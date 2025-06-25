@@ -8,12 +8,12 @@
 > 1. **개인 작업은 꼭 feature 브랜치에서 하기**
 > 2. **모든 작업 시작 전 develop에서 pull을 받은 후, feature 브랜치에서 작업 시작**
 > 3. **개인 작업 마치면 feature 브랜치로 pull request를 통해 develop에 merge하기**
-> 4. **프로젝트 완료 후 main으로 merge (이즈가 한번에 진행 예정)**
+> 4. **프로젝트 완료 후 main으로 merge (앨빈이 한번에 진행 예정)**
 <br>
 
 ### 📝 Feature branch
 > 1. **브랜치명은 아래의 형식으로 작성합니다. (feature/이름-기능제목#이슈번호)**
->    - 팀원 sheepyis의 브랜치명: `feature/sheepyis-login#1`
+>    - 팀원 ysh2002m의 브랜치명: `feature/ysh2002m-login#1`
 > 
 > 2. **Feature branch -> develop branch로 merge하기 전 PR에서 reviewers 설정하여 팀원 2명 이상에게 approve 받기**
 > 
