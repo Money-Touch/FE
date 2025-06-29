@@ -1,25 +1,12 @@
-import styled from "styled-components";
-import colors from "../../styles/common/colors";
 import ListFooter from "./list-footer";
-
-const FooterContainer = styled.div`
-    position: absolute;
-    bottom: 0;
-    background: ${colors.white};
-    width: 100%;
-    height: 10rem;
-    border-radius: 2rem 2rem 0 0;
-    display: flex;
-    justify-content: center;
-    padding-top: 1.3rem;
-`
+import * as F from "../../styles/footer/footer";
 
 const Footer = () => {
     return (
         <div className="pageContainer" style={{ position: "relative" }}>
-            <FooterContainer>
+            <F.FooterContainer>
                 <ListFooter />
-            </FooterContainer>
+            </F.FooterContainer>
         </div>
     )
 }

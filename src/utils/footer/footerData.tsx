@@ -13,7 +13,7 @@ const FooterData = [
     { 
         "id": 2, 
         "name": "가계부", 
-        "link": "/write",
+        "link": "/money",
         "image": images['write'],
         "imageClick": images['writeClick']
     },
@@ -22,14 +22,14 @@ const FooterData = [
         "name": "피드", 
         "link": "/feed",
         "image": images['plus'],
-        "imageClick": images['homeClick']
+        "imageClick": images['plusClick']
     },
     { 
         "id": 4, 
         "name": "마이", 
         "link": "/mypage",
         "image": images['person'],
-        "imageClick": images['homeClick']
+        "imageClick": images['personClick']
     },
 ]
 
