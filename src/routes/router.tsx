@@ -1,5 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../layouts/root-layout';
+import Splash from '../components/splash/splash';
+import LoginPage from "../pages/auth/login/login";
+
 import HomePage from "../pages/home/home";
 import MoneyPage from "../pages/money/money";
 import FeedPage from "../pages/feed/feed";
@@ -14,7 +17,11 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <NotFoundPage />
+                element: <Splash />,
+            },
+            {
+                path: "login",
+                element: <LoginPage />
             },
             {
                 path: "home",
