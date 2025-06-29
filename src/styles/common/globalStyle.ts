@@ -8,6 +8,18 @@ const GlobalStyle = createGlobalStyle`
         font-weight: 400;
         font-style: normal;
     }
+
+    @font-face {
+        font-family: 'Hakgyoansim-L';
+        src: url('/src/assets/fonts/Hakgyoansim-Byeolbichhaneul-TTF-L.ttf') format('truetype');
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'Hakgyoansim-B';
+        src: url('/src/assets/fonts/Hakgyoansim-Byeolbichhaneul-TTF-B.ttf') format('truetype');
+        font-style: normal;
+    }
         
     :root {
     --vh: 100%;
