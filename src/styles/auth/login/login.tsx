@@ -97,3 +97,29 @@ export const ItemP = styled.p<{ clickable: boolean }>`
     color: ${colors.G4};
     cursor: ${({ clickable }) => (clickable ? "pointer" : "default")};
 `;
+
+// kakao.tsx
+export const KakaoButton = styled.button`
+    width: 31.2rem;
+    height: 4.5rem;
+    cursor: pointer;
+    background: ${colors.yellow};
+    padding: 0 1.2rem;
+    border-radius: 0.5rem;
+    margin-top: 3rem;
+`
+
+export const InnerContainer = styled.div`
+    width: 66%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+`
+
+export const KakaoIconImg = styled.img`
+    width: 2.4rem;
+    height: 2.4rem;
+`
