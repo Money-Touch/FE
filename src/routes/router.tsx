@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../layouts/root-layout';
 import Splash from '../components/splash/splash';
 import LoginPage from "../pages/auth/login/login";
+import KakaoCallbackPage from '../pages/auth/login/kakaoCallback';
 
 import HomePage from "../pages/home/home";
 import MoneyPage from "../pages/money/money";
@@ -21,7 +22,17 @@ const router = createBrowserRouter([
             },
             {
                 path: "login",
-                element: <LoginPage />
+                errorElement: <NotFoundPage />,
+                children: [
+                {
+                    index: true,
+                    element: <LoginPage />,
+                },
+                {
+                    path: "auth",
+                    element: <KakaoCallbackPage />,
+                },
+                ],
             },
             {
                 path: "home",
