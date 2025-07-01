@@ -12,7 +12,7 @@ const Agree = ({ onNext }: AgreeProps) => {
 
     return (
         <S.AgreeContainer>
-            <Header to="/login" />
+            <Header />
 
             <S.AgreeP>서비스 이용 약관에<br/>동의해주세요.</S.AgreeP>
             <AgreeForm onChangeRequired={setRequiredChecked}/>

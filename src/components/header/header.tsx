@@ -1,13 +1,12 @@
 import * as H from "../../styles/header/header";
 import LeftArrow from "../../assets/images/header/leftArrow.png";
 import { useNavigate } from "react-router-dom";
-import type { HeaderProps } from "../../types/header/header";
 
-const Header = ({ to }: HeaderProps) => {
+const Header = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(to);
+        navigate(-1);
     }
 
     return (
