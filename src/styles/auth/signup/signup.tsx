@@ -224,3 +224,27 @@ export const CountP = styled.p<{ isMax: boolean }>`
     font-size: 1.1rem;
     color: ${({ isMax }) => (isMax ? colors.M1 : colors.G5)};
 `;
+
+// success.tsx
+export const SuccessImg = styled.div`
+    width: 22.6rem;
+    height: 26.9rem;
+    background: ${colors.G6};
+    margin-top: 12.4rem;
+`
+
+export const SuccessMainP = styled.p`
+    width: 100%;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: ${colors.G1};
+    line-height: 3.4rem;
+    text-align: center;
+    margin: 3.1rem 0 2rem 0;
+`
+
+export const SuccessSubP = styled.p`
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: ${colors.G5};
+`
