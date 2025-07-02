@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { settingSchema } from "../../../../schemas/auth/signup/settingSchema";

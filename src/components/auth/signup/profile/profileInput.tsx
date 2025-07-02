@@ -8,7 +8,7 @@ const MAX_LENGTH = 10;
 
 const ProfileInput = () => {
   const name = "nickname";
-  const { register, setValue } = useFormContext();
+  const { register } = useFormContext();
   const { errors } = useFormState();
   const { value, handleDelete } = useProfileInput(name);
 
