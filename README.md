@@ -1,3 +1,15 @@
+### 👥 Web Developers
+
+<div align="center">
+
+|                              Frontend                               |                              Frontend                               |                              Frontend                               |                                Frontend                                |
+| :-----------------------------------------------------------------: | :-----------------------------------------------------------------: | :-----------------------------------------------------------------: | :--------------------------------------------------------------------: |
+| <img style="width: 150px;" src="https://github.com/hyeok02.png" /> | <img style="width: 150px;" src="https://github.com/sheepyis.png" /> | <img style="width: 150px;" src="https://github.com/zo0o0.png" /> | <img style="width: 150px;" src="https://github.com/gpdnjs8.png" /> |
+|                [윤상혁](https://github.com/hyeok02)                |                [양인서](https://github.com/sheepyis)                |                [이현주](https://github.com/zo0o0)                |                [최혜원](https://github.com/gpdnjs8)                |
+
+</div>
+<br />
+
 ### 🌐 Git-flow
 > - **main**: 프로젝트가 최종적으로 배포되는 브랜치
 > - **develop**: 다음 출시 버전을 개발하는 브랜치
