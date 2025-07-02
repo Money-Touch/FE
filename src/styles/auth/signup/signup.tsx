@@ -2,6 +2,12 @@ import styled from "styled-components";
 import colors from "../../common/colors";
 import type { InputButtonProps } from "../../../types/auth/signup/setting";
 
+// signup.tsx
+export const SignupContainer = styled.div`
+    display: flex;
+    justify-content: center;
+`
+
 // agree.tsx
 export const AgreeContainer = styled.div`
     display: flex;
@@ -145,15 +151,15 @@ export const Button = styled.button<InputButtonProps>`
 `;
 
 export const Error = styled.p`
+    font-weight: 300;
     font-size: 1.1rem;
     color: ${colors.M1};
-    opacity: 0.8;
     position: absolute;
     bottom: -1.4rem;
 `;
 
 // settingInputIcon.tsx
-const BaseIcon = styled.img`
+export const BaseIcon = styled.img`
     width: 1.8rem;
     height: 1.8rem;
     position: absolute;
@@ -166,4 +172,55 @@ export const DeleteIcon = styled(BaseIcon)<{ hasButton: boolean }>`
 
 export const ToggleIcon = styled(BaseIcon)<{ hasDelete: boolean }>`
     right: ${({ hasDelete }) => (hasDelete ? "4rem" : "1.5rem")};
+`;
+
+// profileForm.tsx
+export const ProfileFormContainer = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8rem;
+    margin-top: 6rem;
+`;
+
+// profileImage.tsx
+export const Img = styled.img`
+    width: 10.5rem;
+    height: 10.5rem;
+    border-radius: 3.7rem;
+    border: 0.1rem solid ${colors.G7};
+    cursor: pointer;
+`;
+
+export const HiddenInput = styled.input`
+    display: none;
+`;
+
+// profileInput.tsx
+export const ProfileInputContainer = styled.div`
+    width: 20.8rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+`;
+
+export const ProfileInputBox = styled.input<{ hasError?: boolean; isValid?: boolean }>`
+    height: 4rem;
+    padding-right: 3rem;
+    border: none;
+    border-bottom: 0.1rem solid
+        ${({ hasError, isValid }) =>
+        hasError ? colors.M1 : isValid ? colors.mainColor1 : colors.G5};
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: ${colors.G1};
+`;
+
+export const CountP = styled.p<{ isMax: boolean }>`
+    position: absolute;
+    right: 0;
+    bottom: -1.8rem;
+    font-size: 1.1rem;
+    color: ${({ isMax }) => (isMax ? colors.M1 : colors.G5)};
 `;
