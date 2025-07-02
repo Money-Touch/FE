@@ -35,9 +35,13 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
 
         const formData = new FormData();
         formData.append("nickname", payload.nickname);
-        
+
         if (payload.profileImage) {
             formData.append("profileImage", payload.profileImage);
+        }
+
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
         }
 
         mutate(formData, {
