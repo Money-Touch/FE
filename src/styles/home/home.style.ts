@@ -1,0 +1,222 @@
+import colors from "../../styles/common/colors";
+import styled from "styled-components";
+
+// home.tsx
+export const Container = styled.div`
+  padding-top: 24px;
+  border-top: 1px solid black;
+  border-left: 1px solid blue;
+  border-right: 1px solid blue;
+`;
+
+export const Header = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  border-bottom: 1px solid red;
+`;
+
+export const LogoImg = styled.img`
+  width: 36px;
+  height: 36px;
+  margin-left: 17px;
+`;
+
+export const AlarmImg = styled.img`
+  width: 24px;
+  height: 24px;
+  margin-right: 24px;
+`;
+
+export const Section = styled.div`
+  margin-top: 16px;
+  margin-left: 24px;
+  margin-right: 24px;
+`;
+
+// consumptionWelcome.tsx
+export const WelcomeContainer = styled.div`
+  position: relative;
+  height: 127px;
+  gap: 25px;
+  border-top: 1px solid black;
+  border-left: 1px solid green;
+  border-right: 1px solid green;
+`;
+
+export const WelcomeTitle = styled.div`
+  height: 52px;
+  margin-bottom: 25px;
+
+  p {
+    font-family: Pretendard;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: -3%;
+  }
+`;
+
+export const RecordButton = styled.button`
+  width: 100%;
+  height: 50px;
+  border-radius: 10px;
+  background-color: ${colors.mainColor1};
+
+  p {
+    font-family: Pretendard;
+    height: 23px;
+    top: 14px;
+    left: 82px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 23px;
+    letter-spacing: -3%;
+    color: ${colors.white};
+  }
+`;
+
+export const IllustrationBox = styled.div`
+  position: absolute;
+  top: -17px;
+  right: 0px;
+  width: 75px;
+  height: 75px;
+  background-color: lightgray;
+  z-index: 5;
+`;
+
+// Title
+export const SectionTitle = styled.div`
+  height: 26px;
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: -3%;
+  border-bottom: 1px solid black;
+`;
+
+// consumptionStatistics.tsx
+export const StatisticsContainer = styled.div`
+  margin-top: 40px;
+  height: 277px;
+  gap: 8px;
+`;
+
+export const StatisticsSection = styled.div`
+  height: 243px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px 0px #0000000d;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+`;
+
+export const ChartAndLegendWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  align-items: center;
+  margin-top: 30px;
+`;
+
+export const DonutChartWrapper = styled.div`
+  width: 135px;
+  height: 135px;
+  flex-shrink: 0;
+`;
+
+export const LegendList = styled.div`
+  width: 108px;
+  height: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const LegendItemWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 108px;
+  height: 16px;
+`;
+
+export const LegendItemLeft = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 90px;
+`;
+
+export const LegendColorDot = styled.div<{ color: string }>`
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background-color: ${({ color }) => color};
+`;
+
+export const LegendText = styled.span<{ active: boolean }>`
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -3%;
+  color: ${colors.G1};
+`;
+
+export const LegendPercentage = styled.span<{ active: boolean }>`
+  width: 25px;
+  height: 16px;
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -3%;
+  text-align: right;
+  color: ${colors.G4};
+`;
+
+export const BottomBorderBox = styled.div`
+  width: 258px;
+  height: 24px;
+  margin-top: 34px;
+`;
+
+export const BottomText = styled.p`
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -2%;
+  color: ${colors.G2};
+  text-align: center;
+`;
+
+export const HighlightedText = styled.span`
+  color: ${colors.G1};
+  font-weight: 600;
+`;
+
+// consumptionRanking.tsx
+export const RankingContainer = styled.div`
+  margin-top: 20px;
+  height: 198px;
+  gap: 8px;
+  border-top: 1px solid blue;
+  border-left: 1px solid blue;
+  border-right: 1px solid blue;
+`;
+
+// consumptionRoutine.tsx
+export const RoutineContainer = styled.div`
+  margin-top: 20px;
+  height: 318px;
+  gap: 8px;
+  border-top: 1px solid red;
+  border-left: 1px solid red;
+  border-right: 1px solid red;
+`;

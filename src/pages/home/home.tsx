@@ -1,9 +1,38 @@
+import * as S from "../../styles/home/home.style";
+import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/images/home/logo.png";
+import Alarm from "../../assets/images/home/alarm.png";
+import ConsumptionWelcome from "../../components/home/consumptionWelcome";
+import ConsumptionStatistics from "../../components/home/consumptionStatistics";
+import ConsumptionRanking from "../../components/home/consumptionRanking";
+import ConsumptionRoutine from "../../components/home/consumptionRoutine";
+
 const Home = () => {
-    return (
-        <>
-            home
-        </>
-    )
-}
+  const navigate = useNavigate();
+
+  const handleAlarmClick = () => {
+    navigate("/notification");
+  };
+
+  return (
+    <S.Container>
+      <S.Header>
+        <S.LogoImg src={Logo} alt="logo" />
+        <S.AlarmImg
+          src={Alarm}
+          alt="alarm"
+          onClick={handleAlarmClick}
+          style={{ cursor: "pointer" }}
+        />
+      </S.Header>
+      <S.Section>
+        <ConsumptionWelcome username="라인" />
+        <ConsumptionStatistics />
+        <ConsumptionRanking />
+        <ConsumptionRoutine />
+      </S.Section>
+    </S.Container>
+  );
+};
 
 export default Home;
