@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 // home.tsx
 export const Container = styled.div`
+  position: relative;
   padding-top: 24px;
   border-top: 1px solid black;
   border-left: 1px solid blue;
@@ -67,8 +68,6 @@ export const RecordButton = styled.button`
   p {
     font-family: Pretendard;
     height: 23px;
-    top: 14px;
-    left: 82px;
     font-weight: 500;
     font-size: 15px;
     line-height: 23px;
@@ -118,7 +117,6 @@ export const StatisticsSection = styled.div`
 export const ChartAndLegendWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 50px;
   align-items: center;
   margin-top: 30px;
 `;
@@ -127,6 +125,7 @@ export const DonutChartWrapper = styled.div`
   width: 135px;
   height: 135px;
   flex-shrink: 0;
+  margin-right: 25px;
 `;
 
 export const LegendList = styled.div`
@@ -135,6 +134,7 @@ export const LegendList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-left: 25px;
 `;
 
 export const LegendItemWrapper = styled.div`
@@ -169,8 +169,10 @@ export const LegendText = styled.span<{ active: boolean }>`
 `;
 
 export const LegendPercentage = styled.span<{ active: boolean }>`
-  width: 25px;
+  width: 35px;
   height: 16px;
+  display: inline-block;
+  text-align: right;
   font-family: Pretendard;
   font-weight: 500;
   font-size: 12px;
@@ -181,7 +183,6 @@ export const LegendPercentage = styled.span<{ active: boolean }>`
 `;
 
 export const BottomBorderBox = styled.div`
-  width: 258px;
   height: 24px;
   margin-top: 34px;
 `;
@@ -192,7 +193,7 @@ export const BottomText = styled.p`
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -2%;
-  color: ${colors.G2};
+  color: ${colors.G3};
   text-align: center;
 `;
 

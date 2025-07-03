@@ -48,19 +48,27 @@ export function processSpendingData(
 
   const colorOrder = DEFAULT_COLORS;
 
-  let processedData = top5.map((item, idx) => ({
+  let processedData: ProcessedDataItem[] = top5.map((item, idx) => ({
     ...item,
     percentage: +((item.amount / totalAmount) * 100).toFixed(1),
     color: colorOrder[idx % colorOrder.length],
   }));
 
   if (otherAmount > 0) {
+    const othersProcessed: ProcessedDataItem[] = others.map((item) => ({
+      ...item,
+      percentage: +((item.amount / totalAmount) * 100).toFixed(1),
+      color: colors.mainColor2,
+    }));
+
     processedData.push({
       name: "그 외",
       amount: otherAmount,
       percentage: +((otherAmount / totalAmount) * 100).toFixed(1),
       color: colors.mainColor2,
-    });
+      isOther: true,
+      items: othersProcessed,
+    } as ProcessedDataItem);
   }
 
   const percentSum = processedData.reduce(

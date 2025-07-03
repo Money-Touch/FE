@@ -13,7 +13,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
   const centerX = 67.5;
   const centerY = 67.5;
   const outerRadius = 67;
-  const innerRadius = 37;
+  const innerRadius = 40;
   const rotateOffset = -45;
 
   const filteredData = [...data]
