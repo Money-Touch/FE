@@ -2,12 +2,17 @@ import * as H from "../../styles/header/header";
 import LeftArrow from "../../assets/images/header/leftArrow.png";
 import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+interface HeaderProps {
+    onBack?: () => void;
+}
+
+const Header = ({ onBack }: HeaderProps ) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(-1);
-    }
+        if (onBack) onBack();
+        else navigate(-1);
+    };
 
     return (
         <H.HeaderContainer>
