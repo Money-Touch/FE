@@ -3,6 +3,8 @@ import RootLayout from '../layouts/root-layout';
 import Splash from '../components/splash/splash';
 import LoginPage from "../pages/auth/login/login";
 import KakaoCallbackPage from '../pages/auth/login/kakaoCallback';
+import SignupPage from '../pages/auth/signup/signup';
+import TestPage from "../pages/auth/test/test";
 
 import HomePage from "../pages/home/home";
 import MoneyPage from "../pages/money/money";
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
                     element: <KakaoCallbackPage />,
                 },
                 ],
+            },
+            {
+                path: "signup",
+                element: <SignupPage /> 
+            },
+            {
+                path: "test",
+                element: <TestPage />
             },
             {
                 path: "home",
