@@ -28,6 +28,7 @@ export const AlarmImg = styled.img`
   width: 24px;
   height: 24px;
   margin-right: 24px;
+  cursor: pointer;
 `;
 
 export const Section = styled.div`

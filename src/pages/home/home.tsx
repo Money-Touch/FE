@@ -18,12 +18,7 @@ const Home = () => {
     <S.Container>
       <S.Header>
         <S.LogoImg src={Logo} alt="logo" />
-        <S.AlarmImg
-          src={Alarm}
-          alt="alarm"
-          onClick={handleAlarmClick}
-          style={{ cursor: "pointer" }}
-        />
+        <S.AlarmImg src={Alarm} alt="alarm" onClick={handleAlarmClick} />
       </S.Header>
       <S.Section>
         <ConsumptionWelcome username="라인" />
