@@ -3,18 +3,17 @@ import Check from "../../../../assets/images/auth/signup/check.png";
 import CheckClick from "../../../../assets/images/auth/signup/checkClick.png";
 import ListAgree from "./list-agree";
 import { useAgreeForm } from "../../../../hooks/auth/signup/useAgreeForm";
-import { useEffect } from "react";
+import type { AgreeItem } from "../../../../types/auth/signup/agree";
 
 interface AgreeFormProps {
-    onChangeRequired?: (isChecked: boolean) => void;
+    agreeList: AgreeItem[];
+    setAgreeList: React.Dispatch<React.SetStateAction<AgreeItem[]>>;
 }
 
-const AgreeForm = ({ onChangeRequired }: AgreeFormProps ) => {
-    const { agreeList, allChecked, requiredChecked, toggleAll, toggleItem } = useAgreeForm();
 
-    useEffect(() => {
-        onChangeRequired?.(requiredChecked);
-    }, [requiredChecked]);
+
+const AgreeForm = ({ agreeList, setAgreeList }: AgreeFormProps) => {
+    const { allChecked, toggleAll, toggleItem } = useAgreeForm(agreeList, setAgreeList);
 
     return (
         <S.AgreeFormContainer>
