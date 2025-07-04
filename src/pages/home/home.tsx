@@ -21,7 +21,7 @@ const Home = () => {
         <S.AlarmImg src={Alarm} alt="alarm" onClick={handleAlarmClick} />
       </S.Header>
       <S.Section>
-        <ConsumptionWelcome username="라인" />
+        <ConsumptionWelcome />
         <ConsumptionStatistics />
         <ConsumptionRanking />
         <ConsumptionRoutine />
