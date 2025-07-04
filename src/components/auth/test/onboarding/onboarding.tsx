@@ -4,7 +4,7 @@ import ListOnboarding from "./list-onboarding";
 import type { OnboardingItem } from "../../../../types/auth/test/onboarding";
 import { useOnboarding } from "../../../../hooks/auth/test/useOnboarding";
 import { useOnboardingMutation } from "../../../../hooks/auth/test/useOnboardingMutation";
-import { getOnboarding } from "../../../../utils/auth/signup/getOnboarding";
+import { getOnboarding } from "../../../../utils/auth/test/getOnboarding";
 import * as S from "../../../../styles/auth/signup/signup";
 
 interface OnboardingProps {
