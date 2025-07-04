@@ -6,9 +6,7 @@ export const Container = styled.div`
   position: relative;
   padding-top: 24px;
   padding-bottom: 110px;
-  border-top: 1px solid black;
-  border-left: 1px solid blue;
-  border-right: 1px solid blue;
+  background: linear-gradient(180deg, #a5ffde -13.63%, ${colors.white} 11.57%);
 `;
 
 export const Header = styled.div`
@@ -16,7 +14,6 @@ export const Header = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 60px;
-  border-bottom: 1px solid red;
 `;
 
 export const LogoImg = styled.img`
@@ -43,9 +40,6 @@ export const WelcomeContainer = styled.div`
   position: relative;
   height: 127px;
   gap: 25px;
-  border-top: 1px solid black;
-  border-left: 1px solid green;
-  border-right: 1px solid green;
 `;
 
 export const WelcomeTitle = styled.div`
@@ -59,6 +53,10 @@ export const WelcomeTitle = styled.div`
     line-height: 26px;
     letter-spacing: -3%;
   }
+`;
+
+export const Username = styled.span`
+  color: ${colors.subColor2};
 `;
 
 export const RecordButton = styled.button`
@@ -78,13 +76,12 @@ export const RecordButton = styled.button`
   }
 `;
 
-export const IllustrationBox = styled.div`
+export const IllustrationBox = styled.img`
   position: absolute;
   top: -17px;
   right: 0px;
-  width: 75px;
-  height: 75px;
-  background-color: lightgray;
+  width: 93.09px;
+  height: 85.67px;
   z-index: 5;
 `;
 
@@ -96,7 +93,6 @@ export const SectionTitle = styled.div`
   font-size: 18px;
   line-height: 26px;
   letter-spacing: -3%;
-  border-bottom: 1px solid black;
 `;
 
 export const SectionHeader = styled.div`
@@ -220,9 +216,6 @@ export const RankingContainer = styled.div`
   margin-top: 20px;
   height: 198px;
   gap: 8px;
-  border-top: 1px solid blue;
-  border-left: 1px solid blue;
-  border-right: 1px solid blue;
 `;
 
 export const RankingSection = styled.div`
@@ -274,7 +267,7 @@ export const UserName = styled.div`
 `;
 
 export const WiseCount = styled.div`
-  width: 30px;
+  width: 35px;
   height: 16px;
   font-weight: 500;
   font-size: 12px;
@@ -294,9 +287,6 @@ export const RoutineContainer = styled.div`
   margin-top: 20px;
   height: 318px;
   gap: 8px;
-  border-top: 1px solid red;
-  border-left: 1px solid red;
-  border-right: 1px solid red;
 `;
 
 export const RoutineSection = styled.div`
