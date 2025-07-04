@@ -1,0 +1,35 @@
+import * as S from "../../styles/home/home.style";
+import { useNavigate } from "react-router-dom";
+import illust from "../../assets/images/home/illust.png";
+import type { ConsumptionWelcomeUser } from "../../types/home/user";
+
+const ConsumptionWelcome = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/record");
+  };
+
+  // mock data
+  const mockUser: ConsumptionWelcomeUser = {
+    id: 1,
+    username: "라인",
+  };
+
+  return (
+    <S.WelcomeContainer>
+      <S.WelcomeTitle>
+        <p>
+          안녕하세요, <S.Username>{mockUser.username}</S.Username>님. <br />
+          오늘의 소비 계획은 세우셨나요?
+        </p>
+      </S.WelcomeTitle>
+      <S.IllustrationBox src={illust} />
+      <S.RecordButton onClick={handleClick}>
+        <p>오늘의 소비 기록하러 가기</p>
+      </S.RecordButton>
+    </S.WelcomeContainer>
+  );
+};
+
+export default ConsumptionWelcome;
