@@ -1,18 +1,17 @@
-import { useState } from "react";
-import AgreeData from "../../../utils/auth/signup/agreeData";
 import type { AgreeItem } from "../../../types/auth/signup/agree";
 
-export const useAgreeForm = () => {
-    const [agreeList, setAgreeList] = useState<AgreeItem[]>(
-        AgreeData.map(item => ({ ...item, checked: false }))
-    );
-
+export const useAgreeForm = (agreeList: AgreeItem[],
+    setAgreeList: React.Dispatch<React.SetStateAction<AgreeItem[]>>
+) => {
     const allChecked = agreeList.every(item => item.checked);
 
-    const requiredChecked = agreeList.filter(item => item.name.includes("(필수)")).every(item => item.checked);
+    const requiredChecked = agreeList
+        .filter(item => item.name.includes("(필수)"))
+        .every(item => item.checked);
 
     const toggleAll = () => {
-        setAgreeList(prev => prev.map(item => ({ ...item, checked: !allChecked })));
+        const newValue = !allChecked;
+        setAgreeList(prev => prev.map(item => ({ ...item, checked: newValue })));
     };
 
     const toggleItem = (id: number) => {

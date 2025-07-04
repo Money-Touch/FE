@@ -3,27 +3,20 @@ import colors from "./colors";
 
 const GlobalStyle = createGlobalStyle`
     @font-face {
-        font-family: 'Pretendard-Regular';
-        src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-        font-weight: 400;
-        font-style: normal;
-    }
-
-    @font-face {
         font-family: 'Hakgyoansim-L';
-        src: url('/src/assets/fonts/Hakgyoansim-Byeolbichhaneul-TTF-L.ttf') format('truetype');
+        src: url('/fonts/Hakgyoansim-Byeolbichhaneul-TTF-L.ttf') format('truetype');
         font-style: normal;
     }
 
     @font-face {
         font-family: 'Hakgyoansim-B';
-        src: url('/src/assets/fonts/Hakgyoansim-Byeolbichhaneul-TTF-B.ttf') format('truetype');
+        src: url('/fonts/Hakgyoansim-Byeolbichhaneul-TTF-B.ttf') format('truetype');
         font-style: normal;
     }
         
     :root {
     --vh: 100%;
-    --font-family: 'Pretendard-Regular';
+    --font-family: 'Pretendard';
     }
     
 
@@ -40,19 +33,11 @@ const GlobalStyle = createGlobalStyle`
     figure, figcaption, footer, header, hgroup,
     main, menu, nav, output, ruby, section, summary,
     time, mark, audio, video, button {
-
-
-        @font-face {
-        font-family: 'Pretendard-Regular';
-        src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-        font-weight: 400;
-        font-style: normal;
-    }
-
         margin: 0;
         border: 0;
         padding: 0;
         vertical-align: baseline;
+        font-family: 'Pretendard';
 
     }
     article, aside, details, figcaption, figure,
@@ -100,35 +85,9 @@ const GlobalStyle = createGlobalStyle`
         font-size: 62.5%;
     }
 
-    // @media screen and (max-width:1799px) {
-    //     /* 데스크탑 */
-    //     html {
-    //         font-size: 50%;
-    //     }
-    // }
-    // @media screen and (max-width:1199px) {
-    //     /* 데스크탑 */
-    //     html {
-    //         font-size: 45%;
-    //     }
-    // }
-
-    // @media screen and (max-width:991px) {
-    //     /* 타블렛 */
-    //     html {
-    //         font-size: 40%;
-    //     }
-    // }
-    // @media screen and (max-width:767px) {
-    //     /* 모바일 */
-    //     html {
-    //         font-size: 30%;
-    //     }
-    // }
-
     @media screen and (max-width: 375px) {
         html {
-                font-size: 40%;
+            font-size: 40%;
         }
     }
     
