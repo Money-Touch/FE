@@ -11,9 +11,6 @@ const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
   return (
     <S.ModalBackdrop onClick={onClose}>
       <S.ModalBox onClick={(e) => e.stopPropagation()}>
-        <S.ModalTitle>
-          <h1>그 외 카테고리</h1>
-        </S.ModalTitle>
         <S.ModalList>
           {items.map((item) => (
             <S.ModalItem key={item.name}>

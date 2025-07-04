@@ -17,41 +17,25 @@ export const ModalBackdrop = styled.div`
 export const ModalBox = styled.div`
   position: absolute;
   background: white;
-  padding: 24px;
-  border-radius: 12px;
-  width: 200px;
-  max-height: 70vh;
+  padding: 16px;
+  border-radius: 15px;
+  width: 148px;
+  min-height: 138px;
   overflow-y: auto;
-  top: 341.33px;
-  border-radius: 13px;
-`;
-
-export const ModalTitle = styled.div`
-  height: 26px;
-
-  h1 {
-    font-family: Pretendard;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 26px;
-    letter-spacing: -3%;
-    color: ${colors.G1};
-  }
+  top: 474px;
+  left: 208px;
 `;
 
 export const ModalList = styled.ul`
   width: 116px;
-  margin-top: 20px;
-  margin-left: 2px;
+  height: 100px;
 `;
 
 export const ModalItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 150px;
   padding: 6px 0;
-  font-family: Pretendard;
 `;
 
 export const LeftGroup = styled.div`
@@ -69,7 +53,6 @@ export const ColorDot = styled.div<{ color: string }>`
 
 export const CategoryName = styled.span`
   color: ${colors.G1};
-  font-family: Pretendard;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
@@ -78,7 +61,6 @@ export const CategoryName = styled.span`
 
 export const Percentage = styled.span`
   color: ${colors.G4};
-  font-family: Pretendard;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;

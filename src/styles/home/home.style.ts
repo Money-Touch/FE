@@ -5,7 +5,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   position: relative;
   padding-top: 24px;
-  padding-bottom: 110px;
+  padding-bottom: 110px; //
   background: linear-gradient(180deg, #a5ffde -13.63%, ${colors.white} 11.57%);
 `;
 
@@ -47,7 +47,6 @@ export const WelcomeTitle = styled.div`
   margin-bottom: 25px;
 
   p {
-    font-family: Pretendard;
     font-weight: 700;
     font-size: 18px;
     line-height: 26px;
@@ -66,7 +65,6 @@ export const RecordButton = styled.button`
   background-color: ${colors.mainColor1};
 
   p {
-    font-family: Pretendard;
     height: 23px;
     font-weight: 500;
     font-size: 15px;
@@ -88,7 +86,6 @@ export const IllustrationBox = styled.img`
 // Title
 export const SectionTitle = styled.div`
   height: 26px;
-  font-family: Pretendard;
   font-weight: 500;
   font-size: 18px;
   line-height: 26px;
@@ -169,7 +166,6 @@ export const LegendColorDot = styled.div<{ color: string }>`
 `;
 
 export const LegendText = styled.span<{ active: boolean }>`
-  font-family: Pretendard;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
@@ -182,7 +178,6 @@ export const LegendPercentage = styled.span<{ active: boolean }>`
   height: 16px;
   display: inline-block;
   text-align: right;
-  font-family: Pretendard;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
@@ -197,7 +192,6 @@ export const BottomBorderBox = styled.div`
 `;
 
 export const BottomText = styled.p`
-  font-family: Pretendard;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
@@ -316,7 +310,6 @@ export const RoutineIcon = styled.img`
 export const RoutineText = styled.div`
   height: 22px;
   flex: 1;
-  font-family: Pretendard;
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
