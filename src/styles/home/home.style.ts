@@ -98,6 +98,17 @@ export const SectionTitle = styled.div`
   border-bottom: 1px solid black;
 `;
 
+export const SectionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const MoreIcon = styled.img`
+  height: 14px;
+  cursor: pointer;
+`;
+
 // consumptionStatistics.tsx
 export const StatisticsContainer = styled.div`
   margin-top: 40px;
@@ -211,6 +222,70 @@ export const RankingContainer = styled.div`
   border-top: 1px solid blue;
   border-left: 1px solid blue;
   border-right: 1px solid blue;
+`;
+
+export const RankingSection = styled.div`
+  height: 164px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px 0px #0000000d;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+`;
+
+export const RankingList = styled.div`
+  display: flex;
+  height: 26px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 22px;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Medal = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 16px;
+`;
+
+export const ProfileAndName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+`;
+
+export const Profile = styled.img`
+  width: 26px;
+  height: 26px;
+  object-fit: cover;
+`;
+
+export const UserName = styled.div`
+  width: 30px;
+  height: 22px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -3%;
+  color: ${colors.G1};
+`;
+
+export const WiseCount = styled.div`
+  width: 30px;
+  height: 16px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -3%;
+  text-align: right;
+  color: ${colors.G1};
+`;
+
+export const RankChangeIcon = styled.img`
+  width: 12px;
+  height: 12px;
 `;
 
 // consumptionRoutine.tsx
