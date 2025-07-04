@@ -3,4 +3,5 @@ export interface UserRanking {
   name: string;
   wiseCount: number;
   previousRank: number;
+  profileImage?: string;
 }

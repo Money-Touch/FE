@@ -5,6 +5,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   position: relative;
   padding-top: 24px;
+  padding-bottom: 110px;
   border-top: 1px solid black;
   border-left: 1px solid blue;
   border-right: 1px solid blue;
@@ -296,4 +297,45 @@ export const RoutineContainer = styled.div`
   border-top: 1px solid red;
   border-left: 1px solid red;
   border-right: 1px solid red;
+`;
+
+export const RoutineSection = styled.div`
+  height: 284px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px 0px #0000000d;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+`;
+
+export const RoutineCard = styled.div`
+  display: flex;
+  align-items: center;
+  height: 40px;
+  margin-top: 14px;
+  margin-left: 16px;
+  margin-right: 16px;
+  gap: 8px;
+`;
+
+export const RoutineIcon = styled.img`
+  width: 32px;
+  height: 32px;
+`;
+
+export const RoutineText = styled.div`
+  height: 22px;
+  flex: 1;
+  font-family: Pretendard;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -3%;
+  color: ${colors.G1};
+`;
+
+export const RoutineArrow = styled.img`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
 `;

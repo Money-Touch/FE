@@ -19,9 +19,27 @@ function ConsumptionRanking() {
 
   // mock data
   const mockRankingData: UserRanking[] = [
-    { id: 1, name: "제이", wiseCount: 100, previousRank: 2 },
-    { id: 2, name: "영이", wiseCount: 92, previousRank: 1 },
-    { id: 3, name: "앨빈", wiseCount: 87, previousRank: 3 },
+    {
+      id: 1,
+      name: "제이",
+      wiseCount: 100,
+      previousRank: 2,
+      profileImage: "",
+    },
+    {
+      id: 2,
+      name: "영이",
+      wiseCount: 92,
+      previousRank: 1,
+      profileImage: "",
+    },
+    {
+      id: 3,
+      name: "앨빈",
+      wiseCount: 87,
+      previousRank: 3,
+      profileImage: "",
+    },
   ];
 
   return (
@@ -36,7 +54,10 @@ function ConsumptionRanking() {
           <S.RankingList key={user.id}>
             <S.Medal src={medalImages[index]} alt={`${index + 1}등`} />
             <S.ProfileAndName>
-              <S.Profile src={profile_t} alt="defaultProfile" />
+              <S.Profile
+                src={user.profileImage || profile_t}
+                alt="userProfile"
+              />
               <S.UserName>{user.name}</S.UserName>
             </S.ProfileAndName>
             <S.WiseCount>{user.wiseCount}회</S.WiseCount>
