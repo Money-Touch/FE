@@ -8,6 +8,10 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
+  const allPercentagesAreIntegers = items.every((item) =>
+    Number.isInteger(item.percentage)
+  );
+
   return (
     <S.ModalBackdrop onClick={onClose}>
       <S.ModalBox onClick={(e) => e.stopPropagation()}>
@@ -18,7 +22,11 @@ const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
                 <S.ColorDot color={item.color} />
                 <S.CategoryName>{item.name}</S.CategoryName>
               </S.LeftGroup>
-              <S.Percentage>{item.percentage.toFixed(1)}%</S.Percentage>
+              <S.Percentage>
+                {allPercentagesAreIntegers
+                  ? `${item.percentage}%`
+                  : `${item.percentage.toFixed(1)}%`}
+              </S.Percentage>
             </S.ModalItem>
           ))}
         </S.ModalList>

@@ -14,7 +14,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
   const centerY = 67.5;
   const outerRadius = 67;
   const innerRadius = 40;
-  const rotateOffset = -45;
+  const rotateOffset = 35;
 
   const filteredData = [...data]
     .filter((item) => item.percentage > 0)
