@@ -8,7 +8,7 @@ interface ProfileProps {
 const Profile = ({ onNext }: ProfileProps) => {
     return (
         <S.AgreeContainer className="pageContainer">
-            <S.AgreeP style={{ marginTop: "8.8rem"}}>닉네임을 설정해주세요.</S.AgreeP>
+            <S.AgreeP style={{ marginTop: "11.2rem", width: "100%", textAlign: "center"}}>닉네임을 설정해주세요.</S.AgreeP>
 
             <ProfileForm onNext={onNext} />
         </S.AgreeContainer>

@@ -1,6 +1,7 @@
 import * as S from "../../../../styles/auth/signup/signup";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import SuccessIcon from "../../../../assets/images/auth/signup/successIcon.png";
 
 const Success = () => {
     const navigate = useNavigate();
@@ -15,14 +16,12 @@ const Success = () => {
 
     return (
         <S.AgreeContainer>
-            <S.SuccessImg />
-
             <S.SuccessMainP>
                 이메일 계정으로<br/>
                 회원가입이 완료되었어요!
             </S.SuccessMainP>
-
-            <S.SuccessSubP>3초 뒤에 온보딩 화면으로 이동합니다.</S.SuccessSubP>
+            
+            <S.SuccessImg src={SuccessIcon} alt="success"/>
         </S.AgreeContainer>
     )
 }

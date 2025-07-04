@@ -12,12 +12,12 @@ export const LoginContainer = styled.div`
 export const LogoContainer = styled.div`
     display: flex;
     align-items: flex-end;
-    margin-top: 13.5rem;
+    margin-top: 12.3rem;
 `
 
 export const LogoImg = styled.img`
-    width: 4.8rem;
-    height: 4.8rem;
+    width: 6rem;
+    height: 6rem;
 `
 
 export const LogoP = styled.p`
@@ -28,7 +28,7 @@ export const LogoP = styled.p`
 
 // loginForm.tsx
 export const LoginFormContainer = styled.div`
-    width: 31.2rem;
+    width: 38rem;
     display: flex;
     flex-direction: column;
     gap: 1.6rem;
@@ -87,7 +87,7 @@ export const IconImg = styled.img`
 export const ListMenuContainer = styled.div`
     display: flex;
     gap: 2.4rem;
-    margin-top: 1.6rem;
+    margin: 1.6rem 0 3rem 0;
 `
 
 // item-menu.tsx
@@ -100,20 +100,19 @@ export const ItemP = styled.p<{ clickable: boolean }>`
 
 // kakao.tsx
 export const KakaoButton = styled.button`
-    width: 31.2rem;
+    width: 38rem;
     height: 4.5rem;
     cursor: pointer;
     background: ${colors.yellow};
     padding: 0 1.2rem;
     border-radius: 0.5rem;
-    margin-top: 3rem;
 `
 
 export const InnerContainer = styled.div`
-    width: 66%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 0.8rem;
+    justify-content: center;
     font-size: 1.5rem;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.85);

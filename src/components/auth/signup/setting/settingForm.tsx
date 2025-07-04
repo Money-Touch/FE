@@ -87,7 +87,7 @@ const SettingForm = ({ onNext }: SettingFormProps) => {
                 </S.InputWrapper>
             </S.Container>
 
-            <S.BottomContainer style={{ marginTop: "9.3rem" }}>
+            <S.BottomContainer style={{ marginTop: "7.6rem" }}>
                 <S.NextButton type="submit" form="signupForm" active={methods.formState.isValid}>
                     다음
                 </S.NextButton>

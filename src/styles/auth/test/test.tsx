@@ -5,7 +5,8 @@ export const OnboardingTopContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-    margin: 6rem 0 3.6rem 0;
+    margin: 8.4rem 0 3.6rem 0;
+    width: 100%;
 `
 
 export const OnboardingP = styled.p`
@@ -57,7 +58,7 @@ export const MbtiP = styled.p`
     font-size: 2rem;
     font-weight: 700;
     color: ${colors.G1};
-    margin: 7.8rem 0 3.3rem 0;
+    margin: 13.6rem 0 4.4rem 0;
 `
 
 export const MbtiImgDiv = styled.div`
