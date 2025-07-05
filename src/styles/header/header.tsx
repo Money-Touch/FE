@@ -5,10 +5,11 @@ export const HeaderContainer = styled.div`
     height: 6rem;
     display: flex;
     align-items: center;
+    margin-top: 2.4rem;
 `
 
 export const LeftArrowImg = styled.img`
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 0.98rem;
+    height: 1.78rem;
     cursor: pointer;
 `

@@ -13,7 +13,8 @@ export const AgreeContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 31.2rem;
+    width: 42.5rem;
+    padding: 0 2.4rem;
 `
 
 export const AgreeP = styled.p`
@@ -22,6 +23,7 @@ export const AgreeP = styled.p`
     font-weight: 700;
     color: ${colors.G1};
     line-height: 3.4rem;
+    margin-top: 2.8rem;
 `
 
 export const BottomContainer = styled.div`
@@ -54,11 +56,11 @@ export const BottomP = styled.p`
 
 // agreeForm.tsx
 export const AgreeFormContainer = styled.div`
-    padding-top: 6rem;
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 2.2rem;
+    margin-top: 6rem;
 `
 
 export const AgreeItemContainer = styled.div`
@@ -95,10 +97,10 @@ export const ListContainer = styled.div`
 // settingForm.tsx
 export const Container = styled.form`
     width: 100%;
-    padding-top: 2.6rem;
+    margin-top: 2.6rem;
     display: flex;
     flex-direction: column;
-    gap: 2.2rem;
+    gap: 3.2rem;
 `;
 
 export const InputWrapper = styled.div`
@@ -125,7 +127,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Input = styled.input<InputButtonProps>`
-    width: ${({ hasButton }) => (hasButton ? "78%" : "100%")};
+    width: ${({ hasButton }) => (hasButton ? "29.1rem" : "38rem")};
     height: 4.5rem;
     border-radius: 0.5rem;
     border: 0.1rem solid ${({ hasError }) => (hasError ? `${colors.M1}` : `${colors.G7}`)};
@@ -155,7 +157,7 @@ export const Error = styled.p`
     font-size: 1.1rem;
     color: ${colors.M1};
     position: absolute;
-    bottom: -1.4rem;
+    bottom: -1.7rem;
 `;
 
 // settingInputIcon.tsx
@@ -167,7 +169,7 @@ export const BaseIcon = styled.img`
 `;
 
 export const DeleteIcon = styled(BaseIcon)<{ hasButton: boolean }>`
-    right: ${({ hasButton }) => (hasButton ? "9.5rem" : "1.5rem")};
+    right: ${({ hasButton }) => (hasButton ? "10.5rem" : "1.5rem")};
 `;
 
 export const ToggleIcon = styled(BaseIcon)<{ hasDelete: boolean }>`
@@ -206,8 +208,8 @@ export const ProfileInputContainer = styled.div`
 `;
 
 export const ProfileInputBox = styled.input<{ hasError?: boolean; isValid?: boolean }>`
-    height: 4rem;
-    padding-right: 3rem;
+    height: 2.2rem;
+    padding-right: 2.5rem;
     border: none;
     border-bottom: 0.1rem solid
         ${({ hasError, isValid }) =>
@@ -220,19 +222,12 @@ export const ProfileInputBox = styled.input<{ hasError?: boolean; isValid?: bool
 export const CountP = styled.p<{ isMax: boolean }>`
     position: absolute;
     right: 0;
-    bottom: -1.8rem;
+    bottom: -1.7rem;
     font-size: 1.1rem;
     color: ${({ isMax }) => (isMax ? colors.M1 : colors.G5)};
 `;
 
 // success.tsx
-export const SuccessImg = styled.div`
-    width: 22.6rem;
-    height: 26.9rem;
-    background: ${colors.G6};
-    margin-top: 12.4rem;
-`
-
 export const SuccessMainP = styled.p`
     width: 100%;
     font-size: 2.4rem;
@@ -240,11 +235,10 @@ export const SuccessMainP = styled.p`
     color: ${colors.G1};
     line-height: 3.4rem;
     text-align: center;
-    margin: 3.1rem 0 2rem 0;
+    margin: 13.8rem 0 15.5rem 0;
 `
 
-export const SuccessSubP = styled.p`
-    font-size: 1.2rem;
-    font-weight: 500;
-    color: ${colors.G5};
+export const SuccessImg = styled.img`
+    width: 17.598rem;
+    height: 15.1rem;
 `

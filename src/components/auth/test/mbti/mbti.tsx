@@ -22,7 +22,7 @@ const Mbti = ({ onNext, onBack }: MbtiProps) => {
             <T.MbtiP>나의 소비 MBTI는 무엇일까?</T.MbtiP>
             <T.MbtiImgDiv />
 
-            <S.BottomContainer style={{ marginTop: "27.6rem"}}>
+            <S.BottomContainer style={{ marginTop: "20.7rem"}}>
                 <S.NextButton active={true} onClick={onNext}>테스트하러 가기</S.NextButton>
                 <T.MbtiSkipP onClick={handleSkip}>건너뛰기</T.MbtiSkipP>
             </S.BottomContainer>

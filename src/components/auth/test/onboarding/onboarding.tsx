@@ -4,7 +4,7 @@ import ListOnboarding from "./list-onboarding";
 import type { OnboardingItem } from "../../../../types/auth/test/onboarding";
 import { useOnboarding } from "../../../../hooks/auth/test/useOnboarding";
 import { useOnboardingMutation } from "../../../../hooks/auth/test/useOnboardingMutation";
-import { getOnboarding } from "../../../../utils/auth/signup/getOnboarding";
+import { getOnboarding } from "../../../../utils/auth/test/getOnboarding";
 import * as S from "../../../../styles/auth/signup/signup";
 
 interface OnboardingProps {
@@ -33,7 +33,7 @@ const Onboarding = ({ onNext, onboardingList, setOnboardingList }: OnboardingPro
   };
 
     return (
-        <div>
+        <S.AgreeContainer>
             <T.OnboardingTopContainer>
                 <T.OnboardingP>안녕하세요!</T.OnboardingP>
                 <T.OnboardingP style={{ fontSize: "2rem", color: colors.G1, lineHeight: "2.8rem" }}>
@@ -47,7 +47,7 @@ const Onboarding = ({ onNext, onboardingList, setOnboardingList }: OnboardingPro
             <S.BottomContainer style={{ marginTop: "3.7rem" }}>
                 <S.NextButton onClick={handleSubmit} active={isComplete} disabled={!isComplete}>완료</S.NextButton>
             </S.BottomContainer>
-        </div>
+        </S.AgreeContainer>
     )
 }
 

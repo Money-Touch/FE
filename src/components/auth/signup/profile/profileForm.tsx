@@ -63,7 +63,7 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
                 <ProfileInput />
             </S.ProfileFormContainer>
 
-            <S.BottomContainer style={{ marginTop: "27.2rem" }}>
+            <S.BottomContainer style={{ marginTop: "27.1rem" }}>
                 <S.NextButton type="submit" active={isValid} disabled={!isValid} form="profileForm">다음</S.NextButton>
             </S.BottomContainer>
         </FormProvider>
