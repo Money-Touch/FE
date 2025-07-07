@@ -47,7 +47,7 @@ const Ranking = () => {
           <TopUser
             key={top3[orderIdx].id}
             user={top3[orderIdx]}
-            medal={medalImages[i]}
+            medal={medalImages[orderIdx]}
             podium={podiumImages[i]}
           />
         ))}
