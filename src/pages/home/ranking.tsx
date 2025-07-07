@@ -32,7 +32,7 @@ const Ranking = () => {
   const podiumImages = [ranking2, ranking1, ranking3];
 
   return (
-    <S.Container>
+    <S.Container className="pageContainer">
       <S.HeaderWrapper>
         <S.Header>
           <S.BackIcon src={leftArrow} alt="back" onClick={handleGoBack} />

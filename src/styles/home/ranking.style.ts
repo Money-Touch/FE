@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 // ranking.tsx
 export const Container = styled.div`
-  width: 425px;
-  height: 915px;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(180deg, #e0fadd 0%, #cde3f3 56.31%);
 `;
 
