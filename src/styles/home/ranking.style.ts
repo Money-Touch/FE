@@ -6,6 +6,9 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #e0fadd 0%, #cde3f3 56.31%);
+  max-width: 425px;
+  margin: 0 auto;
+  box-sizing: border-box;
 `;
 
 // header
@@ -14,12 +17,16 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const Header = styled.div`
-  width: 425px;
+  width: 100%;
+  max-width: 425px;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
 `;
 
 export const BackIcon = styled.img`
@@ -39,19 +46,20 @@ export const Title = styled.h2`
 
 // rank box
 export const MyRankBox = styled.div`
-  width: 377px;
+  width: 100%;
+  max-width: 377px;
   height: 50px;
-  margin-top: 26px;
-  margin-left: 24px;
-  margin-right: 24px;
+  min-height: 50px;
+  margin: 26px auto 0;
   background-color: ${colors.white};
   border-radius: 10px;
-  border-width: 1px;
   border: 1px solid #cee5f1;
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  padding: 0 24px;
 `;
 
 export const RankBox = styled.div`
@@ -155,22 +163,26 @@ export const Podium = styled.img`
 
 // other
 export const OtherListWrapper = styled.div`
-  width: 425px;
+  width: 100%;
+  max-width: 425px;
   height: 418px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   background-color: ${colors.B1};
   box-shadow: 0px 0px 10px 0px #0000000d;
   border: 1px solid ${colors.white};
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 0 24px;
 `;
 
 export const OtherListBox = styled.div`
-  width: 377px;
+  width: 100%;
+  max-width: 377px;
   height: 314px;
   margin-top: 28px;
-  margin-left: 24px;
-  margin-right: 24px;
   gap: 22px;
+  box-sizing: border-box;
 `;
 
 export const OtherUser = styled.div`
