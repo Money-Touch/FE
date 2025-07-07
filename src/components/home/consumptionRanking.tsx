@@ -1,6 +1,6 @@
 import * as S from "../../styles/home/home.style";
 import { useNavigate } from "react-router-dom";
-import type { UserRanking } from "../../types/home/ranking";
+import { mockRankingData } from "../../mocks/ranking/mockRankingData"; // mock data
 import { getRankChangeIcon } from "../../utils/home/getRankChangeIcon";
 import more from "../../assets/images/home/more.png";
 import medal1 from "../../assets/images/home/medal1.png";
@@ -16,31 +16,7 @@ function ConsumptionRanking() {
   };
 
   const medalImages = [medal1, medal2, medal3];
-
-  // mock data
-  const mockRankingData: UserRanking[] = [
-    {
-      id: 1,
-      name: "제이",
-      wiseCount: 100,
-      previousRank: 2,
-      profileImage: "",
-    },
-    {
-      id: 2,
-      name: "영이",
-      wiseCount: 92,
-      previousRank: 1,
-      profileImage: "",
-    },
-    {
-      id: 3,
-      name: "앨빈",
-      wiseCount: 87,
-      previousRank: 3,
-      profileImage: "",
-    },
-  ];
+  const top3 = mockRankingData.slice(0, 3);
 
   return (
     <S.RankingContainer>
@@ -50,7 +26,7 @@ function ConsumptionRanking() {
       </S.SectionHeader>
 
       <S.RankingSection>
-        {mockRankingData.map((user, index) => (
+        {top3.map((user, index) => (
           <S.RankingList key={user.id}>
             <S.Medal src={medalImages[index]} alt={`${index + 1}등`} />
             <S.ProfileAndName>

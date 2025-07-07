@@ -1,19 +1,13 @@
 import * as S from "../../styles/home/home.style";
 import { useNavigate } from "react-router-dom";
 import illust from "../../assets/images/home/illust.png";
-import type { ConsumptionWelcomeUser } from "../../types/home/user";
+import { mockUser } from "../../mocks/user/mockUser"; // mock data
 
 const ConsumptionWelcome = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate("/record");
-  };
-
-  // mock data
-  const mockUser: ConsumptionWelcomeUser = {
-    id: 1,
-    username: "라인",
   };
 
   return (
