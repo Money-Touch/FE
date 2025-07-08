@@ -1,5 +1,5 @@
 export interface AgreeItem {
-    id: number;
-    name: string;
-    checked: boolean;
+  id: number;
+  name: string;
+  checked: boolean;
 }

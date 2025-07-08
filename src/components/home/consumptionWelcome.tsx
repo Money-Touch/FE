@@ -1,13 +1,13 @@
-import * as S from "../../styles/home/home.style";
-import { useNavigate } from "react-router-dom";
-import illust from "../../assets/images/home/illust.png";
-import { mockUser } from "../../mocks/user/mockUser"; // mock data
+import * as S from '../../styles/home/home.style';
+import { useNavigate } from 'react-router-dom';
+import illust from '../../assets/images/home/illust.png';
+import { mockUser } from '../../mocks/user/mockUser'; // mock data
 
 const ConsumptionWelcome = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate("/record");
+    navigate('/record');
   };
 
   return (

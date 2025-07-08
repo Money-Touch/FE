@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-  SearchContainer, 
-  SearchInputWrapper, 
-  SearchInput, 
-  SearchButton 
+import {
+  SearchContainer,
+  SearchInputWrapper,
+  SearchInput,
+  SearchButton,
 } from '../../styles/feed/feed';
 import SearchIcon from '../../assets/images/feed/Search.png';
 
@@ -13,10 +13,10 @@ interface SearchBoxProps {
   onSearch: () => void;
 }
 
-export const SearchBox: React.FC<SearchBoxProps> = ({ 
-  searchTerm, 
-  onSearchChange, 
-  onSearch 
+export const SearchBox: React.FC<SearchBoxProps> = ({
+  searchTerm,
+  onSearchChange,
+  onSearch,
 }) => {
   return (
     <SearchContainer>

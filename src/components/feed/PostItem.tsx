@@ -1,17 +1,17 @@
 import React from 'react';
-import { 
-  PostCard, 
-  PostHeader, 
-  ProfileImage, 
-  AuthorInfo, 
-  AuthorName, 
+import {
+  PostCard,
+  PostHeader,
+  ProfileImage,
+  AuthorInfo,
+  AuthorName,
   PostImageContainer,
-  PostImage, 
-  PostActions, 
-  LikeButton, 
+  PostImage,
+  PostActions,
+  LikeButton,
   DislikeButton,
   DefaultProfile,
-  DefaultPostImage
+  DefaultPostImage,
 } from '../../styles/feed/feed';
 import LikeIcon from '../../assets/images/feed/Like.png';
 import DislikeIcon from '../../assets/images/feed/Dislike.png';
@@ -37,19 +37,16 @@ interface PostItemProps {
   onDislike: (postId: number) => void;
 }
 
-export const PostItem: React.FC<PostItemProps> = ({ 
-  post, 
-  onLike, 
-  onDislike 
+export const PostItem: React.FC<PostItemProps> = ({
+  post,
+  onLike,
+  onDislike,
 }) => {
   return (
     <PostCard>
       <PostHeader>
         {post.author.profileImage ? (
-          <ProfileImage
-            src={post.author.profileImage}
-            alt={post.author.name}
-          />
+          <ProfileImage src={post.author.profileImage} alt={post.author.name} />
         ) : (
           <DefaultProfile />
         )}
@@ -61,10 +58,7 @@ export const PostItem: React.FC<PostItemProps> = ({
 
       <PostImageContainer>
         {post.image ? (
-          <PostImage
-            src={post.image}
-            alt="게시물 이미지"
-          />
+          <PostImage src={post.image} alt="게시물 이미지" />
         ) : (
           <DefaultPostImage />
         )}

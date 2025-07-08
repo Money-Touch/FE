@@ -1,5 +1,5 @@
-import ListFooter from "./list-footer";
-import * as F from "../../styles/footer/footer";
+import ListFooter from './list-footer';
+import * as F from '../../styles/footer/footer';
 
 const Footer = () => {
   return (

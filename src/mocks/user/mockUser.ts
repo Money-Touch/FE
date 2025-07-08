@@ -1,6 +1,6 @@
-import type { ConsumptionWelcomeUser } from "../../types/home/user";
+import type { ConsumptionWelcomeUser } from '../../types/home/user';
 
 export const mockUser: ConsumptionWelcomeUser = {
   id: 11,
-  username: "라인",
+  username: '라인',
 };

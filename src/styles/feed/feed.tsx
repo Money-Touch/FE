@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import colors from "../common/colors";
+import styled from 'styled-components';
+import colors from '../common/colors';
 
 export const Container = styled.div`
   min-height: calc(100vh - 100px);
@@ -79,7 +79,9 @@ export const DropdownItem = styled.button<DropdownItemProps>`
   border: none;
   background: transparent;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;

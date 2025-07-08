@@ -4,7 +4,6 @@ about: Bug 발생 시 작성해주세요.
 title: "\U0001F41E [Bug] "
 labels: "\U0001F41E Bug"
 assignees: ''
-
 ---
 
 # 🐞 어떤 버그인가요?

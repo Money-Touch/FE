@@ -1,6 +1,6 @@
-import React from "react";
-import * as S from "../../../styles/home/home.style";
-import type { ProcessedDataItem } from "../../../types/home/spending";
+import React from 'react';
+import * as S from '../../../styles/home/home.style';
+import type { ProcessedDataItem } from '../../../types/home/spending';
 
 interface LegendProps {
   data: ProcessedDataItem[];
@@ -10,7 +10,7 @@ interface LegendProps {
 
 const Legend: React.FC<LegendProps> = ({ data, active, onClickItem }) => {
   const allPercentagesAreIntegers = data.every((item) =>
-    Number.isInteger(item.percentage)
+    Number.isInteger(item.percentage),
   );
 
   return (
@@ -19,7 +19,7 @@ const Legend: React.FC<LegendProps> = ({ data, active, onClickItem }) => {
         <S.LegendItemWrapper
           key={item.name}
           onClick={() => item.isOther && onClickItem?.(item)}
-          style={{ cursor: item.isOther ? "pointer" : "default" }}
+          style={{ cursor: item.isOther ? 'pointer' : 'default' }}
         >
           <S.LegendItemLeft>
             <S.LegendColorDot color={item.color} />
@@ -30,7 +30,7 @@ const Legend: React.FC<LegendProps> = ({ data, active, onClickItem }) => {
               ? allPercentagesAreIntegers
                 ? `${item.percentage}%`
                 : `${item.percentage.toFixed(1)}%`
-              : "0%"}
+              : '0%'}
           </S.LegendPercentage>
         </S.LegendItemWrapper>
       ))}

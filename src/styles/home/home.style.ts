@@ -1,5 +1,5 @@
-import colors from "../../styles/common/colors";
-import styled from "styled-components";
+import colors from '../../styles/common/colors';
+import styled from 'styled-components';
 
 // home.tsx
 export const Container = styled.div`

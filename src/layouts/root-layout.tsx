@@ -1,27 +1,27 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from 'react-router-dom';
 // import Header from "../components/header/header";
-import Footer from "../components/footer/footer";
+import Footer from '../components/footer/footer';
 
 const RootLayout = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const showFooterPaths = ["/home", "/money", "/feed", "/mypage"];
+  const showFooterPaths = ['/home', '/money', '/feed', '/mypage'];
   const shouldShowFooter = showFooterPaths.some((path) =>
-    currentPath.startsWith(path)
+    currentPath.startsWith(path),
   );
 
   return (
     <div
       className="pageContainer"
       style={{
-        position: "relative",
+        position: 'relative',
       }}
     >
       <div
         style={{
-          height: "100%",
-          overflowY: "auto",
+          height: '100%',
+          overflowY: 'auto',
         }}
       >
         <Outlet />
@@ -30,10 +30,10 @@ const RootLayout = () => {
       {shouldShowFooter && (
         <div
           style={{
-            position: "fixed",
+            position: 'fixed',
             bottom: 0,
             left: 0,
-            width: "100%",
+            width: '100%',
           }}
         >
           <Footer />

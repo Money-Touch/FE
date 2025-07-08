@@ -1,16 +1,16 @@
 import type {
   SpendingCategory,
   ProcessedDataItem,
-} from "../../types/home/spending";
-import colors from "../../styles/common/colors";
+} from '../../types/home/spending';
+import colors from '../../styles/common/colors';
 import {
   DEFAULT_CATEGORIES,
   DEFAULT_COLORS,
-} from "../../constants/defaultSpending";
+} from '../../constants/defaultSpending';
 
 export function processSpendingData(
   spendingData: SpendingCategory[],
-  hasSpending: boolean
+  hasSpending: boolean,
 ): ProcessedDataItem[] {
   const nonZeroData = spendingData.filter((item) => item.amount > 0);
 
@@ -62,7 +62,7 @@ export function processSpendingData(
     }));
 
     processedData.push({
-      name: "그 외",
+      name: '그 외',
       amount: otherAmount,
       percentage: +((otherAmount / totalAmount) * 100).toFixed(1),
       color: colors.mainColor2,
@@ -73,14 +73,14 @@ export function processSpendingData(
 
   const percentSum = processedData.reduce(
     (sum, item) => sum + item.percentage,
-    0
+    0,
   );
   const diff = +(100 - percentSum).toFixed(1);
   if (diff !== 0) {
     const maxIdx = processedData.reduce(
       (maxIdx, item, idx) =>
         item.amount > processedData[maxIdx].amount ? idx : maxIdx,
-      0
+      0,
     );
     processedData[maxIdx].percentage = +(
       processedData[maxIdx].percentage + diff

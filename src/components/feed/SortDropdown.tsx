@@ -5,7 +5,7 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownText,
-  ChevronIcon
+  ChevronIcon,
 } from '../../styles/feed/feed';
 import CaretDownIcon from '../../assets/images/feed/CaretDown.png';
 import CaretUpIcon from '../../assets/images/feed/CaretUp.png';
@@ -23,7 +23,7 @@ export const SortDropdown: React.FC<SortDropdownProps> = ({
   sortBy,
   onSortChange,
   isOpen,
-  onToggle
+  onToggle,
 }) => {
   const handleSortChange = (newSortBy: SortBy) => {
     onSortChange(newSortBy);
@@ -37,10 +37,7 @@ export const SortDropdown: React.FC<SortDropdownProps> = ({
           {sortBy === 'popular' ? '인기순' : '최신순'}
         </DropdownText>
         <ChevronIcon>
-          <img
-            src={isOpen ? CaretUpIcon : CaretDownIcon}
-            alt="정렬 아이콘"
-          />
+          <img src={isOpen ? CaretUpIcon : CaretDownIcon} alt="정렬 아이콘" />
         </ChevronIcon>
       </DropdownButton>
 

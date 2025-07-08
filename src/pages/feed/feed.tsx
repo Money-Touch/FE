@@ -32,22 +32,22 @@ const Feed: React.FC = () => {
     {
       id: 1,
       author: {
-        name: '홍길동'
+        name: '홍길동',
       },
       likes: 24,
       dislikes: 2,
       timestamp: new Date('2024-07-03T10:00:00'),
-      content: "123456"
+      content: '123456',
     },
     {
       id: 2,
       author: {
-        name: '김철수'
+        name: '김철수',
       },
       likes: 31,
       dislikes: 1,
       timestamp: new Date('2024-07-03T08:15:00'),
-      content: "abcdefg"
+      content: 'abcdefg',
     },
   ]);
 
@@ -61,12 +61,12 @@ const Feed: React.FC = () => {
   }, []);
 
   const filteredAndSortedPosts = useMemo(() => {
-    const filtered = posts.filter(post =>
-      post.author.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filtered = posts.filter((post) =>
+      post.author.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     if (sortBy === 'popular') {
-      filtered.sort((a, b) => (b.likes - b.dislikes) - (a.likes - a.dislikes));
+      filtered.sort((a, b) => b.likes - b.dislikes - (a.likes - a.dislikes));
     } else {
       filtered.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
     }
@@ -75,51 +75,57 @@ const Feed: React.FC = () => {
   }, [posts, searchTerm, sortBy]);
 
   const handleLike = (id: number) => {
-    setPostStates(prev => {
+    setPostStates((prev) => {
       const current = prev[id] || { liked: false, disliked: false };
       const wasLiked = current.liked;
 
-      const updatedPost = posts.find(p => p.id === id);
+      const updatedPost = posts.find((p) => p.id === id);
       if (!updatedPost) return prev;
 
-      const newPosts = posts.map(p => {
+      const newPosts = posts.map((p) => {
         if (p.id !== id) return p;
         return {
           ...p,
           likes: wasLiked ? p.likes - 1 : p.likes + 1,
-          dislikes: current.disliked && !wasLiked ? p.dislikes - 1 : p.dislikes
+          dislikes: current.disliked && !wasLiked ? p.dislikes - 1 : p.dislikes,
         };
       });
 
       setPosts(newPosts);
       return {
         ...prev,
-        [id]: { liked: !wasLiked, disliked: wasLiked ? current.disliked : false },
+        [id]: {
+          liked: !wasLiked,
+          disliked: wasLiked ? current.disliked : false,
+        },
       };
     });
   };
 
   const handleDislike = (id: number) => {
-    setPostStates(prev => {
+    setPostStates((prev) => {
       const current = prev[id] || { liked: false, disliked: false };
       const wasDisliked = current.disliked;
 
-      const updatedPost = posts.find(p => p.id === id);
+      const updatedPost = posts.find((p) => p.id === id);
       if (!updatedPost) return prev;
 
-      const newPosts = posts.map(p => {
+      const newPosts = posts.map((p) => {
         if (p.id !== id) return p;
         return {
           ...p,
           dislikes: wasDisliked ? p.dislikes - 1 : p.dislikes + 1,
-          likes: current.liked && !wasDisliked ? p.likes - 1 : p.likes
+          likes: current.liked && !wasDisliked ? p.likes - 1 : p.likes,
         };
       });
 
       setPosts(newPosts);
       return {
         ...prev,
-        [id]: { liked: wasDisliked ? current.liked : false, disliked: !wasDisliked },
+        [id]: {
+          liked: wasDisliked ? current.liked : false,
+          disliked: !wasDisliked,
+        },
       };
     });
   };
@@ -146,7 +152,7 @@ const Feed: React.FC = () => {
       <PostList>
         {loading
           ? Array.from({ length: 4 }).map((_, i) => <SkeletonPost key={i} />)
-          : filteredAndSortedPosts.map(post => (
+          : filteredAndSortedPosts.map((post) => (
               <PostItem
                 key={post.id}
                 post={post}
