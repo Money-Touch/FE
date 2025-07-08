@@ -2,7 +2,7 @@ import Agree from '../../../components/auth/signup/agree/agree';
 import Setting from '../../../components/auth/signup/setting/setting';
 import Profile from '../../../components/auth/signup/profile/profile';
 import Success from '../../../components/auth/signup/success/success';
-import AgreeData from '../../../utils/auth/signup/agreeData';
+import AgreeData from '../../../mocks/auth/signup/agreeData';
 import type { AgreeItem } from '../../../types/auth/signup/agree';
 import { useState } from 'react';
 import * as S from '../../../styles/auth/signup/signup.style';

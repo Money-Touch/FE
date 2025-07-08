@@ -3,7 +3,7 @@ import QnaForm from './qnaForm';
 import * as S from '../../../../styles/auth/signup/signup.style';
 import * as T from '../../../../styles/auth/test/test.style';
 import Header from '../../../header/header';
-import QnaData from '../../../../utils/auth/test/qnaData';
+import QnaData from '../../../../mocks/auth/test/qnaData';
 
 interface QnaProps {
   onBack: () => void;

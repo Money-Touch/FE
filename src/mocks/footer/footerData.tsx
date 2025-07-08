@@ -1,4 +1,4 @@
-import { loadImages } from './loadImages';
+import { loadImages } from '../../utils/footer/loadImages';
 
 const images = loadImages();
 

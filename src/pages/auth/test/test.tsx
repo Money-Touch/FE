@@ -4,7 +4,7 @@ import Mbti from '../../../components/auth/test/mbti/mbti';
 import Qna from '../../../components/auth/test/qna/qna';
 import Loading from '../../../components/auth/test/loading/loading';
 import Result from '../../../components/auth/test/result/result';
-import OnboardingData from '../../../utils/auth/test/onboardingData';
+import OnboardingData from '../../../mocks/auth/test/onboardingData';
 import type { OnboardingItem } from '../../../types/auth/test/onboarding';
 import { useState } from 'react';
 
