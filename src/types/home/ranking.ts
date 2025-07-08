@@ -3,5 +3,6 @@ export interface UserRanking {
   name: string;
   wiseCount: number;
   previousRank: number;
+  currentRank: number;
   profileImage?: string;
 }

@@ -90,6 +90,7 @@ export const SectionTitle = styled.div`
   font-size: 18px;
   line-height: 26px;
   letter-spacing: -3%;
+  margin-bottom: 8px;
 `;
 
 export const SectionHeader = styled.div`
