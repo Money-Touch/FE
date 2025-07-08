@@ -51,7 +51,7 @@ const Feed: React.FC = () => {
     },
   ]);
 
-  const [postStates, setPostStates] = useState<{
+  const [, setPostStates] = useState<{
     [key: number]: { liked: boolean; disliked: boolean };
   }>({});
 
