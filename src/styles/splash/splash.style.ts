@@ -1,4 +1,4 @@
-import colors from '../../styles/common/colors';
+import colors from '../common/colors';
 import styled, { keyframes } from 'styled-components';
 
 export const fadeUp = keyframes`

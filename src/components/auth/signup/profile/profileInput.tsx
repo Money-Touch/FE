@@ -1,4 +1,4 @@
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 import colors from '../../../../styles/common/colors';
 import Delete from '../../../../assets/images/auth/signup/delete.png';
 import { useFormContext, useFormState } from 'react-hook-form';

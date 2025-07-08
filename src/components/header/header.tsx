@@ -1,4 +1,4 @@
-import * as H from '../../styles/header/header';
+import * as H from '../../styles/header/header.style';
 import LeftArrow from '../../assets/images/header/leftArrow.png';
 import { useNavigate } from 'react-router-dom';
 

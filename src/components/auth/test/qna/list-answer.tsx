@@ -1,5 +1,5 @@
 import ItemAnswer from './item-answer';
-import * as T from '../../../../styles/auth/test/test';
+import * as T from '../../../../styles/auth/test/test.style';
 
 interface ListAnswerProps {
   answers: string[];

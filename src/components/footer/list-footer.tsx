@@ -1,4 +1,4 @@
-import * as F from '../../styles/footer/footer';
+import * as F from '../../styles/footer/footer.style';
 import ItemFooter from './item-footer';
 import FooterData from '../../utils/footer/footerData';
 

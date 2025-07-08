@@ -8,7 +8,7 @@ import {
   useVerifyEmailCode,
   useSignUp,
 } from '../../../../hooks/auth/signup/useSettingMutation';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 
 interface SettingFormProps {
   onNext: () => void;

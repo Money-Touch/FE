@@ -1,6 +1,6 @@
 import Header from '../../../header/header';
 import SettingForm from './settingForm';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 
 interface SettingProps {
   onNext: () => void;

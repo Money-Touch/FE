@@ -2,7 +2,7 @@ import colors from '../../../../styles/common/colors';
 import SettingInputIcon from './settingInputIcon';
 import type { SettingInputProps } from '../../../../types/auth/signup/setting';
 import { useSettingInput } from '../../../../hooks/auth/signup/useSettingInput';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 
 const SettingInput = ({
   name,

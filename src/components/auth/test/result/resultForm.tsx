@@ -1,7 +1,7 @@
 import colors from '../../../../styles/common/colors';
 import type { ResultProps } from '../../../../types/auth/test/result';
-import * as S from '../../../../styles/auth/signup/signup';
-import * as T from '../../../../styles/auth/test/test';
+import * as S from '../../../../styles/auth/signup/signup.style';
+import * as T from '../../../../styles/auth/test/test.style';
 
 interface ResultFormProps {
   data?: ResultProps;

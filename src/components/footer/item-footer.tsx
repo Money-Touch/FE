@@ -1,5 +1,5 @@
 import type { FooterItem } from '../../types/footer/footer';
-import * as F from '../../styles/footer/footer';
+import * as F from '../../styles/footer/footer.style';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 interface ItemProps {

@@ -1,4 +1,4 @@
-import * as L from '../../../styles/auth/login/login';
+import * as L from '../../../styles/auth/login/login.style';
 import NoShow from '../../../assets/images/auth/login/noShow.png';
 import Show from '../../../assets/images/auth/login/show.png';
 import usePasswordToggle from '../../../hooks/auth/login/usePasswordToggle';

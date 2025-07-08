@@ -1,5 +1,5 @@
 import { ClipLoader } from 'react-spinners';
-import * as T from '../../../../styles/auth/test/test';
+import * as T from '../../../../styles/auth/test/test.style';
 import colors from '../../../../styles/common/colors';
 
 const Spinner = () => {

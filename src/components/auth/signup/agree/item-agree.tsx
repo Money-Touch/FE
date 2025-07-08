@@ -1,7 +1,7 @@
 import type { AgreeItem } from '../../../../types/auth/signup/agree';
 import Check from '../../../../assets/images/auth/signup/check.png';
 import CheckClick from '../../../../assets/images/auth/signup/checkClick.png';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 import colors from '../../../../styles/common/colors';
 
 interface ItemAgreeProps {

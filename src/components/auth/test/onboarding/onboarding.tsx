@@ -1,11 +1,11 @@
-import * as T from '../../../../styles/auth/test/test';
+import * as T from '../../../../styles/auth/test/test.style';
 import colors from '../../../../styles/common/colors';
 import ListOnboarding from './list-onboarding';
 import type { OnboardingItem } from '../../../../types/auth/test/onboarding';
 import { useOnboarding } from '../../../../hooks/auth/test/useOnboarding';
 import { useOnboardingMutation } from '../../../../hooks/auth/test/useOnboardingMutation';
 import { getOnboarding } from '../../../../utils/auth/test/getOnboarding';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 
 interface OnboardingProps {
   onNext: () => void;

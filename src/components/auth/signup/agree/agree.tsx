@@ -1,6 +1,6 @@
 import Header from '../../../header/header';
 import AgreeForm from './agreeForm';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 import { useState, useEffect } from 'react';
 import type { AgreeItem } from '../../../../types/auth/signup/agree';
 import { useAgreeForm } from '../../../../hooks/auth/signup/useAgreeForm';

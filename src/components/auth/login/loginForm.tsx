@@ -1,4 +1,4 @@
-import * as L from '../../../styles/auth/login/login';
+import * as L from '../../../styles/auth/login/login.style';
 import { useState } from 'react';
 import LoginInput from './loginInput';
 import { useLoginMutation } from '../../../hooks/auth/login/useLoginMutation';

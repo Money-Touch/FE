@@ -1,6 +1,6 @@
 import ItemQna from './item-qna';
 import type { QnaItem } from '../../../../types/auth/test/qna';
-import * as T from '../../../../styles/auth/test/test';
+import * as T from '../../../../styles/auth/test/test.style';
 
 interface ListQnaProps {
   qnaList: {

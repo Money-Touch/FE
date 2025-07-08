@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import * as T from '../../../../styles/auth/test/test';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as T from '../../../../styles/auth/test/test.style';
+import * as S from '../../../../styles/auth/signup/signup.style';
 import QnaData from '../../../../utils/auth/test/qnaData';
 import type { QnaItem } from '../../../../types/auth/test/qna';
 import { getQnaResult } from '../../../../utils/auth/test/getQnaResult';

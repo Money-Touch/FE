@@ -1,4 +1,4 @@
-import * as L from '../../../styles/auth/login/login';
+import * as L from '../../../styles/auth/login/login.style';
 import Logo from '../../../assets/images/auth/login/logo.png';
 import LoginForm from '../../../components/auth/login/loginForm';
 import ListMenu from '../../../components/auth/login/menu/list-menu';

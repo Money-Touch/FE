@@ -1,5 +1,5 @@
 import ListAnswer from './list-answer';
-import * as T from '../../../../styles/auth/test/test';
+import * as T from '../../../../styles/auth/test/test.style';
 import colors from '../../../../styles/common/colors';
 
 interface ItemQnaProps {

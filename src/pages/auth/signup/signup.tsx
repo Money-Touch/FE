@@ -5,7 +5,7 @@ import Success from '../../../components/auth/signup/success/success';
 import AgreeData from '../../../utils/auth/signup/agreeData';
 import type { AgreeItem } from '../../../types/auth/signup/agree';
 import { useState } from 'react';
-import * as S from '../../../styles/auth/signup/signup';
+import * as S from '../../../styles/auth/signup/signup.style';
 
 const Signup = () => {
   const [step, setStep] = useState<'agree' | 'setting' | 'profile' | 'success'>(

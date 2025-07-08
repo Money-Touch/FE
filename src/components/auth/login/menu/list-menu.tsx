@@ -1,4 +1,4 @@
-import * as L from '../../../../styles/auth/login/login';
+import * as L from '../../../../styles/auth/login/login.style';
 import MenuData from '../../../../utils/auth/login/menuData';
 import ItemMenu from './item-menu';
 

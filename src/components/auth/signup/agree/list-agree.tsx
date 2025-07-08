@@ -1,6 +1,6 @@
 import ItemAgree from './item-agree';
 import type { AgreeItem } from '../../../../types/auth/signup/agree';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 
 interface ListAgreeProps {
   agreeList: AgreeItem[];

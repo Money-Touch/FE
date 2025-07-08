@@ -1,4 +1,4 @@
-import * as L from '../../../../styles/auth/login/login';
+import * as L from '../../../../styles/auth/login/login.style';
 import KakaoIcon from '../../../../assets/images/auth/login/kakaoIcon.png';
 import { useEffect } from 'react';
 import { initKakao } from '../../../../utils/auth/login/kakao/initKakao';

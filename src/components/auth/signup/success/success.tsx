@@ -1,4 +1,4 @@
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SuccessIcon from '../../../../assets/images/auth/signup/successIcon.png';

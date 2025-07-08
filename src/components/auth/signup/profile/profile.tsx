@@ -1,4 +1,4 @@
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 import ProfileForm from './profileForm';
 
 interface ProfileProps {

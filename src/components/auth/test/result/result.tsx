@@ -1,4 +1,4 @@
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 import { useNavigate } from 'react-router-dom';
 import { useResultQuery } from '../../../../hooks/auth/test/useResultQuery';
 import ResultForm from './resultForm';

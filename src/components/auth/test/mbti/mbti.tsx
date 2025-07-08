@@ -1,6 +1,6 @@
 import Header from '../../../header/header';
-import * as S from '../../../../styles/auth/signup/signup';
-import * as T from '../../../../styles/auth/test/test';
+import * as S from '../../../../styles/auth/signup/signup.style';
+import * as T from '../../../../styles/auth/test/test.style';
 import { useNavigate } from 'react-router-dom';
 
 interface MbtiProps {

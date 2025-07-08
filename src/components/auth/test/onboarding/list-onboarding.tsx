@@ -1,6 +1,6 @@
 import ItemOnboarding from './item-onboarding';
 import type { OnboardingItem } from '../../../../types/auth/test/onboarding';
-import * as T from '../../../../styles/auth/test/test';
+import * as T from '../../../../styles/auth/test/test.style';
 
 interface ListOnboardingProps {
   onboardingList: OnboardingItem[];

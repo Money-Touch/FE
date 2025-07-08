@@ -134,7 +134,6 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .pageContainer {
-        /* 원래는 width: 360px여야 하는데, f12 기준으로 425px가 맞음*/
         width: 425px;
         height: 100vh;
     }

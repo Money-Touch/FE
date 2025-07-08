@@ -1,4 +1,4 @@
-import * as L from '../../../../styles/auth/login/login';
+import * as L from '../../../../styles/auth/login/login.style';
 import type { MenuItem } from '../../../../types/auth/login/menu';
 import { useNavigate } from 'react-router-dom';
 

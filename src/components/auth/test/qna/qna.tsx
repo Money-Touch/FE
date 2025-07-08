@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import QnaForm from './qnaForm';
-import * as S from '../../../../styles/auth/signup/signup';
-import * as T from '../../../../styles/auth/test/test';
+import * as S from '../../../../styles/auth/signup/signup.style';
+import * as T from '../../../../styles/auth/test/test.style';
 import Header from '../../../header/header';
 import QnaData from '../../../../utils/auth/test/qnaData';
 

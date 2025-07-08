@@ -1,4 +1,4 @@
-import * as S from '../../../styles/auth/signup/signup';
+import * as S from '../../../styles/auth/signup/signup.style';
 import Onboarding from '../../../components/auth/test/onboarding/onboarding';
 import Mbti from '../../../components/auth/test/mbti/mbti';
 import Qna from '../../../components/auth/test/qna/qna';

@@ -1,7 +1,7 @@
 import Delete from '../../../../assets/images/auth/signup/delete.png';
 import Show from '../../../../assets/images/auth/login/show.png';
 import NoShow from '../../../../assets/images/auth/login/noShow.png';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 
 interface Props {
   hasButton: boolean;

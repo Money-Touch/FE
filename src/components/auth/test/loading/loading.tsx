@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import * as S from '../../../../styles/auth/signup/signup';
+import * as S from '../../../../styles/auth/signup/signup.style';
 import Spinner from './spinner';
 
 interface LoadingProps {
