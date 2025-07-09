@@ -5,81 +5,52 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #e0fadd 0%, #cde3f3 56.31%);
-  max-width: 425px;
+  background: linear-gradient(180deg, #e0fadd 0%, ${colors.M2} 56.31%);
+  max-width: 42.5rem;
   margin: 0 auto;
   box-sizing: border-box;
 `;
 
 // header
 export const HeaderWrapper = styled.div`
-  padding-top: 24px;
-`;
-
-export const Header = styled.div`
-  width: 100%;
-  max-width: 425px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin: 0 auto;
-  padding: 0 24px;
-  box-sizing: border-box;
-`;
-
-export const BackIcon = styled.img`
-  position: absolute;
-  left: 17px;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-`;
-
-export const Title = styled.h2`
-  font-weight: 700;
-  font-style: Bold;
-  font-size: 18px;
-  color: ${colors.G1};
+  padding: 0 2.4rem;
 `;
 
 // rank box
 export const MyRankBox = styled.div`
   width: 100%;
-  max-width: 377px;
-  height: 50px;
-  min-height: 50px;
-  margin: 26px auto 0;
-  background-color: ${colors.white};
-  border-radius: 10px;
-  border: 1px solid #cee5f1;
-  backdrop-filter: blur(20px);
+  max-width: 37.7rem;
+  height: 5rem;
+  min-height: 5rem;
+  margin: 2.6rem auto 0;
+  background: #ffffffcc;
+  border-radius: 1rem;
+  backdrop-filter: blur(2rem);
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  padding: 0 24px;
+  padding: 0 2.4rem;
 `;
 
 export const RankBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
 `;
 
 export const ProfileImg = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
   object-fit: cover;
   border-radius: 50%;
 `;
 
 export const ProfileDes = styled.div`
   font-weight: 500;
-  font-size: 14px;
+  font-size: 1.4rem;
   color: ${colors.G1};
-  line-height: 22px;
+  line-height: 2.2rem;
 `;
 
 // top3
@@ -87,8 +58,8 @@ export const Top3Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 22px;
-  margin-top: 42px;
+  gap: 2.2rem;
+  margin-top: 4.2rem;
 `;
 
 export const TopUser = styled.div`
@@ -103,21 +74,21 @@ export const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 52px;
-  height: 76px;
-  margin-bottom: 4px;
+  width: 5.2rem;
+  height: 7.6rem;
+  margin-bottom: 0.4rem;
 `;
 
 export const Medal = styled.img`
-  width: 28px;
-  height: 28px;
+  width: 2.8rem;
+  height: 2.8rem;
   position: absolute;
 `;
 
 export const Profile = styled.img`
-  width: 52px;
-  height: 52px;
-  margin-top: 24px;
+  width: 5.2rem;
+  height: 5.2rem;
+  margin-top: 2.4rem;
 `;
 
 export const InfoWrapper = styled.div`
@@ -125,63 +96,62 @@ export const InfoWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: 5.2rem;
+  height: 5.2rem;
 `;
 
 export const UserName = styled.div`
-  width: 52px;
-  height: 24px;
+  width: 5.2rem;
+  height: 2.4rem;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1.6rem;
   text-align: center;
   color: ${colors.G1};
 `;
 
 export const Count = styled.div`
-  width: 52px;
-  height: 26px;
-  gap: 10px;
-  border-radius: 100px;
-  border-width: 1px;
-  padding: 5px;
+  width: 5.2rem;
+  height: 2.6rem;
+  gap: 1rem;
+  border-radius: 10rem;
+  border-width: 0.1rem;
+  padding: 0.5rem;
   background: #ffffff99;
-  border: 1px solid #cee5f1;
-  backdrop-filter: blur(20px);
+  border: 0.1rem solid #cee5f1;
+  backdrop-filter: blur(2rem);
   font-weight: 500;
-  font-size: 12px;
+  font-size: 1.2rem;
   text-align: center;
   color: ${colors.G3};
 `;
 
 export const Podium = styled.img`
-  width: 70px;
+  width: 7rem;
   height: auto;
-  margin-top: 3px;
+  margin-top: 0.3rem;
   z-index: 0;
 `;
 
 // other
 export const OtherListWrapper = styled.div`
   width: 100%;
-  max-width: 425px;
-  height: 418px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  max-width: 42.5rem;
+  height: 41.8rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   background-color: ${colors.B1};
-  box-shadow: 0px 0px 10px 0px #0000000d;
-  border: 1px solid ${colors.white};
+  box-shadow: 0 0 1rem 0 #0000000d;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 0 24px;
+  padding: 0 2.4rem;
 `;
 
 export const OtherListBox = styled.div`
   width: 100%;
-  max-width: 377px;
-  height: 314px;
-  margin-top: 28px;
-  gap: 22px;
+  max-width: 37.7rem;
+  height: 31.4rem;
+  margin-top: 2.8rem;
+  gap: 2.2rem;
   box-sizing: border-box;
 `;
 
@@ -189,55 +159,54 @@ export const OtherUser = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 26px;
-
-  line-height: 22px;
-  margin-bottom: 22px;
+  height: 2.6rem;
+  line-height: 2.2rem;
+  margin-bottom: 2.2rem;
   color: ${colors.G1};
 `;
 
 export const RankNumber = styled.div`
-  width: 9px;
+  width: 0.9rem;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 1.4rem;
 `;
 
 export const RowProfile = styled.img`
-  width: 26px;
-  height: 26px;
+  width: 2.6rem;
+  height: 2.6rem;
   object-fit: cover;
-  margin-left: 16px;
+  margin-left: 1.6rem;
 `;
 
 export const RowName = styled.div`
   flex: 1;
-  margin-left: 10px;
-  width: 24px;
+  margin-left: 1rem;
+  width: 2.4rem;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 1.4rem;
+  line-height: 2.2rem;
 `;
 
 export const RowRight = styled.div`
   display: flex;
   align-items: center;
-  line-height: 22px;
-  gap: 1px;
-  width: 40px;
-  height: 16px;
+  line-height: 2.2rem;
+  gap: 0.1rem;
+  width: 4rem;
+  height: 1.6rem;
 `;
 
 export const RowCount = styled.div`
-  width: 28px;
-  height: 12px;
+  width: 2.8rem;
+  height: 1.2rem;
   font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
   text-align: right;
 `;
 
 export const RankChangeIcon = styled.img`
-  width: 12px;
-  height: 12px;
-  margin-top: 5px;
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-top: 0.5rem;
 `;

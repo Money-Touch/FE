@@ -14,12 +14,56 @@ function ConsumptionRoutine() {
 
   // mock data
   const mockRoutineData: UserRoutine[] = [
-    { id: 1, title: '50만원으로 한 달 살기 루틴', icon: routine_t },
-    { id: 2, title: '배달 끊고 집밥 먹기 예산', icon: routine_t },
-    { id: 3, title: '커피값을 아끼자', icon: routine_t },
-    { id: 4, title: '쇼핑은 10만원만', icon: routine_t },
-    { id: 5, title: '줄줄 새는 고정비 확인하기', icon: routine_t },
+    {
+      id: 1,
+      title: '50만원으로 한 달 살기 루틴',
+      icon: routine_t,
+      startDate: '2025-07-09',
+      views: 300,
+    },
+    {
+      id: 2,
+      title: '배달 끊고 집밥 먹기 예산',
+      icon: routine_t,
+      startDate: '2025-07-09',
+      views: 200,
+    },
+    {
+      id: 3,
+      title: '커피값을 아끼자',
+      icon: routine_t,
+      startDate: '2025-07-07',
+      views: 100,
+    },
+    {
+      id: 4,
+      title: '쇼핑은 10만원만',
+      icon: routine_t,
+      startDate: '2025-07-06',
+      views: 10,
+    },
+    {
+      id: 5,
+      title: '줄줄 새는 고정비 확인하기',
+      icon: routine_t,
+      startDate: '2025-07-01',
+      views: 50,
+    },
   ];
+
+  const isToday = (dateStr: string) => {
+    const today = new Date();
+    const date = new Date(dateStr);
+    return (
+      today.getFullYear() === date.getFullYear() &&
+      today.getMonth() === date.getMonth() &&
+      today.getDate() === date.getDate()
+    );
+  };
+
+  const sortedRoutineData = [...mockRoutineData].sort(
+    (a, b) => b.views - a.views,
+  );
 
   return (
     <S.RoutineContainer>
@@ -28,10 +72,13 @@ function ConsumptionRoutine() {
         <S.MoreIcon src={more} alt="more" onClick={handleMoreClick} />
       </S.SectionHeader>
       <S.RoutineSection>
-        {mockRoutineData.map((routine) => (
+        {sortedRoutineData.map((routine) => (
           <S.RoutineCard key={routine.id}>
             <S.RoutineIcon src={routine.icon} alt="routine" />
-            <S.RoutineText>{routine.title}</S.RoutineText>
+            <S.RoutineText>
+              {routine.title}
+              {isToday(routine.startDate) && <S.NewBadge>NEW</S.NewBadge>}
+            </S.RoutineText>
             <S.RoutineArrow
               src={rightArrow}
               alt="arrow"

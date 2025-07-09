@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { SpendingCategory } from '../../types/home/spending';
+import type { SpendingCategory } from '../../types/home/statistics';
 import { processSpendingData } from '../../utils/home/processSpendingData';
 
 export function useSpendingData(spendingData: SpendingCategory[]) {

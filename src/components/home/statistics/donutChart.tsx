@@ -17,7 +17,7 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
   const baserotateOffset = 35;
 
   const noSpending = data.every((item) => item.amount === 0);
-  const rotateOffset = noSpending ? baserotateOffset - 53.5 : baserotateOffset;
+  const rotateOffset = noSpending ? baserotateOffset - 53 : baserotateOffset;
 
   const filteredData = [...data]
     .filter((item) => item.percentage > 0)

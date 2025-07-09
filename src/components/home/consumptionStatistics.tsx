@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type {
   SpendingCategory,
   ProcessedDataItem,
-} from '../../types/home/spending';
+} from '../../types/home/statistics';
 import { useSpendingData } from '../../hooks/home/useSpendingData';
 import DonutChart from './statistics/donutChart';
 import Legend from './statistics/legend';

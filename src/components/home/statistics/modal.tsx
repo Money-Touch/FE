@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from '../../../styles/home/modal.style';
-import type { ProcessedDataItem } from '../../../types/home/spending';
+import type { ProcessedDataItem } from '../../../types/home/statistics';
 
 interface ModalProps {
   items: ProcessedDataItem[];

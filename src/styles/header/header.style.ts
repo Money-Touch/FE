@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import colors from '../common/colors';
 
 export const HeaderContainer = styled.div`
   width: 100%;
@@ -12,4 +13,13 @@ export const LeftArrowImg = styled.img`
   width: 0.98rem;
   height: 1.78rem;
   cursor: pointer;
+`;
+
+export const Title = styled.div`
+  flex: 1;
+  text-align: center;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 1.8rem;
+  color: ${colors.G1};
 `;

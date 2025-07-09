@@ -1,7 +1,7 @@
 import type {
   SpendingCategory,
   ProcessedDataItem,
-} from '../../types/home/spending';
+} from '../../types/home/statistics';
 import colors from '../../styles/common/colors';
 import {
   DEFAULT_CATEGORIES,

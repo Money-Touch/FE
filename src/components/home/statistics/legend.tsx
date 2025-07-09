@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from '../../../styles/home/home.style';
-import type { ProcessedDataItem } from '../../../types/home/spending';
+import type { ProcessedDataItem } from '../../../types/home/statistics';
 
 interface LegendProps {
   data: ProcessedDataItem[];
