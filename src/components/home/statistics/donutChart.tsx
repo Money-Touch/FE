@@ -24,7 +24,12 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
     .reverse();
 
   return (
-    <svg width="135" height="135" viewBox="0 0 135 135">
+    <svg
+      viewBox="0 0 135 135"
+      width="100%"
+      height="100%"
+      preserveAspectRatio="xMidYMid meet"
+    >
       {filteredData.map((item, index) => {
         let startAngle = 0;
         for (let i = 0; i < index; i++) {
