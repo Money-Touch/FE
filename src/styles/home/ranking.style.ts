@@ -24,6 +24,7 @@ export const MyRankBox = styled.div`
   min-height: 5rem;
   margin: 2.6rem auto 0;
   background: #ffffffcc;
+  border: 1px solid #cee5f1;
   border-radius: 1rem;
   backdrop-filter: blur(2rem);
   display: flex;

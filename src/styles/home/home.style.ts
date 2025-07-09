@@ -5,7 +5,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: relative;
   padding-top: 2.4rem;
-  padding-bottom: 11rem;
+  padding-bottom: 13rem;
+  background-color: ${colors.B2};
 `;
 
 export const Header = styled.div`
@@ -67,7 +68,7 @@ export const WelcomeContainer = styled.div`
     width: 17.6rem;
     height: 12.6rem;
     top: 3.6rem;
-    left: 20.7rem;
+    left: 19.7rem;
     background: linear-gradient(
       234.4deg,
       ${colors.white} 8.28%,
@@ -310,7 +311,7 @@ export const Medal = styled.img`
 export const ProfileAndName = styled.div`
   display: flex;
   align-items: center;
-  gap: 1.6rem;
+  gap: 1rem;
   flex: 1;
 `;
 
