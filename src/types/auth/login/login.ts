@@ -5,7 +5,8 @@ export interface UserInfo {
 }
 
 // 일반 로그인
-export interface LoginInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export interface LoginInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
 export interface LoginRequest {
   email: string;
   password: string;

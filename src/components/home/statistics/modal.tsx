@@ -1,6 +1,6 @@
-import React from "react";
-import * as S from "../../../styles/home/modal.style";
-import type { ProcessedDataItem } from "../../../types/home/spending";
+import React from 'react';
+import * as S from '../../../styles/home/modal.style';
+import type { ProcessedDataItem } from '../../../types/home/spending';
 
 interface ModalProps {
   items: ProcessedDataItem[];
@@ -9,7 +9,7 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
   const allPercentagesAreIntegers = items.every((item) =>
-    Number.isInteger(item.percentage)
+    Number.isInteger(item.percentage),
   );
 
   return (

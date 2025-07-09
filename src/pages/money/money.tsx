@@ -1,9 +1,5 @@
 const Money = () => {
-    return (
-        <>
-            money
-        </>
-    )
-}
+  return <>money</>;
+};
 
 export default Money;

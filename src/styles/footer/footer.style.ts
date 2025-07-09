@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import colors from "../common/colors";
+import styled from 'styled-components';
+import colors from '../common/colors';
 
 // footer.tsx
 export const FooterContainer = styled.div`
-  position: "fixed";
+  position: 'fixed';
   bottom: 0;
   background: ${colors.white};
   width: 100%;

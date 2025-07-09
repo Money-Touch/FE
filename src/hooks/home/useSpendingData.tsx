@@ -1,11 +1,11 @@
-import { useMemo } from "react";
-import type { SpendingCategory } from "../../types/home/spending";
-import { processSpendingData } from "../../utils/home/processSpendingData";
+import { useMemo } from 'react';
+import type { SpendingCategory } from '../../types/home/spending';
+import { processSpendingData } from '../../utils/home/processSpendingData';
 
 export function useSpendingData(spendingData: SpendingCategory[]) {
   const totalAmount = useMemo(
     () => spendingData.reduce((sum, item) => sum + item.amount, 0),
-    [spendingData]
+    [spendingData],
   );
   const hasSpending = totalAmount > 0;
 
@@ -17,7 +17,7 @@ export function useSpendingData(spendingData: SpendingCategory[]) {
     if (!hasSpending) return null;
     return processedData.reduce(
       (max, item) => (item.amount > max.amount ? item : max),
-      processedData[0]
+      processedData[0],
     );
   }, [processedData, hasSpending]);
 

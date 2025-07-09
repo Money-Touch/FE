@@ -1,18 +1,18 @@
-import * as S from "../../styles/home/home.style";
-import { useNavigate } from "react-router-dom";
-import { mockRankingData } from "../../mocks/ranking/mockRankingData"; // mock data
-import { getRankChangeIcon } from "../../utils/home/getRankChangeIcon";
-import more from "../../assets/images/home/more.png";
-import medal1 from "../../assets/images/home/medal1.png";
-import medal2 from "../../assets/images/home/medal2.png";
-import medal3 from "../../assets/images/home/medal3.png";
-import profile_t from "../../assets/images/home/profile_t.png";
+import * as S from '../../styles/home/home.style';
+import { useNavigate } from 'react-router-dom';
+import { mockRankingData } from '../../mocks/ranking/mockRankingData'; // mock data
+import { getRankChangeIcon } from '../../utils/home/getRankChangeIcon';
+import more from '../../assets/images/home/more.png';
+import medal1 from '../../assets/images/home/medal1.png';
+import medal2 from '../../assets/images/home/medal2.png';
+import medal3 from '../../assets/images/home/medal3.png';
+import profile_t from '../../assets/images/home/profile_t.png';
 
 function ConsumptionRanking() {
   const navigate = useNavigate();
 
   const handleMoreClick = () => {
-    navigate("/ranking");
+    navigate('/ranking');
   };
 
   const medalImages = [medal1, medal2, medal3];

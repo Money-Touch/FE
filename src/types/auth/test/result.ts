@@ -1,5 +1,5 @@
 export interface ResultProps {
-    name: string;
-    email: string;
-    companyName: string;
+  name: string;
+  email: string;
+  companyName: string;
 }

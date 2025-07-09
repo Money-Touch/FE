@@ -1,15 +1,15 @@
-import { useMutation } from "@tanstack/react-query";
-import { API } from "../../../apis/axios";
+import { useMutation } from '@tanstack/react-query';
+import { API } from '../../../apis/axios';
 
 interface SubmitPayload {
-    answers: { id: number; answer: string }[];
+  answers: { id: number; answer: string }[];
 }
 
 const submitOnboarding = async (payload: SubmitPayload) => {
-    const response = await API.post("/users", payload);
-    return response.data;
+  const response = await API.post('/users', payload);
+  return response.data;
 };
 
 export const useOnboardingMutation = () => {
-    return useMutation({ mutationFn: submitOnboarding });
+  return useMutation({ mutationFn: submitOnboarding });
 };

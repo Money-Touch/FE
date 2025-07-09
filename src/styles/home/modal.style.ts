@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import colors from "../common/colors";
+import styled from 'styled-components';
+import colors from '../common/colors';
 
 export const ModalBackdrop = styled.div`
   position: absolute;

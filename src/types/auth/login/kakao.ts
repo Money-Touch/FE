@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-    interface Window {
-        Kakao: any;
-    }
+  interface Window {
+    Kakao: any;
+  }
 }

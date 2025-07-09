@@ -1,4 +1,4 @@
-import * as T from "../../../../styles/auth/test/test";
+import * as T from '../../../../styles/auth/test/test.style';
 
 interface ItemAnswerProps {
   answer: string;
@@ -7,11 +7,11 @@ interface ItemAnswerProps {
 }
 
 const ItemAnswer = ({ answer, selected, onClick }: ItemAnswerProps) => {
-    return (
-        <T.AnswerButton selected={selected} onClick={onClick}>
-            {answer}
-        </T.AnswerButton>
-    );
+  return (
+    <T.AnswerButton selected={selected} onClick={onClick}>
+      {answer}
+    </T.AnswerButton>
+  );
 };
 
 export default ItemAnswer;

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface DonutChartProps {
   data: {
@@ -56,8 +56,8 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
           `A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x2} ${y2}`,
           `L ${x3} ${y3}`,
           `A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x4} ${y4}`,
-          "Z",
-        ].join(" ");
+          'Z',
+        ].join(' ');
 
         return (
           <path

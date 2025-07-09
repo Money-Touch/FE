@@ -1,6 +1,6 @@
-import * as S from "../../../styles/home/ranking.style";
-import profile_t from "../../../assets/images/home/profile_t.png";
-import type { UserRanking } from "../../../types/home/ranking";
+import * as S from '../../../styles/home/ranking.style';
+import profile_t from '../../../assets/images/home/profile_t.png';
+import type { UserRanking } from '../../../types/home/ranking';
 
 interface TopUserCardProps {
   user: UserRanking;

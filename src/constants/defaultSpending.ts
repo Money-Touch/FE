@@ -1,11 +1,11 @@
-import colors from "../styles/common/colors";
+import colors from '../styles/common/colors';
 
 export const DEFAULT_CATEGORIES = [
-  "배달/외식",
-  "교통",
-  "패션/쇼핑",
-  "카페",
-  "기타",
+  '배달/외식',
+  '교통',
+  '패션/쇼핑',
+  '카페',
+  '기타',
 ];
 
 export const DEFAULT_COLORS = [

@@ -1,4 +1,4 @@
 export interface ProfileFormPayload {
-    nickname: string;
-    profileImage?: File;
+  nickname: string;
+  profileImage?: File;
 }
