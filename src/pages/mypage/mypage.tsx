@@ -1,9 +1,5 @@
 const Mypage = () => {
-    return (
-        <>
-            mypage
-        </>
-    )
-}
+  return <>mypage</>;
+};
 
 export default Mypage;

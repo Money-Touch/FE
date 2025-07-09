@@ -1,10 +1,9 @@
 ---
-name: "✨ Feature Template"
+name: '✨ Feature Template'
 about: Feature 작업 상황을 작성해주세요..
-title: "✨ [Feature] "
-labels: "✨ Feature"
+title: '✨ [Feature] '
+labels: '✨ Feature'
 assignees: ''
-
 ---
 
 ## 📄 이슈 내용

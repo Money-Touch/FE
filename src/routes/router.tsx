@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../layouts/root-layout';
 import Splash from '../components/splash/splash';
-import LoginPage from "../pages/auth/login/login";
+import LoginPage from '../pages/auth/login/login';
 import KakaoCallbackPage from '../pages/auth/login/kakaoCallback';
 import SignupPage from '../pages/auth/signup/signup';
 import TestPage from "../pages/auth/test/test";
@@ -14,6 +14,7 @@ import FixedCostPage from '../pages/money/fixedcost';
 import FeedPage from "../pages/feed/feed";
 import MypagePage from "../pages/mypage/mypage";
 import NotFoundPage from "../pages/notFound/notFound";
+import RankingPage from '../pages/home/ranking';
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
       {
         path: 'mypage',
         element: <MypagePage />,
+      },
+      {
+        path: 'ranking',
+        element: <RankingPage />,
       },
     ],
   },

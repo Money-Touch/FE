@@ -1,9 +1,5 @@
 const NotFound = () => {
-    return (
-        <>
-            notFound
-        </>
-    )
-}
+  return <>notFound</>;
+};
 
 export default NotFound;
