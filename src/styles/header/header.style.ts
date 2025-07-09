@@ -7,6 +7,7 @@ export const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 2.4rem;
+  position: relative;
 `;
 
 export const LeftArrowImg = styled.img`
@@ -16,10 +17,10 @@ export const LeftArrowImg = styled.img`
 `;
 
 export const Title = styled.div`
-  flex: 1;
-  text-align: center;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-weight: 700;
-  font-style: Bold;
   font-size: 1.8rem;
   color: ${colors.G1};
 `;
