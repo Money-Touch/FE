@@ -134,9 +134,14 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .pageContainer {
-        width: 425px;
+        display: flex;
+        flex-direction: column;
         min-height: 100vh;
-        height: auto;
+        width: 425px;
+    }
+
+    .mainContent {
+        flex: 1;
     }
     
     @media screen and (max-width: 424px) {

@@ -11,12 +11,12 @@ const RootLayout = () => {
   );
 
   return (
-    <div className="pageContainer" style={{ position: 'relative' }}>
-      <Outlet />
-
-      <div style={{ width: '100%' }}>{shouldShowFooter && <Footer />}</div>
+    <div className="pageContainer">
+      <main className="mainContent">
+        <Outlet />
+      </main>
+      {shouldShowFooter && <Footer />}
     </div>
   );
 };
-
 export default RootLayout;
