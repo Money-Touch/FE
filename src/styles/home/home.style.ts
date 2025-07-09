@@ -170,6 +170,7 @@ export const MoreIcon = styled.img`
 // consumptionStatistics.tsx
 export const StatisticsContainer = styled.div`
   margin-top: 4rem;
+  width: 100%;
   height: 27.7rem;
   gap: 0.8rem;
 `;
@@ -265,15 +266,15 @@ export const BottomText = styled.p`
 export const HighlightedText = styled.span`
   color: ${colors.G1};
   font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
 `;
 
 export const DescriptionText = styled.span`
   color: ${colors.G1};
   font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
 `;
 
 // consumptionRanking.tsx
