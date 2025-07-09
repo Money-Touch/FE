@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onBack?: () => void;
+  title?: string;
 }
 
-const Header = ({ onBack }: HeaderProps) => {
+const Header = ({ onBack, title }: HeaderProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -17,6 +18,7 @@ const Header = ({ onBack }: HeaderProps) => {
   return (
     <H.HeaderContainer>
       <H.LeftArrowImg src={LeftArrow} alt="leftArrow" onClick={handleClick} />
+      <H.Title>{title}</H.Title>
     </H.HeaderContainer>
   );
 };

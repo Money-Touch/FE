@@ -1,7 +1,9 @@
 import * as S from '../../styles/home/home.style';
 import { useNavigate } from 'react-router-dom';
+
 import Logo from '../../assets/images/home/logo.png';
 import Alarm from '../../assets/images/home/alarm.png';
+
 import ConsumptionWelcome from '../../components/home/consumptionWelcome';
 import ConsumptionStatistics from '../../components/home/consumptionStatistics';
 import ConsumptionRanking from '../../components/home/consumptionRanking';
@@ -11,7 +13,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleAlarmClick = () => {
-    navigate('/notification');
+    navigate('/updates');
   };
 
   return (

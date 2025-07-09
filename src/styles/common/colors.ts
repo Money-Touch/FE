@@ -1,6 +1,6 @@
 const colors = {
   mainColor1: '#00D1B5',
-  mainColor2: '#FFF27D',
+  mainColor2: '#FFE388',
 
   subColor1: '#004517',
   subColor2: '#135D42',

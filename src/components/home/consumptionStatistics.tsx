@@ -1,29 +1,15 @@
 import * as S from '../../styles/home/home.style';
 import { useState } from 'react';
-import type {
-  SpendingCategory,
-  ProcessedDataItem,
-} from '../../types/home/spending';
+import type { ProcessedDataItem } from '../../types/home/statistics';
 import { useSpendingData } from '../../hooks/home/useSpendingData';
 import DonutChart from './statistics/donutChart';
 import Legend from './statistics/legend';
 import Modal from './statistics/modal';
-
-// mock data
-const spendingData: SpendingCategory[] = [
-  { name: '배달/외식', amount: 80 },
-  { name: '카페', amount: 20 },
-  { name: '고정비', amount: 20 },
-  { name: '패션/쇼핑', amount: 10 },
-  { name: '교육', amount: 30 },
-  { name: '문화생활', amount: 20 },
-  { name: '야구', amount: 70 },
-  { name: '학원', amount: 0 },
-];
+import { mockSpendingData } from '../../mocks/home/mockSpendingData'; // mock data
 
 function ConsumptionStatistics() {
   const { hasSpending, processedData, topCategory } =
-    useSpendingData(spendingData);
+    useSpendingData(mockSpendingData);
   const [showModal, setShowModal] = useState(false);
   const [othersList, setOthersList] = useState<ProcessedDataItem[]>([]);
 
@@ -57,7 +43,10 @@ function ConsumptionStatistics() {
                 <S.HighlightedText>{topCategory.name}</S.HighlightedText>이에요.
               </>
             ) : (
-              '기록된 소비가 없어요. 손대는 순간, 돈터치 시작!'
+              <>
+                기록된 소비가 없어요. 손대는 순간,{' '}
+                <S.DescriptionText>돈터치 시작!</S.DescriptionText>
+              </>
             )}
           </S.BottomText>
         </S.BottomBorderBox>
