@@ -1,6 +1,6 @@
 import * as S from '../../styles/home/home.style';
 import { useNavigate } from 'react-router-dom';
-import { mockRankingData } from '../../mocks/ranking/mockRankingData'; // mock data
+import { mockRankingData } from '../../mocks/home/mockRankingData'; // mock data
 import { getRankChangeIcon } from '../../utils/home/getRankChangeIcon';
 import more from '../../assets/images/home/more.png';
 import medal1 from '../../assets/images/home/medal1.png';

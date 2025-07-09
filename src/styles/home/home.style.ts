@@ -263,7 +263,16 @@ export const BottomText = styled.p`
 
 export const HighlightedText = styled.span`
   color: ${colors.G1};
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+`;
+
+export const DescriptionText = styled.span`
+  color: ${colors.G1};
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
 `;
 
 // consumptionRanking.tsx

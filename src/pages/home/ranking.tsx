@@ -1,6 +1,6 @@
 import * as S from '../../styles/home/ranking.style';
-import { mockUser } from '../../mocks/user/mockUser'; // mock data
-import { mockRankingData } from '../../mocks/ranking/mockRankingData'; // mock data
+import { mockUser } from '../../mocks/home/mockUser'; // mock data
+import { mockRankingData } from '../../mocks/home/mockRankingData'; // mock data
 import { getRankChangeIcon } from '../../utils/home/getRankChangeIcon';
 
 import medal1 from '../../assets/images/home/medal1.png';
