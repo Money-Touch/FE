@@ -1,5 +1,4 @@
 import { Outlet, useLocation } from 'react-router-dom';
-// import Header from "../components/header/header";
 import Footer from '../components/footer/footer';
 
 const RootLayout = () => {
@@ -12,32 +11,10 @@ const RootLayout = () => {
   );
 
   return (
-    <div
-      className="pageContainer"
-      style={{
-        position: 'relative',
-      }}
-    >
-      <div
-        style={{
-          height: '100%',
-          overflowY: 'auto',
-        }}
-      >
-        <Outlet />
-      </div>
+    <div className="pageContainer" style={{ position: 'relative' }}>
+      <Outlet />
 
-      {shouldShowFooter && (
-        <div
-          style={{
-            position: 'fixed',
-            bottom: 0,
-            width: "100%",
-          }}
-        >
-          <Footer />
-        </div>
-      )}
+      <div style={{ width: '100%' }}>{shouldShowFooter && <Footer />}</div>
     </div>
   );
 };

@@ -3,10 +3,8 @@ import colors from '../common/colors';
 
 // footer.tsx
 export const FooterContainer = styled.div`
-  position: 'fixed';
-  bottom: 0;
+  width: 100%;
   background: ${colors.white};
-  width: 42.5rem;
   height: 10rem;
   border-radius: 2rem 2rem 0 0;
   display: flex;
