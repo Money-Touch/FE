@@ -13,7 +13,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleAlarmClick = () => {
-    navigate('/updates');
+    navigate('/notify');
   };
 
   return (

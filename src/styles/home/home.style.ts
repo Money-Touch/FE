@@ -5,7 +5,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   position: relative;
   padding-top: 2.4rem;
-  padding-bottom: 13rem;
+  padding-bottom: 4rem;
   background-color: ${colors.B2};
 `;
 
@@ -112,6 +112,7 @@ export const WelcomeTitle = styled.div`
     font-weight: 700;
     font-size: 1.8rem;
     line-height: 2.6rem;
+    white-space: nowrap;
   }
 `;
 

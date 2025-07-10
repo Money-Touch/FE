@@ -6,13 +6,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #e0fadd 0%, ${colors.M2} 56.31%);
-  max-width: 42.5rem;
-  margin: 0 auto;
-  box-sizing: border-box;
-`;
-
-// header
-export const HeaderWrapper = styled.div`
   padding: 0 2.4rem;
 `;
 

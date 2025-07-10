@@ -23,7 +23,7 @@ export const ModalBox = styled.div`
   min-height: 13.8rem;
   overflow-y: auto;
   top: 53rem;
-  left: 22.8rem;
+  left: 20.9rem;
 `;
 
 export const ModalList = styled.ul`
