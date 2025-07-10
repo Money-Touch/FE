@@ -5,7 +5,6 @@ import type { InputButtonProps } from '../../../types/auth/signup/setting';
 // signup.tsx
 export const SignupContainer = styled.div`
   display: flex;
-  justify-content: center;
 `;
 
 // agree.tsx
@@ -13,7 +12,7 @@ export const AgreeContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 42.5rem;
+  width: 100%;
   padding: 0 2.4rem;
 `;
 
@@ -104,6 +103,7 @@ export const Container = styled.form`
 `;
 
 export const InputWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -127,12 +127,13 @@ export const Wrapper = styled.div`
 `;
 
 export const Input = styled.input<InputButtonProps>`
-  width: ${({ hasButton }) => (hasButton ? '29.1rem' : '38rem')};
+  width: 100%;
   height: 4.5rem;
   border-radius: 0.5rem;
   border: 0.1rem solid
     ${({ hasError }) => (hasError ? `${colors.M1}` : `${colors.G7}`)};
-  padding: 0 3rem 0 1.5rem;
+  padding: ${({ hasButton }) =>
+    hasButton ? '0 4rem 0 1.5rem' : '0 6.5rem 0 1.5rem'};
   font-size: 1.4rem;
   font-weight: 500;
   color: ${colors.G5};
@@ -170,7 +171,7 @@ export const BaseIcon = styled.img`
 `;
 
 export const DeleteIcon = styled(BaseIcon)<{ hasButton: boolean }>`
-  right: ${({ hasButton }) => (hasButton ? '10.5rem' : '1.5rem')};
+  right: ${({ hasButton }) => (hasButton ? '8.5rem' : '1.5rem')};
 `;
 
 export const ToggleIcon = styled(BaseIcon)<{ hasDelete: boolean }>`
@@ -179,6 +180,7 @@ export const ToggleIcon = styled(BaseIcon)<{ hasDelete: boolean }>`
 
 // profileForm.tsx
 export const ProfileFormContainer = styled.form`
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
