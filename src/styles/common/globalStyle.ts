@@ -136,12 +136,14 @@ const GlobalStyle = createGlobalStyle`
     .pageContainer {
         display: flex;
         flex-direction: column;
-        min-height: 100vh;
+        align-items: center;
         width: 425px;
+        min-height: 100vh;
     }
 
     .mainContent {
         flex: 1;
+        width: 100%;
     }
     
     @media screen and (max-width: 424px) {

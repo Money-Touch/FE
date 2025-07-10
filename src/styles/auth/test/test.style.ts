@@ -107,9 +107,10 @@ export const AnswerButton = styled.button<AnswerButtonProps>`
 
 // spinner.tsx
 export const SpinnerWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin: 22.3rem 0 3.9rem 0;
+  margin-top: 22.3rem;
 `;
 
 // resultForm.tsx
