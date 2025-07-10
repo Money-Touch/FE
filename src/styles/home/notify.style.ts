@@ -1,4 +1,4 @@
-import colors from '../../styles/common/colors';
+// import colors from '../../styles/common/colors';
 import styled from 'styled-components';
 
 // notify.tsx
