@@ -5,7 +5,7 @@ import colors from '../common/colors';
 export const FooterContainer = styled.div`
   width: 100%;
   background: ${colors.white};
-  height: 10rem;
+  height: 13rem;
   border-radius: 2rem 2rem 0 0;
   display: flex;
   justify-content: center;
@@ -15,7 +15,7 @@ export const FooterContainer = styled.div`
 // list-footer.tsx
 export const ListContainer = styled.div`
   display: flex;
-  gap: 5.8rem;
+  gap: 6rem;
 `;
 
 // item-footer.tsx
@@ -38,6 +38,6 @@ export const ItemP = styled.p`
   color: ${colors.G5};
 
   &.active {
-    color: ${colors.G1};
+    color: ${colors.subColor1};
   }
 `;
