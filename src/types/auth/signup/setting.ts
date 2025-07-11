@@ -8,7 +8,7 @@ export interface InputButtonProps {
 
 export interface SettingInputProps {
   name: string;
-  label: string;
+  label?: string;
   required?: boolean;
   register?: UseFormRegisterReturn;
   error?: FieldError;

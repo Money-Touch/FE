@@ -32,7 +32,7 @@ const SettingInput = ({
   return (
     <>
       <S.Label>
-        {label}
+        {label && <label>{label}</label>}
         {required && <span style={{ color: colors.M1 }}>*</span>}
       </S.Label>
 
