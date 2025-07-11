@@ -1,6 +1,6 @@
-import { loadImages } from '../../utils/footer/loadImages';
+import { loadImages } from '../../utils/common/loadImages';
 
-const images = loadImages();
+const images = loadImages('footer');
 
 const FooterData = [
   {
