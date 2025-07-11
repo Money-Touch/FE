@@ -6,13 +6,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   background: linear-gradient(180deg, #e0fadd 0%, ${colors.M2} 56.31%);
-  max-width: 42.5rem;
-  margin: 0 auto;
-  box-sizing: border-box;
-`;
-
-// header
-export const HeaderWrapper = styled.div`
   padding: 0 2.4rem;
 `;
 
@@ -135,14 +128,13 @@ export const Podium = styled.img`
 
 // other
 export const OtherListWrapper = styled.div`
-  width: 100%;
+  width: calc(100% + 4.8rem);
   max-width: 42.5rem;
   height: 41.8rem;
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
   background-color: ${colors.B1};
   box-shadow: 0 0 1rem 0 #0000000d;
-  margin: 0 auto;
   box-sizing: border-box;
   padding: 0 2.4rem;
 `;

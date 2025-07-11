@@ -26,9 +26,7 @@ const Ranking = () => {
 
   return (
     <S.Container className="pageContainer">
-      <S.HeaderWrapper>
-        <Header title="똑똑 소비 왕 랭킹" />
-      </S.HeaderWrapper>
+      <Header title="똑똑 소비 왕 랭킹" />
 
       {myInfo && <MyRank user={myInfo} />}
 
