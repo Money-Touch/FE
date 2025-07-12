@@ -18,7 +18,8 @@ import Header from '../../components/header/header';
 const Ranking = () => {
   const top3 = mockRankingData.slice(0, 3);
   const others = mockRankingData.slice(3, 10);
-  const myInfo = mockRankingData.find((user) => user.id === mockUser.id);
+  const user = mockUser.find((user) => user.id === 11);
+  const myInfo = mockRankingData.find((userData) => userData.id === user?.id);
 
   const displayOrder = [1, 0, 2];
   const medalImages = [medal1, medal2, medal3];
