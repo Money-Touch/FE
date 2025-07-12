@@ -22,11 +22,27 @@ export const LogoImg = styled.img`
   margin-left: 1.7rem;
 `;
 
-export const AlarmImg = styled.img`
+export const AlarmWrapper = styled.div`
+  position: relative;
   width: 2.4rem;
   height: 2.4rem;
   margin-right: 2.4rem;
+`;
+
+export const AlarmImg = styled.img`
+  width: 1.833rem;
+  height: 1.98rem;
+  margin-top: 0.2rem;
+  margin-left: 0.3rem;
   cursor: pointer;
+`;
+
+export const New = styled.img`
+  position: absolute;
+  top: 0.1rem;
+  left: 1.4rem;
+  width: 0.6rem;
+  height: 0.6rem;
 `;
 
 export const Section = styled.div`
