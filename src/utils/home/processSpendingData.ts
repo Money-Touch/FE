@@ -6,7 +6,7 @@ import colors from '../../styles/common/colors';
 import {
   DEFAULT_CATEGORIES,
   DEFAULT_COLORS,
-} from '../../constants/defaultSpending';
+} from '../../constants/home/defaultSpending';
 
 export function processSpendingData(
   spendingData: SpendingCategory[],

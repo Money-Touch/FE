@@ -1,4 +1,4 @@
-import colors from '../styles/common/colors';
+import colors from '../../styles/common/colors';
 
 export const DEFAULT_CATEGORIES = [
   '배달/외식',
