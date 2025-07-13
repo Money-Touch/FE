@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useFeedQuery } from '../../../hooks/auth/mypage/useFeedQuery';
 import * as S from '../../../styles/auth/signup/signup.style';
-import colors from '../../../styles/common/colors';
 import Header from '../../../components/header/header';
 import ListGrid from '../../../components/auth/mypage/myfeed/grid/list-grid';
 import ListGrid4 from '../../../components/auth/mypage/myfeed/grid/list-grid4';
@@ -13,7 +12,9 @@ const Myfeed = () => {
 
   return (
     <S.AgreeContainer
-      style={{ background: colors.white, paddingBottom: '1.2rem' }}
+      style={{
+        paddingBottom: '1.2rem',
+      }}
     >
       <Header title="MY 피드" />
 
