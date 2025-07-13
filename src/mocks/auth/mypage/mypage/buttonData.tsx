@@ -1,4 +1,4 @@
-import { loadImages } from '../../../utils/common/loadImages';
+import { loadImages } from '../../../../utils/common/loadImages';
 
 const images = loadImages('mypageButton');
 

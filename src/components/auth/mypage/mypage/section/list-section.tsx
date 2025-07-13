@@ -1,5 +1,5 @@
 import * as M from '../../../../../styles/auth/mypage/mypage.style';
-import SectionData from '../../../../../mocks/auth/mypage/sectionData';
+import SectionData from '../../../../../mocks/auth/mypage/mypage/sectionData';
 import ItemSection from './item-section';
 
 const ListSection = () => {

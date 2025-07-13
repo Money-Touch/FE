@@ -1,5 +1,5 @@
 import * as M from '../../../../../styles/auth/mypage/mypage.style';
-import ButtonData from '../../../../../mocks/auth/mypage/buttonData';
+import ButtonData from '../../../../../mocks/auth/mypage/mypage/buttonData';
 import ItemButton from './item-button';
 
 const ListButton = () => {

@@ -10,6 +10,7 @@ export const FooterContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 1.3rem;
+  box-shadow: 0 0 0.2rem 0 rgba(0, 0, 0, 0.16);
 `;
 
 // list-footer.tsx
