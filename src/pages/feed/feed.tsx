@@ -4,6 +4,7 @@ import { SortDropdown } from '../../components/feed/SortDropdown';
 import { PostItem } from '../../components/feed/PostItem';
 import { SkeletonPost } from '../../components/feed/SkeletonPost';
 import * as S from '../../styles/feed/feed.style';
+import NoResult from '../../assets/images/feed/NO_RESULT.png';
 
 export interface Author {
   name: string;
@@ -165,7 +166,10 @@ const Feed: React.FC = () => {
       </S.PostList>
 
       {!loading && filteredAndSortedPosts.length === 0 && (
-        <S.EmptyState>검색 결과가 없어요.</S.EmptyState>
+        <S.NoResultContainer>
+          <S.NoResultImage src={NoResult} alt="검색 결과 없음" />
+          <S.NoResultText>검색 결과가 없어요.</S.NoResultText>
+        </S.NoResultContainer>
       )}
     </S.Container>
   );

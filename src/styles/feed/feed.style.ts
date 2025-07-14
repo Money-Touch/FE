@@ -171,14 +171,24 @@ export const DislikeCount = styled.span`
   color: ${colors.G1};
 `;
 
-export const EmptyState = styled.div`
+export const NoResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60vh;
   text-align: center;
-  padding: 4.8rem 0;
+  margin-top: 10rem;
+`;
 
-  p {
-    color: ${colors.G5};
-    font-size: 1.8rem;
-  }
+export const NoResultImage = styled.img`
+  width: auto;
+  height: 12rem;
+  display: block;
+`;
+
+export const NoResultText = styled.div`
+  font-size: 20px;
+  color: ${colors.G1};
 `;
 
 // Dropdown Text Styles
