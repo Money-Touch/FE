@@ -3,7 +3,7 @@ import { SearchBox } from '../../components/feed/SearchBox';
 import { SortDropdown } from '../../components/feed/SortDropdown';
 import { PostItem } from '../../components/feed/PostItem';
 import { SkeletonPost } from '../../components/feed/SkeletonPost';
-import { Container, PostList, EmptyState } from '../../styles/feed/feed';
+import * as S from '../../styles/feed/feed.style';
 
 export interface Author {
   name: string;
@@ -51,7 +51,7 @@ const Feed: React.FC = () => {
     },
   ]);
 
-  const [, setPostStates] = useState<{
+  const [postStates, setPostStates] = useState<{
     [key: number]: { liked: boolean; disliked: boolean };
   }>({});
 
@@ -135,7 +135,7 @@ const Feed: React.FC = () => {
   };
 
   return (
-    <Container>
+    <S.Container>
       <SearchBox
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
@@ -149,7 +149,7 @@ const Feed: React.FC = () => {
         onToggle={() => setIsDropdownOpen(!isDropdownOpen)}
       />
 
-      <PostList>
+      <S.PostList>
         {loading
           ? Array.from({ length: 4 }).map((_, i) => <SkeletonPost key={i} />)
           : filteredAndSortedPosts.map((post) => (
@@ -158,14 +158,16 @@ const Feed: React.FC = () => {
                 post={post}
                 onLike={() => handleLike(post.id)}
                 onDislike={() => handleDislike(post.id)}
+                liked={postStates[post.id]?.liked}
+                disliked={postStates[post.id]?.disliked}
               />
             ))}
-      </PostList>
+      </S.PostList>
 
       {!loading && filteredAndSortedPosts.length === 0 && (
-        <EmptyState>검색 결과가 없어요.</EmptyState>
+        <S.EmptyState>검색 결과가 없어요.</S.EmptyState>
       )}
-    </Container>
+    </S.Container>
   );
 };
 
