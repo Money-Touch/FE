@@ -144,6 +144,7 @@ const GlobalStyle = createGlobalStyle`
     .mainContent {
         flex: 1;
         width: 100%;
+        background: ${colors.white};
     }
     
     @media screen and (max-width: 424px) {

@@ -5,16 +5,23 @@ import LoginPage from '../pages/auth/login/login';
 import KakaoCallbackPage from '../pages/auth/login/kakaoCallback';
 import SignupPage from '../pages/auth/signup/signup';
 import TestPage from '../pages/auth/test/test';
-import AddDayPage from '../pages/money/addday';
+
 import HomePage from '../pages/home/home';
 import RankingPage from '../pages/home/ranking';
 import NotifyPage from '../pages/home/notify';
+
 import MoneyPage from '../pages/money/money';
+import AddDayPage from '../pages/money/addday';
+import FixedCostPage from '../pages/money/fixedcost';
 import BudgetRegisterPage from '../pages/money/registration';
 import AddCategoryPage from '../pages/money/addcategory';
-import FixedCostPage from '../pages/money/fixedcost';
+
 import FeedPage from '../pages/feed/feed';
-import MypagePage from '../pages/mypage/mypage';
+
+import MypagePage from '../pages/auth/mypage/mypage';
+import MyfeedPage from '../pages/auth/mypage/myfeed';
+import MybadgePage from '../pages/auth/mypage/mybadge';
+
 import NotFoundPage from '../pages/notFound/notFound';
 
 const router = createBrowserRouter([
@@ -29,7 +36,6 @@ const router = createBrowserRouter([
       },
       {
         path: 'login',
-        errorElement: <NotFoundPage />,
         children: [
           {
             index: true,
@@ -87,7 +93,20 @@ const router = createBrowserRouter([
       },
       {
         path: 'mypage',
-        element: <MypagePage />,
+        children: [
+          {
+            index: true,
+            element: <MypagePage />,
+          },
+          {
+            path: 'feed',
+            element: <MyfeedPage />,
+          },
+          {
+            path: 'badge',
+            element: <MybadgePage />,
+          },
+        ],
       },
     ],
   },
