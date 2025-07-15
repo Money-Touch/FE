@@ -17,6 +17,7 @@ import BudgetRegisterPage from '../pages/money/registration';
 import AddCategoryPage from '../pages/money/addcategory';
 
 import FeedPage from '../pages/feed/feed';
+import FeedDetailPage from "../pages/feed/feedDetail"
 
 import MypagePage from '../pages/auth/mypage/mypage';
 import MyfeedPage from '../pages/auth/mypage/myfeed';
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
       {
         path: 'feed',
         element: <FeedPage />,
+      },
+      {
+        path: 'feed-detail',
+        element: <FeedDetailPage />,
       },
       {
         path: 'mypage',
