@@ -2,25 +2,23 @@ import styled from 'styled-components';
 import colors from '../common/colors';
 
 export const Container = styled.div`
-  min-height: calc(100vh - 100px);
-  padding: 24px 24px 100px;
+  padding: 2.4rem;
   background: ${colors.white};
 `;
 
 // SearchBox.tsx
 export const SearchContainer = styled.div`
   width: 100%;
-  height: 60px;
-  border-radius: 5px;
+  height: 6rem;
+  border-radius: 0.5rem;
 `;
 
 export const SearchInputWrapper = styled.div`
-  width: 100%;
-  max-width: 600px;
-  height: 45px;
-  border: 1px solid ${colors.G7};
-  border-radius: 5px;
-  margin: 8px auto;
+  width: 37.7rem
+  height: 4.5rem;
+  border: 0.1rem solid ${colors.G7};
+  border-radius: 0.5rem;
+  margin: 0.8rem auto;
   display: flex;
   align-items: center;
 `;
@@ -28,15 +26,15 @@ export const SearchInputWrapper = styled.div`
 export const SearchInput = styled.input`
   width: 100%;
   height: 100%;
-  font-size: 14px;
-  padding: 12px 15px;
+  font-size: 1.4rem;
+  padding: 1.2rem 1.5rem;
   color: ${colors.G5};
 `;
 
 export const SearchButton = styled.button`
   height: 100%;
   cursor: pointer;
-  padding: 12px;
+  padding: 1.2rem;
 `;
 
 // Dropdown Styles
@@ -49,21 +47,19 @@ export const DropdownContainer = styled.div`
 export const DropdownButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 5px;
+  gap: 0.8rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.2s;
 `;
 
 export const DropdownMenu = styled.div`
   position: absolute;
   top: 100%;
-  right: 0;
-  margin-top: 4px;
-  width: 80px;
+  margin-top: 0.4rem;
+  width: 8rem;
   background: ${colors.G8};
-  border-radius: 5px;
+  border-radius: 0.5rem;
   z-index: 10;
   color: ${colors.G4};
 `;
@@ -74,14 +70,9 @@ interface DropdownItemProps {
 
 export const DropdownItem = styled.button<DropdownItemProps>`
   width: 100%;
-  padding: 8px 0;
+  padding: 0.8rem 0;
   text-align: center;
-  border: none;
-  background: transparent;
   cursor: pointer;
-  transition:
-    background-color 0.2s,
-    color 0.2s;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,19 +88,19 @@ export const PostList = styled.div`
 export const PostCard = styled.div`
   background: ${colors.white};
   overflow: hidden;
-  padding-bottom: 16px;
+  padding-bottom: 1.6rem;
 `;
 
 export const PostHeader = styled.div`
-  padding-bottom: 8px;
+  padding-bottom: 0.8rem;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 1.2rem;
 `;
 
 export const ProfileImage = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   object-fit: cover;
 `;
@@ -120,9 +111,8 @@ export const AuthorInfo = styled.div`
 `;
 
 export const AuthorName = styled.h3`
-  font-size: 14px;
+  font-size: 1.4rem;
   color: ${colors.G2};
-  margin: 0;
 `;
 
 export const PostImageContainer = styled.div`
@@ -130,7 +120,7 @@ export const PostImageContainer = styled.div`
   position: relative;
   padding-bottom: 100%;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 1rem;
 `;
 
 export const PostImage = styled.img`
@@ -143,17 +133,17 @@ export const PostImage = styled.img`
 export const PostActions = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding-top: 5px;
+  gap: 1.6rem;
+  padding-top: 0.5rem;
 `;
 
 export const LikeButton = styled.button`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  width: 40px;
-  height: 36px;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 5rem;
+  height: 3.6rem;
   cursor: pointer;
 `;
 
@@ -161,20 +151,44 @@ export const DislikeButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  width: 40px;
-  height: 36px;
+  gap: 0.4rem;
+  width: 5rem;
+  height: 3.6rem;
   cursor: pointer;
 `;
 
-export const EmptyState = styled.div`
+export const LikeCount = styled.span`
+  width: 2rem;
   text-align: center;
-  padding: 48px 0;
+  font-size: 1.4rem;
+  color: ${colors.G1};
+`;
 
-  p {
-    color: ${colors.G5};
-    font-size: 18px;
-  }
+export const DislikeCount = styled.span`
+  width: 2rem;
+  text-align: center;
+  font-size: 1.4rem;
+  color: ${colors.G1};
+`;
+
+export const NoResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60vh;
+  text-align: center;
+  margin-top: 10rem;
+`;
+
+export const NoResultImage = styled.img`
+  width: auto;
+  height: 12rem;
+  display: block;
+`;
+
+export const NoResultText = styled.div`
+  font-size: 20px;
+  color: ${colors.G1};
 `;
 
 // Dropdown Text Styles
@@ -188,8 +202,8 @@ export const ChevronIcon = styled.div`
   align-items: center;
 
   img {
-    width: 8px;
-    height: 8px;
+    width: 0.8rem;
+    height: 0.8rem;
     object-fit: contain;
   }
 `;
@@ -202,24 +216,22 @@ export const SkeletonBox = styled.div<{
 }>`
   background-color: ${colors.G7};
   width: ${({ width }) => width || '100%'};
-  height: ${({ height }) => height || '16px'};
-  border-radius: ${({ circle }) => (circle ? '50%' : '4px')};
+  height: ${({ height }) => height || '1.6rem'};
+  border-radius: ${({ circle }) => (circle ? '50%' : '0.4rem')};
 `;
 
 export const ImageSkeleton = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
   background-color: ${colors.G7};
   width: 100%;
   height: 100%;
-  border-radius: 5px;
+  border-radius: 0.5rem;
 `;
 
 //PostItem Default
 export const DefaultProfile = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background-color: ${colors.G6};
 `;
@@ -229,5 +241,5 @@ export const DefaultPostImage = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${colors.G6};
-  border-radius: 10px;
+  border-radius: 1rem;
 `;

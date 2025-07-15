@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  DropdownContainer,
-  DropdownButton,
-  DropdownMenu,
-  DropdownItem,
-  DropdownText,
-  ChevronIcon,
-} from '../../styles/feed/feed';
+import * as S from '../../styles/feed/feed.style';
 import CaretDownIcon from '../../assets/images/feed/CaretDown.png';
 import CaretUpIcon from '../../assets/images/feed/CaretUp.png';
 
@@ -31,32 +24,32 @@ export const SortDropdown: React.FC<SortDropdownProps> = ({
   };
 
   return (
-    <DropdownContainer>
-      <DropdownButton onClick={onToggle}>
-        <DropdownText>
+    <S.DropdownContainer>
+      <S.DropdownButton onClick={onToggle}>
+        <S.DropdownText>
           {sortBy === 'popular' ? '인기순' : '최신순'}
-        </DropdownText>
-        <ChevronIcon>
+        </S.DropdownText>
+        <S.ChevronIcon>
           <img src={isOpen ? CaretUpIcon : CaretDownIcon} alt="정렬 아이콘" />
-        </ChevronIcon>
-      </DropdownButton>
+        </S.ChevronIcon>
+      </S.DropdownButton>
 
       {isOpen && (
-        <DropdownMenu>
-          <DropdownItem
+        <S.DropdownMenu>
+          <S.DropdownItem
             isActive={sortBy === 'popular'}
             onClick={() => handleSortChange('popular')}
           >
             인기순
-          </DropdownItem>
-          <DropdownItem
+          </S.DropdownItem>
+          <S.DropdownItem
             isActive={sortBy === 'latest'}
             onClick={() => handleSortChange('latest')}
           >
             최신순
-          </DropdownItem>
-        </DropdownMenu>
+          </S.DropdownItem>
+        </S.DropdownMenu>
       )}
-    </DropdownContainer>
+    </S.DropdownContainer>
   );
 };
