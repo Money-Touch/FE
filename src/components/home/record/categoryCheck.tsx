@@ -9,12 +9,8 @@ interface Props {
 
 const CategoryCheck = ({ isChecked, onToggle }: Props) => {
   return (
-    <S.CategoryCheckboxWrapper>
-      <S.CheckboxIcon
-        src={isChecked ? checked : unchecked}
-        alt="checkbox"
-        onClick={onToggle}
-      />
+    <S.CategoryCheckboxWrapper onClick={onToggle}>
+      <S.CheckboxIcon src={isChecked ? checked : unchecked} alt="checkbox" />
       <label htmlFor="categoryOnly">가계부에만 등록하기</label>
     </S.CategoryCheckboxWrapper>
   );
