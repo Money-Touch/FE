@@ -12,7 +12,7 @@ function Notify() {
     <S.Container className="pageContainer">
       <Header title="알림" />
       {isNotificationStale(notifications) && (
-        <S.NoNewNotice>새로운 알림이 없습니다.</S.NoNewNotice>
+        <S.NoNewNotice>새로운 알림이 없어요.</S.NoNewNotice>
       )}
       {notifications.map((item) => (
         <NotificationList
