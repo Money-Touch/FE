@@ -1,24 +1,17 @@
 import * as S from '../../styles/home/home.style';
 import { useNavigate } from 'react-router-dom';
+
 import more from '../../assets/images/home/more.png';
 import rightArrow from '../../assets/images/home/rightArrow.png';
+
 import { mockRoutineData } from '../../mocks/home/mockRoutineData'; // mock data
+import { isToday } from '../../utils/home/todayCheck';
 
 function ConsumptionRoutine() {
   const navigate = useNavigate();
 
   const handleMoreClick = () => {
     navigate('/routine');
-  };
-
-  const isToday = (dateStr: string) => {
-    const today = new Date();
-    const date = new Date(dateStr);
-    return (
-      today.getFullYear() === date.getFullYear() &&
-      today.getMonth() === date.getMonth() &&
-      today.getDate() === date.getDate()
-    );
   };
 
   const sortedRoutineData = [...mockRoutineData].sort(
