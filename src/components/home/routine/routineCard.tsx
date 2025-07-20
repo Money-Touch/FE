@@ -31,7 +31,7 @@ export default function RoutineCard({ item }: Props) {
   }, [item.id, navigate]);
 
   return (
-    <S.Card>
+    <S.Card onClick={handleClick}>
       <S.Left>
         <S.Thumbnail src={item.thumbnail} alt="routine thumbnail" />
       </S.Left>
@@ -48,11 +48,7 @@ export default function RoutineCard({ item }: Props) {
 
           <S.Title>
             {item.title}
-            <S.RightArrowImg
-              src={rightArrow}
-              alt="navigate"
-              onClick={handleClick}
-            />
+            <S.RightArrowImg src={rightArrow} alt="navigate" />
           </S.Title>
 
           <S.HashtagList>

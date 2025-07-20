@@ -60,6 +60,7 @@ export const Card = styled.div`
   background: ${colors.white};
   box-shadow: 0px 0px 10px 0px #0000000d;
   position: relative;
+  cursor: pointer;
 `;
 
 export const Left = styled.div`

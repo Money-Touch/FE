@@ -26,17 +26,16 @@ function ConsumptionRoutine() {
       </S.SectionHeader>
       <S.RoutineSection>
         {sortedRoutineData.map((routine) => (
-          <S.RoutineCard key={routine.id}>
+          <S.RoutineCard
+            key={routine.id}
+            onClick={() => navigate(`/routine/${routine.id}`)}
+          >
             <S.RoutineIcon src={routine.icon} alt="routine" />
             <S.RoutineText>
               {routine.title}
               {isToday(routine.startDate) && <S.NewBadge>NEW</S.NewBadge>}
             </S.RoutineText>
-            <S.RoutineArrow
-              src={rightArrow}
-              alt="arrow"
-              onClick={() => navigate(`/routine/${routine.id}`)}
-            />
+            <S.RoutineArrow src={rightArrow} alt="arrow" />
           </S.RoutineCard>
         ))}
       </S.RoutineSection>
