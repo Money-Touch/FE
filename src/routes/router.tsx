@@ -7,8 +7,9 @@ import SignupPage from '../pages/auth/signup/signup';
 import TestPage from '../pages/auth/test/test';
 
 import HomePage from '../pages/home/home';
-import RankingPage from '../pages/home/ranking';
 import NotifyPage from '../pages/home/notify';
+import RecordPage from '../pages/home/record';
+import RankingPage from '../pages/home/ranking';
 
 import MoneyPage from '../pages/money/money';
 import AddDayPage from '../pages/money/addday';
@@ -61,12 +62,16 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'ranking',
-        element: <RankingPage />,
-      },
-      {
         path: 'notify',
         element: <NotifyPage />,
+      },
+      {
+        path: 'record',
+        element: <RecordPage />,
+      },
+      {
+        path: 'ranking',
+        element: <RankingPage />,
       },
       {
         path: 'money',
