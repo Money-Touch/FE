@@ -76,11 +76,16 @@ const router = createBrowserRouter([
       },
       {
         path: 'routine',
-        element: <RoutinePage />,
-      },
-      {
-        path: '/routine/:id',
-        element: <RoutineDetailPage />,
+        children: [
+          {
+            index: true,
+            element: <RoutinePage />,
+          },
+          {
+            path: ':id',
+            element: <RoutineDetailPage />,
+          },
+        ],
       },
       {
         path: 'money',

@@ -193,3 +193,85 @@ export const NoResultImg = styled.img`
   width: 14.8rem;
   height: 15.8rem;
 `;
+
+// routineDetail.tsx
+export const Budget = styled.div`
+  width: 100%;
+  height: 6.1rem;
+  margin-top: 2.6rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const BudgetTitle = styled.div`
+  height: 2.6rem;
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: ${colors.G1};
+`;
+
+export const BudgetAmount = styled.div`
+  height: 3.5rem;
+  font-weight: 700;
+  font-size: 2.6rem;
+  color: ${colors.G1};
+`;
+
+export const Line = styled.div`
+  width: 100%;
+  height: 0.7rem;
+  margin-top: 2.4rem;
+  background-color: ${colors.G8};
+`;
+
+export const BudgetListWrapper = styled.div`
+  height: 22.6rem;
+  margin-top: 3rem;
+  gap: 1.4rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const BudgetItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.6rem;
+`;
+
+export const BudgetLabel = styled.div`
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: ${colors.G5};
+`;
+
+export const BudgetAmountPerItem = styled.div`
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: ${colors.G1};
+`;
+
+export const BudgetButton = styled.button<{ $isReflected: boolean }>`
+  width: 100%;
+  height: 5rem;
+  margin-top: 24.3rem;
+  border-radius: 1rem;
+  background-color: ${({ disabled }) =>
+    disabled ? colors.G6 : colors.mainColor1};
+  color: ${colors.white};
+  font-weight: 500;
+  font-size: 1.8rem;
+  cursor: ${({ $isReflected }) => ($isReflected ? 'default' : 'pointer')};
+`;
+
+export const ErrorMessage = styled.div`
+  width: 100%;
+  margin-top: 0.6rem;
+  font-weight: 300;
+  font-size: 1.1rem;
+  color: ${colors.M1};
+  text-align: center;
+`;
