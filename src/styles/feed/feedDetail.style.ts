@@ -83,11 +83,17 @@ export const ActionButtons = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-top: 1rem;
+  gap: 0.6rem;
 `;
 
 export const ActionButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  width: 3.2rem;
+
+  gap: 0.6rem;
+  width: 4rem;
   height: 2rem;
 
   img {
@@ -95,3 +101,10 @@ export const ActionButton = styled.button`
     height: 2rem;
   }
 `;
+
+export const ActionCount = styled.span`
+  font-size: 1.2rem;
+  color: ${colors.G1};
+  display: flex;
+  align-items: center;
+`

@@ -11,6 +11,8 @@ export interface Post {
   dislikes: number;
   timestamp: Date;
   content?: string;
+  category?: string;
+  comments?: number;
 }
 
 export type SortBy = 'popular' | 'latest';
