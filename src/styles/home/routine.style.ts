@@ -131,7 +131,7 @@ export const Title = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 25.6rem;
+  width: 100%;
   height: 2.3rem;
   font-weight: 500;
   font-size: 1.5rem;
