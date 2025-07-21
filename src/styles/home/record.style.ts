@@ -142,24 +142,22 @@ export const SubmitButton = styled.button<{ $active: boolean }>`
 
 // amount
 export const AmountInputWrapper = styled.div`
-  position: relative;
   width: 100%;
   height: 4.5rem;
   border: 0.1rem solid ${colors.G7};
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  padding: 0 5.6rem 0 1.3rem;
+  padding: 1.1rem 1.5rem 1.1rem 1.3rem;
   box-sizing: border-box;
 `;
 
 export const AmountInput = styled.input`
   flex: 1;
-  height: 100%;
+  height: 2.2rem;
   border: none;
   font-weight: 300;
   font-size: 1.4rem;
-  line-height: 2.2rem;
   color: ${colors.G1};
   background-color: transparent;
   font-family: 'Pretendard';
@@ -180,19 +178,19 @@ export const AmountInput = styled.input`
 `;
 
 export const Won = styled.span`
-  position: absolute;
-  right: 3.9rem;
+  width: 1.3rem;
   font-weight: 500;
   font-size: 1.4rem;
   color: ${colors.G1};
+  object-fit: contain;
 `;
 
 export const ClearIcon = styled.img`
-  position: absolute;
-  right: 1.5rem;
   width: 2rem;
   height: 2rem;
   cursor: pointer;
+  object-fit: contain;
+  margin-left: 0.4rem;
 `;
 
 // content
@@ -204,13 +202,13 @@ export const ContentInputWrapper = styled.div<{ $error: boolean }>`
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  padding: 0 5.6rem 0 1.3rem;
+  padding: 1.1rem 1.3rem;
   box-sizing: border-box;
 `;
 
 export const ContentInput = styled.input`
   flex: 1;
-  height: 100%;
+  height: 2.2rem;
   border: none;
   font-weight: 300;
   font-size: 1.4rem;
@@ -299,7 +297,7 @@ export const MemoTextarea = styled.textarea<{
   height: 18rem;
   border: 0.1rem solid ${({ $error }) => ($error ? colors.M1 : colors.G7)};
   border-radius: 0.5rem;
-  padding: 1.5rem 1.5rem 0 1.5rem;
+  padding: 1.2rem 1.5rem;
   margin: 0;
   display: block;
   box-sizing: border-box;
