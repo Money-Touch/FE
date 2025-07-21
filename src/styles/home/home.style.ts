@@ -387,6 +387,7 @@ export const RoutineCard = styled.div`
   margin-left: 1.6rem;
   margin-right: 1.6rem;
   gap: 0.8rem;
+  cursor: pointer;
 `;
 
 export const RoutineIcon = styled.img`

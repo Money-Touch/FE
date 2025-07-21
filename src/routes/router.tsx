@@ -10,6 +10,8 @@ import HomePage from '../pages/home/home';
 import NotifyPage from '../pages/home/notify';
 import RecordPage from '../pages/home/record';
 import RankingPage from '../pages/home/ranking';
+import RoutinePage from '../pages/home/routine';
+import RoutineDetailPage from '../pages/home/routinedetail';
 
 import MoneyPage from '../pages/money/money';
 import AddDayPage from '../pages/money/addday';
@@ -72,6 +74,19 @@ const router = createBrowserRouter([
       {
         path: 'ranking',
         element: <RankingPage />,
+      },
+      {
+        path: 'routine',
+        children: [
+          {
+            index: true,
+            element: <RoutinePage />,
+          },
+          {
+            path: ':id',
+            element: <RoutineDetailPage />,
+          },
+        ],
       },
       {
         path: 'money',
