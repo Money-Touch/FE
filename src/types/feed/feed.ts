@@ -10,9 +10,22 @@ export interface Post {
   likes: number;
   dislikes: number;
   timestamp: Date;
-  content?: string;
+
   category?: string;
-  comments?: number;
+
+  companyName?: string;
+  price?: number;
+  content?: string;
+
+  comments?: Comment[];
+}
+
+export interface Comment {
+  id: number;
+  author: Author;
+  content: string;
+  timestamp: Date;
+  replies?: Comment[];
 }
 
 export type SortBy = 'popular' | 'latest';
