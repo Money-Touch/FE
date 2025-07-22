@@ -6,6 +6,7 @@ import CommentIcon from '../../../assets/images/feed/Bubble.png';
 import LikeIcon from '../../../assets/images/feed/Like.png';
 import LikeActiveIcon from '../../../assets/images/feed/Like_Fill.png';
 import ReplyIcon from '../../../assets/images/feed/Reply.png';
+import EllipseIcon from '../../../assets/images/feed/Ellipse_221.png';
 
 import type { Comment as CommentType } from '../../../types/feed/feed';
 
@@ -17,6 +18,27 @@ interface CommentItemProps {
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({ comment, likedComments, onLike, onReply }) => {
+  const formatCommentTime = (timestamp: Date) => {
+    const date = new Date(timestamp);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const time = date.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+
+    return (
+      <S.Timestamp>
+        {month}
+        <S.EclipseIcon src={EllipseIcon} alt="·" />
+        {day}
+        <S.EclipseIcon src={EllipseIcon} alt="·" />
+        {time}
+      </S.Timestamp>
+    );
+  };
+
   return (
     <div>
       <S.CommentItem>
@@ -26,7 +48,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, likedComments, onLik
               <S.ProfileImage src={comment.author.profileImage || PersonIcon} />
               <S.AuthorInfo>
                 <S.AuthorName>{comment.author.name}</S.AuthorName>
-                <S.Timestamp>{new Date(comment.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</S.Timestamp>
+                <S.Timestamp>{formatCommentTime(comment.timestamp)}</S.Timestamp>
               </S.AuthorInfo>
             </S.AuthorInfoGroup>
 
@@ -53,7 +75,7 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, likedComments, onLik
                   <S.ProfileImage src={reply.author.profileImage || PersonIcon} />
                   <S.AuthorInfo>
                     <S.AuthorName>{reply.author.name}</S.AuthorName>
-                    <S.Timestamp>{new Date(reply.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</S.Timestamp>
+                    <S.Timestamp>{formatCommentTime(reply.timestamp)}</S.Timestamp>
                   </S.AuthorInfo>
                 </S.AuthorInfoGroup>
 

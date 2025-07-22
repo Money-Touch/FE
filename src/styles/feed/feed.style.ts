@@ -162,6 +162,7 @@ export const LikeCount = styled.span`
   width: 2rem;
   text-align: center;
   font-size: 1.4rem;
+  font-family: inherit;
   color: ${colors.G1};
 `;
 
@@ -169,6 +170,7 @@ export const DislikeCount = styled.span`
   width: 2rem;
   text-align: center;
   font-size: 1.4rem;
+  font-family: inherit;
   color: ${colors.G1};
 `;
 

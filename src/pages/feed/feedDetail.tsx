@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import * as S from '../../styles/feed/feedDetail.style';
-import { useNavigate } from 'react-router-dom';
 
 import LikeIcon from '../../assets/images/feed/Like.png';
 import LikeActiveIcon from '../../assets/images/feed/Like_Fill.png';
@@ -8,6 +7,7 @@ import DislikeIcon from '../../assets/images/feed/Dislike.png';
 import DislikeActiveIcon from '../../assets/images/feed/Dislike_Fill.png';
 import CommentIcon from '../../assets/images/feed/Bubble.png';
 import PersonIcon from '../../assets/images/feed/Person.png';
+import EllipseIcon from '../../assets/images/feed/Ellipse_221.png';
 
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
@@ -19,7 +19,6 @@ import { handleLike, handleDislike } from '../../utils/feed/reaction';
 import type { Post, PostStates, Comment } from '../../types/feed/feed';
 
 export const FeedDetail: React.FC = () => {
-  const navigate = useNavigate();
 
   const [post] = useState<Post>({
     id: 1,
@@ -102,10 +101,11 @@ export const FeedDetail: React.FC = () => {
 
   const updatedPost = posts.find((p) => p.id === post.id) ?? post;
   const { liked, disliked } = postStates[post.id] || { liked: false, disliked: false };
+
   const date = new Date(post.timestamp);
-  const formattedTime = `${date.toLocaleDateString()} · ${date.toLocaleTimeString([], {
-    hour: '2-digit', minute: '2-digit'
-  })}`;
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
 
   return (
     <>
@@ -116,7 +116,13 @@ export const FeedDetail: React.FC = () => {
             <S.ProfileImage src={updatedPost.author.profileImage || PersonIcon} />
             <S.AuthorInfo>
               <S.AuthorName>{updatedPost.author.name}</S.AuthorName>
-              <S.Timestamp>{formattedTime}</S.Timestamp>
+              <S.Timestamp>
+                {month}
+                <S.EclipseIcon src={EllipseIcon} alt="·" />
+                {day}
+                <S.EclipseIcon src={EllipseIcon} alt="·" />
+                {time}
+              </S.Timestamp>
             </S.AuthorInfo>
           </S.AuthorSection>
 

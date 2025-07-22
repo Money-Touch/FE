@@ -37,7 +37,18 @@ export const AuthorName = styled.span`
 
 export const Timestamp = styled.span`
   font-size: 0.8rem;
+  line-height: 1rem;
   color: ${colors.G3};
+`;
+
+export const EclipseIcon = styled.img`
+  width: 0.2rem;
+  height: 0.2rem;
+  margin: 0 0.2rem;
+  vertical-align: middle;
+  border-radius: 50%;
+  object-fit: cover;
+  font-family: inherit;
 `;
 
 export const PostImage = styled.img<{ hasImage: boolean }>`
