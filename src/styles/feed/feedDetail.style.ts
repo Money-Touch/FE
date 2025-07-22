@@ -52,15 +52,13 @@ export const EclipseIcon = styled.img`
 `;
 
 export const PostImage = styled.img<{ hasImage: boolean }>`
-  width-max: 37.7rem;
-  height-max: 36.5rem;
+  width: 100%;
+  aspect-ratio: 37.7 / 36.5;
   object-fit: cover;
-  background-color: ${({ hasImage }) => (hasImage ? 'transparent' : '#aaaaaa')};  //실제 코드에서는 삭제
-  position: relative;
-  padding-bottom: 100%;
-  overflow: hidden;
+  background-color: ${({ hasImage }) => (hasImage ? 'transparent' : '#aaaaaa')};
   border-radius: 1rem;
   margin-top: 0.6rem;
+  display: block;
 `;
 
 export const ActionButtons = styled.div`
