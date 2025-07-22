@@ -6,9 +6,7 @@ const RootLayout = () => {
   const currentPath = location.pathname;
 
   const showFooterPaths = ['/home', '/money', '/feed', '/mypage'];
-  const shouldShowFooter = showFooterPaths.some((path) =>
-    currentPath.startsWith(path),
-  );
+  const shouldShowFooter = showFooterPaths.some((path) => currentPath === path || currentPath.startsWith(path + '/')) && !currentPath.startsWith('/feed/post');
 
   return (
     <div className="pageContainer">

@@ -110,11 +110,16 @@ const router = createBrowserRouter([
       },
       {
         path: 'feed',
-        element: <FeedPage />,
-      },
-      {
-        path: 'feed-detail',
-        element: <FeedDetailPage />,
+        children: [
+          {
+            index: true,
+            element: <FeedPage />,
+          },
+          {
+            path: 'post/:postId',
+            element: <FeedDetailPage />,
+          },
+        ]
       },
       {
         path: 'mypage',
