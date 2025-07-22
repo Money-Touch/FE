@@ -52,8 +52,8 @@ export const EclipseIcon = styled.img`
 `;
 
 export const PostImage = styled.img<{ hasImage: boolean }>`
-  width: 37.7rem;
-  height: 36.5rem;
+  width-max: 37.7rem;
+  height-max: 36.5rem;
   object-fit: cover;
   background-color: ${({ hasImage }) => (hasImage ? 'transparent' : '#aaaaaa')};  //실제 코드에서는 삭제
   position: relative;
