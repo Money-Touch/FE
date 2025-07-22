@@ -172,3 +172,57 @@ export const CommentMain = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+//reply input
+export const ReplyInputWrapper = styled.div`
+  border-top: 1px solid ${colors.G7};
+  align-items: center;
+  display: flex;
+  height: 4.4rem;
+  padding: 0.7rem 2.4rem;
+  margin-bottom: 5rem;
+`;
+
+export const ReplyInput = styled.textarea`
+  flex: 1;
+  font-size: 1.2rem;
+  height: 3rem;
+  line-height: 1.6rem;
+  margin-left: 0.5rem;
+  border: none;
+  outline: none;
+  resize: none;
+  padding: 0.7rem 0.5rem;
+  font-family: inherit;
+`;
+
+
+export const SubmitButton = styled.button`
+  background-color: ${colors.mainColor1};
+  color: white;
+  border-radius: 0.5rem;
+  font-size: 1.4rem;
+  height: 3rem;
+  width: 4.4rem;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: ${colors.G5};
+    cursor: not-allowed;
+  }
+`;
+
+//comment mention
+export const MentionLabel = styled.div`
+  color: ${colors.G1};
+  background: ${colors.subColor5};
+  border-radius: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+  line-height:1.8rem;
+  width: 3.7rem;
+  height: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
