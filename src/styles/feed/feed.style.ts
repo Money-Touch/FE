@@ -121,6 +121,7 @@ export const PostImageContainer = styled.div`
   padding-bottom: 100%;
   overflow: hidden;
   border-radius: 1rem;
+  cursor: pointer;
 `;
 
 export const PostImage = styled.img`
