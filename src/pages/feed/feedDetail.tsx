@@ -60,8 +60,6 @@ export const FeedDetail: React.FC = () => {
   const [replyText, setReplyText] = useState('');
   const [mentionName, setMentionName] = useState<string | null>(null);
 
-  const handleBack = () => navigate(-1);
-
   useEffect(() => {
     const footer = document.querySelector('footer');
     if (!footer) return;
@@ -112,9 +110,8 @@ export const FeedDetail: React.FC = () => {
   return (
     <>
       <S.Container>
-        <Header title={updatedPost.category} onBack={handleBack} />
-
         <S.ContentContainer>
+          <Header title={updatedPost.category} />
           <S.AuthorSection>
             <S.ProfileImage src={updatedPost.author.profileImage || PersonIcon} />
             <S.AuthorInfo>
