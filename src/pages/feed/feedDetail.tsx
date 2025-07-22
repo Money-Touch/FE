@@ -8,10 +8,13 @@ import DislikeIcon from '../../assets/images/feed/Dislike.png';
 import DislikeActiveIcon from '../../assets/images/feed/Dislike_Fill.png';
 import CommentIcon from '../../assets/images/feed/Bubble.png';
 import PersonIcon from '../../assets/images/feed/Person.png';
-import ReplyIcon from '../../assets/images/feed/Reply.png';
 
 import Footer from '../../components/footer/footer';
-import Header from '../../components/header/header'
+import Header from '../../components/header/header';
+
+import CommentInput from '../../components/feed/feedDetail/CommentInput';
+import CommentItem from '../../components/feed/feedDetail/CommentItem';
+
 import { handleLike, handleDislike } from '../../utils/feed/reaction';
 import type { Post, PostStates, Comment } from '../../types/feed/feed';
 
@@ -44,8 +47,8 @@ export const FeedDetail: React.FC = () => {
             author: { name: '라인', profileImage: '' },
             content: '헤어졌으니 봐주세요ㅜ 다음부턴 무조건 집밥입니다..',
             timestamp: new Date(),
-          }
-        ]
+          },
+        ],
       },
     ],
   });
@@ -62,13 +65,7 @@ export const FeedDetail: React.FC = () => {
   useEffect(() => {
     const footer = document.querySelector('footer');
     if (!footer) return;
-
-    if (isReplying) {
-      footer.style.display = 'block';
-    } else {
-      footer.style.display = 'none';
-    }
-
+    footer.style.display = isReplying ? 'block' : 'none';
     return () => {
       if (footer) footer.style.display = 'none';
     };
@@ -85,7 +82,6 @@ export const FeedDetail: React.FC = () => {
     setReplyText('');
   };
 
-
   const toggleLike = (commentId: number) => {
     setLikedComments((prev) => ({
       ...prev,
@@ -93,72 +89,24 @@ export const FeedDetail: React.FC = () => {
     }));
   };
 
-  const renderComments = (comments: Comment[]) => {
-    return comments.map((cmt) => (
-      <div key={cmt.id}>
-        <S.CommentItem>
-          <S.CommentMain>
-            <S.CommentAuthorSection>
-              <S.AuthorInfoGroup>
-                <S.ProfileImage src={cmt.author.profileImage || PersonIcon} />
-                <S.AuthorInfo>
-                  <S.AuthorName>{cmt.author.name}</S.AuthorName>
-                  <S.Timestamp>{new Date(cmt.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</S.Timestamp>
-                </S.AuthorInfo>
-              </S.AuthorInfoGroup>
+  const renderComments = (comments: Comment[]) => (
+    comments.map((cmt) => (
+      <CommentItem
+        key={cmt.id}
+        comment={cmt}
+        likedComments={likedComments}
+        onLike={toggleLike}
+        onReply={handleComment}
+      />
+    ))
+  );
 
-              <S.AuthorActionGroup>
-                <S.IconButton onClick={() => toggleLike(cmt.id)}>
-                  <img src={likedComments[cmt.id] ? LikeActiveIcon : LikeIcon} alt="좋아요" />
-                </S.IconButton>
-                <S.IconButton onClick={() => handleComment(cmt.author.name)}>
-                  <img src={CommentIcon} alt="댓글" />
-                </S.IconButton>
-              </S.AuthorActionGroup>
-            </S.CommentAuthorSection>
-            <S.CommentContent>{cmt.content}</S.CommentContent>
-          </S.CommentMain>
-        </S.CommentItem>
-
-        {cmt.replies &&
-          cmt.replies.map((reply) => (
-            <div key={reply.id} style={{ marginLeft: 18 }}>
-              <S.CommentItem>
-                <S.ReplyIconContain src={ReplyIcon} alt="reply" />
-                <S.CommentMain>
-                  <S.CommentAuthorSection>
-                    <S.AuthorInfoGroup>
-                      <S.ProfileImage src={reply.author.profileImage || PersonIcon} />
-                      <S.AuthorInfo>
-                        <S.AuthorName>{reply.author.name}</S.AuthorName>
-                        <S.Timestamp>{new Date(reply.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</S.Timestamp>
-                      </S.AuthorInfo>
-                    </S.AuthorInfoGroup>
-
-                    <S.AuthorActionGroup>
-                      <S.IconButton onClick={() => toggleLike(reply.id)}>
-                        <img src={likedComments[reply.id] ? LikeActiveIcon : LikeIcon} alt="좋아요" />
-                      </S.IconButton>
-                      <S.IconButton onClick={() => handleComment(reply.author.name)}>
-                        <img src={CommentIcon} alt="댓글" />
-                      </S.IconButton>
-                    </S.AuthorActionGroup>
-                  </S.CommentAuthorSection>
-                  <S.CommentContent>{reply.content}</S.CommentContent>
-                </S.CommentMain>
-              </S.CommentItem>
-            </div>
-          ))}
-      </div>
-    ));
-  };
 
   const updatedPost = posts.find((p) => p.id === post.id) ?? post;
   const { liked, disliked } = postStates[post.id] || { liked: false, disliked: false };
   const date = new Date(post.timestamp);
   const formattedTime = `${date.toLocaleDateString()} · ${date.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
+    hour: '2-digit', minute: '2-digit'
   })}`;
 
   return (
@@ -215,30 +163,15 @@ export const FeedDetail: React.FC = () => {
       </S.Container>
 
       {isReplying && (
-        <S.ReplyInputWrapper>
-          <S.ProfileImage src={PersonIcon} alt="내 프로필" />
-
-          {mentionName && (
-            <S.MentionLabel>@{mentionName}</S.MentionLabel>
-          )}
-
-          <S.ReplyInput
-            value={replyText}
-            onChange={(e) => setReplyText(e.target.value)}
-            placeholder="댓글을 입력해주세요."
-          />
-
-          <S.SubmitButton
-            onClick={closeReplyInput}
-            disabled={replyText.trim().length === 0}
-          >
-            등록
-          </S.SubmitButton>
-        </S.ReplyInputWrapper>
+        <CommentInput
+          mentionName={mentionName}
+          replyText={replyText}
+          onChange={setReplyText}
+          onClose={closeReplyInput}
+        />
       )}
 
       {!isReplying && <Footer />}
-
     </>
   );
 };
