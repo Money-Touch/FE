@@ -15,12 +15,12 @@ const Splash = () => {
   }, [navigate]);
 
   return (
-    <S.SplashContainer className="pageContainer">
-      <S.LogoContainer>
-        <S.SplashImg src={SplashLogo} alt="splash" />
-        <S.SplashP>Touch</S.SplashP>
-      </S.LogoContainer>
-    </S.SplashContainer>
+    <div className="pageContainer splashBackground">
+      <div className={S.LogoContainer}>
+        <img src={SplashLogo} alt="splash" className={S.SplashImg} />
+        <p className={S.SplashP}>Touch</p>
+      </div>
+    </div>
   );
 };
 

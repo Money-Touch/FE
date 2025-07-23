@@ -17,9 +17,9 @@ const ItemMenu = ({ item }: ItemMenuProps) => {
   };
 
   return (
-    <L.ItemP onClick={handleClick} clickable={!!link}>
+    <p className={L.ItemP(!!link)} onClick={handleClick}>
       {name}
-    </L.ItemP>
+    </p>
   );
 };
 
