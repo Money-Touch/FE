@@ -23,4 +23,5 @@ export const Title = styled.div`
   font-weight: 700;
   font-size: 1.8rem;
   color: ${colors.G1};
+  white-space: nowrap;
 `;

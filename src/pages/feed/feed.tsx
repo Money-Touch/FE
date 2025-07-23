@@ -6,22 +6,8 @@ import { SkeletonPost } from '../../components/feed/SkeletonPost';
 import * as S from '../../styles/feed/feed.style';
 import NoResult from '../../assets/images/feed/NO_RESULT.png';
 
-export interface Author {
-  name: string;
-  profileImage?: string;
-}
-
-export interface Post {
-  id: number;
-  author: Author;
-  image?: string;
-  likes: number;
-  dislikes: number;
-  timestamp: Date;
-  content?: string;
-}
-
-export type SortBy = 'popular' | 'latest';
+import type { Post, SortBy, PostStates } from '../../types/feed/feed';
+import { handleLike, handleDislike } from '../../utils/feed/reaction';
 
 const Feed: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -32,9 +18,7 @@ const Feed: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([
     {
       id: 1,
-      author: {
-        name: '홍길동',
-      },
+      author: { name: '홍길동' },
       likes: 24,
       dislikes: 2,
       timestamp: new Date('2024-07-03T10:00:00'),
@@ -42,9 +26,7 @@ const Feed: React.FC = () => {
     },
     {
       id: 2,
-      author: {
-        name: '김철수',
-      },
+      author: { name: '김철수' },
       likes: 31,
       dislikes: 1,
       timestamp: new Date('2024-07-03T08:15:00'),
@@ -52,9 +34,7 @@ const Feed: React.FC = () => {
     },
   ]);
 
-  const [postStates, setPostStates] = useState<{
-    [key: number]: { liked: boolean; disliked: boolean };
-  }>({});
+  const [postStates, setPostStates] = useState<PostStates>({});
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
@@ -63,7 +43,7 @@ const Feed: React.FC = () => {
 
   const filteredAndSortedPosts = useMemo(() => {
     const filtered = posts.filter((post) =>
-      post.author.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      post.author.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     if (sortBy === 'popular') {
@@ -74,62 +54,6 @@ const Feed: React.FC = () => {
 
     return filtered;
   }, [posts, searchTerm, sortBy]);
-
-  const handleLike = (id: number) => {
-    setPostStates((prev) => {
-      const current = prev[id] || { liked: false, disliked: false };
-      const wasLiked = current.liked;
-
-      const updatedPost = posts.find((p) => p.id === id);
-      if (!updatedPost) return prev;
-
-      const newPosts = posts.map((p) => {
-        if (p.id !== id) return p;
-        return {
-          ...p,
-          likes: wasLiked ? p.likes - 1 : p.likes + 1,
-          dislikes: current.disliked && !wasLiked ? p.dislikes - 1 : p.dislikes,
-        };
-      });
-
-      setPosts(newPosts);
-      return {
-        ...prev,
-        [id]: {
-          liked: !wasLiked,
-          disliked: wasLiked ? current.disliked : false,
-        },
-      };
-    });
-  };
-
-  const handleDislike = (id: number) => {
-    setPostStates((prev) => {
-      const current = prev[id] || { liked: false, disliked: false };
-      const wasDisliked = current.disliked;
-
-      const updatedPost = posts.find((p) => p.id === id);
-      if (!updatedPost) return prev;
-
-      const newPosts = posts.map((p) => {
-        if (p.id !== id) return p;
-        return {
-          ...p,
-          dislikes: wasDisliked ? p.dislikes - 1 : p.dislikes + 1,
-          likes: current.liked && !wasDisliked ? p.likes - 1 : p.likes,
-        };
-      });
-
-      setPosts(newPosts);
-      return {
-        ...prev,
-        [id]: {
-          liked: wasDisliked ? current.liked : false,
-          disliked: !wasDisliked,
-        },
-      };
-    });
-  };
 
   const handleSearch = () => {
     console.log('검색 실행:', searchTerm);
@@ -157,8 +81,12 @@ const Feed: React.FC = () => {
               <PostItem
                 key={post.id}
                 post={post}
-                onLike={() => handleLike(post.id)}
-                onDislike={() => handleDislike(post.id)}
+                onLike={() =>
+                  handleLike(post.id, posts, postStates, setPosts, setPostStates)
+                }
+                onDislike={() =>
+                  handleDislike(post.id, posts, postStates, setPosts, setPostStates)
+                }
                 liked={postStates[post.id]?.liked}
                 disliked={postStates[post.id]?.disliked}
               />
