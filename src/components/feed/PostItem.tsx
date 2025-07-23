@@ -1,24 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as S from '../../styles/feed/feed.style';
 import LikeIcon from '../../assets/images/feed/Like.png';
 import LikeIconFill from '../../assets/images/feed/Like_Fill.png';
 import DislikeIcon from '../../assets/images/feed/Dislike.png';
 import DislikeIconFill from '../../assets/images/feed/Dislike_Fill.png';
 
-export interface Author {
-  name: string;
-  profileImage?: string;
-}
-
-export interface Post {
-  id: number;
-  author: Author;
-  content?: string;
-  image?: string;
-  likes: number;
-  dislikes: number;
-  timestamp: Date;
-}
+import type { Post } from '../../types/feed/feed';
 
 interface PostItemProps {
   post: Post;
@@ -35,6 +23,12 @@ export const PostItem: React.FC<PostItemProps> = ({
   liked = false,
   disliked = false,
 }) => {
+  const navigate = useNavigate();
+
+  const handlePostClick = () => {
+    navigate(`/feed/post/${post.id}`);
+  };
+
   return (
     <S.PostCard>
       <S.PostHeader>
@@ -43,13 +37,12 @@ export const PostItem: React.FC<PostItemProps> = ({
         ) : (
           <S.DefaultProfile />
         )}
-
         <S.AuthorInfo>
           <S.AuthorName>{post.author.name}</S.AuthorName>
         </S.AuthorInfo>
       </S.PostHeader>
 
-      <S.PostImageContainer>
+      <S.PostImageContainer onClick={handlePostClick}>
         {post.image ? (
           <S.PostImage src={post.image} alt="게시물 이미지" />
         ) : (
@@ -70,3 +63,4 @@ export const PostItem: React.FC<PostItemProps> = ({
     </S.PostCard>
   );
 };
+

@@ -121,6 +121,7 @@ export const PostImageContainer = styled.div`
   padding-bottom: 100%;
   overflow: hidden;
   border-radius: 1rem;
+  cursor: pointer;
 `;
 
 export const PostImage = styled.img`
@@ -161,6 +162,7 @@ export const LikeCount = styled.span`
   width: 2rem;
   text-align: center;
   font-size: 1.4rem;
+  font-family: inherit;
   color: ${colors.G1};
 `;
 
@@ -168,6 +170,7 @@ export const DislikeCount = styled.span`
   width: 2rem;
   text-align: center;
   font-size: 1.4rem;
+  font-family: inherit;
   color: ${colors.G1};
 `;
 
