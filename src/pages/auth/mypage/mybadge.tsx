@@ -24,13 +24,13 @@ import JulyFirstBadge from '../../../assets/images/auth/badge/MyBadge/July_first
 import Nobadge from '../../../assets/images/auth/badge/Represent/Nobadge.png';
 
 const badgeList = [
+  { id: 'master', name: '절제 마스터', image: MasterBadge, represent: MasterRepresent },
+  { id: 'july_first', name: '7월의 1등', image: JulyFirstBadge, represent: JulyFirstRepresent },
   { id: 'fairy', name: '알뜰 요정', image: FairyBadge, represent: FairyRepresent },
   { id: 'lover', name: '절약 러버', image: LoverBadge, represent: LoverRepresent },
-  { id: 'master', name: '절제 마스터', image: MasterBadge, represent: MasterRepresent },
   { id: 'boss', name: '똑똑 소비 대장', image: BossBadge, represent: BossRepresent },
-  { id: 'may_third', name: '5월의 3등', image: MaythirdBadge, represent: MayThirdRepresent },
   { id: 'june_second', name: '6월의 2등', image: JuneSecondBadge, represent: JuneSecondRepresent },
-  { id: 'july_first', name: '7월의 1등', image: JulyFirstBadge, represent: JulyFirstRepresent },
+  { id: 'may_third', name: '5월의 3등', image: MaythirdBadge, represent: MayThirdRepresent },
 ];
 
 const Mybadge = () => {
