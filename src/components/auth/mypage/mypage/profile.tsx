@@ -10,21 +10,22 @@ const Profile = () => {
     navigate('/mypage/badge');
   };
   return (
-    <M.ProfileContainer>
-      <M.ProfileLeftContainer>
-        <M.ProfileImg src={ProfileImage} alt="profile" />
-        <M.ProfileEditButton>프로필 편집</M.ProfileEditButton>
-      </M.ProfileLeftContainer>
+    <div className={M.ProfileContainer}>
+      <div className={M.ProfileLeftContainer}>
+        <img className={M.ProfileImg} src={ProfileImage} alt="profile" />
+        <button className={M.ProfileEditButton}>프로필 편집</button>
+      </div>
 
-      <M.ProfileRightContaienr>
-        <M.ProfileP>라인</M.ProfileP>
-        <M.BadgeImg
+      <div className={M.ProfileRightContaienr}>
+        <p className={M.ProfileP}>라인</p>
+        <img
+          className={M.BadgeImg}
           src={NotBadgeImage}
           alt="notBadge"
           onClick={handleMybadgeClick}
         />
-      </M.ProfileRightContaienr>
-    </M.ProfileContainer>
+      </div>
+    </div>
   );
 };
 

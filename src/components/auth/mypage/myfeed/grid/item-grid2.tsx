@@ -1,7 +1,6 @@
 import type { ItemFeedProps } from '../../../../../types/auth/mypage/myfeed';
 import { useNavigate } from 'react-router-dom';
 import * as M from '../../../../../styles/auth/mypage/myfeed.style';
-import colors from '../../../../../styles/common/colors';
 
 const ItemGrid2 = ({ item }: ItemFeedProps) => {
   const navigate = useNavigate();
@@ -11,21 +10,25 @@ const ItemGrid2 = ({ item }: ItemFeedProps) => {
   };
 
   return (
-    <M.ItemGrid2Contaienr onClick={handleItemClick}>
-      <M.ItemGrid2P>{item.name}</M.ItemGrid2P>
+    <div className={M.ItemGrid2Contaienr} onClick={handleItemClick}>
+      <p className={M.ItemGrid2P}>{item.name}</p>
 
-      <M.ItemGrid2Img />
+      <div className={M.ItemGrid2Img} />
 
-      <M.ItemGrid2PDiv>
-        <M.ItemGrid2P fontSize="1.2rem" fontWeight={500}>
+      <div className={M.ItemGrid2PDiv}>
+        <p
+          className={`${M.ItemGrid2P} !font-medium !text-[1.2rem] !text-[var(--color-G3)] leading-[1.6rem]`}
+        >
           {item.name}
-        </M.ItemGrid2P>
+        </p>
 
-        <M.ItemGrid2P fontSize="2rem" fontWeight={500} color={colors.G1}>
+        <p
+          className={`${M.ItemGrid2P} !font-medium !text-[2rem] !text-[var(--color-G1)]`}
+        >
           {item.email}
-        </M.ItemGrid2P>
-      </M.ItemGrid2PDiv>
-    </M.ItemGrid2Contaienr>
+        </p>
+      </div>
+    </div>
   );
 };
 

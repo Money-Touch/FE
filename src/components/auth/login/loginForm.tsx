@@ -28,8 +28,8 @@ const LoginForm = () => {
   };
 
   return (
-    <L.LoginFormContainer>
-      <L.InputContainer>
+    <div className={L.LoginFormContainer}>
+      <div className={L.InputContainer}>
         <LoginInput
           placeholder="이메일 주소"
           name="email"
@@ -43,14 +43,18 @@ const LoginForm = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ paddingRight: '4rem' }}
+          className={`${L.InputBox} !pr-[4rem]`}
         />
-      </L.InputContainer>
+      </div>
 
-      <L.LoginButton onClick={handleLogin} disabled={isPending}>
+      <button
+        className={L.LoginButton}
+        onClick={handleLogin}
+        disabled={isPending}
+      >
         {isPending ? '로그인 중...' : '로그인'}
-      </L.LoginButton>
-    </L.LoginFormContainer>
+      </button>
+    </div>
   );
 };
 

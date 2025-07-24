@@ -9,12 +9,12 @@ interface ItemSelectProps {
 
 const ItemSelect = ({ id, value, selected, onSelect }: ItemSelectProps) => {
   return (
-    <T.ItemSelectContainer
-      selected={selected}
+    <li
+      className={T.ItemSelectContainer(selected)}
       onClick={() => onSelect(id, value)}
     >
       {value}
-    </T.ItemSelectContainer>
+    </li>
   );
 };
 

@@ -3,9 +3,9 @@ import * as F from '../../styles/footer/footer.style';
 
 const Footer = () => {
   return (
-    <F.FooterContainer>
+    <div className={F.FooterContainer}>
       <ListFooter />
-    </F.FooterContainer>
+    </div>
   );
 };
 

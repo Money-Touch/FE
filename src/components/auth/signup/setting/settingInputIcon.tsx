@@ -24,19 +24,19 @@ const SettingInputIcon = ({
 }: Props) => (
   <>
     {showDelete && (
-      <S.DeleteIcon
+      <img
+        className={S.DeleteIcon({ hasButton })}
         src={Delete}
         alt="delete"
         onClick={onDelete}
-        hasButton={hasButton}
       />
     )}
     {showToggle && (
-      <S.ToggleIcon
+      <img
+        className={S.ToggleIcon({ hasDelete })}
         src={showPassword ? Show : NoShow}
         alt="toggle"
         onClick={onToggle}
-        hasDelete={hasDelete}
       />
     )}
   </>

@@ -15,15 +15,16 @@ const Success = () => {
   }, [navigate]);
 
   return (
-    <S.AgreeContainer>
-      <S.SuccessMainP>
+    <div className={S.AgreeContainer}>
+      <p className={S.SuccessMainP}>
         이메일 계정으로
         <br />
         회원가입이 완료되었어요!
-      </S.SuccessMainP>
+      </p>
 
-      <S.SuccessImg src={SuccessIcon} alt="success" />
-    </S.AgreeContainer>
+      <img className={S.SuccessImg} src={SuccessIcon} alt="success" />
+      <p className={S.SuccessSubP}>3초 뒤에 온보딩 화면으로 이동합니다.</p>
+    </div>
   );
 };
 

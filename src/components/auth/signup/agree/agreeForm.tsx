@@ -17,16 +17,20 @@ const AgreeForm = ({ agreeList, setAgreeList }: AgreeFormProps) => {
   );
 
   return (
-    <S.AgreeFormContainer>
-      <S.AgreeItemContainer onClick={toggleAll}>
-        <S.CheckImg src={allChecked ? CheckClick : Check} alt="check" />
-        <S.ItemP>모두 동의합니다.</S.ItemP>
-      </S.AgreeItemContainer>
+    <div className={S.AgreeFormContainer}>
+      <div className={S.AgreeItemContainer} onClick={toggleAll}>
+        <img
+          className={S.CheckImg}
+          src={allChecked ? CheckClick : Check}
+          alt="check"
+        />
+        <p className={S.ItemP}>모두 동의합니다.</p>
+      </div>
 
-      <S.AgreeBar />
+      <div className={S.AgreeBar} />
 
       <ListAgree agreeList={agreeList} toggleItem={toggleItem} />
-    </S.AgreeFormContainer>
+    </div>
   );
 };
 

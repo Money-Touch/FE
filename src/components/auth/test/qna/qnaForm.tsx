@@ -46,10 +46,10 @@ const QnaForm = ({ pageIndex, setPageIndex, onNext }: QnaFormProps) => {
   const isPageAnswered = currentPage.qnaList.every((qna) => answers[qna.qnaId]);
 
   return (
-    <T.ListOnboardingContainer style={{ gap: '0rem' }}>
-      <T.MbtiP style={{ margin: '1rem 0 3.4rem 0' }}>
+    <div className={`${T.ListOnboardingContainer} !gap-0`}>
+      <p className={`${T.MbtiP} !mt-[1rem] !mb-[3.4rem]`}>
         {currentPage.title}
-      </T.MbtiP>
+      </p>
 
       <ListQna
         qnaList={currentPage.qnaList}
@@ -58,16 +58,16 @@ const QnaForm = ({ pageIndex, setPageIndex, onNext }: QnaFormProps) => {
         onSelect={handleSelect}
       />
 
-      <S.BottomContainer style={{ marginTop: '9.8rem' }}>
-        <S.NextButton
+      <div className={`${S.BottomContainer} !mt-[9.8rem]`}>
+        <button
+          className={S.NextButton(isPageAnswered)}
           onClick={handleNext}
           disabled={!isPageAnswered}
-          active={isPageAnswered}
         >
           다음
-        </S.NextButton>
-      </S.BottomContainer>
-    </T.ListOnboardingContainer>
+        </button>
+      </div>
+    </div>
   );
 };
 

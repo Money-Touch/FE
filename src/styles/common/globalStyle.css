@@ -1,0 +1,108 @@
+@import 'tailwindcss';
+@import './colors.css';
+@import './fonts.css';
+
+@layer base {
+  html {
+    @apply scroll-smooth text-[62.5%];
+    font-family: 'Pretendard', sans-serif;
+  }
+
+  @media screen and (max-width: 375px) {
+    html {
+      font-size: 40%;
+    }
+  }
+
+  body {
+    @apply flex justify-center;
+    touch-action: manipulation;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  input,
+  button,
+  select {
+    outline: none;
+    border: none;
+    background: transparent;
+  }
+
+  button {
+    cursor: pointer;
+    padding: 0;
+  }
+
+  ul,
+  li {
+    list-style: none;
+    padding: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pageContainer {
+    @apply flex flex-col items-center w-[425px] min-h-screen;
+  }
+
+  @media screen and (max-width: 424px) {
+    .pageContainer {
+      width: 100vw;
+    }
+  }
+
+  .mainContent {
+    @apply flex-1 w-full bg-white;
+  }
+
+  .font-hakgyoB {
+    font-family: 'Hakgyoansim-B', sans-serif !important;
+  }
+
+  .font-hakgyoL {
+    font-family: 'Hakgyoansim-L', sans-serif !important;
+  }
+}
+
+@layer utilities {
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .animate-fadeUp {
+    animation: fadeUp 2s ease-out;
+  }
+}
+
+@layer components {
+  .splashBackground {
+    background-image: var(--color-splash);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 27.5rem;
+  }
+}

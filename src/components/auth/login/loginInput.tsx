@@ -9,19 +9,21 @@ const LoginInput: React.FC<LoginInputProps> = ({ type, ...rest }) => {
   const { showPassword, togglePassword } = usePasswordToggle();
 
   return (
-    <L.InputWrapper>
-      <L.InputBox
+    <div className={L.InputWrapper}>
+      <input
+        className={L.InputBox}
         {...rest}
         type={isPasswordInput ? (showPassword ? 'text' : 'password') : type}
       />
       {isPasswordInput && (
-        <L.IconImg
+        <img
+          className={L.IconImg}
           src={showPassword ? Show : NoShow}
           alt={showPassword ? 'hide' : 'show'}
           onClick={togglePassword}
         />
       )}
-    </L.InputWrapper>
+    </div>
   );
 };
 

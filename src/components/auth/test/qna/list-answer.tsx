@@ -9,7 +9,7 @@ interface ListAnswerProps {
 
 const ListAnswer = ({ answers, selectedIndex, onSelect }: ListAnswerProps) => {
   return (
-    <T.ItemOnboardingContainer style={{ gap: '0.6rem' }}>
+    <div className={`${T.ItemOnboardingContainer} !gap-[0.6rem]`}>
       {answers.map((ans, index) => (
         <ItemAnswer
           key={index}
@@ -18,7 +18,7 @@ const ListAnswer = ({ answers, selectedIndex, onSelect }: ListAnswerProps) => {
           onClick={() => onSelect(index)}
         />
       ))}
-    </T.ItemOnboardingContainer>
+    </div>
   );
 };
 

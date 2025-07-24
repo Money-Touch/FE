@@ -9,7 +9,7 @@ const ItemGrid4 = ({ item }: ItemFeedProps) => {
     navigate(`/feed/${item.id}`);
   };
 
-  return <M.ItemGrid4Div onClick={handleItemClick} />;
+  return <div className={M.ItemGrid4Div} onClick={handleItemClick} />;
 };
 
 export default ItemGrid4;

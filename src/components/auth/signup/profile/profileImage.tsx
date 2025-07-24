@@ -10,8 +10,9 @@ interface Props {
 const ProfileImage = ({ preview, fileInputRef, onClick, onChange }: Props) => {
   return (
     <>
-      <S.Img src={preview} alt="profile" onClick={onClick} />
-      <S.HiddenInput
+      <img className={S.Img} src={preview} alt="profile" onClick={onClick} />
+      <input
+        className={S.HiddenInput}
         type="file"
         accept="image/*"
         ref={fileInputRef}

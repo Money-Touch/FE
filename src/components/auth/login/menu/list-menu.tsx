@@ -4,11 +4,11 @@ import ItemMenu from './item-menu';
 
 const ListMenu = () => {
   return (
-    <L.ListMenuContainer>
+    <div className={L.ListMenuContainer}>
       {MenuData.map((item) => (
         <ItemMenu key={item.id} item={item} />
       ))}
-    </L.ListMenuContainer>
+    </div>
   );
 };
 

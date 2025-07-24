@@ -7,7 +7,8 @@ const ItemGrid = ({ item, isSelected, onClick }: ItemGridProps) => {
   };
 
   return (
-    <M.ItemGridImg
+    <img
+      className={M.ItemGridImg}
       src={isSelected ? item.imageClick : item.image}
       alt={item.name}
       onClick={handleClick}

@@ -4,11 +4,11 @@ import ItemSection from './item-section';
 
 const ListSection = () => {
   return (
-    <M.ListSectionContainer>
+    <div className={M.ListSectionContainer}>
       {SectionData.map((item) => (
         <ItemSection key={item.id} item={item} />
       ))}
-    </M.ListSectionContainer>
+    </div>
   );
 };
 

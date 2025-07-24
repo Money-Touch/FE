@@ -1,4 +1,3 @@
-import colors from '../../../../styles/common/colors';
 import SettingInputIcon from './settingInputIcon';
 import type { SettingInputProps } from '../../../../types/auth/signup/setting';
 import { useSettingInput } from '../../../../hooks/auth/signup/useSettingInput';
@@ -31,18 +30,20 @@ const SettingInput = ({
 
   return (
     <>
-      <S.Label>
+      <p className={S.Label}>
         {label && <label>{label}</label>}
-        {required && <span style={{ color: colors.M1 }}>*</span>}
-      </S.Label>
+        {required && <span className="text-[var(--color-M1)]">*</span>}
+      </p>
 
-      <S.Wrapper>
-        <S.Input
+      <div className={S.Wrapper}>
+        <input
           type={inputType}
           {...register}
           placeholder={placeholder}
-          hasError={!!error}
-          hasButton={hasButton}
+          className={S.Input({
+            hasError: !!error,
+            hasButton: hasButton,
+          })}
         />
 
         <SettingInputIcon
@@ -56,13 +57,17 @@ const SettingInput = ({
         />
 
         {hasButton && (
-          <S.Button type="button" onClick={onClickButton} hasError={hasError}>
+          <button
+            className={S.Button({ hasError })}
+            type="button"
+            onClick={onClickButton}
+          >
             {buttonText}
-          </S.Button>
+          </button>
         )}
-      </S.Wrapper>
+      </div>
 
-      {error && <S.Error>{error.message}</S.Error>}
+      {error && <p className={S.Error}>{error.message}</p>}
     </>
   );
 };

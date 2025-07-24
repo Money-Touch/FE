@@ -9,11 +9,11 @@ interface ListOnboardingProps {
 
 const ListOnboarding = ({ onboardingList, onSelect }: ListOnboardingProps) => {
   return (
-    <T.ListOnboardingContainer>
+    <div className={T.ListOnboardingContainer}>
       {onboardingList.map((item) => (
         <ItemOnboarding key={item.id} item={item} onSelect={onSelect} />
       ))}
-    </T.ListOnboardingContainer>
+    </div>
   );
 };
 

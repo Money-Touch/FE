@@ -22,21 +22,21 @@ const Qna = ({ onBack, onNext }: QnaProps) => {
   };
 
   return (
-    <S.AgreeContainer style={{ position: 'relative' }}>
+    <div className={`${S.AgreeContainer} !relative`}>
       <Header onBack={handleHeaderBack} />
 
-      <T.NavbarContainer>
+      <div className={T.NavbarContainer}>
         {QnaData.map((_, idx) => (
-          <T.NavbarDot key={idx} active={idx === pageIndex} />
+          <div className={T.NavbarDot(idx === pageIndex)} key={idx} />
         ))}
-      </T.NavbarContainer>
+      </div>
 
       <QnaForm
         pageIndex={pageIndex}
         setPageIndex={setPageIndex}
         onNext={onNext}
       />
-    </S.AgreeContainer>
+    </div>
   );
 };
 

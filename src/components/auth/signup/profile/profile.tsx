@@ -7,15 +7,13 @@ interface ProfileProps {
 
 const Profile = ({ onNext }: ProfileProps) => {
   return (
-    <S.AgreeContainer className="pageContainer">
-      <S.AgreeP
-        style={{ marginTop: '11.2rem', width: '100%', textAlign: 'center' }}
-      >
+    <div className={`${S.AgreeContainer} pageContainer`}>
+      <p className={`${S.AgreeP} !mt-[11.2rem] !w-full !text-center`}>
         닉네임을 설정해주세요.
-      </S.AgreeP>
+      </p>
 
       <ProfileForm onNext={onNext} />
-    </S.AgreeContainer>
+    </div>
   );
 };
 

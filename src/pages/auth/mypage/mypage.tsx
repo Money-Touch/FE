@@ -6,15 +6,17 @@ import ListSection from '../../../components/auth/mypage/mypage/section/list-sec
 
 const Mypage = () => {
   return (
-    <S.AgreeContainer style={{ padding: '0 0 3.2rem 0' }}>
+    <div
+      className={`${S.AgreeContainer} !pb-[11.6rem] !bg-[var(--color-B2)] !px-0`}
+    >
       <Profile />
 
-      <M.ProfileBar />
+      <div className={M.ProfileBar} />
 
       <ListButton />
 
       <ListSection />
-    </S.AgreeContainer>
+    </div>
   );
 };
 

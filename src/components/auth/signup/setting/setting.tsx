@@ -9,17 +9,17 @@ interface SettingProps {
 
 const Setting = ({ onNext, onBack }: SettingProps) => {
   return (
-    <S.AgreeContainer>
+    <div className={S.AgreeContainer}>
       <Header onBack={onBack} />
 
-      <S.AgreeP>
+      <p className={S.AgreeP}>
         이메일과 비밀번호를
         <br />
         설정해주세요.
-      </S.AgreeP>
+      </p>
 
       <SettingForm onNext={onNext} />
-    </S.AgreeContainer>
+    </div>
   );
 };
 

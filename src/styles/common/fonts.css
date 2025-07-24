@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Hakgyoansim-L';
+  src: url('/fonts/Hakgyoansim-Byeolbichhaneul-TTF-L.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Hakgyoansim-B';
+  src: url('/fonts/Hakgyoansim-Byeolbichhaneul-TTF-B.ttf') format('truetype');
+  font-style: normal;
+  font-weight: bold;
+}
