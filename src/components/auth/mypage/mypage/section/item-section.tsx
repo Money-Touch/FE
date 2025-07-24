@@ -4,10 +4,10 @@ import type { MenuSection } from '../../../../../types/auth/mypage/mypage';
 
 const ItemSection = ({ item }: { item: MenuSection }) => {
   return (
-    <M.ItemSectionContainer>
-      <M.ItemSectionP>{item.title}</M.ItemSectionP>
+    <div className={M.ItemSectionContainer}>
+      <p className={M.ItemSectionP}>{item.title}</p>
       <ListMenu list={item.list} />
-    </M.ItemSectionContainer>
+    </div>
   );
 };
 

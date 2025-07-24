@@ -10,12 +10,12 @@ const ItemButton = ({ item }: { item: MenuButton }) => {
   };
 
   return (
-    <M.ItemButtonContainer onClick={handleItemClick}>
-      <M.ItemButtonInnerContainer>
-        <M.ItemButtonImg src={item.image} alt={item.name} />
-        <M.ItemButtonP>{item.name}</M.ItemButtonP>
-      </M.ItemButtonInnerContainer>
-    </M.ItemButtonContainer>
+    <div className={M.ItemButtonContainer} onClick={handleItemClick}>
+      <div className={M.ItemButtonInnerContainer}>
+        <img className={M.ItemButtonImg} src={item.image} alt={item.name} />
+        <p className={M.ItemButtonP}>{item.name}</p>
+      </div>
+    </div>
   );
 };
 

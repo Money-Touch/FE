@@ -72,7 +72,8 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
 
   return (
     <FormProvider {...methods}>
-      <S.ProfileFormContainer
+      <form
+        className={S.ProfileFormContainer}
         onSubmit={handleSubmit(onSubmit)}
         id="profileForm"
       >
@@ -83,7 +84,7 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
           onChange={handleChange}
         />
 
-        <S.InputWrapper>
+        <div className={S.InputWrapper}>
           <SettingInput
             register={register('nickname')}
             error={errors.nickname}
@@ -92,19 +93,19 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
             placeholder="닉네임 (2~10자)"
             onClickButton={handleCheckNickname}
           />
-        </S.InputWrapper>
-      </S.ProfileFormContainer>
+        </div>
+      </form>
 
-      <S.BottomContainer style={{ marginTop: '27.1rem' }}>
-        <S.NextButton
+      <div className={`${S.BottomContainer} !mt-[25.3rem]`}>
+        <button
+          className={S.NextButton(isValid)}
           type="submit"
-          active={isValid}
           disabled={!isValid}
           form="profileForm"
         >
           다음
-        </S.NextButton>
-      </S.BottomContainer>
+        </button>
+      </div>
     </FormProvider>
   );
 };

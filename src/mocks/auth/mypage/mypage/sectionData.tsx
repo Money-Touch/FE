@@ -29,7 +29,7 @@ const SectionData = [
       },
       {
         id: 2,
-        name: '회원 정보 수정',
+        name: '회원정보 재설정',
       },
       {
         id: 3,

@@ -4,10 +4,10 @@ import type { MenuItem } from '../../../../../types/auth/mypage/mypage';
 
 const ItemMenu = ({ item }: { item: MenuItem }) => {
   return (
-    <M.ItemMenuContainer>
-      <M.ItemMenuP>{item.name}</M.ItemMenuP>
-      <M.RightArrowImg src={RightArrow} alt="rightArrow" />
-    </M.ItemMenuContainer>
+    <div className={M.ItemMenuContainer}>
+      <p className={M.ItemMenuP}>{item.name}</p>
+      <img className={M.RightArrowImg} src={RightArrow} alt="rightArrow" />
+    </div>
   );
 };
 

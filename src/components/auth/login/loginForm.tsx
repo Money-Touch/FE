@@ -43,7 +43,7 @@ const LoginForm = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={{ paddingRight: '4rem' }}
+          className={`${L.InputBox} !pr-[4rem]`}
         />
       </div>
 

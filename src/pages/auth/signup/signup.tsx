@@ -27,7 +27,7 @@ const Signup = () => {
   };
 
   return (
-    <S.SignupContainer className="pageContainer">
+    <div className={`${S.SignupContainer} pageContainer`}>
       {step === 'agree' && (
         <Agree
           onNext={handleNext}
@@ -40,7 +40,7 @@ const Signup = () => {
       )}
       {step === 'profile' && <Profile onNext={handleNext} />}
       {step === 'success' && <Success />}
-    </S.SignupContainer>
+    </div>
   );
 };
 

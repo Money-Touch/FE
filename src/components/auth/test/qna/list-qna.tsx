@@ -15,7 +15,7 @@ interface ListQnaProps {
 
 const ListQna = ({ qnaList, answers, type, onSelect }: ListQnaProps) => {
   return (
-    <T.ListOnboardingContainer style={{ gap: '3rem' }}>
+    <div className={`${T.ListOnboardingContainer} !gap-[3rem]`}>
       {qnaList.map((qna) => (
         <ItemQna
           key={qna.qnaId}
@@ -26,7 +26,7 @@ const ListQna = ({ qnaList, answers, type, onSelect }: ListQnaProps) => {
           onSelectAnswer={(index) => onSelect(qna.qnaId, type, index)}
         />
       ))}
-    </T.ListOnboardingContainer>
+    </div>
   );
 };
 

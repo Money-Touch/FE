@@ -1,5 +1,4 @@
 import * as T from '../../../../styles/auth/test/test.style';
-import colors from '../../../../styles/common/colors';
 import ListOnboarding from './list-onboarding';
 import type { OnboardingItem } from '../../../../types/auth/test/onboarding';
 import { useOnboarding } from '../../../../hooks/auth/test/useOnboarding';
@@ -39,31 +38,32 @@ const Onboarding = ({
   };
 
   return (
-    <S.AgreeContainer>
-      <T.OnboardingTopContainer>
-        <T.OnboardingP>안녕하세요!</T.OnboardingP>
-        <T.OnboardingP
-          style={{ fontSize: '2rem', color: colors.G1, lineHeight: '2.8rem' }}
+    <div className={S.AgreeContainer}>
+      <div className={T.OnboardingTopContainer}>
+        <p className={T.OnboardingP}>안녕하세요!</p>
+        <p
+          className={`${T.OnboardingP} !text-[2rem] !text-[var(--color-G1)] !leading-[2.8rem]`}
         >
-          당신의 <span style={{ color: colors.mainColor1 }}>소비 습관</span>을
+          당신의
+          <span className="text-[var(--color-mainColor1)]"> 소비 습관</span>을
           파악하기 위한
           <br />
           간단한 질문 몇 가지에 답해주세요.
-        </T.OnboardingP>
-      </T.OnboardingTopContainer>
+        </p>
+      </div>
 
       <ListOnboarding onboardingList={onboardingList} onSelect={handleSelect} />
 
-      <S.BottomContainer style={{ marginTop: '3.7rem' }}>
-        <S.NextButton
+      <div className={`${S.BottomContainer} !mt-[3.7rem]`}>
+        <button
+          className={S.NextButton(isComplete)}
           onClick={handleSubmit}
-          active={isComplete}
           disabled={!isComplete}
         >
           완료
-        </S.NextButton>
-      </S.BottomContainer>
-    </S.AgreeContainer>
+        </button>
+      </div>
+    </div>
   );
 };
 

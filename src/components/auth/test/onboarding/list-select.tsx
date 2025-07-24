@@ -14,7 +14,7 @@ const ListSelect = ({ id, selectList, checked, onSelect }: ListSelectProps) => {
 
   return (
     <>
-      <T.ListSelectContainer>
+      <ul className={T.ListSelectContainer}>
         {firstRow.map((option) => (
           <ItemSelect
             key={option}
@@ -24,10 +24,10 @@ const ListSelect = ({ id, selectList, checked, onSelect }: ListSelectProps) => {
             onSelect={onSelect}
           />
         ))}
-      </T.ListSelectContainer>
+      </ul>
 
       {secondRow.length > 0 && (
-        <T.ListSelectContainer>
+        <ul className={T.ListSelectContainer}>
           {secondRow.map((option) => (
             <ItemSelect
               key={option}
@@ -37,7 +37,7 @@ const ListSelect = ({ id, selectList, checked, onSelect }: ListSelectProps) => {
               onSelect={onSelect}
             />
           ))}
-        </T.ListSelectContainer>
+        </ul>
       )}
     </>
   );

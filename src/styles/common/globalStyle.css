@@ -1,51 +1,17 @@
 @import 'tailwindcss';
+@import './colors.css';
+@import './fonts.css';
 
 @layer base {
-  @font-face {
-    font-family: 'Hakgyoansim-L';
-    src: url('/fonts/Hakgyoansim-Byeolbichhaneul-TTF-L.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-  }
-
-  @font-face {
-    font-family: 'Hakgyoansim-B';
-    src: url('/fonts/Hakgyoansim-Byeolbichhaneul-TTF-B.ttf') format('truetype');
-    font-style: normal;
-    font-weight: bold;
-  }
-
-  :root {
-    --color-mainColor1: #00d1b5;
-    --color-mainColor2: #ffe388;
-    --color-subColor1: #004517;
-    --color-subColor2: #135d42;
-    --color-subColor3: #31c68f;
-    --color-subColor4: #8eeec5;
-    --color-subColor5: #ddfaea;
-    --color-subColor6: #eefff8;
-    --color-G1: #111111;
-    --color-G2: #303030;
-    --color-G3: #585858;
-    --color-G4: #767676;
-    --color-G5: #999999;
-    --color-G6: #bfbfbf;
-    --color-G7: #d9d9d9;
-    --color-G8: #f4f4f4;
-    --color-M1: rgba(235, 58, 58, 0.8);
-    --color-M2: #cde3f3;
-    --color-B1: #fcfcfc;
-    --color-B2: #fafafa;
-    --color-white: #ffffff;
-    --color-black: #000000;
-    --color-yellow: #fee500;
-
-    --color-splash: linear-gradient(191.43deg, #00d1b5 0.01%, #8eeec5 99.99%);
-  }
-
   html {
     @apply scroll-smooth text-[62.5%];
     font-family: 'Pretendard', sans-serif;
+  }
+
+  @media screen and (max-width: 375px) {
+    html {
+      font-size: 40%;
+    }
   }
 
   body {
@@ -96,20 +62,22 @@
     @apply flex flex-col items-center w-[425px] min-h-screen;
   }
 
-  .mainContent {
-    @apply flex-1 w-full bg-white;
-  }
-
   @media screen and (max-width: 424px) {
     .pageContainer {
       width: 100vw;
     }
   }
 
-  @media screen and (max-width: 375px) {
-    html {
-      font-size: 40%;
-    }
+  .mainContent {
+    @apply flex-1 w-full bg-white;
+  }
+
+  .font-hakgyoB {
+    font-family: 'Hakgyoansim-B', sans-serif !important;
+  }
+
+  .font-hakgyoL {
+    font-family: 'Hakgyoansim-L', sans-serif !important;
   }
 }
 
@@ -135,6 +103,6 @@
     background-image: var(--color-splash);
     background-repeat: no-repeat;
     background-size: cover;
-    padding-top: 26.7rem;
+    padding-top: 27.5rem;
   }
 }

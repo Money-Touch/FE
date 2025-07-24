@@ -1,12 +1,11 @@
 import { ClipLoader } from 'react-spinners';
 import * as T from '../../../../styles/auth/test/test.style';
-import colors from '../../../../styles/common/colors';
 
 const Spinner = () => {
   return (
-    <T.SpinnerWrapper>
-      <ClipLoader size={40} color={colors.mainColor1} />
-    </T.SpinnerWrapper>
+    <div className={T.SpinnerWrapper}>
+      <ClipLoader size={40} color="var(--color-mainColor1)" />
+    </div>
   );
 };
 

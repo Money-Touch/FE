@@ -1,154 +1,54 @@
-import styled from 'styled-components';
-import colors from '../../common/colors';
-
 // mypage.tsx
-export const ProfileBar = styled.div`
-  width: 100%;
-  height: 0.7rem;
-  background: ${colors.G8};
-`;
+export const ProfileBar = 'w-full h-[0.7rem] bg-[var(--color-G8)]';
 
 // profile.tsx
-export const ProfileContainer = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  gap: 2rem;
-  margin: 7.9rem 0 2rem 0;
-  padding: 0 2rem;
-`;
+export const ProfileContainer =
+  'w-full flex items-start gap-[2rem] pt-[7.9rem] pb-[2rem] px-[2.4rem] bg-white';
 
-export const ProfileLeftContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  jutify-content: center;
-  gap: 0.9rem;
-  width: 8rem;
-`;
+export const ProfileLeftContainer =
+  'flex flex-col justify-center gap-[0.9rem] w-[8rem]';
 
-export const ProfileImg = styled.img`
-  width: 100%;
-  height: 8rem;
-  cursor: pointer;
-`;
+export const ProfileImg = 'w-full h-[8rem] cursor-pointer';
 
-export const ProfileEditButton = styled.button`
-  width: 100%;
-  height: 2.3rem;
-  border-radius: 0.5rem;
-  border: 0.05rem solid ${colors.G7};
-  font-size: 1.1rem;
-  font-weight: 300;
-  cursor: pointer;
-  color: ${colors.G1};
-`;
+export const ProfileEditButton =
+  'w-full h-[2.3rem] rounded-[0.5rem] border-[0.05rem] border-[var(--color-G7)] text-[var(--color-G1)] text-[1.1rem] font-light cursor-pointer';
 
-export const ProfileRightContaienr = styled.div`
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  margin-top: 1.5rem;
-`;
+export const ProfileRightContaienr = 'flex gap-[1rem] items-center mt-[1.5rem]';
 
-export const ProfileP = styled.p`
-  font-size: 2.4rem;
-  font-weight: 500;
-  color: ${colors.G1};
-`;
+export const ProfileP = 'text-[2.4rem] font-medium text-[var(--color-G1)]';
 
-export const BadgeImg = styled.img`
-  width: 4.5rem;
-  height: 5.1rem;
-  cursor: pointer;
-`;
+export const BadgeImg = 'w-[4.5rem] h-[5.1rem] cursor-pointer';
 
 // list-button.tsx
-export const ListButtonContainer = styled.div`
-  width: 100%;
-  padding: 1.6rem 2rem 4.2rem 2rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-`;
+export const ListButtonContainer =
+  'w-full pt-[1.5rem] px-[2.4rem] pb-[4.2rem] grid grid-cols-2 gap-[1.5rem]';
 
 // item-button.tsx
-export const ItemButtonContainer = styled.div`
-  width: 100%;
-  height: 10.5rem;
-  border-radius: 1rem;
-  background: ${colors.G8};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.05);
-`;
+export const ItemButtonContainer =
+  'w-full h-[6.1rem] rounded-[1rem] bg-white flex justify-center items-center cursor-pointer shadow-[0_0_1rem_0_rgba(0,0,0,0.05)]';
 
-export const ItemButtonInnerContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-`;
+export const ItemButtonInnerContainer = 'flex items-center gap-[1rem]';
 
-export const ItemButtonImg = styled.img`
-  width: 4rem;
-  height: 4rem;
-`;
+export const ItemButtonImg = 'w-[2.8rem] h-[2.8rem]';
 
-export const ItemButtonP = styled.p`
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: ${colors.G1};
-`;
+export const ItemButtonP = 'text-[1.6rem] font-medium text-[var(--color-G1)]';
 
 // list-section.tsx
-export const ListSectionContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 0 2rem;
-  gap: 4.8rem;
-`;
+export const ListSectionContainer =
+  'w-full flex flex-col py-0 px-[2.4rem] gap-[4.8rem]';
 
 // item-section.tsx
-export const ItemSectionContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-`;
+export const ItemSectionContainer = 'w-full flex flex-col gap-[0.6rem]';
 
-export const ItemSectionP = styled.p`
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: ${colors.G1};
-`;
+export const ItemSectionP = 'text-[1.8rem] font-bold text-[var(--color-G1)]';
 
 // list-menu.tsx
-export const ListMenuContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.6rem;
-`;
+export const ListMenuContainer = 'w-full flex flex-col gap-[1.6rem]';
 
 // item-menu.tsx
-export const ItemMenuContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-`;
+export const ItemMenuContainer =
+  'w-full flex justify-between items-center cursor-pointer';
 
-export const ItemMenuP = styled.p`
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: ${colors.G3};
-`;
+export const ItemMenuP = 'text-[1.5rem] font-medium text-[var(--color-G3)]';
 
-export const RightArrowImg = styled.img`
-  width: 1.8rem;
-  height: 1.8rem;
-`;
+export const RightArrowImg = 'w-[1.8rem] h-[1.8rem]';

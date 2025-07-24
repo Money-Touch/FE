@@ -25,6 +25,7 @@ const Test = () => {
   const handleBack = () => {
     if (step === 'mbti') setStep('onboarding');
     else if (step === 'qna') setStep('mbti');
+    else if (step === 'result') setStep('qna');
   };
 
   const handleLoading = () => {
@@ -36,7 +37,7 @@ const Test = () => {
   };
 
   return (
-    <S.SignupContainer className="pageContainer">
+    <div className={`${S.SignupContainer} pageContainer`}>
       {step === 'onboarding' && (
         <Onboarding
           onNext={handleNext}
@@ -47,8 +48,8 @@ const Test = () => {
       {step === 'mbti' && <Mbti onBack={handleBack} onNext={handleNext} />}
       {step === 'qna' && <Qna onBack={handleBack} onNext={handleLoading} />}
       {step === 'loading' && <Loading onNext={handleResult} />}
-      {step === 'result' && <Result />}
-    </S.SignupContainer>
+      {step === 'result' && <Result onBack={handleBack} />}
+    </div>
   );
 };
 

@@ -4,11 +4,11 @@ import FooterData from '../../mocks/footer/footerData';
 
 const ListFooter = () => {
   return (
-    <F.ListContainer>
+    <div className={F.ListContainer}>
       {FooterData.map((item, index) => (
         <ItemFooter key={index} item={item} />
       ))}
-    </F.ListContainer>
+    </div>
   );
 };
 

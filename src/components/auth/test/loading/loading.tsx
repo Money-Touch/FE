@@ -16,10 +16,10 @@ const Loading = ({ onNext }: LoadingProps) => {
   }, [onNext]);
 
   return (
-    <S.AgreeContainer style={{ width: '100%', gap: '3.9rem' }}>
+    <div className={`${S.AgreeContainer} !w-full !gap-[3.9rem]`}>
       <Spinner />
-      <S.ItemP style={{ fontSize: '2rem' }}>소비 MBTI 측정 중...</S.ItemP>
-    </S.AgreeContainer>
+      <p className={`${S.ItemP} !text-[2rem]`}>소비 MBTI 측정 중...</p>
+    </div>
   );
 };
 

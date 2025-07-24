@@ -11,18 +11,14 @@ const Myfeed = () => {
   const [selectedId, setSelectedId] = useState<number>(1);
 
   return (
-    <S.AgreeContainer
-      style={{
-        paddingBottom: '1.2rem',
-      }}
-    >
+    <div className={`${S.AgreeContainer} !pb-[1.2rem]`}>
       <Header title="MY 피드" />
 
       <ListGrid selectedId={selectedId} setSelectedId={setSelectedId} />
 
       {selectedId === 1 && <ListGrid4 data={data} />}
       {selectedId === 2 && <ListGrid2 data={data} />}
-    </S.AgreeContainer>
+    </div>
   );
 };
 

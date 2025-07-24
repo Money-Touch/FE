@@ -5,7 +5,7 @@ import * as M from '../../../../../styles/auth/mypage/myfeed.style';
 
 const ListGrid = ({ selectedId, setSelectedId }: ListGridProps) => {
   return (
-    <M.ListGridContainer>
+    <div className={M.ListGridContainer}>
       {GridData.map((item) => (
         <ItemGrid
           key={item.id}
@@ -14,7 +14,7 @@ const ListGrid = ({ selectedId, setSelectedId }: ListGridProps) => {
           onClick={setSelectedId}
         />
       ))}
-    </M.ListGridContainer>
+    </div>
   );
 };
 

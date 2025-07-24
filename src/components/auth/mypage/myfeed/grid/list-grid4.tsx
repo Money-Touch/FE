@@ -4,11 +4,11 @@ import type { ListFeedProps } from '../../../../../types/auth/mypage/myfeed';
 
 const ListGrid4 = ({ data }: ListFeedProps) => {
   return (
-    <M.ListGrid4Container>
+    <div className={M.ListGrid4Container}>
       {data?.map((item) => (
         <ItemGrid4 key={item.id} item={item} />
       ))}
-    </M.ListGrid4Container>
+    </div>
   );
 };
 

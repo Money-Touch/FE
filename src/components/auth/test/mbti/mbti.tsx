@@ -16,19 +16,21 @@ const Mbti = ({ onNext, onBack }: MbtiProps) => {
   };
 
   return (
-    <S.AgreeContainer>
+    <div className={S.AgreeContainer}>
       <Header onBack={onBack} />
 
-      <T.MbtiP>나의 소비 MBTI는 무엇일까?</T.MbtiP>
-      <T.MbtiImgDiv />
+      <p className={T.MbtiP}>나의 소비 MBTI는 무엇일까?</p>
+      <div className={T.MbtiImgDiv} />
 
-      <S.BottomContainer style={{ marginTop: '20.7rem' }}>
-        <S.NextButton active={true} onClick={onNext}>
+      <div className={`${S.BottomContainer} !mt-[20.7rem]`}>
+        <button className={S.NextButton(true)} onClick={onNext}>
           테스트하러 가기
-        </S.NextButton>
-        <T.MbtiSkipP onClick={handleSkip}>건너뛰기</T.MbtiSkipP>
-      </S.BottomContainer>
-    </S.AgreeContainer>
+        </button>
+        <p className={T.MbtiSkipP} onClick={handleSkip}>
+          건너뛰기
+        </p>
+      </div>
+    </div>
   );
 };
 

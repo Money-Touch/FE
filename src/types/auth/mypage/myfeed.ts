@@ -32,10 +32,3 @@ export interface ListFeedProps {
 export interface ItemFeedProps {
   item: Feed;
 }
-
-// item-grid2.tsx
-export interface ItemGrid2PProps {
-  fontSize?: string;
-  fontWeight?: number;
-  color?: string;
-}

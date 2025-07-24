@@ -4,11 +4,11 @@ import ItemButton from './item-button';
 
 const ListButton = () => {
   return (
-    <M.ListButtonContainer>
+    <div className={M.ListButtonContainer}>
       {ButtonData.map((item) => (
         <ItemButton key={item.id} item={item} />
       ))}
-    </M.ListButtonContainer>
+    </div>
   );
 };
 
