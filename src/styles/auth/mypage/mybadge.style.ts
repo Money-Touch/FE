@@ -46,7 +46,6 @@ export const RepresentBadgeImageWrapper = styled.div`
   align-items: center;
   width: 100%;
   aspect-ratio: 397 / 298;
-  padding: 0 1.5rem;
 `;
 
 export const RepresentBadgeImage = styled.img`
