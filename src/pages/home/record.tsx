@@ -12,7 +12,7 @@ import MemoInput from '../../components/home/record/memoInput';
 import SubmitButton from '../../components/home/record/submitButton';
 
 import type { UserRecord } from '../../types/home/record';
-import { getReorderedCategories } from '../../utils/home/category';
+import { getReorderedCategories } from '../../utils/home/getReorderedCategories';
 import { validateForm } from '../../utils/home/recordValidation';
 
 function record() {

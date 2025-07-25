@@ -5,7 +5,7 @@ import {
   hasThumbnail,
 } from '../../../constants/home/notificationIcon';
 import type { Notification } from '../../../types/home/notification';
-import { getFormattedTime } from '../../../utils/home/timeFormat';
+import { getFormattedTime } from '../../../utils/home/getFormattedTime';
 
 import exImage from '../../../assets/images/home/notify/ex1.png';
 
