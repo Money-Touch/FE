@@ -1,6 +1,6 @@
 import * as S from '../../styles/home/routine.style';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import Header from '../../components/header/header';
 import BudgetList from '../../components/home/routine/budgetList';
@@ -8,6 +8,7 @@ import Modal from '../../components/home/routine/modal';
 import { mockFullRoutineDetailData } from '../../mocks/home/mockRoutineData';
 
 function RoutineDetail() {
+  const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
   const routine = mockFullRoutineDetailData.find(
@@ -47,7 +48,8 @@ function RoutineDetail() {
           onConfirm={() => {
             setReflected(true);
             setShowModal(false);
-            alert('루틴 가져오기 성공');
+            alert('루틴 가져오기 성공'); //
+            navigate('/budget-register');
           }}
           onCancel={() => setShowModal(false)}
         />

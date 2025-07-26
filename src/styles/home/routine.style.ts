@@ -90,7 +90,7 @@ export const Content = styled.div<{ $isNew?: boolean }>`
 export const TopWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 5.4rem;
+  height: 4.9rem;
 `;
 
 export const DateRow = styled.div<{ $isNew?: boolean }>`
@@ -104,6 +104,8 @@ export const Date = styled.div`
   font-weight: 300;
   font-size: 0.8rem;
   text-align: center;
+  display: inline-block;
+  height: 1rem;
 `;
 
 export const DateDot = styled.img`
@@ -112,6 +114,7 @@ export const DateDot = styled.img`
   margin: 0 0.3rem;
   object-fit: contain;
   vertical-align: middle;
+  display: inline-block;
 `;
 
 export const NewBadge = styled.div`
@@ -134,6 +137,7 @@ export const Title = styled.div`
   align-items: center;
   width: 100%;
   height: 2.3rem;
+  line-height: 2.3rem;
   font-weight: 500;
   font-size: 1.5rem;
   color: ${colors.G1};
@@ -175,8 +179,10 @@ export const ProfileImg = styled.img`
   object-fit: cover;
 `;
 
-export const AuthorName = styled.span`
+export const AuthorName = styled.div`
   height: 100%;
+  display: flex;
+  align-items: center;
   color: ${colors.G1};
   font-weight: 500;
   font-size: 1.1rem;
@@ -221,7 +227,8 @@ export const BudgetAmount = styled.div`
 `;
 
 export const Line = styled.div`
-  width: 100%;
+  width: calc(100% + 4.8rem);
+  margin-left: -2.4rem;
   height: 0.7rem;
   margin-top: 2.4rem;
   background-color: ${colors.G8};

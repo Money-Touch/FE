@@ -70,7 +70,7 @@ export const Percentage = styled.span`
 export const ModalContent = styled.div`
   width: 29.3rem;
   height: 14.6rem;
-  top: 38.5prem;
+  top: 38.5rem;
   left: 6.6rem;
   border-radius: 1.5rem;
   background-color: ${colors.white};
@@ -105,19 +105,10 @@ export const ModalDividerVertical = styled.div`
   background-color: ${colors.G7};
 `;
 
-export const ModalButtonYes = styled.button`
+export const ModalButton = styled.button`
   flex: 1;
   font-weight: 500;
   font-size: 1.8rem;
   text-align: center;
-  color: ${colors.mainColor1};
-`;
-
-export const ModalButtonNo = styled.button`
-  flex: 1;
-  flex: 1;
-  font-weight: 500;
-  font-size: 1.8rem;
-  text-align: center;
-  color: ${colors.G6};
+  color: ${colors.G3};
 `;

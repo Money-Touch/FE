@@ -17,9 +17,9 @@ export default function Modal({
         <M.ModalText>{text}</M.ModalText>
         <M.ModalDivider />
         <M.ModalButtons>
-          <M.ModalButtonYes onClick={onConfirm}>네</M.ModalButtonYes>
+          <M.ModalButton onClick={onConfirm}>네</M.ModalButton>
           <M.ModalDividerVertical />
-          <M.ModalButtonNo onClick={onCancel}>아니요</M.ModalButtonNo>
+          <M.ModalButton onClick={onCancel}>아니요</M.ModalButton>
         </M.ModalButtons>
       </M.ModalContent>
     </M.ModalBackdrop>

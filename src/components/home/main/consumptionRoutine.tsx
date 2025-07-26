@@ -13,7 +13,7 @@ function ConsumptionRoutine() {
   };
 
   const sortedRoutineData = [...mockRoutineData].sort(
-    (a, b) => b.views - a.views,
+    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
   );
 
   return (
