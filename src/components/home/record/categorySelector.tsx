@@ -12,17 +12,18 @@ const CategorySelector = ({
   onSelectCategory,
 }: Props) => {
   return (
-    <S.CategoryButtonWrapper>
+    <div className={S.CategoryButtonWrapper}>
       {categories.map((category) => (
-        <S.CategoryButton
+        <button
           key={category}
-          $selected={selectedCategory === category}
+          type="button"
+          className={S.CategoryButton(selectedCategory === category)}
           onClick={() => onSelectCategory(category)}
         >
           {category}
-        </S.CategoryButton>
+        </button>
       ))}
-    </S.CategoryButtonWrapper>
+    </div>
   );
 };
 

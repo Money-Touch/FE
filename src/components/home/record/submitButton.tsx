@@ -7,9 +7,13 @@ interface SubmitButtonProps {
 
 const SubmitButton = ({ isActive, onClick }: SubmitButtonProps) => {
   return (
-    <S.SubmitButton $active={isActive} disabled={!isActive} onClick={onClick}>
+    <button
+      className={S.SubmitButton(isActive)}
+      disabled={!isActive}
+      onClick={onClick}
+    >
       완료
-    </S.SubmitButton>
+    </button>
   );
 };
 

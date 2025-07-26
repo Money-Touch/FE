@@ -1,16 +1,12 @@
 import * as S from '../../styles/home/record.style';
 import { useState, useMemo } from 'react';
-
 import Header from '../../components/header/header';
-import Title from '../../components/home/record/title';
-import CategorySelector from '../../components/home/record/categorySelector';
-import CategoryCheck from '../../components/home/record/categoryCheck';
-import AmountInput from '../../components/home/record/amountInput';
-import ContentInput from '../../components/home/record/contentInput';
-import ImageInput from '../../components/home/record/imageInput';
-import MemoInput from '../../components/home/record/memoInput';
+import CategorySection from '../../components/home/record/categorySection';
+import AmountSection from '../../components/home/record/amountSection';
+import ContentSection from '../../components/home/record/contentSection';
+import ImageSection from '../../components/home/record/imageSection';
+import MemoSection from '../../components/home/record/memoSection';
 import SubmitButton from '../../components/home/record/submitButton';
-
 import type { UserRecord } from '../../types/home/record';
 import { getReorderedCategories } from '../../utils/home/getReorderedCategories';
 import { validateForm } from '../../utils/home/recordValidation';
@@ -61,81 +57,59 @@ function record() {
   }, [formData, contentError, isMemoInvalid]);
 
   return (
-    <S.Container className="pageContainer">
+    <div className={`pageContainer ${S.Container}`}>
       <Header title="소비 기록" />
-      <S.CategorySection>
-        <Title>카테고리 선택</Title>
-        <CategorySelector
-          selectedCategory={formData.categoryName}
-          categories={reorderedCategories}
-          onSelectCategory={(category) =>
-            setFormData((prev) => ({ ...prev, categoryName: category }))
-          }
-        />
-        <CategoryCheck
-          isChecked={formData.isPublic}
-          onToggle={() =>
-            setFormData((prev) => ({ ...prev, isPublic: !prev.isPublic }))
-          }
-        />
-      </S.CategorySection>
+      <CategorySection
+        selectedCategory={formData.categoryName}
+        categories={reorderedCategories}
+        isChecked={formData.isPublic}
+        onSelectCategory={(category) =>
+          setFormData((prev) => ({ ...prev, categoryName: category }))
+        }
+        onToggle={() =>
+          setFormData((prev) => ({ ...prev, isPublic: !prev.isPublic }))
+        }
+      />
 
-      <S.RecordSection>
-        <S.AmountSection>
-          <Title>비용</Title>
-          <AmountInput
-            amount={formData.amount}
-            isTouched={isAmountTouched}
-            onChange={(value) => {
-              setIsAmountTouched(true);
-              setFormData((prev) => ({ ...prev, amount: value }));
-            }}
-            onClear={() => {
-              setIsAmountTouched(true);
-              setFormData((prev) => ({ ...prev, amount: 0 }));
-            }}
-          />
-        </S.AmountSection>
-        <S.ContentSection>
-          <Title>항목명</Title>
-          <ContentInput
-            value={formData.content}
-            error={contentError}
-            onChange={(value) => {
-              setContentError(value.length > 20);
-              setFormData((prev) => ({ ...prev, content: value }));
-            }}
-            onClear={() => {
-              setContentError(false);
-              setFormData((prev) => ({ ...prev, content: '' }));
-            }}
-          />
-          {contentError && (
-            <S.ErrorMessage>최대 20자까지만 입력할 수 있어요.</S.ErrorMessage>
-          )}
-        </S.ContentSection>
-        <S.ImageSection>
-          <Title>사진</Title>
-          <ImageInput
-            imageUrl={formData.imageUrl}
-            isDisabled={!formData.isPublic}
-            onChange={handleImageChange}
-          />
-        </S.ImageSection>
-        <S.MemoSection>
-          <Title>메모</Title>
-          <MemoInput
-            value={formData.memo}
-            isError={isMemoInvalid}
-            isDisabled={!formData.isPublic}
-            onChange={handleMemoChange}
-            onBlur={handleMemoBlur}
-          />
-          {isMemoInvalid && (
-            <S.ErrorMessage>최대 1000자까지만 입력할 수 있어요.</S.ErrorMessage>
-          )}
-        </S.MemoSection>
-      </S.RecordSection>
+      <div className={S.RecordSection}>
+        <AmountSection
+          amount={formData.amount}
+          isTouched={isAmountTouched}
+          onChange={(value) => {
+            setIsAmountTouched(true);
+            setFormData((prev) => ({ ...prev, amount: value }));
+          }}
+          onClear={() => {
+            setIsAmountTouched(true);
+            setFormData((prev) => ({ ...prev, amount: 0 }));
+          }}
+        />
+        <ContentSection
+          value={formData.content}
+          error={contentError}
+          onChange={(value) => {
+            setContentError(value.length > 20);
+            setFormData((prev) => ({ ...prev, content: value }));
+          }}
+          onClear={() => {
+            setContentError(false);
+            setFormData((prev) => ({ ...prev, content: '' }));
+          }}
+        />
+        <ImageSection
+          imageUrl={formData.imageUrl}
+          isDisabled={!formData.isPublic}
+          onChange={handleImageChange}
+        />
+        <MemoSection
+          value={formData.memo}
+          isError={isMemoInvalid}
+          isDisabled={!formData.isPublic}
+          onChange={handleMemoChange}
+          onBlur={handleMemoBlur}
+        />
+      </div>
+
       <SubmitButton
         isActive={isFormValid}
         onClick={() => {
@@ -143,7 +117,7 @@ function record() {
           alert('소비 기록 저장 완료');
         }}
       />
-    </S.Container>
+    </div>
   );
 }
 

@@ -7,10 +7,10 @@ interface Props {
 
 const Title = ({ children }: Props) => {
   return (
-    <S.Title>
+    <div className={S.Title}>
       {children}
-      <S.StarImg src={star} />
-    </S.Title>
+      <img className={S.StarImg} src={star} alt="star" />
+    </div>
   );
 };
 
