@@ -24,6 +24,8 @@ export const StarImg = styled.img`
   position: absolute;
   width: 0.6rem;
   height: 0.6rem;
+  top: 0;
+  right: -0.5rem;
 `;
 
 // category
@@ -135,6 +137,7 @@ export const SubmitButton = styled.button<{ $active: boolean }>`
     $active ? colors.mainColor1 : colors.G6};
   cursor: ${({ $active }) => ($active ? 'pointer' : 'default')};
   margin-top: 4.2rem;
+  margin-bottom: 7.4rem;
   font-weight: 500;
   font-size: 1.8rem;
   color: ${colors.white};
