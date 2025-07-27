@@ -74,9 +74,11 @@ export const MemoTextareaWrapper = (error: boolean): string =>
       ? 'border-[var(--color-M1)] bg-[#fff0f0]'
       : 'border-[var(--color-G7)] bg-transparent'
   }`;
-export const MemoTextarea = (error: boolean, disabled: boolean): string =>
-  `w-full h-[18rem] border rounded-[0.5rem] p-[1.2rem_1.5rem] box-border font-light text-[1.4rem] leading-[2.2rem] text-[var(--color-G1)] font-Pretendard resize-none ${
-    error ? 'border-[var(--color-M1)]' : 'border-[var(--color-G7)]'
-  } ${disabled ? 'bg-transparent' : 'bg-[var(--color-G7)]'} focus:outline-none focus:border-${
-    error ? 'var(--color-M1)' : 'var(--color-G7)'
-  }`;
+export const MemoTextarea = (error: boolean, disabled: boolean) =>
+  `w-full h-[18rem] rounded-[0.5rem] box-border p-[1.5rem_1.5rem_0_1.5rem] m-0 block font-light text-[1.4rem] leading-[2.2rem] font-Pretendard placeholder:text-[var(--color-G5)]resize-none
+   text-[var(--color-G1)]
+   ${disabled ? 'bg-transparent' : 'bg-[var(--color-G7)]'}
+   border ${error ? 'border-[var(--color-M1)]' : 'border-[var(--color-G7)]'}
+   focus:outline-none focus:border-${
+     error ? '[var(--color-M1)]' : '[var(--color-G7)]'
+   }`;
