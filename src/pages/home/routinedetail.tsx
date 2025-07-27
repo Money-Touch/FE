@@ -1,7 +1,6 @@
 import * as S from '../../styles/home/routine.style';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-
 import Header from '../../components/header/header';
 import BudgetList from '../../components/home/routine/budgetList';
 import Modal from '../../components/home/routine/modal';
@@ -21,25 +20,27 @@ function RoutineDetail() {
   const [reflected, setReflected] = useState(routine?.isReflected || false);
 
   return (
-    <S.Container className="pageContainer">
+    <div className={`pageContainer ${S.Container}`}>
       <Header title={routine?.title || '소비 루틴 상세'} />
       <BudgetList
         totalBudget={routine.totalBudget}
         budgetList={routine.budgetList}
       />
-      <S.BudgetButton
+
+      <button
+        className={S.BudgetButton(routine.isReflected, routine.isReflected)}
         disabled={routine.isReflected}
-        $isReflected={routine.isReflected}
         onClick={() => {
           if (!reflected) setShowModal(true);
         }}
       >
         내 예산에 반영
-      </S.BudgetButton>
+      </button>
+
       {routine.isReflected && (
-        <S.ErrorMessage>
+        <div className={S.ErrorMessage}>
           소비 루틴은 한 달에 한 번만 반영할 수 있어요.
-        </S.ErrorMessage>
+        </div>
       )}
 
       {showModal && (
@@ -48,13 +49,13 @@ function RoutineDetail() {
           onConfirm={() => {
             setReflected(true);
             setShowModal(false);
-            alert('루틴 가져오기 성공'); //
+            alert('루틴 가져오기 성공');
             navigate('/budget-register');
           }}
           onCancel={() => setShowModal(false)}
         />
       )}
-    </S.Container>
+    </div>
   );
 }
 

@@ -8,7 +8,6 @@ export const List = (isRead: boolean) =>
   `w-[calc(100%+4.8rem)] flex px-[2.4rem] py-[1.5rem] ${
     isRead ? 'bg-[var(--color-white)]' : 'bg-[var(--color-subColor5)]'
   } items-start box-border gap-[8.3rem] cursor-pointer`;
-
 export const Item = 'w-full h-[7.3rem] flex items-start justify-between';
 export const Icon = 'w-[2.6rem] h-[2.6rem] flex-shrink-0';
 export const Content = 'flex-1 min-w-0';

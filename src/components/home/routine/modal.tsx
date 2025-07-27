@@ -12,16 +12,20 @@ export default function Modal({
   text,
 }: ConfirmModalProps) {
   return (
-    <M.ModalBackdrop>
-      <M.ModalContent>
-        <M.ModalText>{text}</M.ModalText>
-        <M.ModalDivider />
-        <M.ModalButtons>
-          <M.ModalButton onClick={onConfirm}>네</M.ModalButton>
-          <M.ModalDividerVertical />
-          <M.ModalButton onClick={onCancel}>아니요</M.ModalButton>
-        </M.ModalButtons>
-      </M.ModalContent>
-    </M.ModalBackdrop>
+    <div className={M.ModalBackdrop}>
+      <div className={M.ModalContent}>
+        <p className={M.ModalText}>{text}</p>
+        <div className={M.ModalDivider} />
+        <div className={M.ModalButtons}>
+          <button className={M.ModalButton} onClick={onConfirm}>
+            네
+          </button>
+          <div className={M.ModalDividerVertical} />
+          <button className={M.ModalButton} onClick={onCancel}>
+            아니요
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }

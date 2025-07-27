@@ -11,21 +11,23 @@ export default function BudgetList({
 }: BudgetListProps) {
   return (
     <>
-      <S.Budget>
-        <S.BudgetTitle>한 달 예산</S.BudgetTitle>
-        <S.BudgetAmount>{totalBudget.toLocaleString()}원</S.BudgetAmount>
-      </S.Budget>
-      <S.Line />
-      <S.BudgetListWrapper>
+      <div className={S.Budget}>
+        <div className={S.BudgetTitle}>한 달 예산</div>
+        <div className={S.BudgetAmount}>{totalBudget.toLocaleString()}원</div>
+      </div>
+
+      <div className={S.Line} />
+
+      <div className={S.BudgetListWrapper}>
         {budgetList.map((item, index) => (
-          <S.BudgetItem key={index}>
-            <S.BudgetLabel>{item.label}</S.BudgetLabel>
-            <S.BudgetAmountPerItem>
+          <div key={index} className={S.BudgetItem}>
+            <div className={S.BudgetLabel}>{item.label}</div>
+            <div className={S.BudgetAmountPerItem}>
               {item.amount.toLocaleString()}원
-            </S.BudgetAmountPerItem>
-          </S.BudgetItem>
+            </div>
+          </div>
         ))}
-      </S.BudgetListWrapper>
+      </div>
     </>
   );
 }
