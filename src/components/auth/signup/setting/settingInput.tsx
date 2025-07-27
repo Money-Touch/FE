@@ -26,7 +26,7 @@ const SettingInput = ({
   const hasError = !!error || isEmpty;
   const hasButton = !!buttonText;
   const showDelete = !!value;
-  const showToggle = !hasButton && type === 'password';
+  const showToggle = !!value && !hasButton && type === 'password';
 
   return (
     <>

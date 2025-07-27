@@ -34,7 +34,7 @@ const SettingInputIcon = ({
     {showToggle && (
       <img
         className={S.ToggleIcon({ hasDelete })}
-        src={showPassword ? Show : NoShow}
+        src={showPassword ? NoShow : Show}
         alt="toggle"
         onClick={onToggle}
       />
