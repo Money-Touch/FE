@@ -17,13 +17,13 @@ const MemoInput = ({
 }: MemoTextareaProps) => {
   return (
     <>
-      <S.MemoTextarea
+      <textarea
         value={value}
         onChange={onChange}
         onBlur={onBlur}
         placeholder="1000자 이내로 작성해 주세요."
-        $error={isError}
-        $disabled={isDisabled}
+        className={S.MemoTextarea(isError, isDisabled)}
+        disabled={isDisabled}
       />
     </>
   );
