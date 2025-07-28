@@ -83,7 +83,7 @@ export const ProfileFormContainer =
 
 // profileImage.tsx
 export const Img =
-  'w-[10.5rem] h-[10.5rem] rounded-[3.7rem] border border-[var(--color-G7)] cursor-pointer';
+  'w-[10.5rem] h-[10.5rem] rounded-[3.7rem] border border-[var(--color-G7)] cursor-pointer object-cover';
 
 export const HiddenInput = 'hidden';
 

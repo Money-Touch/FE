@@ -1,3 +1,5 @@
+// hooks/auth/signup/useProfileImage.ts
+
 import { useRef, useState } from 'react';
 import ProfileIcon from '../../../assets/images/auth/signup/profileIcon.png';
 
@@ -11,10 +13,10 @@ export const useProfileImage = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const previewUrl = URL.createObjectURL(file);
-      setPreview(previewUrl);
-    }
+    if (!file || !file.type.startsWith('image/')) return;
+
+    const previewUrl = URL.createObjectURL(file);
+    setPreview(previewUrl);
   };
 
   return {
