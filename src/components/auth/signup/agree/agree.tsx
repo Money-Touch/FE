@@ -27,7 +27,6 @@ const Agree = ({ onNext, agreeList, setAgreeList }: AgreeProps) => {
     }));
     localStorage.setItem('agreeTerms', JSON.stringify(agreeTerms));
     onNext();
-    localStorage.removeItem('agreeTerms');
   };
 
   return (
