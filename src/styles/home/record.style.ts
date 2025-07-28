@@ -1,321 +1,84 @@
-import colors from '../../styles/common/colors';
-import styled from 'styled-components';
-
 // record.tsx
-export const Container = styled.div`
-  display: flex;
-  padding: 0 2.4rem;
-  align-items: flex-start;
-`;
+export const Container = 'flex px-[2.4rem] items-start';
 
 // title
-export const Title = styled.div`
-  position: relative;
-  display: inline-block;
-  height: 2.3rem;
-  margin-bottom: 0.6rem;
-  line-height: 2.3rem;
-  font-weight: 500;
-  font-size: 1.5rem;
-  color: ${colors.G1};
-`;
-
-export const StarImg = styled.img`
-  position: absolute;
-  width: 0.6rem;
-  height: 0.6rem;
-`;
+export const Title =
+  'relative inline-block h-[2.3rem] mb-[0.6rem] leading-[2.3rem] font-medium text-[1.5rem] text-[var(--color-G1)]';
+export const StarImg = 'absolute w-[0.6rem] h-[0.6rem] top-0 right-[-0.5rem]';
 
 // category
-export const CategorySection = styled.div`
-  width: 100%;
-  height: 9.9rem;
-  margin-top: 1rem;
-  gap: 1.4rem;
-  position: relative;
-  overflow-x: hidden;
-`;
-
-export const CategoryButtonWrapper = styled.div`
-  width: 100%;
-  height: 3.6rem;
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-export const CategoryButton = styled.button<{ $selected: boolean }>`
-  box-sizing: border-box;
-  padding: 0.7rem 1.5rem;
-  border-radius: 2rem;
-  white-space: nowrap;
-  border: 0.1rem solid
-    ${({ $selected }) => ($selected ? colors.mainColor1 : colors.G7)};
-  background-color: ${({ $selected }) =>
-    $selected ? colors.mainColor1 : colors.white};
-  color: ${({ $selected }) => ($selected ? colors.white : colors.G2)};
-  font-weight: 500;
-  font-size: 1.4rem;
-  line-height: 2.2rem;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  flex-shrink: 0;
-`;
-
-export const CategoryCheckboxWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 1.4rem;
-
-  label {
-    height: 1.6rem;
-    font-weight: 300;
-    font-size: 1.2rem;
-    line-height: 1.6rem;
-    cursor: pointer;
-    color: ${colors.G1};
-  }
-`;
-
-export const CheckboxIcon = styled.img`
-  width: 1.6rem;
-  height: 1.6rem;
-  cursor: pointer;
-`;
+export const CategorySection =
+  'w-full h-[9.9rem] mt-[1rem] relative overflow-x-hidden';
+export const CategoryButtonWrapper =
+  'w-full h-[3.6rem] flex gap-[1rem] overflow-x-auto overflow-y-hidden whitespace-nowrap scroll';
+export const CategoryButton = (selected: boolean) =>
+  `box-border px-[1.5rem] py-[0.7rem] rounded-[2rem] whitespace-nowrap border font-medium text-[1.4rem] leading-[2.2rem] text-center flex-shrink-0 cursor-pointer ${
+    selected
+      ? 'bg-[var(--color-mainColor1)] text-white border-[var(--color-mainColor1)]'
+      : 'bg-white text-[var(--color-G2)] border-[var(--color-G7)]'
+  }`;
+export const CategoryCheckboxWrapper =
+  'flex items-center gap-[0.6rem] mt-[1.4rem]';
+export const CheckboxLabel =
+  'h-[1.6rem] font-light text-[1.2rem] leading-[1.6rem] cursor-pointer text-[var(--color-G1)]';
+export const CheckboxIcon = 'w-[1.6rem] h-[1.6rem] cursor-pointer';
 
 // record
-export const RecordSection = styled.div`
-  width: 100%;
-  height: 82.3rem;
-  margin-top: 4.4rem;
-  gap: 2.4rem;
-`;
-
-export const AmountSection = styled.div`
-  width: 100%;
-  height: 7.4rem;
-  gap: 0.6rem;
-`;
-
-export const ContentSection = styled.div`
-  width: 100%;
-  height: 7.4rem;
-  margin-top: 2.4rem;
-  gap: 0.6rem;
-`;
-
-export const ImageSection = styled.div`
-  width: 100%;
-  height: 39.4rem;
-  margin-top: 2.4rem;
-  gap: 0.6rem;
-`;
-
-export const MemoSection = styled.div`
-  width: 100%;
-  height: 20.9rem;
-  margin-top: 2.4rem;
-  gap: 0.6rem;
-  padding: 0;
-`;
-
-export const SubmitButton = styled.button<{ $active: boolean }>`
-  width: 100%;
-  height: 5rem;
-  border-radius: 1rem;
-  background-color: ${({ $active }) =>
-    $active ? colors.mainColor1 : colors.G6};
-  cursor: ${({ $active }) => ($active ? 'pointer' : 'default')};
-  margin-top: 4.2rem;
-  font-weight: 500;
-  font-size: 1.8rem;
-  color: ${colors.white};
-`;
+export const RecordSection = 'w-full h-[82.3rem] mt-[4.4rem]';
+export const AmountSection = 'w-full h-[7.4rem]';
+export const ContentSection = 'w-full h-[7.4rem] mt-[2.4rem]';
+export const ImageSection = 'w-full h-[39.4rem] mt-[2.4rem]';
+export const MemoSection = 'w-full h-[20.9rem] mt-[2.4rem]';
+export const SubmitButton = (active: boolean) =>
+  `w-full h-[5rem] rounded-[1rem] font-medium text-[1.8rem] mt-[4.2rem] mb-[7.4rem] text-white ${
+    active
+      ? 'bg-[var(--color-mainColor1)] cursor-pointer'
+      : 'bg-[var(--color-G6)] cursor-default'
+  }`;
 
 // amount
-export const AmountInputWrapper = styled.div`
-  width: 100%;
-  height: 4.5rem;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  padding: 1.1rem 1.5rem 1.1rem 1.3rem;
-  box-sizing: border-box;
-`;
-
-export const AmountInput = styled.input`
-  flex: 1;
-  height: 2.2rem;
-  border: none;
-  font-weight: 300;
-  font-size: 1.4rem;
-  color: ${colors.G1};
-  background-color: transparent;
-  font-family: 'Pretendard';
-
-  &::placeholder {
-    color: ${colors.G5};
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`;
-
-export const Won = styled.span`
-  width: 1.3rem;
-  font-weight: 500;
-  font-size: 1.4rem;
-  color: ${colors.G1};
-  object-fit: contain;
-`;
-
-export const ClearIcon = styled.img`
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  object-fit: contain;
-  margin-left: 0.4rem;
-`;
+export const AmountInputWrapper =
+  'w-full h-[4.5rem] border border-[var(--color-G7)] rounded-[0.5rem] flex items-center px-[1.5rem] py-[1.1rem] box-border';
+export const AmountInput =
+  'flex-1 h-[2.2rem] border-none font-light text-[1.4rem] text-[var(--color-G1)] bg-transparent font-Pretendard placeholder:text-[var(--color-G5)] focus:outline-none';
+export const Won =
+  'w-[1.3rem] font-medium text-[1.4rem] text-[var(--color-G1)]';
+export const ClearIcon =
+  'w-[2rem] h-[2rem] object-contain cursor-pointer ml-[0.4rem]';
 
 // content
-export const ContentInputWrapper = styled.div<{ $error: boolean }>`
-  position: relative;
-  width: 100%;
-  height: 4.5rem;
-  border: 0.1rem solid ${({ $error }) => ($error ? colors.M1 : colors.G7)};
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  padding: 1.1rem 1.3rem;
-  box-sizing: border-box;
-`;
-
-export const ContentInput = styled.input`
-  flex: 1;
-  height: 2.2rem;
-  border: none;
-  font-weight: 300;
-  font-size: 1.4rem;
-  line-height: 2.2rem;
-  color: ${colors.G1};
-  background-color: transparent;
-  font-family: 'Pretendard';
-
-  &::placeholder {
-    color: ${colors.G5};
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`;
-
-export const ErrorMessage = styled.div`
-  margin-top: 0.3rem;
-  font-weight: 300;
-  font-size: 1.1rem;
-  color: ${colors.M1};
-`;
+export const ContentInputWrapper = (error: boolean): string =>
+  `relative w-full h-[4.5rem] border rounded-[0.5rem] flex items-center px-[1.3rem] box-border ${
+    error ? 'border-[var(--color-M1)]' : 'border-[var(--color-G7)]'
+  }`;
+export const ContentInput =
+  'flex-1 h-[2.2rem] border-none font-light text-[1.4rem] leading-[2.2rem] text-[var(--color-G1)] bg-transparent font-Pretendard placeholder:text-[var(--color-G5)] focus:outline-none';
+export const ErrorMessage =
+  'mt-[0.3rem] font-light text-[1.1rem] text-[var(--color-M1)]';
 
 // image
-export const ImageInputWrapper = styled.div<{ $disabled?: boolean }>`
-  position: relative;
-  width: 100%;
-  height: 36.5rem;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 0.5rem;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  background-color: ${({ $disabled }) =>
-    $disabled ? 'transparent' : colors.G7};
-`;
-
-export const ImageLabel = styled.label`
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const CameraIcon = styled.img`
-  width: 3rem;
-  height: 3rem;
-  color: ${colors.G6};
-`;
-
-export const ImagePreview = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
-
-export const ImageInput = styled.input`
-  display: none;
-`;
+export const ImageInputWrapper = (disabled: boolean): string =>
+  `relative w-full h-[36.5rem] border border-[var(--color-G7)] rounded-[0.5rem] flex items-center box-border ${
+    disabled ? 'bg-transparent' : 'bg-[var(--color-G7)]'
+  }`;
+export const ImageLabel =
+  'w-full h-full cursor-pointer flex justify-center items-center';
+export const CameraIcon = 'w-[3rem] h-[3rem] text-[var(--color-G6)]';
+export const ImagePreview = 'w-full h-full object-cover';
+export const ImageInput = 'hidden';
 
 // memo
-export const MemoTextareaWrapper = styled.div<{ $error: boolean }>`
-  position: relative;
-  width: 100%;
-  border: 0.1rem solid ${({ $error }) => ($error ? colors.M1 : colors.G7)};
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  box-sizing: border-box;
-  background-color: ${({ $error }) => ($error ? '#fff0f0' : 'transparent')};
-`;
-
-export const MemoTextarea = styled.textarea<{
-  $error: boolean;
-  $disabled?: boolean;
-}>`
-  width: 100%;
-  height: 18rem;
-  border: 0.1rem solid ${({ $error }) => ($error ? colors.M1 : colors.G7)};
-  border-radius: 0.5rem;
-  padding: 1.2rem 1.5rem;
-  margin: 0;
-  display: block;
-  box-sizing: border-box;
-  font-weight: 300;
-  font-size: 1.4rem;
-  line-height: 2.2rem;
-  color: ${colors.G1};
-  background-color: ${({ $disabled }) =>
-    $disabled ? 'transparent' : colors.G7};
-  resize: none;
-  font-family: 'Pretendard';
-
-  &::placeholder {
-    color: ${colors.G5};
-  }
-
-  &:focus {
-    outline: none;
-    border-color: ${({ $error }) => ($error ? colors.M1 : colors.G7)};
-  }
-`;
+export const MemoTextareaWrapper = (error: boolean): string =>
+  `relative w-full border rounded-[0.5rem] p-[1.5rem] box-border ${
+    error
+      ? 'border-[var(--color-M1)] bg-[#fff0f0]'
+      : 'border-[var(--color-G7)] bg-transparent'
+  }`;
+export const MemoTextarea = (error: boolean, disabled: boolean) =>
+  `w-full h-[18rem] rounded-[0.5rem] box-border p-[1.5rem_1.5rem_0_1.5rem] m-0 block font-light text-[1.4rem] leading-[2.2rem] font-Pretendard placeholder:text-[var(--color-G5)]resize-none
+   text-[var(--color-G1)]
+   ${disabled ? 'bg-transparent' : 'bg-[var(--color-G7)]'}
+   border ${error ? 'border-[var(--color-M1)]' : 'border-[var(--color-G7)]'}
+   focus:outline-none focus:border-${
+     error ? '[var(--color-M1)]' : '[var(--color-G7)]'
+   }`;

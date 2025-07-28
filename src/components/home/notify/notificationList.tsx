@@ -5,8 +5,7 @@ import {
   hasThumbnail,
 } from '../../../constants/home/notificationIcon';
 import type { Notification } from '../../../types/home/notification';
-import { getFormattedTime } from '../../../utils/home/timeFormat';
-
+import { getFormattedTime } from '../../../utils/home/getFormattedTime';
 import exImage from '../../../assets/images/home/notify/ex1.png';
 
 type Props = {
@@ -25,37 +24,38 @@ function NotificationList({ notification, onMarkAsRead }: Props) {
   };
 
   return (
-    <S.List $isRead={isRead} onClick={handleClick}>
-      <S.Item>
-        <S.LeftSection>
-          <S.IconTitleGroup>
-            <S.Icon src={typeToIcon[type]} alt="icon" />
-            <S.TitleContentGroup>
-              <S.Title>{title}</S.Title>
-              <S.MessageGroup>
-                <S.Message>
+    <div className={S.List(isRead)} onClick={handleClick}>
+      <div className={S.Item}>
+        <div className={S.LeftSection}>
+          <div className={S.IconTitleGroup}>
+            <img src={typeToIcon[type]} alt="icon" className={S.Icon} />
+            <div className={S.TitleContentGroup}>
+              <div className={S.Title}>{title}</div>
+              <div className={S.MessageGroup}>
+                <div className={S.Message}>
                   <HighlightedMessage
                     message={message}
                     type={type}
                     senderId={senderId}
                     hasThumbnail={hasThumbnail}
                   />
-                </S.Message>
-                <S.DateText>{getFormattedTime(createdAt)}</S.DateText>
-              </S.MessageGroup>
-            </S.TitleContentGroup>
-          </S.IconTitleGroup>
-        </S.LeftSection>
-        <S.RightSection>
+                </div>
+                <div className={S.DateText}>{getFormattedTime(createdAt)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={S.RightSection}>
           {hasThumbnail(type) && (
-            <S.Thumbnail
+            <img
               src={imageUrl && imageUrl.trim() !== '' ? imageUrl : exImage}
               alt="thumbnail"
+              className={S.Thumbnail}
             />
           )}
-        </S.RightSection>
-      </S.Item>
-    </S.List>
+        </div>
+      </div>
+    </div>
   );
 }
 

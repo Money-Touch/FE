@@ -1,120 +1,28 @@
-import colors from '../../styles/common/colors';
-import styled from 'styled-components';
-
 // notify.tsx
-export const Container = styled.div`
-  display: flex;
-  padding: 0 2.4rem;
-  background-color: ${colors.white};
-`;
+export const Container = 'flex px-[2.4rem]';
+export const NoNewNotice =
+  'self-start h-[2.2rem]font-medium text-[1.4rem] leading-[2.2rem] text-[var(--color-G2)]';
 
 // notificationList.tsx
-export const List = styled.div<{ $isRead: boolean }>`
-  width: calc(100% + 4.8rem);
-  display: flex;
-  padding: 1.5rem 2.4rem;
-  background-color: ${({ $isRead }) =>
-    $isRead ? colors.white : colors.subColor5};
-  align-items: flex-start;
-  box-sizing: border-box;
-  gap: 8.3rem;
-  cursor: pointer;
-`;
-
-export const Item = styled.div`
-  width: 100%;
-  height: 7.3rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-`;
-
-export const Icon = styled.img`
-  width: 2.6rem;
-  height: 2.6rem;
-  flex-shrink: 0;
-`;
-
-export const Content = styled.div`
-  flex: 1;
-  min-width: 0;
-`;
-
-export const LeftSection = styled.div`
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const IconTitleGroup = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 0.8rem;
-`;
-
-export const TitleContentGroup = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: 7.3rem;
-`;
-
-export const MessageGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex: 1;
-  min-height: 0;
-`;
-
-export const Title = styled.div`
-  font-weight: 500;
-  font-size: 1.5rem;
-  height: 2.6rem;
-  line-height: 2.6rem;
-  color: ${colors.G1};
-`;
-
-export const Message = styled.div`
-  font-size: 1.1rem;
-  font-style: Light;
-  color: ${colors.G2};
-  white-space: pre-line;
-  font-weight: 300;
-`;
-
-export const DateText = styled.div`
-  font-weight: 300;
-  font-size: 1.1rem;
-  color: ${colors.G5};
-`;
-
-export const Thumbnail = styled.img`
-  width: 5.3rem;
-  height: 5.3rem;
-  border-radius: 0.5rem;
-  object-fit: cover;
-  flex-shrink: 0;
-`;
-
-export const RightSection = styled.div`
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-`;
-
-export const NoNewNotice = styled.div`
-  align-self: flex-start;
-  height: 2.2rem;
-  left: 2.4rem;
-  font-weight: 500;
-  font-size: 1.4rem;
-  line-height: 2.2rem;
-  color: ${colors.G2};
-`;
+export const List = (isRead: boolean) =>
+  `w-[calc(100%+4.8rem)] flex px-[2.4rem] py-[1.5rem] ${
+    isRead ? 'bg-[var(--color-white)]' : 'bg-[var(--color-subColor5)]'
+  } items-start box-border gap-[8.3rem] cursor-pointer`;
+export const Item = 'w-full h-[7.3rem] flex items-start justify-between';
+export const Icon = 'w-[2.6rem] h-[2.6rem] flex-shrink-0';
+export const Content = 'flex-1 min-w-0';
+export const LeftSection = 'flex-1 min-w-0 flex flex-col';
+export const IconTitleGroup = 'flex items-start gap-[0.8rem]';
+export const TitleContentGroup = 'flex flex-col h-[7.3rem] flex-1';
+export const MessageGroup = 'flex flex-col justify-between flex-1 min-h-0';
+export const Title =
+  'font-medium text-[1.5rem] h-[2.6rem] leading-[2.6rem] text-[var(--color-G1)]';
+export const Message =
+  'text-[1.1rem] font-light text-[var(--color-G2)] whitespace-pre-line';
+export const DateText = 'font-light text-[1.1rem] text-[var(--color-G5)]';
+export const Thumbnail =
+  'w-[5.3rem] h-[5.3rem] rounded-[0.5rem] object-cover flex-shrink-0';
+export const RightSection = 'flex items-center flex-shrink-0';
 
 // highlightedMessage.tsx
-export const SenderName = styled.span`
-  font-weight: 500;
-`;
+export const SenderName = 'font-medium';

@@ -1,6 +1,7 @@
 import * as S from '../../../styles/home/record.style';
+import Title from './title';
 
-interface MemoTextareaProps {
+interface Props {
   value: string;
   isError: boolean;
   isDisabled: boolean;
@@ -8,25 +9,30 @@ interface MemoTextareaProps {
   onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
 }
 
-const MemoInput = ({
+const MemoSection = ({
   value,
   isError,
   isDisabled,
   onChange,
   onBlur,
-}: MemoTextareaProps) => {
+}: Props) => {
   return (
-    <>
-      <S.MemoTextarea
+    <div className={S.MemoSection}>
+      <Title>메모</Title>
+      <textarea
         value={value}
         onChange={onChange}
         onBlur={onBlur}
         placeholder="1000자 이내로 작성해 주세요."
-        $error={isError}
-        $disabled={isDisabled}
+        className={S.MemoTextarea(isError, isDisabled)}
       />
-    </>
+      {isError && (
+        <div className={S.ErrorMessage}>
+          최대 1000자까지만 입력할 수 있어요.
+        </div>
+      )}
+    </div>
   );
 };
 
-export default MemoInput;
+export default MemoSection;

@@ -1,5 +1,4 @@
 import * as S from '../../styles/home/notify.style';
-
 import Header from '../../components/header/header';
 import NotificationList from '../../components/home/notify/notificationList';
 import { useNotifications } from '../../hooks/home/useNotifications';
@@ -9,10 +8,10 @@ function Notify() {
   const { notifications, markAsRead } = useNotifications();
 
   return (
-    <S.Container className="pageContainer">
+    <div className={`pageContainer ${S.Container}`}>
       <Header title="알림" />
       {isNotificationStale(notifications) && (
-        <S.NoNewNotice>새로운 알림이 없어요.</S.NoNewNotice>
+        <div className={S.NoNewNotice}>새로운 알림이 없어요.</div>
       )}
       {notifications.map((item) => (
         <NotificationList
@@ -21,7 +20,7 @@ function Notify() {
           onMarkAsRead={markAsRead}
         />
       ))}
-    </S.Container>
+    </div>
   );
 }
 

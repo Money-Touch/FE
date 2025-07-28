@@ -1,9 +1,7 @@
 import * as S from '../../styles/home/routine.style';
 import { useState } from 'react';
-
 import searchIcon from '../../assets/images/home/routine/search.png';
 import noResult from '../../assets/images/home/routine/noResult.png';
-
 import Header from '../../components/header/header';
 import RoutineCard from '../../components/home/routine/routineCard';
 import { mockRoutineDetailData } from '../../mocks/home/mockRoutineData';
@@ -20,30 +18,30 @@ function Routine() {
   );
 
   return (
-    <S.Container className="pageContainer">
+    <div className={`pageContainer ${S.Container}`}>
       <Header title="소비 루틴" />
-      <S.SearchWrapper>
-        <S.SearchInput
+      <div className={S.SearchWrapper}>
+        <input
           type="text"
           placeholder="검색어를 입력해 주세요."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          className={S.SearchInput}
         />
-        <S.SearchIcon src={searchIcon} alt="검색" />
-      </S.SearchWrapper>
-
+        <img src={searchIcon} alt="검색" className={S.SearchIcon} />
+      </div>
       {filteredData.length === 0 ? (
-        <S.NoResultWrapper>
-          <S.NoResultImg src={noResult} alt="검색 결과 없음" />
-        </S.NoResultWrapper>
+        <div className={S.NoResultWrapper}>
+          <img src={noResult} alt="검색 결과 없음" className={S.NoResultImg} />
+        </div>
       ) : (
-        <S.List>
+        <div className={S.List}>
           {filteredData.map((item) => (
             <RoutineCard key={item.id} item={item} />
           ))}
-        </S.List>
+        </div>
       )}
-    </S.Container>
+    </div>
   );
 }
 

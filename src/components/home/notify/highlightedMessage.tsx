@@ -30,7 +30,7 @@ const HighlightedMessage = ({
   return (
     <>
       {parts[0]}
-      <S.SenderName>{senderName}</S.SenderName>
+      <span className={S.SenderName}>{senderName}</span>
       {parts[1]}
     </>
   );

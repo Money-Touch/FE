@@ -15,9 +15,9 @@ function formatDateWithDots(date: string) {
   return (
     <>
       {year}
-      <S.DateDot src={dateDot} alt="dot" />
+      <img src={dateDot} alt="dot" className={S.DateDot} />
       {month}
-      <S.DateDot src={dateDot} alt="dot" />
+      <img src={dateDot} alt="dot" className={S.DateDot} />
       {day}
     </>
   );
@@ -30,39 +30,51 @@ export default function RoutineCard({ item }: Props) {
     navigate(`/routine/${item.id}`);
   }, [item.id, navigate]);
 
+  const isNew = isToday(item.startDate);
+
   return (
-    <S.Card onClick={handleClick}>
-      <S.Left>
-        <S.Thumbnail src={item.thumbnail} alt="routine thumbnail" />
-      </S.Left>
+    <div className={S.Card} onClick={handleClick}>
+      <div className={S.Left}>
+        <img
+          src={item.thumbnail}
+          alt="routine thumbnail"
+          className={S.Thumbnail}
+        />
+      </div>
 
-      <S.Content $isNew={isToday(item.startDate)}>
-        <S.TopWrapper>
-          <S.DateRow $isNew={isToday(item.startDate)}>
-            {isToday(item.startDate) ? (
-              <S.NewBadge>NEW</S.NewBadge>
+      <div className={S.Content(isNew)}>
+        <div className={S.TopWrapper}>
+          <div className={S.DateRow(isNew)}>
+            {isNew ? (
+              <div className={S.NewBadge}>NEW</div>
             ) : (
-              <S.Date>{formatDateWithDots(item.startDate)}</S.Date>
+              <div className={S.Date}>{formatDateWithDots(item.startDate)}</div>
             )}
-          </S.DateRow>
+          </div>
 
-          <S.Title>
+          <div className={S.Title}>
             {item.title}
-            <S.RightArrowImg src={rightArrow} alt="navigate" />
-          </S.Title>
+            <img src={rightArrow} alt="navigate" className={S.RightArrowImg} />
+          </div>
 
-          <S.HashtagList>
+          <div className={S.HashtagList}>
             {item.hashtags.map((tag) => (
-              <S.Hashtag key={tag}>{tag}</S.Hashtag>
+              <span key={tag} className={S.Hashtag}>
+                {tag}
+              </span>
             ))}
-          </S.HashtagList>
-        </S.TopWrapper>
+          </div>
+        </div>
 
-        <S.Author>
-          <S.ProfileImg src={item.authorProfileImg} alt="profile" />
-          <S.AuthorName>{item.author}</S.AuthorName>
-        </S.Author>
-      </S.Content>
-    </S.Card>
+        <div className={S.Author}>
+          <img
+            src={item.authorProfileImg}
+            alt="profile"
+            className={S.ProfileImg}
+          />
+          <div className={S.AuthorName}>{item.author}</div>
+        </div>
+      </div>
+    </div>
   );
 }

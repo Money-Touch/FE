@@ -1,278 +1,60 @@
-import colors from '../../styles/common/colors';
-import styled from 'styled-components';
-
 // routine.tsx
-export const Container = styled.div`
-  display: flex;
-  padding: 0 2.4rem;
-  align-items: flex-start;
-`;
-
-export const SearchWrapper = styled.div`
-  width: 100%;
-  height: 4.5rem;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 0.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 1.5rem;
-  background-color: ${colors.white};
-`;
-
-export const SearchInput = styled.input`
-  flex: 1;
-  height: 2.2rem;
-  border: none;
-  outline: none;
-  font-size: 1.4rem;
-  color: ${colors.G7};
-  background: transparent;
-  font-family: Pretendard;
-  font-weight: 300;
-  font-size: 1.4rem;
-  color: ${colors.G1};
-
-  &::placeholder {
-    color: ${colors.G5};
-  }
-`;
-
-export const SearchIcon = styled.img`
-  width: 2rem;
-  height: 2rem;
-  object-fit: contain;
-`;
-
-export const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 1rem;
-  margin-top: 1.5rem;
-`;
-
-export const Card = styled.div`
-  display: flex;
-  align-items: flex-start;
-  height: 10.6rem;
-  border-radius: 1.5rem;
-  background: ${colors.white};
-  box-shadow: 0px 0px 10px 0px #0000000d;
-  position: relative;
-  cursor: pointer;
-`;
-
-export const Left = styled.div`
-  margin-left: 1.1rem;
-  margin-top: 1.1rem;
-`;
-
-export const Thumbnail = styled.img`
-  width: 8.4rem;
-  height: 8.4rem;
-  border-radius: 1rem;
-  object-fit: cover;
-  opacity: 0.8;
-  box-shadow: 0px 0px 10px 0px #0000000d;
-`;
-
-export const Content = styled.div<{ $isNew?: boolean }>`
-  flex: 1;
-  width: 25.6rem;
-  height: 8.6rem;
-  margin-left: 1.1rem;
-  margin-right: 1.5rem;
-  margin-top: ${({ $isNew }) => ($isNew ? '0.9rem' : '1.1rem')};
-  gap: 1.8rem;
-`;
-
-export const TopWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 5.4rem;
-`;
-
-export const DateRow = styled.div<{ $isNew?: boolean }>`
-  height: ${({ $isNew }) => ($isNew ? '1.4rem' : '1rem')};
-  display: flex;
-  align-items: center;
-`;
-
-export const Date = styled.div`
-  color: ${colors.G3};
-  font-weight: 300;
-  font-size: 0.8rem;
-  text-align: center;
-`;
-
-export const DateDot = styled.img`
-  width: 0.2rem;
-  height: 0.2rem;
-  margin: 0 0.3rem;
-  object-fit: contain;
-  vertical-align: middle;
-`;
-
-export const NewBadge = styled.div`
-  width: 3.2rem;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2rem;
-  background: #ff828226;
-  border: 0.07rem solid #ffadadcc;
-  font-weight: 500;
-  font-size: 0.8rem;
-  color: ${colors.M1};
-`;
-
-export const Title = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 2.3rem;
-  font-weight: 500;
-  font-size: 1.5rem;
-  color: ${colors.G1};
-  cursor: default;
-`;
-
-export const RightArrowImg = styled.img`
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-`;
-
-export const HashtagList = styled.div`
-  display: flex;
-  height: 1.4rem;
-  margin-top: 0.3rem;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-`;
-
-export const Hashtag = styled.span`
-  font-weight: 300;
-  font-size: 1.1rem;
-  color: ${colors.G4};
-`;
-
-export const Author = styled.div`
-  display: flex;
-  align-items: center;
-  height: 1.4rem;
-  gap: 0.6rem;
-  margin-top: 1.8rem;
-`;
-
-export const ProfileImg = styled.img`
-  width: 1.4rem;
-  height: 1.4rem;
-  border-radius: 50%;
-  object-fit: cover;
-`;
-
-export const AuthorName = styled.span`
-  height: 100%;
-  color: ${colors.G1};
-  font-weight: 500;
-  font-size: 1.1rem;
-`;
-
-export const NoResultWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 7.3rem;
-`;
-
-export const NoResultImg = styled.img`
-  width: 14.8rem;
-  height: 15.8rem;
-`;
+export const Container = 'flex items-start px-[2.4rem]';
+export const SearchWrapper =
+  'w-full h-[4.5rem] border border-[var(--color-G7)] rounded-[0.5rem] flex justify-between items-center px-[1.5rem] py-[1.2rem] bg-white';
+export const SearchInput =
+  'flex-1 h-[2.2rem] border-none outline-none text-[1.4rem] text-[var(--color-G1)] bg-transparent font-[Pretendard] font-light placeholder-[var(--color-G5)]';
+export const SearchIcon = 'w-[2rem] h-[2rem] object-contain';
+export const List = 'flex flex-col w-full gap-[1rem] mt-[1.5rem]';
+export const Card =
+  'flex items-start h-[10.6rem] rounded-[1.5rem] bg-white shadow-[0px_0px_10px_0px_#0000000d] relative cursor-pointer';
+export const Left = 'ml-[1.1rem] mt-[1.1rem]';
+export const Thumbnail =
+  'w-[8.4rem] h-[8.4rem] rounded-[1rem] object-cover opacity-80 shadow-[0px_0px_10px_0px_#0000000d]';
+export const Content = (isNew?: boolean) =>
+  `flex-1 w-[25.6rem] h-[8.6rem] ml-[1.1rem] mr-[1.5rem] ${isNew ? 'mt-[0.9rem]' : 'mt-[1.1rem]'} gap-[1.8rem]`;
+export const TopWrapper = 'flex flex-col h-[4.9rem]';
+export const DateRow = (isNew?: boolean) =>
+  `flex items-center ${isNew ? 'h-[1.4rem]' : 'h-[1rem]'}`;
+export const Date =
+  'text-[var(--color-G3)] font-light text-[0.8rem] text-center inline-block h-[1rem]';
+export const DateDot =
+  'w-[0.2rem] h-[0.2rem] mx-[0.3rem] object-contain align-middle inline-block';
+export const NewBadge =
+  'w-[3.2rem] h-full flex justify-center items-center rounded-[2rem] bg-[#ff828226] border border-[#ffadadcc] font-medium text-[0.8rem] text-[var(--color-M1)]';
+export const Title =
+  'flex justify-between items-center w-full h-[2.3rem] leading-[2.3rem] font-medium text-[1.5rem] text-[var(--color-G1)] cursor-default';
+export const RightArrowImg = 'w-[2rem] h-[2rem] cursor-pointer';
+export const HashtagList = 'flex h-[1.4rem] mt-[0.3rem] flex-wrap gap-[0.3rem]';
+export const Hashtag = 'font-light text-[1.1rem] text-[var(--color-G4)]';
+export const Author = 'flex items-center h-[1.4rem] gap-[0.6rem] mt-[1.8rem]';
+export const ProfileImg = 'w-[1.4rem] h-[1.4rem] rounded-full object-cover';
+export const AuthorName =
+  'h-full flex items-center text-[var(--color-G1)] font-medium text-[1.1rem]';
+export const NoResultWrapper =
+  'w-full flex justify-center items-center mt-[7.3rem]';
+export const NoResultImg = 'w-[14.8rem] h-[15.8rem]';
 
 // routineDetail.tsx
-export const Budget = styled.div`
-  width: 100%;
-  height: 6.1rem;
-  margin-top: 2.6rem;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-export const BudgetTitle = styled.div`
-  height: 2.6rem;
-  font-weight: 500;
-  font-size: 1.8rem;
-  color: ${colors.G1};
-`;
-
-export const BudgetAmount = styled.div`
-  height: 3.5rem;
-  font-weight: 700;
-  font-size: 2.6rem;
-  color: ${colors.G1};
-`;
-
-export const Line = styled.div`
-  width: 100%;
-  height: 0.7rem;
-  margin-top: 2.4rem;
-  background-color: ${colors.G8};
-`;
-
-export const BudgetListWrapper = styled.div`
-  height: 22.6rem;
-  margin-top: 3rem;
-  gap: 1.4rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-export const BudgetItem = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 2.6rem;
-`;
-
-export const BudgetLabel = styled.div`
-  font-weight: 500;
-  font-size: 1.5rem;
-  color: ${colors.G5};
-`;
-
-export const BudgetAmountPerItem = styled.div`
-  font-weight: 500;
-  font-size: 1.8rem;
-  color: ${colors.G1};
-`;
-
-export const BudgetButton = styled.button<{ $isReflected: boolean }>`
-  width: 100%;
-  height: 5rem;
-  margin-top: 24.3rem;
-  border-radius: 1rem;
-  background-color: ${({ disabled }) =>
-    disabled ? colors.G6 : colors.mainColor1};
-  color: ${colors.white};
-  font-weight: 500;
-  font-size: 1.8rem;
-  cursor: ${({ $isReflected }) => ($isReflected ? 'default' : 'pointer')};
-`;
-
-export const ErrorMessage = styled.div`
-  width: 100%;
-  margin-top: 0.6rem;
-  font-weight: 300;
-  font-size: 1.1rem;
-  color: ${colors.M1};
-  text-align: center;
-`;
+export const Budget =
+  'w-full h-[6.1rem] mt-[2.6rem] relative flex flex-col items-start';
+export const BudgetTitle =
+  'h-[2.6rem] font-medium text-[1.8rem] text-[var(--color-G1)]';
+export const BudgetAmount =
+  'h-[3.5rem] font-bold text-[2.6rem] text-[var(--color-G1)]';
+export const Line =
+  'w-[calc(100%+4.8rem)] ml-[-2.4rem] h-[0.7rem] mt-[2.4rem] bg-[var(--color-G8)]';
+export const BudgetListWrapper =
+  'h-[22.6rem] mt-[3rem] gap-[1.4rem] w-full flex flex-col';
+export const BudgetItem = 'flex justify-between items-center h-[2.6rem]';
+export const BudgetLabel = 'font-medium text-[1.5rem] text-[var(--color-G5)]';
+export const BudgetAmountPerItem =
+  'font-medium text-[1.8rem] text-[var(--color-G1)]';
+export const BudgetButton = (isReflected: boolean, disabled?: boolean) =>
+  `w-full h-[5rem] mt-[24.3rem] rounded-[1rem] ${
+    disabled ? 'bg-[var(--color-G6)]' : 'bg-[var(--color-mainColor1)]'
+  } text-white font-medium text-[1.8rem] ${
+    isReflected ? 'cursor-default' : 'cursor-pointer'
+  }`;
+export const ErrorMessage =
+  'w-full mt-[0.6rem] font-light text-[1.1rem] text-[var(--color-M1)] text-center';
