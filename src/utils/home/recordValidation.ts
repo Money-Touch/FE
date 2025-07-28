@@ -5,16 +5,23 @@ export function validateForm(
   contentError: boolean,
   isMemoInvalid: boolean,
 ): boolean {
-  return (
+  const basicValid =
     formData.categoryName !== '' &&
     formData.amount > 0 &&
     formData.content.length > 0 &&
     formData.content.length <= 20 &&
-    !contentError &&
-    (formData.isPublic ||
-      (formData.imageUrl !== '' &&
-        formData.memo.length > 0 &&
-        formData.memo.length <= 1000 &&
-        !isMemoInvalid))
-  );
+    !contentError;
+
+  if (!basicValid) return false;
+
+  if (formData.isPublic) {
+    return (
+      formData.imageUrl !== '' &&
+      formData.memo.length > 0 &&
+      formData.memo.length <= 1000 &&
+      !isMemoInvalid
+    );
+  }
+
+  return true;
 }
