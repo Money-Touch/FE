@@ -14,6 +14,7 @@ const Result = ({ onBack }: ResultProps) => {
 
   const handleHome = () => {
     navigate('/home');
+    localStorage.clear();
   };
 
   return (

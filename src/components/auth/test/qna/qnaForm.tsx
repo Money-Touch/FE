@@ -5,7 +5,6 @@ import QnaData from '../../../../mocks/auth/test/qnaData';
 import type { QnaItem } from '../../../../types/auth/test/qna';
 import { getQnaResult } from '../../../../utils/auth/test/getQnaResult';
 import ListQna from './list-qna';
-import { useQnaMutation } from '../../../../hooks/auth/test/useQnaMutation';
 
 interface QnaFormProps {
   pageIndex: number;
@@ -16,7 +15,6 @@ interface QnaFormProps {
 const QnaForm = ({ pageIndex, setPageIndex, onNext }: QnaFormProps) => {
   const [answers, setAnswers] = useState<Record<number, QnaItem>>({});
   const currentPage = QnaData[pageIndex];
-  const { mutate } = useQnaMutation();
 
   const handleSelect = (qnaId: number, type: string, choiceIndex: number) => {
     setAnswers((prev) => ({
@@ -30,16 +28,8 @@ const QnaForm = ({ pageIndex, setPageIndex, onNext }: QnaFormProps) => {
       setPageIndex((prev) => prev + 1);
     } else {
       const resultCode = getQnaResult(answers);
-      // console.log("소비 성향 코드:", resultCode);
-      mutate(resultCode, {
-        onSuccess: (data) => {
-          console.log('전송 성공', data);
-          onNext();
-        },
-        onError: (error) => {
-          console.error('전송 실패', error.message);
-        },
-      });
+      localStorage.setItem('resultCode', resultCode);
+      onNext();
     }
   };
 
