@@ -4,11 +4,16 @@ import ItemSelect from './item-select';
 interface ListSelectProps {
   id: number;
   selectList: string[];
-  checked: string | null;
+  selected: string | null;
   onSelect: (id: number, value: string) => void;
 }
 
-const ListSelect = ({ id, selectList, checked, onSelect }: ListSelectProps) => {
+const ListSelect = ({
+  id,
+  selectList,
+  selected,
+  onSelect,
+}: ListSelectProps) => {
   const firstRow = selectList.slice(0, 3);
   const secondRow = selectList.slice(3);
 
@@ -20,7 +25,7 @@ const ListSelect = ({ id, selectList, checked, onSelect }: ListSelectProps) => {
             key={option}
             id={id}
             value={option}
-            selected={checked === option}
+            selected={selected === option}
             onSelect={onSelect}
           />
         ))}
@@ -33,7 +38,7 @@ const ListSelect = ({ id, selectList, checked, onSelect }: ListSelectProps) => {
               key={option}
               id={id}
               value={option}
-              selected={checked === option}
+              selected={selected === option}
               onSelect={onSelect}
             />
           ))}

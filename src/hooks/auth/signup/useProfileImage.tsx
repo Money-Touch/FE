@@ -1,5 +1,3 @@
-// hooks/auth/signup/useProfileImage.ts
-
 import { useRef, useState } from 'react';
 import ProfileIcon from '../../../assets/images/auth/signup/profileIcon.png';
 

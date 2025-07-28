@@ -6,11 +6,15 @@ export const useOnboarding = (
 ) => {
   const handleSelect = (id: number, value: string) => {
     setOnboardingList((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, checked: value } : item)),
+      prev.map((item) =>
+        item.id === id ? { ...item, selected: value } : item,
+      ),
     );
   };
 
-  const isComplete = onboardingList.every((item) => item.checked !== null);
+  const isComplete = onboardingList.every(
+    (item) => item.selected !== undefined,
+  );
 
   return {
     handleSelect,

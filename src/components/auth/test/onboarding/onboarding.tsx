@@ -4,6 +4,7 @@ import type { OnboardingItem } from '../../../../types/auth/test/onboarding';
 import { useOnboarding } from '../../../../hooks/auth/test/useOnboarding';
 import { useOnboardingMutation } from '../../../../hooks/auth/test/useOnboardingMutation';
 import { getOnboarding } from '../../../../utils/auth/test/getOnboarding';
+import type { SubmitPayload } from '../../../../types/auth/test/onboarding';
 import * as S from '../../../../styles/auth/signup/signup.style';
 
 interface OnboardingProps {
@@ -24,15 +25,36 @@ const Onboarding = ({
   const { mutate } = useOnboardingMutation();
 
   const handleSubmit = () => {
-    const payload = getOnboarding(onboardingList);
+    const { age, gender, job, isIncome } = getOnboarding(onboardingList);
+    // console.log(onboardingData);
+
+    const nickname = localStorage.getItem('nickname');
+    const profileImgUrl = localStorage.getItem('profileImgUrl') || null;
+
+    if (!nickname) {
+      alert('닉네임이 없습니다.');
+      return;
+    }
+
+    const payload: SubmitPayload = {
+      age,
+      gender,
+      job,
+      isIncome,
+      nickname,
+      profileImgUrl,
+    };
+    // console.log(payload);
 
     mutate(payload, {
       onSuccess: (data) => {
-        console.log('응답: ', data);
+        // console.log('응답: ', data);
+        localStorage.setItem('userId', data.result.userId);
         onNext();
       },
-      onError: () => {
+      onError: (err) => {
         alert('제출 중 오류가 발생했습니다.');
+        console.log(err);
       },
     });
   };

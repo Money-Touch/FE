@@ -14,7 +14,7 @@ const ItemOnboarding = ({ item, onSelect }: ItemOnboardingProps) => {
       <ListSelect
         id={item.id}
         selectList={item.list}
-        checked={item.checked}
+        selected={item.selected ?? null}
         onSelect={onSelect}
       />
     </div>
