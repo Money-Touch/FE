@@ -2,11 +2,13 @@ import * as L from '../../../styles/auth/login/login.style';
 import { useState } from 'react';
 import LoginInput from './loginInput';
 import { useLoginMutation } from '../../../hooks/auth/login/useLoginMutation';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { mutate, isPending } = useLoginMutation();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     if (!email || !password) {
@@ -19,6 +21,8 @@ const LoginForm = () => {
       {
         onSuccess: (data) => {
           console.log('로그인 성공:', data);
+          alert('로그인이 완료되었습니다.');
+          navigate('/home');
         },
         onError: () => {
           alert('아이디와 비밀번호를 다시 확인해주세요.');
