@@ -20,6 +20,16 @@ const Agree = ({ onNext, agreeList, setAgreeList }: AgreeProps) => {
     setAgreeProced(requiredChecked);
   }, [requiredChecked]);
 
+  const handleNext = () => {
+    const agreeTerms = agreeList.map((item) => ({
+      termsId: item.id,
+      isAgree: item.checked,
+    }));
+    localStorage.setItem('agreeTerms', JSON.stringify(agreeTerms));
+    onNext();
+    localStorage.removeItem('agreeTerms');
+  };
+
   return (
     <div className={S.AgreeContainer}>
       <Header />
@@ -35,7 +45,7 @@ const Agree = ({ onNext, agreeList, setAgreeList }: AgreeProps) => {
         <button
           className={S.NextButton(agreeProced)}
           disabled={!agreeProced}
-          onClick={onNext}
+          onClick={handleNext}
         >
           다음
         </button>

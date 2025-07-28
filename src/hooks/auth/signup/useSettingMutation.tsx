@@ -19,15 +19,14 @@ const verifyEmailCode = async ({ email, code }: VerifyEmailCodePayload) => {
 };
 
 // 최종 회원가입 제출
-const submitSignUp = async ({
-  email,
-  password,
-  confirmPassword,
-}: SignUpPayload) => {
-  const response = await API.post('/users', {
+const submitSignUp = async ({ email, password }: SignUpPayload) => {
+  const localData = localStorage.getItem('agreeTerms');
+  const agreeTerms = localData ? JSON.parse(localData) : [];
+
+  const response = await API.post('/api/user/signup', {
     email,
     password,
-    confirmPassword,
+    agreeTerms,
   });
   return response.data;
 };
