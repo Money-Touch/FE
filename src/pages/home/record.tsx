@@ -26,6 +26,20 @@ function record() {
   const [contentError, setContentError] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [isMemoInvalid, setIsMemoInvalid] = useState(false);
+  const resetForm = () => {
+    setFormData({
+      categoryName: '',
+      isPublic: true,
+      amount: 0,
+      content: '',
+      imageUrl: '',
+      memo: '',
+    });
+    setFile(null);
+    setIsAmountTouched(false);
+    setContentError(false);
+    setIsMemoInvalid(false);
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -52,10 +66,14 @@ function record() {
     return validateForm(formData, contentError, isMemoInvalid);
   }, [formData, contentError, isMemoInvalid]);
 
-  const { mutate: submitRecord } = useSubmitRecord();
+  const { mutate: submitRecord } = useSubmitRecord(resetForm);
 
   const handleSubmit = () => {
     if (!isFormValid) return;
+    console.log('data:', {
+      formData,
+      file,
+    });
     submitRecord({ formData, file });
   };
 

@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { API } from '../../../apis/axios';
 import type { UserRecord } from '../../../types/home/record';
 
-export function useSubmitRecord() {
+export function useSubmitRecord(onSuccessCallback?: () => void) {
   return useMutation({
     mutationFn: async ({
       formData,
@@ -40,6 +40,7 @@ export function useSubmitRecord() {
 
     onSuccess: (data) => {
       console.log('등록 성공:', data);
+      if (onSuccessCallback) onSuccessCallback();
     },
 
     onError: (err) => {
