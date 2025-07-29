@@ -6,7 +6,7 @@ const ItemGrid4 = ({ item }: ItemFeedProps) => {
   const navigate = useNavigate();
 
   const handleItemClick = () => {
-    navigate(`/feed/${item.id}`);
+    navigate(`/feed/post/${item.id}`);
   };
 
   return <div className={M.ItemGrid4Div} onClick={handleItemClick} />;
