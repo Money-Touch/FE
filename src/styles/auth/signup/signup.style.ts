@@ -8,10 +8,10 @@ export const AgreeContainer =
   'flex flex-col items-center w-full h-full px-[2.4rem]';
 
 export const AgreeP =
-  'w-full text-[2.4rem] font-bold text-[var(--color-G1)] leading-[3.4rem] mt-[2.8rem]';
+  'w-[37.7rem] text-[2.4rem] font-bold text-[var(--color-G1)] leading-[3.4rem] mt-[2.8rem]';
 
 export const BottomContainer =
-  'w-full mt-[18.4rem] flex flex-col items-center gap-[1rem]';
+  'w-[37.7rem] mt-[18.4rem] flex flex-col items-center gap-[1rem]';
 
 export const NextButton = (active: boolean) =>
   `w-full h-[5rem] rounded-[1rem] text-[1.8rem] font-medium text-[var(--color-white)] ${
@@ -24,7 +24,8 @@ export const BottomP =
   'text-[1.1rem] font-light text-[var(--color-G6)] leading-[1.4rem] text-center';
 
 // agreeForm.tsx
-export const AgreeFormContainer = 'w-full flex flex-col gap-[2.2rem] mt-[6rem]';
+export const AgreeFormContainer =
+  'w-[37.7rem] flex flex-col gap-[2.2rem] mt-[6rem]';
 
 export const AgreeItemContainer = 'flex items-center gap-[1rem] cursor-pointer';
 
@@ -82,7 +83,7 @@ export const ProfileFormContainer =
 
 // profileImage.tsx
 export const Img =
-  'w-[10.5rem] h-[10.5rem] rounded-[3.7rem] border border-[var(--color-G7)] cursor-pointer';
+  'w-[10.5rem] h-[10.5rem] rounded-[3.7rem] border border-[var(--color-G7)] cursor-pointer object-cover';
 
 export const HiddenInput = 'hidden';
 

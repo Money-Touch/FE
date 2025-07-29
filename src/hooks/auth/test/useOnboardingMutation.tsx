@@ -1,12 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import { API } from '../../../apis/axios';
-
-interface SubmitPayload {
-  answers: { id: number; answer: string }[];
-}
+import type { SubmitPayload } from '../../../types/auth/test/onboarding';
 
 const submitOnboarding = async (payload: SubmitPayload) => {
-  const response = await API.post('/users', payload);
+  const response = await API.post('/api/user/detail', payload);
   return response.data;
 };
 

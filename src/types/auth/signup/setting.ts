@@ -30,5 +30,8 @@ export interface VerifyEmailCodePayload {
 export interface SignUpPayload {
   email: string;
   password: string;
-  confirmPassword: string;
+  agreeTerms?: {
+    termId: number;
+    isAgree: boolean;
+  }[];
 }

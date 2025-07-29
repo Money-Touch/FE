@@ -12,6 +12,7 @@ const Mbti = ({ onNext, onBack }: MbtiProps) => {
   const navigate = useNavigate();
 
   const handleSkip = () => {
+    localStorage.clear();
     navigate('/home');
   };
 

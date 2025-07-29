@@ -44,27 +44,30 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
     useProfileImage();
   const { mutate } = useProfileMutation();
 
-  const onSubmit = (data: z.infer<typeof profileSchema>) => {
+  const onSubmit = (formDataInput: z.infer<typeof profileSchema>) => {
     const file = fileInputRef.current?.files?.[0];
 
     const payload: ProfileFormPayload = {
-      nickname: data.nickname,
+      nickname: formDataInput.nickname,
       profileImage: file,
     };
 
+    localStorage.setItem('nickname', payload.nickname);
+
+    if (!file) {
+      onNext();
+      return;
+    }
+
     const formData = new FormData();
-    formData.append('nickname', payload.nickname);
-
-    if (payload.profileImage) {
-      formData.append('profileImage', payload.profileImage);
-    }
-
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
+    formData.append('file', file);
 
     mutate(formData, {
-      onSuccess: () => {
+      onSuccess: (res) => {
+        console.log(res);
+        if (res?.result) {
+          localStorage.setItem('profileImgUrl', res.result);
+        }
         onNext();
       },
     });

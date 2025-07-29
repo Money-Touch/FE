@@ -64,6 +64,7 @@ const SettingForm = ({ onNext }: SettingFormProps) => {
       onSuccess: () => {
         console.log('회원가입 성공');
         onNext();
+        localStorage.removeItem('agreeTerms');
       },
       onError: (err) => {
         console.error('회원가입 실패', err);

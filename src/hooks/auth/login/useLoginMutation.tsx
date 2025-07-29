@@ -8,7 +8,10 @@ import type {
 export const useLoginMutation = () =>
   useMutation<LoginResponse, unknown, LoginRequest>({
     mutationFn: async (loginData) => {
-      const response = await API.post<LoginResponse>('/users', loginData);
+      const response = await API.post<LoginResponse>(
+        '/api/user/login',
+        loginData,
+      );
       return response.data;
     },
   });

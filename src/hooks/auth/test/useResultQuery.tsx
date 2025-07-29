@@ -3,7 +3,15 @@ import { API } from '../../../apis/axios';
 import type { ResultProps } from '../../../types/auth/test/result';
 
 const fetchResult = async (): Promise<ResultProps> => {
-  const res = await API.get('/users/1');
+  const result = localStorage.getItem('resultCode');
+
+  const res = await API.get('/api/consumptionMbti/result', {
+    params: { result: result },
+  });
+
+  console.log(res);
+
+  // 추후 수정 예정
   const user = res.data;
 
   return {

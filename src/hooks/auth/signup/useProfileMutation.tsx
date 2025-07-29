@@ -1,10 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import { API } from '../../../apis/axios';
+import type { AxiosError } from 'axios';
+
+interface UploadResponse {
+  result: string;
+}
 
 export const useProfileMutation = () => {
-  return useMutation({
+  return useMutation<UploadResponse, AxiosError, FormData>({
     mutationFn: async (formData: FormData) => {
-      const res = await API.post('/users', formData, {
+      const res = await API.post('/api/test/s3/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -17,7 +22,7 @@ export const useProfileMutation = () => {
     },
 
     onError: (error) => {
-      console.error('저장 실패: ', error);
+      console.error('저장 실패: ', error.response?.data || error.message);
     },
   });
 };
