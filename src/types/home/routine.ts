@@ -3,6 +3,7 @@ export interface UserRoutine {
   title: string;
   icon: string;
   startDate: string;
+  views: number;
 }
 
 export interface UserRoutineDetail {
@@ -46,13 +47,20 @@ export interface RoutineSearchResponse {
   result: RoutineSearchResult;
 }
 
+export interface RoutineDetail extends UserRoutine {
+  thumbnail: string;
+  author: string;
+  authorProfileImg: string;
+}
+
 export type RoutineBudget = {
   label: string;
   amount: number;
 };
 
-export interface FullRoutineDetail extends UserRoutineDetail {
+export interface FullRoutineDetail extends RoutineDetail {
   totalBudget: number;
   budgetList: RoutineBudget[];
   isReflected: boolean;
+  hashtags: string[];
 }
