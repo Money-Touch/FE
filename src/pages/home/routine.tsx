@@ -4,18 +4,47 @@ import searchIcon from '../../assets/images/home/routine/search.png';
 import noResult from '../../assets/images/home/routine/noResult.png';
 import Header from '../../components/header/header';
 import RoutineCard from '../../components/home/routine/routineCard';
-import { mockRoutineDetailData } from '../../mocks/home/mockRoutineData';
+import { useRoutineData } from '../../hooks/home/routine/useRoutineData';
+import { useInfiniteScroll } from '../../hooks/home/routine/useInfiniteScroll';
+import type { UserRoutineDetail } from '../../types/home/routine';
 
 function Routine() {
-  const [search, setSearch] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    error,
+    isSearching,
+  } = useRoutineData(inputValue);
 
-  const sortedData = [...mockRoutineDetailData].sort(
-    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+  const routines: UserRoutineDetail[] = data
+    ? data.pages.flatMap((page) => page.result.routineList)
+    : [];
+
+  const bottomRef = useInfiniteScroll(
+    fetchNextPage,
+    hasNextPage && !isFetchingNextPage,
   );
 
-  const filteredData = sortedData.filter((item) =>
-    item.title.toLowerCase().includes(search.toLowerCase()),
-  );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setInputValue(inputValue.trim());
+    }
+  };
+
+  const handleSearchClick = () => {
+    setInputValue(inputValue.trim());
+  };
+
+  if (isLoading) return <div></div>;
+  if (error) return <div></div>;
 
   return (
     <div className={`pageContainer ${S.Container}`}>
@@ -24,22 +53,33 @@ function Routine() {
         <input
           type="text"
           placeholder="검색어를 입력해 주세요."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           className={S.SearchInput}
         />
-        <img src={searchIcon} alt="검색" className={S.SearchIcon} />
+        <img
+          src={searchIcon}
+          alt="검색"
+          className={S.SearchIcon}
+          onClick={handleSearchClick}
+          style={{ cursor: 'pointer' }}
+        />
       </div>
-      {filteredData.length === 0 ? (
+
+      {isSearching && routines.length === 0 ? (
         <div className={S.NoResultWrapper}>
           <img src={noResult} alt="검색 결과 없음" className={S.NoResultImg} />
         </div>
       ) : (
-        <div className={S.List}>
-          {filteredData.map((item) => (
-            <RoutineCard key={item.id} item={item} />
-          ))}
-        </div>
+        <>
+          <div className={S.List}>
+            {routines.map((item) => (
+              <RoutineCard key={item.routineId} item={item} />
+            ))}
+          </div>
+          <div ref={bottomRef} />
+        </>
       )}
     </div>
   );
