@@ -7,13 +7,16 @@ export interface UserInfo {
 // 일반 로그인
 export interface LoginInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
-export interface LoginRequest {
+export interface LoginPayload {
   email: string;
   password: string;
 }
+
 export interface LoginResponse {
-  token: string;
-  user: UserInfo;
+  result: {
+    accessToken: string;
+    refreshToken: string;
+  };
 }
 
 // 카카오 로그인

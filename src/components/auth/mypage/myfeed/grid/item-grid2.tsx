@@ -6,7 +6,7 @@ const ItemGrid2 = ({ item }: ItemFeedProps) => {
   const navigate = useNavigate();
 
   const handleItemClick = () => {
-    navigate(`/feed/${item.id}`);
+    navigate(`/feed/post/${item.id}`);
   };
 
   return (

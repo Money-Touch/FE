@@ -22,9 +22,9 @@ export const ItemSelectContainer = (selected: boolean) =>
 
 // mbti.tsx
 export const MbtiP =
-  'text-[2rem] font-bold text-[var(--color-G1)] mt-[13.6rem] mb-[4.4rem]';
+  'text-[2rem] font-bold text-[var(--color-G1)] mt-[9.3rem] mb-[6.2rem]';
 
-export const MbtiImgDiv = 'w-[20.2rem] h-[20.2rem] bg-[var(--color-G7)]';
+export const MbtiImg = 'w-[34.658rem] h-[19.1rem]';
 
 export const MbtiSkipP =
   'text-[1.1rem] font-light text-[var(--color-G1)] mt-[0.6rem] cursor-pointer';
