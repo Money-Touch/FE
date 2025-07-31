@@ -1,147 +1,36 @@
-import styled from 'styled-components';
-import colors from '../../common/colors';
+export const container = 'flex flex-col';
 
-export const Container = styled.div`
-  display:flex;
-  flex-direction: column;
-`;
+export const topContainer = 'flex flex-col mx-[2.4rem]';
 
-//title
-export const TopContainer = styled.div`
-  display:flex;
-  flex-direction: column;
-  margin: 0 2.4rem;
-`;
+export const titleContainer = 'mt-[1rem] flex items-center gap-[0.6rem]';
 
-export const TitleContainer = styled.div`
-  margin-top: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-`;
+export const title = 'text-[1.6rem] leading-[2.4rem] tracking-[-0.02em]';
 
-export const Title = styled.div`
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  letter-spacing: -2%;
-`;
+export const editImage = 'flex items-center justify-center cursor-pointer';
 
-export const EditImage = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+export const representBadgeImageWrapper =
+  'relative flex justify-center items-center w-full aspect-[397/298]';
 
-  img {
-    width: 2rem;
-    height: 2rem;
-  }
-`;
+export const representBadgeImage = 'w-full h-full object-contain';
 
-//represent badge
-export const RepresentBadgeImageWrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  aspect-ratio: 397 / 298;
-`;
+export const divider = 'h-[0.7rem] bg-[var(--color-G8)] mt-[1.2rem] mb-[2rem]';
 
-export const RepresentBadgeImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-`;
+export const myBadgeContainer =
+  'grid grid-cols-3 gap-y-[2rem] gap-x-[1rem] px-[5.1rem] mb-[1.2rem]';
 
-//Divider
-export const Divider = styled.div`
-  height: 0.7rem;
-  background-color: ${colors.G8};
-  margin-top: 1.2rem;
-  margin-bottom: 2rem;
-`;
+export const badgeItem = 'flex flex-col items-center cursor-pointer';
 
-//My Badge
-export const MyBadgeContainer = styled.div<{ isEditMode: boolean }>`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem 1rem;
-  padding: 0 5.1rem;
-  opacity: ${({ isEditMode }) => (isEditMode ? 1 : 0.4)};
-  pointer-events: ${({ isEditMode }) => (isEditMode ? 'auto' : 'none')};
-  margin-bottom: 1.2rem;
-`;
+export const badgeImageWrapper =
+  'w-[7.6rem] h-[7.6rem] rounded-full flex justify-center items-center';
 
-export const BadgeItem = styled.div<{ isSelected: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-`;
+export const badgeName =
+  'mt-[1rem] text-[1.2rem] leading-[1.6rem] text-[var(--color-G1)] text-center';
 
-export const BadgeName = styled.div`
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  line-height: 1.6rem;
-  color: ${colors.G1};
-  text-align: center;
-`;
+export const selectFooter =
+  'w-full max-w-[425px] h-[130px] bg-white rounded-t-[20px] flex justify-between px-[2.4rem] pt-[1.5rem] shadow-[0_0_2px_0_rgba(0,0,0,0.16)] gap-[2.3rem]';
 
-// 선택 푸터
-export const SelectFooter = styled.div`
-  width: 100%;
-  max-width: 425px;
-  height: 130px;
-  background: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  display: flex;
-  justify-content: space-between;
-  padding: 1.5rem 2.4rem 0 2.4rem;
-  box-shadow: 0px 0px 2px 0px #00000029;
-  gap: 2.3rem;
-`;
+export const cancelButton =
+  'flex-1 h-[4.7rem] bg-[var(--color-G7)] text-[2rem] text-[var(--color-G4)] rounded-[0.5rem]';
 
-export const CancelButton = styled.button`
-  flex: 1;
-  height: 4.7rem;
-  background: ${colors.G7};
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1.4rem;
-  color: ${colors.G4};
-`;
-
-export const SelectButton = styled.button`
-  flex: 1;
-  height: 4.7rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1.4rem;
-  color: ${({ disabled }) => (disabled ? colors.G4 : colors.white)};
-  background: ${({ disabled }) => (disabled ? colors.G7 : colors.mainColor1)};
-  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-  transition: opacity 0.2s ease;
-`;
-
-
-interface BadgeImageWrapperProps {
-  isSelected: boolean;
-}
-
-export const BadgeImageWrapper = styled.div<BadgeImageWrapperProps>`
-  width: 7.6rem;
-  height: 7.6rem;
-  background-color: ${(props) => props.isSelected ? '#E6E6E6' : 'transparent'};
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  img {
-    width: 5.8rem;
-    height: 6.6rem;
-    object-fit: contain;
-  }
-`;
+export const selectButton =
+  'flex-1 h-[4.7rem] rounded-[0.5rem] text-[2rem] transition-opacity duration-200 ease-in-out';
