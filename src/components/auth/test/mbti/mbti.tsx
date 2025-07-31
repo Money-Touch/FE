@@ -13,8 +13,15 @@ const Mbti = ({ onNext, onBack }: MbtiProps) => {
   const navigate = useNavigate();
 
   const handleSkip = () => {
-    localStorage.clear();
+    localStorage.removeItem('userId');
+    localStorage.removeItem('profileImageUrl');
     navigate('/home');
+  };
+
+  const handleQna = () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('profileImageUrl');
+    onNext();
   };
 
   return (
@@ -25,7 +32,7 @@ const Mbti = ({ onNext, onBack }: MbtiProps) => {
       <img className={T.MbtiImg} alt="mbti" src={OnboardingMain} />
 
       <div className={`${S.BottomContainer} !mt-[24.3rem]`}>
-        <button className={S.NextButton(true)} onClick={onNext}>
+        <button className={S.NextButton(true)} onClick={handleQna}>
           테스트하러 가기
         </button>
         <p className={T.MbtiSkipP} onClick={handleSkip}>

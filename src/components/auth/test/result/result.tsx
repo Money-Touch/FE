@@ -9,17 +9,19 @@ interface ResultProps {
 }
 
 const Result = ({ onBack }: ResultProps) => {
+  const nickname = localStorage.getItem('nickname');
   const navigate = useNavigate();
   const { data } = useResultQuery();
+  console.log(data);
 
   const handleHome = () => {
+    localStorage.removeItem('resultCode');
     navigate('/home');
-    localStorage.clear();
   };
 
   return (
     <div className={S.AgreeContainer}>
-      <Header onBack={onBack} title={`${data?.name}님의 소비 MBTI는?`} />
+      <Header onBack={onBack} title={`${nickname}님의 소비 MBTI는?`} />
       <ResultForm data={data} />
 
       <div className={`${S.BottomContainer} !mt-[10.7rem]`}>

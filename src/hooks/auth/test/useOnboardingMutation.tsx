@@ -3,7 +3,14 @@ import { API } from '../../../apis/axios';
 import type { SubmitPayload } from '../../../types/auth/test/onboarding';
 
 const submitOnboarding = async (payload: SubmitPayload) => {
-  const response = await API.post('/api/user/detail', payload);
+  const accessToken = localStorage.getItem('accessToken');
+
+  const response = await API.post('/api/user/detail', payload, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
   return response.data;
 };
 
