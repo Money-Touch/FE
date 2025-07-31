@@ -1,10 +1,10 @@
 // onboarding.tsx
 export const OnboardingTopContainer =
-  'flex flex-col gap-[0.4rem] mb-[3.6rem] mt-[8.4rem] w-full';
+  'flex flex-col gap-[0.4rem] mb-[3.6rem] mt-[8.4rem] w-[37.7rem]';
 
 export const OnboardingP = 'text-[1.6rem] font-medium text-[var(--color-G4)]';
 
-export const ListOnboardingContainer = 'w-full flex flex-col gap-[3.2rem]';
+export const ListOnboardingContainer = 'w-[37.7rem] flex flex-col gap-[3.2rem]';
 
 export const ItemOnboardingContainer = 'w-full flex flex-col gap-[0.6rem]';
 
@@ -47,10 +47,12 @@ export const AnswerButton = (selected: boolean) =>
   }`;
 
 // spinner.tsx
-export const SpinnerWrapper = 'w-full flex justify-center mt-[22.3rem]';
+export const SpinnerWrapper = 'w-full flex justify-center mt-[23.2rem]';
+
+export const SpinnerImg = 'w-[30.1rem] h-[30rem]';
 
 // resultForm.tsx
-export const ResultFormContainer = 'flex flex-col items-center mt-[3.3rem]';
+export const ResultFormContainer =
+  'w-[35.7rem] h-[48.9rem] rounded-[1rem] flex flex-col bg-[rgba(255,255,255,0.23)] backdrop-blur-md items-center py-[4.2rem] mt-[4.7rem]';
 
-export const ResultImg =
-  'w-[31.2rem] h-[32rem] bg-[var(--color-G7)] mt-[3.1rem] mb-[2.2rem]';
+export const ResultImg = 'w-[20rem] h-[20.6rem] mt-[3.4rem] mb-[4.8rem]';

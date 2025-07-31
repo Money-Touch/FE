@@ -10,15 +10,15 @@ const ResultForm = ({ data }: ResultFormProps) => {
   return (
     <div className={T.ResultFormContainer}>
       <p className={`${S.ItemP} !text-[var(--color-G3)] !text-[2rem]`}>
-        {data?.name}
+        {data?.title}
       </p>
-      <p className={`${S.ItemP} !text-[2.6rem] !font-bold`}>{data?.email}</p>
+      <p className={`${S.ItemP} !text-[3.2rem] !font-bold`}>{data?.code}</p>
 
-      <div className={T.ResultImg} />
-      <p className={`${S.ItemP} !text-[1.5rem] !leading-[2.3rem]`}>
-        {data?.companyName}
-        <br />
-        {data?.email}
+      <img className={T.ResultImg} src={data?.image} />
+      <p
+        className={`${S.ItemP} !text-[1.5rem] !leading-[2.3rem] !text-center !whitespace-pre-line`}
+      >
+        {data?.explain}
       </p>
     </div>
   );

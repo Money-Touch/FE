@@ -4,6 +4,9 @@ const imageGlobs = {
   mypageButton: import.meta.glob('../../assets/images/auth/mypage/*.png', {
     eager: true,
   }),
+  result: import.meta.glob('../../assets/images/auth/signup/result/*.png', {
+    eager: true,
+  }),
   footer: import.meta.glob('../../assets/images/footer/*.png', { eager: true }),
 } as const;
 
