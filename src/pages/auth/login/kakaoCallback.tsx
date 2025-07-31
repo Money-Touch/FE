@@ -9,7 +9,7 @@ const KakaoCallback = () => {
 
   const { mutate, isPending, isError } = useKakaoLoginMutation({
     onSuccess: (data) => {
-      localStorage.setItem('accessToken', data.token);
+      localStorage.setItem('accessToken', data.result.accessToken);
       navigate('/home');
     },
     onError: (error) => {
