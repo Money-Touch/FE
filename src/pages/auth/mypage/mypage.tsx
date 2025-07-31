@@ -7,7 +7,7 @@ import { useMypageQuery } from '../../../hooks/auth/mypage/useMypageQuery';
 
 const Mypage = () => {
   const { data } = useMypageQuery();
-  // console.log(data);
+  console.log(data);
 
   return (
     <div
