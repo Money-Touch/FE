@@ -17,7 +17,12 @@ interface CommentItemProps {
   onReply: (mention: string) => void;
 }
 
-const CommentItem: React.FC<CommentItemProps> = ({ comment, likedComments, onLike, onReply }) => {
+const CommentItem: React.FC<CommentItemProps> = ({
+  comment,
+  likedComments,
+  onLike,
+  onReply,
+}) => {
   const formatCommentTime = (timestamp: Date) => {
     const date = new Date(timestamp);
     const month = date.getMonth() + 1;
@@ -29,70 +34,97 @@ const CommentItem: React.FC<CommentItemProps> = ({ comment, likedComments, onLik
     });
 
     return (
-      <S.Timestamp>
+      <span className={S.timestamp}>
         {month}
-        <S.EclipseIcon src={EllipseIcon} alt="·" />
+        <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
         {day}
-        <S.EclipseIcon src={EllipseIcon} alt="·" />
+        <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
         {time}
-      </S.Timestamp>
+      </span>
     );
   };
 
   return (
     <div>
-      <S.CommentItem>
-        <S.CommentMain>
-          <S.CommentAuthorSection>
-            <S.AuthorInfoGroup>
-              <S.ProfileImage src={comment.author.profileImage || PersonIcon} />
-              <S.AuthorInfo>
-                <S.AuthorName>{comment.author.name}</S.AuthorName>
-                <S.Timestamp>{formatCommentTime(comment.timestamp)}</S.Timestamp>
-              </S.AuthorInfo>
-            </S.AuthorInfoGroup>
+      <div className={S.commentItem}>
+        <div className={S.commentMain}>
+          <div className={S.commentAuthorSection}>
+            <div className={S.authorInfoGroup}>
+              <img
+                src={comment.author.profileImage || PersonIcon}
+                className={S.profileImage}
+              />
+              <div className={S.authorInfo}>
+                <span className={S.authorName}>{comment.author.name}</span>
+                {formatCommentTime(comment.timestamp)}
+              </div>
+            </div>
 
-            <S.AuthorActionGroup>
-              <S.IconButton onClick={() => onLike(comment.id)}>
-                <img src={likedComments[comment.id] ? LikeActiveIcon : LikeIcon} alt="좋아요" />
-              </S.IconButton>
-              <S.IconButton onClick={() => onReply(comment.author.name)}>
+            <div className={S.authorActionGroup}>
+              <button
+                className={S.iconButton}
+                onClick={() => onLike(comment.id)}
+              >
+                <img
+                  src={likedComments[comment.id] ? LikeActiveIcon : LikeIcon}
+                  alt="좋아요"
+                />
+              </button>
+              <button
+                className={S.iconButton}
+                onClick={() => onReply(comment.author.name)}
+              >
                 <img src={CommentIcon} alt="댓글" />
-              </S.IconButton>
-            </S.AuthorActionGroup>
-          </S.CommentAuthorSection>
-          <S.CommentContent>{comment.content}</S.CommentContent>
-        </S.CommentMain>
-      </S.CommentItem>
-
-      {comment.replies && comment.replies.map((reply) => (
-        <div key={reply.id} style={{ marginLeft: 18 }}>
-          <S.CommentItem>
-            <S.ReplyIconContain src={ReplyIcon} alt="reply" />
-            <S.CommentMain>
-              <S.CommentAuthorSection>
-                <S.AuthorInfoGroup>
-                  <S.ProfileImage src={reply.author.profileImage || PersonIcon} />
-                  <S.AuthorInfo>
-                    <S.AuthorName>{reply.author.name}</S.AuthorName>
-                    <S.Timestamp>{formatCommentTime(reply.timestamp)}</S.Timestamp>
-                  </S.AuthorInfo>
-                </S.AuthorInfoGroup>
-
-                <S.AuthorActionGroup>
-                  <S.IconButton onClick={() => onLike(reply.id)}>
-                    <img src={likedComments[reply.id] ? LikeActiveIcon : LikeIcon} alt="좋아요" />
-                  </S.IconButton>
-                  <S.IconButton onClick={() => onReply(reply.author.name)}>
-                    <img src={CommentIcon} alt="댓글" />
-                  </S.IconButton>
-                </S.AuthorActionGroup>
-              </S.CommentAuthorSection>
-              <S.CommentContent>{reply.content}</S.CommentContent>
-            </S.CommentMain>
-          </S.CommentItem>
+              </button>
+            </div>
+          </div>
+          <div className={S.commentContent}>{comment.content}</div>
         </div>
-      ))}
+      </div>
+
+      {comment.replies &&
+        comment.replies.map((reply) => (
+          <div key={reply.id} className="ml-[1.8rem]">
+            <div className={S.commentItem}>
+              <img src={ReplyIcon} alt="reply" className={S.replyIconContain} />
+              <div className={S.commentMain}>
+                <div className={S.commentAuthorSection}>
+                  <div className={S.authorInfoGroup}>
+                    <img
+                      src={reply.author.profileImage || PersonIcon}
+                      className={S.profileImage}
+                    />
+                    <div className={S.authorInfo}>
+                      <span className={S.authorName}>{reply.author.name}</span>
+                      {formatCommentTime(reply.timestamp)}
+                    </div>
+                  </div>
+
+                  <div className={S.authorActionGroup}>
+                    <button
+                      className={S.iconButton}
+                      onClick={() => onLike(reply.id)}
+                    >
+                      <img
+                        src={
+                          likedComments[reply.id] ? LikeActiveIcon : LikeIcon
+                        }
+                        alt="좋아요"
+                      />
+                    </button>
+                    <button
+                      className={S.iconButton}
+                      onClick={() => onReply(reply.author.name)}
+                    >
+                      <img src={CommentIcon} alt="댓글" />
+                    </button>
+                  </div>
+                </div>
+                <div className={S.commentContent}>{reply.content}</div>
+              </div>
+            </div>
+          </div>
+        ))}
     </div>
   );
 };

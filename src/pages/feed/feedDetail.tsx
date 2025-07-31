@@ -1,3 +1,4 @@
+// FeedDetail.tsx
 import React, { useState, useEffect } from 'react';
 import * as S from '../../styles/feed/feedDetail.style';
 
@@ -19,7 +20,6 @@ import { handleLike, handleDislike } from '../../utils/feed/reaction';
 import type { Post, PostStates, Comment } from '../../types/feed/feed';
 
 export const FeedDetail: React.FC = () => {
-
   const [post] = useState<Post>({
     id: 1,
     author: {
@@ -33,7 +33,8 @@ export const FeedDetail: React.FC = () => {
     category: '배달/외식',
     companyName: '신라방마라탕',
     price: 12000,
-    content: '오늘 저녁은 기필코 집밥을 해먹으려고 했는데...\n남자친구랑 헤어져서 슬퍼서 마라탕 먹었습니다.',
+    content:
+      '오늘 저녁은 기필코 집밥을 해먹으려고 했는데...\n남자친구랑 헤어져서 슬퍼서 마라탕 먹었습니다.',
     comments: [
       {
         id: 1,
@@ -54,7 +55,9 @@ export const FeedDetail: React.FC = () => {
 
   const [posts, setPosts] = useState<Post[]>([post]);
   const [postStates, setPostStates] = useState<PostStates>({});
-  const [likedComments, setLikedComments] = useState<{ [commentId: number]: boolean }>({});
+  const [likedComments, setLikedComments] = useState<{
+    [commentId: number]: boolean;
+  }>({});
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
   const [mentionName, setMentionName] = useState<string | null>(null);
@@ -86,7 +89,7 @@ export const FeedDetail: React.FC = () => {
     }));
   };
 
-  const renderComments = (comments: Comment[]) => (
+  const renderComments = (comments: Comment[]) =>
     comments.map((cmt) => (
       <CommentItem
         key={cmt.id}
@@ -95,75 +98,114 @@ export const FeedDetail: React.FC = () => {
         onLike={toggleLike}
         onReply={handleComment}
       />
-    ))
-  );
-
+    ));
 
   const updatedPost = posts.find((p) => p.id === post.id) ?? post;
-  const { liked, disliked } = postStates[post.id] || { liked: false, disliked: false };
+  const { liked, disliked } = postStates[post.id] || {
+    liked: false,
+    disliked: false,
+  };
 
   const date = new Date(post.timestamp);
   const month = date.getMonth() + 1;
   const day = date.getDate();
-  const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+  const time = date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
 
   return (
     <>
-      <S.Container>
-        <S.ContentContainer>
+      <div className={S.container}>
+        <div className={S.contentContainer}>
           <Header title={updatedPost.category} />
-          <S.AuthorSection>
-            <S.ProfileImage src={updatedPost.author.profileImage || PersonIcon} />
-            <S.AuthorInfo>
-              <S.AuthorName>{updatedPost.author.name}</S.AuthorName>
-              <S.Timestamp>
+          <div className={S.authorSection}>
+            <img
+              src={updatedPost.author.profileImage || PersonIcon}
+              className={S.profileImage}
+              alt="작성자 프로필"
+            />
+            <div className={S.authorInfo}>
+              <span className={S.authorName}>{updatedPost.author.name}</span>
+              <span className={S.timestamp}>
                 {month}
-                <S.EclipseIcon src={EllipseIcon} alt="·" />
+                <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
                 {day}
-                <S.EclipseIcon src={EllipseIcon} alt="·" />
+                <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
                 {time}
-              </S.Timestamp>
-            </S.AuthorInfo>
-          </S.AuthorSection>
+              </span>
+            </div>
+          </div>
 
-          <S.PostImage
+          <img
             src={updatedPost.image || ''}
             alt="본문 이미지"
-            hasImage={!!updatedPost.image}
+            className={`${S.postImage} ${!updatedPost.image ? S.noImage : ''}`}
           />
 
-          <S.ActionButtons>
-            <S.ActionButton onClick={() => handleLike(post.id, posts, postStates, setPosts, setPostStates)}>
-              <img src={liked ? LikeActiveIcon : LikeIcon} alt="좋아요" />
-              <S.ActionCount>{updatedPost.likes}</S.ActionCount>
-            </S.ActionButton>
+          <div className={S.actionButtons}>
+            <button
+              className={S.actionButton}
+              onClick={() =>
+                handleLike(post.id, posts, postStates, setPosts, setPostStates)
+              }
+            >
+              <img
+                src={liked ? LikeActiveIcon : LikeIcon}
+                className={S.actionIcon}
+                alt="좋아요"
+              />
+              <span className={S.actionCount}>{updatedPost.likes}</span>
+            </button>
 
-            <S.ActionButton onClick={() => handleDislike(post.id, posts, postStates, setPosts, setPostStates)}>
-              <img src={disliked ? DislikeActiveIcon : DislikeIcon} alt="싫어요" />
-              <S.ActionCount>{updatedPost.dislikes}</S.ActionCount>
-            </S.ActionButton>
+            <button
+              className={S.actionButton}
+              onClick={() =>
+                handleDislike(
+                  post.id,
+                  posts,
+                  postStates,
+                  setPosts,
+                  setPostStates,
+                )
+              }
+            >
+              <img
+                src={disliked ? DislikeActiveIcon : DislikeIcon}
+                className={S.actionIcon}
+                alt="싫어요"
+              />
+              <span className={S.actionCount}>{updatedPost.dislikes}</span>
+            </button>
 
-            <S.ActionButton onClick={() => handleComment()}>
-              <img src={CommentIcon} alt="댓글" />
-              <S.ActionCount>{updatedPost.comments?.length ?? 0}</S.ActionCount>
-            </S.ActionButton>
-          </S.ActionButtons>
+            <button className={S.actionButton} onClick={() => handleComment()}>
+              <img src={CommentIcon} className={S.actionIcon} alt="댓글" />
+              <span className={S.actionCount}>
+                {updatedPost.comments?.length ?? 0}
+              </span>
+            </button>
+          </div>
 
           {updatedPost.companyName && (
-            <S.InfoContainer>
-              <S.CompanyName>{updatedPost.companyName}</S.CompanyName>
-              <S.Price>{updatedPost.price?.toLocaleString()}원</S.Price>
-              <S.Content>{updatedPost.content}</S.Content>
-            </S.InfoContainer>
+            <div className={S.infoContainer}>
+              <h2 className={S.companyName}>{updatedPost.companyName}</h2>
+              <div className={S.price}>
+                {updatedPost.price?.toLocaleString()}원
+              </div>
+              <p className={S.content}>{updatedPost.content}</p>
+            </div>
           )}
-        </S.ContentContainer>
+        </div>
 
-        <S.Divider />
+        <div className={S.divider} />
 
         {updatedPost.comments && updatedPost.comments.length > 0 && (
-          <S.CommentContainer>{renderComments(updatedPost.comments)}</S.CommentContainer>
+          <div className={S.commentContainer}>
+            {renderComments(updatedPost.comments)}
+          </div>
         )}
-      </S.Container>
+      </div>
 
       {isReplying && (
         <CommentInput
