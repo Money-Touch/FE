@@ -1,37 +1,28 @@
 import * as S from '../../../styles/home/notify.style';
-import { mockUser } from '../../../mocks/home/mockUser'; // mock data
 
 type Props = {
   message: string;
   type: string;
-  senderId?: number;
+  senderName?: string | null;
   hasThumbnail: (type: string) => boolean;
 };
 
 const HighlightedMessage = ({
   message,
   type,
-  senderId,
+  senderName,
   hasThumbnail,
 }: Props) => {
-  if (!hasThumbnail(type) || !senderId) {
+  if (!hasThumbnail(type) || !senderName) {
     return <>{message}</>;
   }
 
-  const senderName =
-    mockUser.find((user) => user.id === senderId)?.username + '_님';
-
-  if (!senderName || !message.includes(senderName)) {
-    return <>{message}</>;
-  }
-
-  const parts = message.split(senderName);
+  const name = type === 'COMMENT' ? `${senderName}_님 ` : `${senderName}_님`;
 
   return (
     <>
-      {parts[0]}
-      <span className={S.SenderName}>{senderName}</span>
-      {parts[1]}
+      <span className={S.SenderName}>{name}</span>
+      {message}
     </>
   );
 };

@@ -14,12 +14,20 @@ type Props = {
 };
 
 function NotificationList({ notification, onMarkAsRead }: Props) {
-  const { id, title, message, type, imageUrl, createdAt, isRead, senderId } =
-    notification;
+  const {
+    notificationId,
+    title,
+    content,
+    notificationTypeName,
+    senderName,
+    isRead,
+    imageUrl,
+    createdAt,
+  } = notification;
 
   const handleClick = () => {
     if (!isRead) {
-      onMarkAsRead(id);
+      onMarkAsRead(notificationId);
     }
   };
 
@@ -28,15 +36,19 @@ function NotificationList({ notification, onMarkAsRead }: Props) {
       <div className={S.Item}>
         <div className={S.LeftSection}>
           <div className={S.IconTitleGroup}>
-            <img src={typeToIcon[type]} alt="icon" className={S.Icon} />
+            <img
+              src={typeToIcon[notificationTypeName]}
+              alt="icon"
+              className={S.Icon}
+            />
             <div className={S.TitleContentGroup}>
               <div className={S.Title}>{title}</div>
               <div className={S.MessageGroup}>
                 <div className={S.Message}>
                   <HighlightedMessage
-                    message={message}
-                    type={type}
-                    senderId={senderId}
+                    message={content}
+                    type={notificationTypeName}
+                    senderName={senderName}
                     hasThumbnail={hasThumbnail}
                   />
                 </div>
@@ -46,7 +58,7 @@ function NotificationList({ notification, onMarkAsRead }: Props) {
           </div>
         </div>
         <div className={S.RightSection}>
-          {hasThumbnail(type) && (
+          {hasThumbnail(notificationTypeName) && (
             <img
               src={imageUrl && imageUrl.trim() !== '' ? imageUrl : exImage}
               alt="thumbnail"
