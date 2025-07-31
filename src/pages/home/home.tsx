@@ -5,7 +5,7 @@ import ConsumptionWelcome from '../../components/home/main/consumptionWelcome';
 import ConsumptionStatistics from '../../components/home/main/consumptionStatistics';
 import ConsumptionRanking from '../../components/home/main/consumptionRanking';
 import ConsumptionRoutine from '../../components/home/main/consumptionRoutine';
-import { useNotifications } from '../../hooks/home/useNotifications';
+import { useNotifications } from '../../hooks/home/notify/useNotifications';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Home = () => {
     navigate('/notify');
   };
 
-  const hasUnread = notifications.some((n) => !n.isRead);
+  const hasUnread = (notifications || []).some((n) => !n.isRead);
 
   return (
     <div className={S.Container}>
