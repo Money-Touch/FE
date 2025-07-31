@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { useProfileNicknameQuery } from '../../../../hooks/auth/signup/useProfileNicknameQuery';
 import { useProfileImage } from '../../../../hooks/auth/signup/useProfileImage';
 import ProfileImage from './profileImage';
+import { useSignUpMutation } from '../../../../hooks/auth/signup/useSignUpMutation';
 import { useProfileMutation } from '../../../../hooks/auth/signup/useProfileMutation';
 import type { ProfileFormPayload } from '../../../../types/auth/signup/profile';
 import SettingInput from '../setting/settingInput';
@@ -42,33 +43,65 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
 
   const { preview, fileInputRef, handleImgClick, handleChange } =
     useProfileImage();
-  const { mutate } = useProfileMutation();
+  const { mutate: signUp } = useSignUpMutation();
+  const { mutate: uploadImage } = useProfileMutation();
 
+  // 폼 제출
   const onSubmit = (formDataInput: z.infer<typeof profileSchema>) => {
     const file = fileInputRef.current?.files?.[0];
+    const payload: ProfileFormPayload = { profileImage: file };
 
-    const payload: ProfileFormPayload = {
-      nickname: formDataInput.nickname,
-      profileImage: file,
+    const email = localStorage.getItem('email') || '';
+    const password = localStorage.getItem('password') || '';
+    const agreeTerms = JSON.parse(localStorage.getItem('agreeTerms') || '[]');
+    const nickname = formDataInput.nickname;
+
+    const signUpPayload = {
+      email,
+      password,
+      agreeTerms,
+      nickname,
     };
 
-    localStorage.setItem('nickname', payload.nickname);
-
-    if (!file) {
-      onNext();
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    mutate(formData, {
+    signUp(signUpPayload, {
       onSuccess: (res) => {
-        console.log(res);
-        if (res?.result) {
-          localStorage.setItem('profileImgUrl', res.result);
+        const userId = res?.result?.userId;
+        if (!userId) {
+          alert('회원가입에 실패하였습니다.');
+          return;
         }
-        onNext();
+
+        localStorage.clear();
+        localStorage.setItem('userId', String(userId));
+        localStorage.setItem('nickname', nickname);
+
+        if (!file) {
+          onNext();
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', payload.profileImage!);
+
+        uploadImage(formData, {
+          onSuccess: (uploadRes) => {
+            const uploadedUrl = uploadRes?.result;
+            if (uploadedUrl) {
+              localStorage.setItem('profileImageUrl', uploadedUrl);
+            }
+            console.log('이미지 업로드 성공');
+            onNext();
+          },
+          onError: (err) => {
+            console.error('이미지 업로드 실패:', err);
+            alert('프로필 사진 등록에 실패하였습니다.');
+            onNext();
+          },
+        });
+      },
+      onError: (err) => {
+        console.error('회원가입 실패:', err);
+        alert('회원가입에 실패하였습니다.');
       },
     });
   };

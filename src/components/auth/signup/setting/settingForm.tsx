@@ -6,7 +6,6 @@ import SettingInput from './settingInput';
 import {
   useRequestEmailCode,
   useVerifyEmailCode,
-  useSignUp,
 } from '../../../../hooks/auth/signup/useSettingMutation';
 import * as S from '../../../../styles/auth/signup/signup.style';
 
@@ -29,7 +28,6 @@ const SettingForm = ({ onNext }: SettingFormProps) => {
 
   const { mutate: requestEmailCode } = useRequestEmailCode();
   const { mutate: verifyEmailCode } = useVerifyEmailCode();
-  const { mutate: signUp } = useSignUp();
 
   const handleRequestCode = () => {
     requestEmailCode(
@@ -60,16 +58,9 @@ const SettingForm = ({ onNext }: SettingFormProps) => {
   };
 
   const onSubmit = (data: SettingFormValues) => {
-    signUp(data, {
-      onSuccess: () => {
-        console.log('회원가입 성공');
-        onNext();
-        localStorage.removeItem('agreeTerms');
-      },
-      onError: (err) => {
-        console.error('회원가입 실패', err);
-      },
-    });
+    localStorage.setItem('email', data.email);
+    localStorage.setItem('password', data.password);
+    onNext();
   };
 
   return (

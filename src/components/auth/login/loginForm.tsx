@@ -22,6 +22,8 @@ const LoginForm = () => {
         onSuccess: (data) => {
           console.log('로그인 성공:', data);
           alert('로그인이 완료되었습니다.');
+          localStorage.setItem('accessToken', data.result.accessToken);
+          localStorage.setItem('refreshToken', data.result.refreshToken);
           navigate('/home');
         },
         onError: () => {
