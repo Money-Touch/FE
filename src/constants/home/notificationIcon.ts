@@ -8,13 +8,13 @@ import todayIcon from '../../assets/images/home/notify/today.png';
 
 export const typeToIcon = {
   COMMENT: commentIcon,
-  REACTION_UP: upIcon,
-  REACTION_DOWN: downIcon,
-  ACHIEVEMENT: achievementIcon,
-  WARNING: warningIcon,
-  REMINDER: reminderIcon,
-  TODAY: todayIcon,
+  WISE: upIcon,
+  WASTE: downIcon,
+  GOAL: achievementIcon,
+  COFFEE: warningIcon,
+  FIXED_COST: reminderIcon,
+  BUDGET: todayIcon,
 };
 
 export const hasThumbnail = (type: string) =>
-  type === 'COMMENT' || type === 'REACTION_UP' || type === 'REACTION_DOWN';
+  type === 'COMMENT' || type === 'WISE' || type === 'WASTE';
