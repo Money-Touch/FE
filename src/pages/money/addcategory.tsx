@@ -1,15 +1,18 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import colors from "../../styles/common/colors";
-import leftArrow from "../../assets/images/header/leftArrow.png";
+import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import colors from '../../styles/common/colors';
+import leftArrow from '../../assets/images/header/leftArrow.png';
 
-const MOBILE_MAX = "430px";
-const MAX_LEN    = 8;
+const MOBILE_MAX = '430px';
+const MAX_LEN = 8;
 
 const AddCategory = () => {
   const navigate = useNavigate();
-  const [category, setCategory] = useState("");
+  const location = useLocation();
+  const [category, setCategory] = useState('');
+
+  const from = location.state?.from || '/budget-register';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= MAX_LEN) setCategory(e.target.value);
@@ -18,18 +21,20 @@ const AddCategory = () => {
   const handleSubmit = () => {
     if (!category.trim()) return;
 
-    const existing = JSON.parse(localStorage.getItem("customCategories") || "[]");
-    localStorage.setItem(
-      "customCategories",
-      JSON.stringify([...existing, category.trim()])
+    const existing = JSON.parse(
+      localStorage.getItem('customCategories') || '[]',
     );
-    navigate("/budget-register", { replace: true });
+    localStorage.setItem(
+      'customCategories',
+      JSON.stringify([...existing, category.trim()]),
+    );
+    navigate(from, { replace: true });
   };
 
   return (
     <Wrap>
       <Header>
-        <IconBtnLeft onClick={() => navigate("/budget-register")}>
+        <IconBtnLeft onClick={() => navigate(from)}>
           <img src={leftArrow} alt="back" />
         </IconBtnLeft>
         <Title>카테고리 추가</Title>
@@ -98,7 +103,9 @@ const IconBase = styled.button`
   }
 `;
 
-const IconBtnLeft = styled(IconBase)`left: 16px;`;
+const IconBtnLeft = styled(IconBase)`
+  left: 16px;
+`;
 
 const Title = styled.h1`
   font-size: 18px;

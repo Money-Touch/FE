@@ -1,19 +1,19 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import styled from "styled-components";
-import colors from "../../styles/common/colors";
-import leftArrow  from "../../assets/images/header/leftArrow.png";
-import pencilIcon from "../../assets/images/budget/Pencil.png";
+import { useState, useEffect } from 'react';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import styled from 'styled-components';
+import colors from '../../styles/common/colors';
+import leftArrow from '../../assets/images/header/leftArrow.png';
+import pencilIcon from '../../assets/images/budget/Pencil.png';
 
-const CATEGORIES = ["배달/외식", "교통", "패션/쇼핑", "카페", "기타"] as const;
+const CATEGORIES = ['배달/외식', '교통', '패션/쇼핑', '카페', '기타'] as const;
 const fmtComma = (v: string | number) =>
-  String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 type LayoutCtx = { setHideFooter: (b: boolean) => void };
 
 const FixedCost = () => {
-  const navigate      = useNavigate();
-  const outletCtx     = useOutletContext<LayoutCtx | null>();
+  const navigate = useNavigate();
+  const outletCtx = useOutletContext<LayoutCtx | null>();
   const setHideFooter = outletCtx?.setHideFooter;
 
   useEffect(() => {
@@ -21,22 +21,22 @@ const FixedCost = () => {
     return () => setHideFooter?.(false);
   }, [setHideFooter]);
 
-  const [category, setCategory] = useState<string>("");
-  const [item,     setItem]     = useState("");
-  const [amount,   setAmount]   = useState(0);
-  const [memo,     setMemo]     = useState("");
+  const [category, setCategory] = useState<string>('');
+  const [item, setItem] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [memo, setMemo] = useState('');
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [raw,       setRaw]       = useState("");
+  const [raw, setRaw] = useState('');
 
   const valid = category && item.trim();
 
   const pressKey = (k: string) =>
-    setRaw(prev =>
-      k === "back" ? prev.slice(0, -1) : (prev + k).replace(/^0+(?=\d)/, "")
+    setRaw((prev) =>
+      k === 'back' ? prev.slice(0, -1) : (prev + k).replace(/^0+(?=\d)/, ''),
     );
   const openModal = () => {
-    setRaw(amount ? String(amount) : "");
+    setRaw(amount ? String(amount) : '');
     setModalOpen(true);
   };
   const applyValue = () => {
@@ -44,23 +44,23 @@ const FixedCost = () => {
     if (isNaN(n)) return;
     setAmount(n);
     setModalOpen(false);
-    setRaw("");
+    setRaw('');
   };
 
   const save = () => {
     if (!valid) return;
 
     const entry = {
-      id:       Date.now(),
+      id: Date.now(),
       category,
-      item:     item.trim(),
-      amount:  -Math.abs(amount),
+      item: item.trim(),
+      amount: -Math.abs(amount),
       memo,
     };
-    const prev = JSON.parse(localStorage.getItem("fixedEntries") || "[]");
-    localStorage.setItem("fixedEntries", JSON.stringify([...prev, entry]));
+    const prev = JSON.parse(localStorage.getItem('fixedEntries') || '[]');
+    localStorage.setItem('fixedEntries', JSON.stringify([...prev, entry]));
 
-    navigate("/money", { replace: true, state: { tab: "고정비" } });
+    navigate('/money', { replace: true, state: { tab: '고정비' } });
   };
 
   return (
@@ -90,11 +90,7 @@ const FixedCost = () => {
         </Label>
         <CatBox>
           {CATEGORIES.map((c) => (
-            <CatBtn
-              key={c}
-              $on={c === category}
-              onClick={() => setCategory(c)}
-            >
+            <CatBtn key={c} $on={c === category} onClick={() => setCategory(c)}>
               {c}
             </CatBtn>
           ))}
@@ -134,18 +130,28 @@ const FixedCost = () => {
             <InputRow>
               <Money
                 readOnly
-                value={raw ? fmtComma(raw) : ""}
+                value={raw ? fmtComma(raw) : ''}
                 placeholder="0"
               />
               <Won>원</Won>
             </InputRow>
 
             <Pad>
-              {["1","2","3","4","5","6","7","8","9","00","0","←"].map(k => (
-                <Key
-                  key={k}
-                  onClick={() => pressKey(k === "←" ? "back" : k)}
-                >
+              {[
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6',
+                '7',
+                '8',
+                '9',
+                '00',
+                '0',
+                '←',
+              ].map((k) => (
+                <Key key={k} onClick={() => pressKey(k === '←' ? 'back' : k)}>
                   {k}
                 </Key>
               ))}
@@ -201,7 +207,9 @@ const IconBase = styled.button`
     object-fit: contain;
   }
 `;
-const IconBtnLeft = styled(IconBase)`left: 16px;`;
+const IconBtnLeft = styled(IconBase)`
+  left: 16px;
+`;
 
 const H1 = styled.h1`
   font-size: 18px;
@@ -274,7 +282,7 @@ const CatBtn = styled.button<{ $on: boolean }>`
   border-radius: 20px;
   font-size: 14px;
   background: ${({ $on }) => ($on ? colors.mainColor1 : colors.B1)};
-  color: ${({ $on }) => ($on ? "#fff" : colors.G3)};
+  color: ${({ $on }) => ($on ? '#fff' : colors.G3)};
 `;
 
 const Input = styled.input`
@@ -315,7 +323,7 @@ const Save = styled.button<{ disabled?: boolean }>`
   font-weight: 600;
   color: #fff;
   background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
-  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")};
+  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 `;
 
 const Dim = styled.div`

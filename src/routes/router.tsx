@@ -16,6 +16,9 @@ import FixedCostPage from '../pages/money/fixedcost';
 import FeedPage from '../pages/feed/feed';
 import MypagePage from '../pages/mypage/mypage';
 import NotFoundPage from '../pages/notFound/notFound';
+import RoutinePage from '../pages/money/routine';
+import RoutineRegister from '../pages/money/routineregistration';
+import MyRoutinePage from '../pages/money/myroutine';
 
 const router = createBrowserRouter([
   {
@@ -66,6 +69,10 @@ const router = createBrowserRouter([
         element: <MoneyPage />,
       },
       {
+        path: 'myroutine/:id',
+        element: <MyRoutinePage />,
+      },
+      {
         path: 'add-day',
         element: <AddDayPage />,
       },
@@ -80,6 +87,14 @@ const router = createBrowserRouter([
       {
         path: 'add-category',
         element: <AddCategoryPage />,
+      },
+      {
+        path: 'routine',
+        element: <RoutinePage />,
+      },
+      {
+        path: 'routine-registration',
+        element: <RoutineRegister />,
       },
       {
         path: 'feed',
