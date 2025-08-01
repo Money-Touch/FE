@@ -12,9 +12,17 @@ export function useCategories() {
   return useQuery<string[], Error>({
     queryKey: ['categories'],
     queryFn: async () => {
+      const accessToken = localStorage.getItem('accessToken');
+
       const res = await API.get<CategoryResponse>(
         '/api/consumptionrecord/categories',
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
       );
+
       if (res.data.isSuccess) {
         return res.data.result.map((c) => c.categoryName);
       } else {

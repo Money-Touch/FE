@@ -1,237 +1,73 @@
-import styled from 'styled-components';
-import colors from '../common/colors';
+export const container = '';
 
-export const Container = styled.div`
-`;
+export const contentContainer = 'flex flex-col mx-[2.4rem]';
 
-//content
-export const ContentContainer = styled.div`
-  display:flex;
-  flex-direction: column;
-  margin: 0 2.4rem;
- `;
+export const authorSection = 'flex items-center';
 
-//author info
-export const AuthorSection = styled.div`
-  display: flex;
-  align-items: center;
-`;
+export const profileImage = 'w-[3rem] h-[3rem] rounded-full object-cover';
 
-export const ProfileImage = styled.img`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  object-fit: cover;
-`;
+export const authorInfo = 'flex flex-col ml-[0.5rem]';
 
-export const AuthorInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-left: 0.5rem;
-`;
+export const authorName = 'text-[1.4rem] text-[var(--color-G1)]';
 
-export const AuthorName = styled.span`
-  font-size: 1.4rem;
-  color: ${colors.G1};
-`;
+export const timestamp =
+  'text-[0.8rem] leading-[1rem] text-[var(--color-G3)] flex items-center';
 
-export const Timestamp = styled.span`
-  font-size: 0.8rem;
-  line-height: 1rem;
-  color: ${colors.G3};
-`;
+export const eclipseIcon =
+  'w-[0.2rem] h-[0.2rem] mx-[0.2rem] align-middle rounded-full object-cover';
 
-export const EclipseIcon = styled.img`
-  width: 0.2rem;
-  height: 0.2rem;
-  margin: 0 0.2rem;
-  vertical-align: middle;
-  border-radius: 50%;
-  object-fit: cover;
-  font-family: inherit;
-`;
+export const postImage =
+  'w-full aspect-[37.7/36.5] object-cover rounded-[1rem] mt-[0.6rem] block';
 
-export const PostImage = styled.img<{ hasImage: boolean }>`
-  width: 100%;
-  aspect-ratio: 37.7 / 36.5;
-  object-fit: cover;
-  background-color: ${({ hasImage }) => (hasImage ? 'transparent' : '#aaaaaa')};
-  border-radius: 1rem;
-  margin-top: 0.6rem;
-  display: block;
-`;
+export const noImage = 'bg-[#aaaaaa]';
 
-export const ActionButtons = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 1rem;
-  gap: 0.6rem;
-`;
+export const actionButtons = 'flex justify-start mt-[1rem] gap-[0.6rem]';
 
-export const ActionButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+export const actionButton =
+  'flex items-center justify-center gap-[0.6rem] w-[4rem] h-[2rem] cursor-pointer';
 
-  gap: 0.6rem;
-  width: 4rem;
-  height: 2rem;
+export const actionIcon = 'w-[2rem] h-[2rem]';
 
-  img {
-    width: 2rem;
-    height: 2rem;
-  }
-`;
+export const actionCount =
+  'text-[1.2rem] text-[var(--color-G1)] flex items-center';
 
-export const ActionCount = styled.span`
-  font-size: 1.2rem;
-  color: ${colors.G1};
-  display: flex;
-  align-items: center;
-`
+export const infoContainer = 'mt-[2rem] gap-[1rem]';
 
-//contents
-export const InfoContainer = styled.div`
-  margin-top: 2rem;
-  gap: 1rem;
-`;
+export const companyName =
+  'leading-[1.6rem] text-[1.2rem] text-[var(--color-G3)]';
 
-export const CompanyName = styled.h2`
-  line-height: 1.6rem;
-  font-size: 1.2rem;
-  color: ${colors.G3};
-`;
+export const price = 'leading-[2.8rem] text-[2rem] mb-[1rem]';
 
-export const Price = styled.div`
-  line-height: 2.8rem;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-`;
+export const content = 'leading-[1.8rem] text-[1.4rem] whitespace-pre-wrap';
 
-export const Content = styled.p`
-  line-height: 1.8rem;
-  font-size: 1.4rem;
-  white-space: pre-wrap;
-`;
+export const divider = 'h-[0.7rem] bg-[var(--color-G8)] mt-[2rem]';
 
-//Divider
-export const Divider = styled.div`
-  height: 0.7rem;
-  background-color: ${colors.G8};
-  margin-top: 2rem;
-`;
+export const commentContainer = 'flex flex-col mx-[2.4rem] mt-[1.4rem]';
 
-//Comment
-export const CommentContainer = styled.div`
-  display:flex;
-  flex-direction: column;
-  margin: 0 2.4rem;
-  margin-top: 1.4rem;
-`;
+export const commentItem = 'flex mb-[1.4rem]';
 
-export const CommentItem = styled.div`
-  display:flex;
-  margin-bottom: 1.4rem;
-`;
+export const commentContent = 'leading-[1.6rem] text-[1.2rem] mt-[1rem]';
 
-export const CommentContent = styled.div`
-  line-height: 1.6rem;
-  font-size: 1.2rem;
-  margin-top: 1rem;
-`;
+export const commentAuthorSection = 'flex justify-between items-center';
 
-export const CommentAuthorSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+export const authorInfoGroup = 'flex items-center';
 
-export const AuthorInfoGroup = styled.div`
-  display: flex;
-  align-items: center;
-`;
+export const authorActionGroup = 'flex gap-[1rem]';
 
-export const AuthorActionGroup = styled.div`
-  display: flex;
-  gap: 1rem;
-`;
+export const iconButton = 'bg-none border-none p-1 cursor-pointer';
 
-export const IconButton = styled.button`
-  background: none;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
+export const replyIconContain = 'w-[0.8rem] h-[0.8rem] mt-[0.8rem] mr-[0.5rem]';
 
-  img {
-    width: 14px;
-    height: 14px;
-  }
-`;
+export const commentMain = 'flex-1 flex flex-col';
 
-export const ReplyIconContain = styled.img`
-  width: 0.8rem;
-  height: 0.8rem;
-  margin-top: 0.8rem;
-  margin-right: 0.5rem;
-`;
+export const replyInputWrapper =
+  'border-t border-[var(--color-G7)] flex items-center h-[5rem] px-[2.4rem] pt-[0.7rem] pb-[1.2rem]  mb-[5rem]';
 
-export const CommentMain = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
+export const replyInput =
+  'flex-1 text-[1.2rem] h-[3rem] leading-[1.6rem] ml-[0.5rem] border-none outline-none resize-none py-[0.7rem] px-[0.5rem] font-inherit';
 
-//reply input
-export const ReplyInputWrapper = styled.div`
-  border-top: 1px solid ${colors.G7};
-  align-items: center;
-  display: flex;
-  height: 4.4rem;
-  padding: 0.7rem 2.4rem;
-  margin-bottom: 5rem;
-`;
+export const submitButton =
+  'text-white text-[1.4rem] h-[3rem] w-[4.4rem] rounded-[0.5rem] bg-[var(--color-mainColor1)] cursor-pointer disabled:bg-[var(--color-G5)] disabled:cursor-not-allowed';
 
-export const ReplyInput = styled.textarea`
-  flex: 1;
-  font-size: 1.2rem;
-  height: 3rem;
-  line-height: 1.6rem;
-  margin-left: 0.5rem;
-  border: none;
-  outline: none;
-  resize: none;
-  padding: 0.7rem 0.5rem;
-  font-family: inherit;
-`;
-
-
-export const SubmitButton = styled.button`
-  background-color: ${colors.mainColor1};
-  color: white;
-  border-radius: 0.5rem;
-  font-size: 1.4rem;
-  height: 3rem;
-  width: 4.4rem;
-  cursor: pointer;
-
-  &:disabled {
-    background-color: ${colors.G5};
-    cursor: not-allowed;
-  }
-`;
-
-//comment mention
-export const MentionLabel = styled.div`
-  color: ${colors.G1};
-  background: ${colors.subColor5};
-  border-radius: 0.5rem;
-  margin-left: 0.5rem;
-  font-size: 1.2rem;
-  line-height:1.8rem;
-  width: 3.7rem;
-  height: 2.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+export const mentionLabel =
+  'text-[var(--color-G1)] bg-[var(--color-subColor5)] rounded-[0.5rem] ml-[0.5rem] text-[1.2rem] leading-[1.8rem] w-[3.7rem] h-[2.4rem] flex items-center justify-center';

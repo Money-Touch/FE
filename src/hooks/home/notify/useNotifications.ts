@@ -19,7 +19,12 @@ export function useNotifications() {
   } = useInfiniteQuery<NotificationResponse, Error>({
     queryKey: ['notifications'],
     queryFn: async ({ pageParam = null }) => {
+      const accessToken = localStorage.getItem('accessToken');
+
       const res = await API.get('/api/notification/list', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
         params: { cursor: pageParam },
       });
 
@@ -36,7 +41,18 @@ export function useNotifications() {
 
   const { mutate: markAsRead } = useMutation({
     mutationFn: async (id: number) => {
-      const res = await API.patch(`/api/notification/${id}/read`);
+      const accessToken = localStorage.getItem('accessToken');
+
+      const res = await API.patch(
+        `/api/notification/${id}/read`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
       if (!res.data.isSuccess) {
         throw new Error('알림 읽음 처리 실패');
       }

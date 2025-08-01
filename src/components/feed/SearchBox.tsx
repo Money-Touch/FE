@@ -1,6 +1,6 @@
 import React from 'react';
-import * as S from '../../styles/feed/feed.style';
 import SearchIcon from '../../assets/images/feed/Search.png';
+import * as S from '../../styles/feed/feed.style';
 
 interface SearchBoxProps {
   searchTerm: string;
@@ -14,18 +14,19 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
   onSearch,
 }) => {
   return (
-    <S.SearchContainer>
-      <S.SearchInputWrapper>
-        <S.SearchInput
+    <div className={S.SearchContainer}>
+      <div className={S.SearchInputWrapper}>
+        <input
           type="text"
           placeholder="검색어를 입력해 주세요."
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
+          className={S.SearchInput}
         />
-        <S.SearchButton onClick={onSearch}>
+        <button onClick={onSearch} className={S.SearchButton}>
           <img src={SearchIcon} alt="검색" width={20} height={20} />
-        </S.SearchButton>
-      </S.SearchInputWrapper>
-    </S.SearchContainer>
+        </button>
+      </div>
+    </div>
   );
 };

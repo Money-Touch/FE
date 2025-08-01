@@ -10,28 +10,33 @@ interface CommentInputProps {
   onClose: () => void;
 }
 
-const CommentInput: React.FC<CommentInputProps> = ({ mentionName, replyText, onChange, onClose }) => {
+const CommentInput: React.FC<CommentInputProps> = ({
+  mentionName,
+  replyText,
+  onChange,
+  onClose,
+}) => {
   return (
-    <S.ReplyInputWrapper>
-      <S.ProfileImage src={PersonIcon} alt="내 프로필" />
+    <div className={S.replyInputWrapper}>
+      <img src={PersonIcon} alt="내 프로필" className={S.profileImage} />
 
-      {mentionName && (
-        <S.MentionLabel>@{mentionName}</S.MentionLabel>
-      )}
+      {mentionName && <div className={S.mentionLabel}>@{mentionName}</div>}
 
-      <S.ReplyInput
+      <textarea
         value={replyText}
         onChange={(e) => onChange(e.target.value)}
         placeholder="댓글을 입력해주세요."
+        className={S.replyInput}
       />
 
-      <S.SubmitButton
+      <button
         onClick={onClose}
         disabled={replyText.trim().length === 0}
+        className={S.submitButton}
       >
         등록
-      </S.SubmitButton>
-    </S.ReplyInputWrapper>
+      </button>
+    </div>
   );
 };
 

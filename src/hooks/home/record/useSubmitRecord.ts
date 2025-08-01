@@ -11,6 +11,7 @@ export function useSubmitRecord(onSuccessCallback?: () => void) {
       formData: UserRecord;
       file: File | null;
     }) => {
+      const accessToken = localStorage.getItem('accessToken');
       const form = new FormData();
 
       form.append(
@@ -32,6 +33,7 @@ export function useSubmitRecord(onSuccessCallback?: () => void) {
 
       const res = await API.post('/api/consumptionrecord/record', form, {
         headers: {
+          Authorization: `Bearer ${accessToken}`,
           'Content-Type': 'multipart/form-data',
         },
       });
