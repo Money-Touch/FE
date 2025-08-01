@@ -99,7 +99,7 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
                 onSuccess: (uploadRes) => {
                   const uploadedUrl = uploadRes?.result;
                   if (uploadedUrl) {
-                    localStorage.setItem('profileImageUrl', uploadedUrl);
+                    localStorage.setItem('profileImgUrl', uploadedUrl);
                   }
                   console.log('이미지 업로드 성공');
                   onNext();

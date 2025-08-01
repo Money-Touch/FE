@@ -14,7 +14,7 @@ const ResultForm = ({ data }: ResultFormProps) => {
       </p>
       <p className={`${S.ItemP} !text-[3.2rem] !font-bold`}>{data?.code}</p>
 
-      <img className={T.ResultImg} src={data?.image} />
+      <img className={T.ResultImg} src={data?.imageShadow} />
       <p
         className={`${S.ItemP} !text-[1.5rem] !leading-[2.3rem] !text-center !whitespace-pre-line`}
       >

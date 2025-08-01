@@ -4,4 +4,5 @@ export interface ResultProps {
   title: string;
   explain: string;
   image: string;
+  imageShadow: string;
 }
