@@ -12,7 +12,7 @@ import HomePage from '../pages/home/home';
 import NotifyPage from '../pages/home/notify';
 import RecordPage from '../pages/home/record';
 import RankingPage from '../pages/home/ranking';
-import RoutinePage from '../pages/home/routine';
+import HomeRoutinePage from '../pages/home/routine';
 import RoutineDetailPage from '../pages/home/routinedetail';
 
 import MoneyPage from '../pages/money/money';
@@ -29,6 +29,9 @@ import MyfeedPage from '../pages/auth/mypage/myfeed';
 import MybadgePage from '../pages/auth/mypage/mybadge';
 
 import NotFoundPage from '../pages/notFound/notFound';
+import MoneyRoutinePage from '../pages/money/routine';
+import RoutineRegister from '../pages/money/routineregistration';
+import MyRoutinePage from '../pages/money/myroutine';
 
 const router = createBrowserRouter([
   {
@@ -57,7 +60,7 @@ const router = createBrowserRouter([
           {
             path: 'routine',
             children: [
-              { index: true, element: <RoutinePage /> },
+              { index: true, element: <HomeRoutinePage /> },
               { path: ':id', element: <RoutineDetailPage /> },
             ],
           },
@@ -67,6 +70,9 @@ const router = createBrowserRouter([
           { path: 'fixed-cost', element: <FixedCostPage /> },
           { path: 'budget-register', element: <BudgetRegisterPage /> },
           { path: 'add-category', element: <AddCategoryPage /> },
+          { path: 'myroutine/:id', element: <MyRoutinePage /> },
+          { path: 'routine-registration', element: <RoutineRegister /> },
+          { path: 'money-routine', element: <MoneyRoutinePage /> },
 
           {
             path: 'feed',

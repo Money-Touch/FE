@@ -6,43 +6,41 @@ import leftArrow from '../../assets/images/header/leftArrow.png';
 import pencilIcon from '../../assets/images/budget/Pencil.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 
-const CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
+const DEFAULT_CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
 const MOBILE_MAX = '430px';
 
-const BudgetRegister = () => {
+const Routine = () => {
   const navigate = useNavigate();
 
-  const [monthBudget, setMonthBudget] = useState(500_000);
+  const [monthBudget, setMonthBudget] = useState(0);
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
+  const [customCats, setCustomCats] = useState<string[]>([]);
+  const [customBudget, setCustomBudget] = useState<number[]>([]);
   const [editMode, setEditMode] = useState(false);
-  const [myEditMode, setMyEditMode] = useState(false);
-  const [myDeleteMode, setMyDeleteMode] = useState(false);
-  const [myCategories, setMyCategories] = useState<string[]>([]);
-  const [myCatBudget, setMyCatBudget] = useState<number[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [raw, setRaw] = useState('');
   const [targetIdx, setTargetIdx] = useState<-1 | number>(-1);
-  const [targetIsCustom, setTargetIsCustom] = useState(false);
+  const [targetCustom, setTargetCustom] = useState(false);
 
   useEffect(() => {
-    const savedCats = JSON.parse(
-      localStorage.getItem('customCategories') || '[]',
-    );
-    setMyCategories(savedCats);
-    setMyCatBudget(Array(savedCats.length).fill(0));
+    setMonthBudget(Number(localStorage.getItem('monthBudget') || 0));
 
-    const savedMonth = Number(localStorage.getItem('monthBudget') || 0);
-    if (savedMonth) setMonthBudget(savedMonth);
-
-    const savedCatBudgets = JSON.parse(
+    const savedCat = JSON.parse(
       localStorage.getItem('categoryBudgets') || '[]',
     );
-    if (savedCatBudgets.length === 5) setCatBudget(savedCatBudgets);
+    if (savedCat.length === 5) setCatBudget(savedCat);
 
-    const savedMyBudgets = JSON.parse(
+    const savedCurs = JSON.parse(
+      localStorage.getItem('customCategories') || '[]',
+    );
+    setCustomCats(savedCurs);
+
+    const savedCBudg = JSON.parse(
       localStorage.getItem('customCategoryBudgets') || '[]',
     );
-    if (savedMyBudgets.length) setMyCatBudget(savedMyBudgets);
+    setCustomBudget(
+      savedCBudg.length ? savedCBudg : Array(savedCurs.length).fill(0),
+    );
   }, []);
 
   const comma = (v: string | number) =>
@@ -55,7 +53,14 @@ const BudgetRegister = () => {
 
   const openModal = (idx: number, isCustom = false) => {
     setTargetIdx(idx);
-    setTargetIsCustom(isCustom);
+    setTargetCustom(isCustom);
+    setRaw(
+      idx === -1
+        ? String(monthBudget)
+        : isCustom
+          ? String(customBudget[idx])
+          : String(catBudget[idx]),
+    );
     setModalOpen(true);
   };
 
@@ -65,14 +70,14 @@ const BudgetRegister = () => {
 
     if (targetIdx === -1) {
       setMonthBudget(n);
-    } else if (!targetIsCustom) {
+    } else if (!targetCustom) {
       setCatBudget((prev) => {
         const next = [...prev];
         next[targetIdx] = n;
         return next;
       });
     } else {
-      setMyCatBudget((prev) => {
+      setCustomBudget((prev) => {
         const next = [...prev];
         next[targetIdx] = n;
         return next;
@@ -82,28 +87,22 @@ const BudgetRegister = () => {
     setRaw('');
   };
 
-  const deleteCategory = (idx: number) => {
-    setMyCategories((prev) => {
-      const next = prev.filter((_, i) => i !== idx);
-      localStorage.setItem('customCategories', JSON.stringify(next));
-      return next;
-    });
-    setMyCatBudget((prev) => prev.filter((_, i) => i !== idx));
-  };
-
-  const totalDefault = catBudget.reduce((a, b) => a + b, 0);
-  const totalCustom = myCatBudget.reduce((a, b) => a + b, 0);
   const canConfirm =
-    monthBudget > 0 && monthBudget === totalDefault + totalCustom;
+    monthBudget > 0 &&
+    monthBudget === [...catBudget, ...customBudget].reduce((a, b) => a + b, 0);
 
   const handleConfirm = () => {
     if (!canConfirm) return;
 
     localStorage.setItem('monthBudget', String(monthBudget));
     localStorage.setItem('categoryBudgets', JSON.stringify(catBudget));
-    localStorage.setItem('customCategoryBudgets', JSON.stringify(myCatBudget));
+    localStorage.setItem('customCategoryBudgets', JSON.stringify(customBudget));
+    localStorage.setItem(
+      'totalRoutineBudget',
+      JSON.stringify([...catBudget, ...customBudget]),
+    );
 
-    navigate('/money', { replace: true });
+    navigate('/routine-registration', { replace: true });
   };
 
   return (
@@ -130,21 +129,20 @@ const BudgetRegister = () => {
 
         <Section>
           <Row>
-            <Label>카테고리 별 예산</Label>
+            <Label>소비 루틴</Label>
             <IconBtn $active={editMode} onClick={() => setEditMode((v) => !v)}>
               <img src={pencilIcon} alt="edit" />
             </IconBtn>
           </Row>
 
           <CatUl>
-            {CATEGORIES.map((c, i) => (
+            {DEFAULT_CATEGORIES.map((c, i) => (
               <CatLi
                 key={c}
                 $editable={editMode}
                 onClick={() => editMode && openModal(i, false)}
               >
                 <span>{c}</span>
-
                 {editMode ? (
                   <EditWrapper>
                     <EditInput>{comma(catBudget[i])}원</EditInput>
@@ -154,62 +152,32 @@ const BudgetRegister = () => {
                 )}
               </CatLi>
             ))}
+
+            {customCats.map((name, i) => (
+              <CatLi
+                key={name}
+                $editable={editMode}
+                onClick={() => editMode && openModal(i, true)}
+              >
+                <span>{name}</span>
+                {editMode ? (
+                  <EditWrapper>
+                    <EditInput>{comma(customBudget[i])}원</EditInput>
+                  </EditWrapper>
+                ) : (
+                  <span>{comma(customBudget[i])}원</span>
+                )}
+              </CatLi>
+            ))}
           </CatUl>
         </Section>
-
-        {myCategories.length > 0 && (
-          <Section>
-            <Row>
-              <Label>내 카테고리</Label>
-
-              <IconBtn
-                style={{ marginRight: 4 }}
-                $active={myEditMode}
-                onClick={() => setMyEditMode((v) => !v)}
-              >
-                <img src={pencilIcon} alt="edit" />
-              </IconBtn>
-
-              <DeleteToggleBtn
-                $active={myDeleteMode}
-                onClick={() => setMyDeleteMode((v) => !v)}
-              >
-                —
-              </DeleteToggleBtn>
-            </Row>
-
-            <CatUl>
-              {myCategories.map((name, i) => (
-                <CatLi
-                  key={name}
-                  $editable={myEditMode || myDeleteMode}
-                  onClick={() =>
-                    myEditMode && !myDeleteMode && openModal(i, true)
-                  }
-                >
-                  <span>{name}</span>
-
-                  <RightBox>
-                    {myEditMode && !myDeleteMode ? (
-                      <EditWrapper>
-                        <EditInput>{comma(myCatBudget[i] || 0)}원</EditInput>
-                      </EditWrapper>
-                    ) : (
-                      <span>{comma(myCatBudget[i] || 0)}원</span>
-                    )}
-
-                    {myDeleteMode && (
-                      <DeleteBtn onClick={() => deleteCategory(i)}>×</DeleteBtn>
-                    )}
-                  </RightBox>
-                </CatLi>
-              ))}
-            </CatUl>
-          </Section>
-        )}
       </Body>
 
-      <PlusBtn onClick={() => navigate('/add-category')}>
+      <PlusBtn
+        onClick={() =>
+          navigate('/add-category', { state: { from: '/routine' } })
+        }
+      >
         <img src={plusCircle} alt="add" />
       </PlusBtn>
 
@@ -261,7 +229,7 @@ const BudgetRegister = () => {
   );
 };
 
-export default BudgetRegister;
+export default Routine;
 
 const Wrap = styled.div`
   position: relative;
@@ -295,8 +263,7 @@ const IconBase = styled.button`
   border: none;
   padding: 0;
 
-  img,
-  svg {
+  img {
     width: 20px;
     height: 20px;
     display: block;
@@ -355,21 +322,6 @@ const IconBtn = styled.button<{ $active?: boolean }>`
   }
 `;
 
-const DeleteToggleBtn = styled.button<{ $active: boolean }>`
-  margin-left: auto;
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: none;
-  font-size: 28px;
-  line-height: 20px;
-  color: ${({ $active }) => ($active ? colors.mainColor1 : colors.G3)};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateY(-2px);
-`;
-
 const Month = styled.p`
   font-size: 28px;
   font-weight: 700;
@@ -417,20 +369,6 @@ const EditInput = styled.span`
   border-bottom: 1.5px solid ${colors.mainColor1};
   padding-bottom: 2px;
   text-align: right;
-`;
-
-const RightBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`;
-
-const DeleteBtn = styled.button`
-  border: none;
-  background: none;
-  font-size: 20px;
-  color: ${colors.G3};
-  line-height: 1;
 `;
 
 const PlusBtn = styled.button`
