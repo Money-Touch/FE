@@ -5,7 +5,12 @@ export const useMypageQuery = () => {
   return useQuery({
     queryKey: ['mypage'],
     queryFn: async () => {
-      const res = await API.get('/api/user/mypage');
+      const accessToken = localStorage.getItem('accessToken');
+      const res = await API.get('/api/user/mypage', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       return res.data;
     },
     retry: false,

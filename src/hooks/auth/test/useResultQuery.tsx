@@ -4,21 +4,16 @@ import type { ResultProps } from '../../../types/auth/test/result';
 
 const fetchResult = async (): Promise<ResultProps> => {
   const result = localStorage.getItem('resultCode');
+  const accessToken = localStorage.getItem('accessToken');
 
-  const res = await API.get('/api/consumptionMbti/result', {
-    params: { result: result },
+  const response = await API.get('/api/consumptionMbti/result', {
+    params: { result },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
-  console.log(res);
-
-  // 추후 수정 예정
-  const user = res.data;
-
-  return {
-    name: user.name,
-    email: user.email,
-    companyName: user.company.name,
-  };
+  return response.data;
 };
 
 export const useResultQuery = () => {

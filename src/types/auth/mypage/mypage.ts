@@ -13,3 +13,11 @@ export interface MenuSection {
   title: string;
   list: MenuItem[];
 }
+
+export interface MypageResponse {
+  result: {
+    nickname: string;
+    profileImgUrl: string;
+    representativeBadgeImageUrl: string;
+  };
+}

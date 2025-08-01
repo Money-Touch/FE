@@ -9,6 +9,7 @@ import { useProfileImage } from '../../../../hooks/auth/signup/useProfileImage';
 import ProfileImage from './profileImage';
 import { useSignUpMutation } from '../../../../hooks/auth/signup/useSignUpMutation';
 import { useProfileMutation } from '../../../../hooks/auth/signup/useProfileMutation';
+import { useLoginMutation } from '../../../../hooks/auth/login/useLoginMutation';
 import type { ProfileFormPayload } from '../../../../types/auth/signup/profile';
 import SettingInput from '../setting/settingInput';
 
@@ -44,6 +45,7 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
   const { preview, fileInputRef, handleImgClick, handleChange } =
     useProfileImage();
   const { mutate: signUp } = useSignUpMutation();
+  const { mutate: login } = useLoginMutation();
   const { mutate: uploadImage } = useProfileMutation();
 
   // 폼 제출
@@ -65,39 +67,59 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
 
     signUp(signUpPayload, {
       onSuccess: (res) => {
+        localStorage.removeItem('agreeTerms');
         const userId = res?.result?.userId;
         if (!userId) {
           alert('회원가입에 실패하였습니다.');
           return;
         }
 
-        localStorage.clear();
-        localStorage.setItem('userId', String(userId));
-        localStorage.setItem('nickname', nickname);
+        login(
+          { email, password },
+          {
+            onSuccess: (loginRes) => {
+              const { accessToken, refreshToken } = loginRes.result;
+              localStorage.removeItem('email');
+              localStorage.removeItem('password');
+              localStorage.setItem('accessToken', accessToken);
+              localStorage.setItem('refreshToken', refreshToken);
 
-        if (!file) {
-          onNext();
-          return;
-        }
+              localStorage.setItem('userId', String(userId));
+              localStorage.setItem('nickname', nickname);
 
-        const formData = new FormData();
-        formData.append('file', payload.profileImage!);
+              if (!file) {
+                onNext();
+                return;
+              }
 
-        uploadImage(formData, {
-          onSuccess: (uploadRes) => {
-            const uploadedUrl = uploadRes?.result;
-            if (uploadedUrl) {
-              localStorage.setItem('profileImageUrl', uploadedUrl);
-            }
-            console.log('이미지 업로드 성공');
-            onNext();
+              const formData = new FormData();
+              formData.append('file', payload.profileImage!);
+
+              uploadImage(formData, {
+                onSuccess: (uploadRes) => {
+                  const uploadedUrl = uploadRes?.result;
+                  if (uploadedUrl) {
+                    localStorage.setItem('profileImageUrl', uploadedUrl);
+                  }
+                  console.log('이미지 업로드 성공');
+                  onNext();
+                },
+                onError: (err) => {
+                  console.error('이미지 업로드 실패:', err);
+                  alert('프로필 사진 등록에 실패하였습니다.');
+                  onNext();
+                },
+              });
+            },
+            onError: (err) => {
+              console.error('로그인 실패:', err);
+              alert(
+                '자동 로그인에 실패했습니다. 로그인 페이지로 이동해 주세요.',
+              );
+              onNext();
+            },
           },
-          onError: (err) => {
-            console.error('이미지 업로드 실패:', err);
-            alert('프로필 사진 등록에 실패하였습니다.');
-            onNext();
-          },
-        });
+        );
       },
       onError: (err) => {
         console.error('회원가입 실패:', err);
