@@ -1,31 +1,36 @@
 import React from 'react';
-import {
-  PostCard,
-  PostHeader,
-  PostImageContainer,
-  PostActions,
-  SkeletonBox,
-  ImageSkeleton,
-} from '../../styles/feed/feed';
+import * as S from '../../styles/feed/feed.style';
 
 export const SkeletonPost: React.FC = () => {
   return (
-    <PostCard>
-      <PostHeader>
-        <SkeletonBox width="30px" height="30px" circle />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <SkeletonBox width="120px" height="16px" />
+    <div className={S.PostCard}>
+      <div className={S.PostHeader}>
+        <div
+          className={`${S.SkeletonBox} rounded-full`}
+          style={{ width: '3rem', height: '3rem' }}
+        />
+        <div className="flex flex-col gap-2">
+          <div
+            className={`${S.SkeletonBox} rounded-full`}
+            style={{ width: '12rem', height: '1.6rem' }}
+          />
         </div>
-      </PostHeader>
+      </div>
 
-      <PostImageContainer>
-        <ImageSkeleton />
-      </PostImageContainer>
+      <div className={S.PostImageContainer}>
+        <div className={S.ImageSkeleton} />
+      </div>
 
-      <PostActions>
-        <SkeletonBox width="64px" height="32px" />
-        <SkeletonBox width="64px" height="32px" />
-      </PostActions>
-    </PostCard>
+      <div className={S.PostActions}>
+        <div
+          className={`${S.SkeletonBox} rounded-full`}
+          style={{ width: '6.4rem', height: '3.2rem' }}
+        />
+        <div
+          className={`${S.SkeletonBox} rounded-full`}
+          style={{ width: '6.4rem', height: '3.2rem' }}
+        />
+      </div>
+    </div>
   );
 };

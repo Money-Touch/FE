@@ -26,9 +26,3 @@ export interface VerifyEmailCodePayload {
   email: string;
   code: string;
 }
-
-export interface SignUpPayload {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}

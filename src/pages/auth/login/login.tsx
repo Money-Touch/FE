@@ -6,18 +6,18 @@ import Kakao from '../../../components/auth/login/kakao/kakao';
 
 const Login = () => {
   return (
-    <L.LoginContainer className="pageContainer">
-      <L.LogoContainer>
-        <L.LogoImg src={Logo} alt="logo" />
-        <L.LogoP>Touch</L.LogoP>
-      </L.LogoContainer>
+    <div className={`pageContainer ${L.LoginContainer}`}>
+      <div className={L.LogoContainer}>
+        <img className={L.LogoImg} src={Logo} alt="logo" />
+        <p className={L.LogoP}>Touch</p>
+      </div>
 
       <LoginForm />
 
       <ListMenu />
 
       <Kakao />
-    </L.LoginContainer>
+    </div>
   );
 };
 

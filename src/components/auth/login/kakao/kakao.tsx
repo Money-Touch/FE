@@ -16,12 +16,12 @@ const Kakao = () => {
   };
 
   return (
-    <L.KakaoButton onClick={handleLogin}>
-      <L.InnerContainer>
-        <L.KakaoIconImg src={KakaoIcon} alt="kakao" />
+    <button className={L.KakaoButton} onClick={handleLogin}>
+      <div className={L.InnerContainer}>
+        <img className={L.KakaoIconImg} src={KakaoIcon} alt="kakao" />
         카카오 로그인
-      </L.InnerContainer>
-    </L.KakaoButton>
+      </div>
+    </button>
   );
 };
 

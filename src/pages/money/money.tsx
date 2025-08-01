@@ -506,7 +506,10 @@ const Money = () => {
 
         {activeTab === '소비 루틴' && (
           <>
-            <PlusBtn $shifted={false} onClick={() => navigate('/routine')}>
+            <PlusBtn
+              $shifted={false}
+              onClick={() => navigate('/money-routine')}
+            >
               <img src={plusIcon} alt="add" />
             </PlusBtn>
 

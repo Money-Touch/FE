@@ -1,6 +1,16 @@
 export interface OnboardingItem {
   id: number;
   title: string;
+  label: string;
   list: string[];
-  checked: string | null;
+  selected?: string;
+}
+
+export interface SubmitPayload {
+  age: string;
+  gender: string;
+  job: string;
+  isIncome: string;
+  nickname: string;
+  profileImgUrl: string | null;
 }

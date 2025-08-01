@@ -1,5 +1,8 @@
 export interface ResultProps {
-  name: string;
-  email: string;
-  companyName: string;
+  id: number;
+  code: string;
+  title: string;
+  explain: string;
+  image: string;
+  imageShadow: string;
 }

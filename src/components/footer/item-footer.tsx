@@ -18,10 +18,10 @@ const ItemFooter = ({ item }: ItemProps) => {
   };
 
   return (
-    <F.ItemContainer onClick={handleItemClick}>
-      <F.ItemImage src={imageSrc} alt={item.name} />
-      <F.ItemP className={isActive ? 'active' : ''}>{item.name}</F.ItemP>
-    </F.ItemContainer>
+    <div className={F.ItemContainer} onClick={handleItemClick}>
+      <img className={F.ItemImage} src={imageSrc} alt={item.name} />
+      <p className={`${F.ItemP} ${isActive ? 'active' : ''}`}>{item.name}</p>
+    </div>
   );
 };
 

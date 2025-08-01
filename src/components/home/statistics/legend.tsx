@@ -14,27 +14,41 @@ const Legend: React.FC<LegendProps> = ({ data, active, onClickItem }) => {
   );
 
   return (
-    <S.LegendList>
-      {data.map((item) => (
-        <S.LegendItemWrapper
-          key={item.name}
-          onClick={() => item.isOther && onClickItem?.(item)}
-          style={{ cursor: item.isOther ? 'pointer' : 'default' }}
-        >
-          <S.LegendItemLeft>
-            <S.LegendColorDot color={item.color} />
-            <S.LegendText active={active}>{item.name}</S.LegendText>
-          </S.LegendItemLeft>
-          <S.LegendPercentage active={active}>
-            {active
-              ? allPercentagesAreIntegers
-                ? `${item.percentage}%`
-                : `${item.percentage.toFixed(1)}%`
-              : '0%'}
-          </S.LegendPercentage>
-        </S.LegendItemWrapper>
-      ))}
-    </S.LegendList>
+    <div className={S.LegendList}>
+      {data.map((item) => {
+        const cursorClass = item.isOther ? S.cursorPointer : S.cursorDefault;
+        const textColorClass = active ? S.activeTextColor : S.inactiveTextColor;
+        const percentageColorClass = active
+          ? S.activePercentageColor
+          : S.inactivePercentageColor;
+
+        return (
+          <div
+            key={item.name}
+            onClick={() => item.isOther && onClickItem?.(item)}
+            className={`${S.LegendItemWrapper} ${cursorClass}`}
+          >
+            <div className={S.LegendItemLeft}>
+              <div
+                className={S.LegendColorDot()}
+                style={{ backgroundColor: item.color }}
+                aria-label={`${item.name} color dot`}
+              />
+              <span className={`${S.LegendText} ${textColorClass}`}>
+                {item.name}
+              </span>
+            </div>
+            <span className={`${S.LegendPercentage} ${percentageColorClass}`}>
+              {active
+                ? allPercentagesAreIntegers
+                  ? `${item.percentage}%`
+                  : `${item.percentage.toFixed(1)}%`
+                : '0%'}
+            </span>
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

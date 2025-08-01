@@ -3,7 +3,7 @@ import { API } from '../../../apis/axios';
 import type {
   RequestEmailCodePayload,
   VerifyEmailCodePayload,
-  SignUpPayload,
+  // SignUpPayload,
 } from '../../../types/auth/signup/setting';
 
 // 이메일 인증 요청
@@ -18,20 +18,6 @@ const verifyEmailCode = async ({ email, code }: VerifyEmailCodePayload) => {
   return response.data;
 };
 
-// 최종 회원가입 제출
-const submitSignUp = async ({
-  email,
-  password,
-  confirmPassword,
-}: SignUpPayload) => {
-  const response = await API.post('/users', {
-    email,
-    password,
-    confirmPassword,
-  });
-  return response.data;
-};
-
 export const useRequestEmailCode = () =>
   useMutation({
     mutationFn: requestEmailCode,
@@ -40,9 +26,4 @@ export const useRequestEmailCode = () =>
 export const useVerifyEmailCode = () =>
   useMutation({
     mutationFn: verifyEmailCode,
-  });
-
-export const useSignUp = () =>
-  useMutation({
-    mutationFn: submitSignUp,
   });

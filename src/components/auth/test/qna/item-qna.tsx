@@ -1,6 +1,5 @@
 import ListAnswer from './list-answer';
 import * as T from '../../../../styles/auth/test/test.style';
-import colors from '../../../../styles/common/colors';
 
 interface ItemQnaProps {
   qnaId: number;
@@ -18,16 +17,16 @@ const ItemQna = ({
   onSelectAnswer,
 }: ItemQnaProps) => {
   return (
-    <T.ItemOnboardingContainer style={{ gap: '0.7rem' }}>
-      <T.OnboardingP style={{ color: colors.G1, fontSize: '1.8rem' }}>
+    <div className={`${T.ItemOnboardingContainer} !gap-[0.7rem]`}>
+      <p className={`${T.OnboardingP} !text-[var(--color-G1)] !text-[1.8rem]`}>
         Q{qnaId}. {question}
-      </T.OnboardingP>
+      </p>
       <ListAnswer
         answers={answerList}
         selectedIndex={selectedIndex}
         onSelect={onSelectAnswer}
       />
-    </T.ItemOnboardingContainer>
+    </div>
   );
 };
 

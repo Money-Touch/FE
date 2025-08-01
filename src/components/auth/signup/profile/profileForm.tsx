@@ -7,7 +7,9 @@ import { z } from 'zod';
 import { useProfileNicknameQuery } from '../../../../hooks/auth/signup/useProfileNicknameQuery';
 import { useProfileImage } from '../../../../hooks/auth/signup/useProfileImage';
 import ProfileImage from './profileImage';
+import { useSignUpMutation } from '../../../../hooks/auth/signup/useSignUpMutation';
 import { useProfileMutation } from '../../../../hooks/auth/signup/useProfileMutation';
+import { useLoginMutation } from '../../../../hooks/auth/login/useLoginMutation';
 import type { ProfileFormPayload } from '../../../../types/auth/signup/profile';
 import SettingInput from '../setting/settingInput';
 
@@ -42,37 +44,94 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
 
   const { preview, fileInputRef, handleImgClick, handleChange } =
     useProfileImage();
-  const { mutate } = useProfileMutation();
+  const { mutate: signUp } = useSignUpMutation();
+  const { mutate: login } = useLoginMutation();
+  const { mutate: uploadImage } = useProfileMutation();
 
-  const onSubmit = (data: z.infer<typeof profileSchema>) => {
+  // 폼 제출
+  const onSubmit = (formDataInput: z.infer<typeof profileSchema>) => {
     const file = fileInputRef.current?.files?.[0];
+    const payload: ProfileFormPayload = { profileImage: file };
 
-    const payload: ProfileFormPayload = {
-      nickname: data.nickname,
-      profileImage: file,
+    const email = localStorage.getItem('email') || '';
+    const password = localStorage.getItem('password') || '';
+    const agreeTerms = JSON.parse(localStorage.getItem('agreeTerms') || '[]');
+    const nickname = formDataInput.nickname;
+
+    const signUpPayload = {
+      email,
+      password,
+      agreeTerms,
+      nickname,
     };
 
-    const formData = new FormData();
-    formData.append('nickname', payload.nickname);
+    signUp(signUpPayload, {
+      onSuccess: (res) => {
+        localStorage.removeItem('agreeTerms');
+        const userId = res?.result?.userId;
+        if (!userId) {
+          alert('회원가입에 실패하였습니다.');
+          return;
+        }
 
-    if (payload.profileImage) {
-      formData.append('profileImage', payload.profileImage);
-    }
+        login(
+          { email, password },
+          {
+            onSuccess: (loginRes) => {
+              const { accessToken, refreshToken } = loginRes.result;
+              localStorage.removeItem('email');
+              localStorage.removeItem('password');
+              localStorage.setItem('accessToken', accessToken);
+              localStorage.setItem('refreshToken', refreshToken);
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
+              localStorage.setItem('userId', String(userId));
+              localStorage.setItem('nickname', nickname);
 
-    mutate(formData, {
-      onSuccess: () => {
-        onNext();
+              if (!file) {
+                onNext();
+                return;
+              }
+
+              const formData = new FormData();
+              formData.append('file', payload.profileImage!);
+
+              uploadImage(formData, {
+                onSuccess: (uploadRes) => {
+                  const uploadedUrl = uploadRes?.result;
+                  if (uploadedUrl) {
+                    localStorage.setItem('profileImgUrl', uploadedUrl);
+                  }
+                  console.log('이미지 업로드 성공');
+                  onNext();
+                },
+                onError: (err) => {
+                  console.error('이미지 업로드 실패:', err);
+                  alert('프로필 사진 등록에 실패하였습니다.');
+                  onNext();
+                },
+              });
+            },
+            onError: (err) => {
+              console.error('로그인 실패:', err);
+              alert(
+                '자동 로그인에 실패했습니다. 로그인 페이지로 이동해 주세요.',
+              );
+              onNext();
+            },
+          },
+        );
+      },
+      onError: (err) => {
+        console.error('회원가입 실패:', err);
+        alert('회원가입에 실패하였습니다.');
       },
     });
   };
 
   return (
     <FormProvider {...methods}>
-      <S.ProfileFormContainer
+      <form
+        className={S.ProfileFormContainer}
         onSubmit={handleSubmit(onSubmit)}
         id="profileForm"
       >
@@ -83,7 +142,7 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
           onChange={handleChange}
         />
 
-        <S.InputWrapper>
+        <div className={S.InputWrapper}>
           <SettingInput
             register={register('nickname')}
             error={errors.nickname}
@@ -92,19 +151,19 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
             placeholder="닉네임 (2~10자)"
             onClickButton={handleCheckNickname}
           />
-        </S.InputWrapper>
-      </S.ProfileFormContainer>
+        </div>
+      </form>
 
-      <S.BottomContainer style={{ marginTop: '27.1rem' }}>
-        <S.NextButton
+      <div className={`${S.BottomContainer} !mt-[25.3rem]`}>
+        <button
+          className={S.NextButton(isValid)}
           type="submit"
-          active={isValid}
           disabled={!isValid}
           form="profileForm"
         >
           다음
-        </S.NextButton>
-      </S.BottomContainer>
+        </button>
+      </div>
     </FormProvider>
   );
 };

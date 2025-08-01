@@ -1,43 +1,15 @@
-import styled from 'styled-components';
-import colors from '../common/colors';
-
 // footer.tsx
-export const FooterContainer = styled.div`
-  width: 100%;
-  background: ${colors.white};
-  height: 13rem;
-  border-radius: 2rem 2rem 0 0;
-  display: flex;
-  justify-content: center;
-  padding-top: 1.3rem;
-`;
+export const FooterContainer =
+  'w-full bg-white h-[13rem] rounded-t-[2rem] flex justify-center pt-[1.3rem] shadow-[0_0_0.2rem_0_rgba(0,0,0,0.16)]';
 
 // list-footer.tsx
-export const ListContainer = styled.div`
-  display: flex;
-  gap: 6rem;
-`;
+export const ListContainer = 'flex gap-[6rem]';
 
 // item-footer.tsx
-export const ItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  align-items: center;
-  cursor: pointer;
-`;
+export const ItemContainer =
+  'flex flex-col gap-[0.3rem] items-center cursor-pointer';
 
-export const ItemImage = styled.img`
-  width: auto;
-  height: 2.8rem;
-`;
+export const ItemImage = 'w-auto h-[2.8rem]';
 
-export const ItemP = styled.p`
-  font-weight: 500;
-  font-size: 1.2rem;
-  color: ${colors.G5};
-
-  &.active {
-    color: ${colors.subColor1};
-  }
-`;
+export const ItemP = (active: boolean) =>
+  `font-medium text-[1.2rem] text-[var(--color-G5)] ${active ? 'text-[var(--subColor1)]' : ''}`;

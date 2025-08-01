@@ -8,9 +8,9 @@ interface ItemAnswerProps {
 
 const ItemAnswer = ({ answer, selected, onClick }: ItemAnswerProps) => {
   return (
-    <T.AnswerButton selected={selected} onClick={onClick}>
+    <button className={T.AnswerButton(selected)} onClick={onClick}>
       {answer}
-    </T.AnswerButton>
+    </button>
   );
 };
 

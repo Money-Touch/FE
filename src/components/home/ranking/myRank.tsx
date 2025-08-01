@@ -8,15 +8,19 @@ interface MyRankProps {
 
 function MyRank({ user }: MyRankProps) {
   return (
-    <S.MyRankBox>
-      <S.RankBox>
-        <S.ProfileImg src={user.profileImage || profile_t} alt="profile" />
-        <S.ProfileDes>
-          {user.name}님의 순위는 {user.currentRank}위({user.wiseCount}회){' '}
+    <div className={S.MyRankBox}>
+      <div className={S.RankBox}>
+        <img
+          src={user.profileImage || profile_t}
+          alt="profile"
+          className={S.ProfileImg}
+        />
+        <div className={S.ProfileDes}>
+          {user.name}님의 순위는 {user.currentRank}위({user.wiseCount}회)
           입니다.
-        </S.ProfileDes>
-      </S.RankBox>
-    </S.MyRankBox>
+        </div>
+      </div>
+    </div>
   );
 }
 

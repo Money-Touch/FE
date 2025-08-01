@@ -9,15 +9,15 @@ interface ItemOnboardingProps {
 
 const ItemOnboarding = ({ item, onSelect }: ItemOnboardingProps) => {
   return (
-    <T.ItemOnboardingContainer>
-      <T.ItemOnboardingP>{item.title}</T.ItemOnboardingP>
+    <div className={T.ItemOnboardingContainer}>
+      <p className={T.ItemOnboardingP}>{item.title}</p>
       <ListSelect
         id={item.id}
         selectList={item.list}
-        checked={item.checked}
+        selected={item.selected ?? null}
         onSelect={onSelect}
       />
-    </T.ItemOnboardingContainer>
+    </div>
   );
 };
 

@@ -3,14 +3,17 @@ import { API } from '../../../apis/axios';
 import type { ResultProps } from '../../../types/auth/test/result';
 
 const fetchResult = async (): Promise<ResultProps> => {
-  const res = await API.get('/users/1');
-  const user = res.data;
+  const result = localStorage.getItem('resultCode');
+  const accessToken = localStorage.getItem('accessToken');
 
-  return {
-    name: user.name,
-    email: user.email,
-    companyName: user.company.name,
-  };
+  const response = await API.get('/api/consumptionMbti/result', {
+    params: { result },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return response.data;
 };
 
 export const useResultQuery = () => {

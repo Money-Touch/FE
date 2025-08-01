@@ -1,34 +1,32 @@
 import * as S from '../../styles/home/home.style';
 import { useNavigate } from 'react-router-dom';
-
-import Logo from '../../assets/images/home/logo.png';
-import Alarm from '../../assets/images/home/alarm.png';
-
-import ConsumptionWelcome from '../../components/home/consumptionWelcome';
-import ConsumptionStatistics from '../../components/home/consumptionStatistics';
-import ConsumptionRanking from '../../components/home/consumptionRanking';
-import ConsumptionRoutine from '../../components/home/consumptionRoutine';
+import Header from '../../components/home/main/HomeHeader';
+import ConsumptionWelcome from '../../components/home/main/consumptionWelcome';
+import ConsumptionStatistics from '../../components/home/main/consumptionStatistics';
+import ConsumptionRanking from '../../components/home/main/consumptionRanking';
+import ConsumptionRoutine from '../../components/home/main/consumptionRoutine';
+import { useNotifications } from '../../hooks/home/notify/useNotifications';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { notifications } = useNotifications();
 
   const handleAlarmClick = () => {
     navigate('/notify');
   };
 
+  const hasUnread = (notifications || []).some((n) => !n.isRead);
+
   return (
-    <S.Container>
-      <S.Header>
-        <S.LogoImg src={Logo} alt="logo" />
-        <S.AlarmImg src={Alarm} alt="alarm" onClick={handleAlarmClick} />
-      </S.Header>
-      <S.Section>
+    <div className={S.Container}>
+      <Header hasUnread={hasUnread} onAlarmClick={handleAlarmClick} />
+      <div className={S.Section}>
         <ConsumptionWelcome />
         <ConsumptionStatistics />
         <ConsumptionRanking />
         <ConsumptionRoutine />
-      </S.Section>
-    </S.Container>
+      </div>
+    </div>
   );
 };
 

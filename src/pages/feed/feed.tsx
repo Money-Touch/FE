@@ -3,24 +3,12 @@ import { SearchBox } from '../../components/feed/SearchBox';
 import { SortDropdown } from '../../components/feed/SortDropdown';
 import { PostItem } from '../../components/feed/PostItem';
 import { SkeletonPost } from '../../components/feed/SkeletonPost';
-import { Container, PostList, EmptyState } from '../../styles/feed/feed';
+import NoResult from '../../assets/images/feed/NO_RESULT.png';
 
-export interface Author {
-  name: string;
-  profileImage?: string;
-}
-
-export interface Post {
-  id: number;
-  author: Author;
-  image?: string;
-  likes: number;
-  dislikes: number;
-  timestamp: Date;
-  content?: string;
-}
-
-export type SortBy = 'popular' | 'latest';
+import type { Post, SortBy, PostStates } from '../../types/feed/feed';
+import { handleLike, handleDislike } from '../../utils/feed/reaction';
+import { Posts } from '../../mocks/feed/feed';
+import * as S from '../../styles/feed/feed.style';
 
 const Feed: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -28,32 +16,8 @@ const Feed: React.FC = () => {
   const [sortBy, setSortBy] = useState<SortBy>('popular');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const [posts, setPosts] = useState<Post[]>([
-    {
-      id: 1,
-      author: {
-        name: '홍길동',
-      },
-      likes: 24,
-      dislikes: 2,
-      timestamp: new Date('2024-07-03T10:00:00'),
-      content: '123456',
-    },
-    {
-      id: 2,
-      author: {
-        name: '김철수',
-      },
-      likes: 31,
-      dislikes: 1,
-      timestamp: new Date('2024-07-03T08:15:00'),
-      content: 'abcdefg',
-    },
-  ]);
-
-  const [, setPostStates] = useState<{
-    [key: number]: { liked: boolean; disliked: boolean };
-  }>({});
+  const [posts, setPosts] = useState<Post[]>(Posts);
+  const [postStates, setPostStates] = useState<PostStates>({});
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
@@ -74,68 +38,12 @@ const Feed: React.FC = () => {
     return filtered;
   }, [posts, searchTerm, sortBy]);
 
-  const handleLike = (id: number) => {
-    setPostStates((prev) => {
-      const current = prev[id] || { liked: false, disliked: false };
-      const wasLiked = current.liked;
-
-      const updatedPost = posts.find((p) => p.id === id);
-      if (!updatedPost) return prev;
-
-      const newPosts = posts.map((p) => {
-        if (p.id !== id) return p;
-        return {
-          ...p,
-          likes: wasLiked ? p.likes - 1 : p.likes + 1,
-          dislikes: current.disliked && !wasLiked ? p.dislikes - 1 : p.dislikes,
-        };
-      });
-
-      setPosts(newPosts);
-      return {
-        ...prev,
-        [id]: {
-          liked: !wasLiked,
-          disliked: wasLiked ? current.disliked : false,
-        },
-      };
-    });
-  };
-
-  const handleDislike = (id: number) => {
-    setPostStates((prev) => {
-      const current = prev[id] || { liked: false, disliked: false };
-      const wasDisliked = current.disliked;
-
-      const updatedPost = posts.find((p) => p.id === id);
-      if (!updatedPost) return prev;
-
-      const newPosts = posts.map((p) => {
-        if (p.id !== id) return p;
-        return {
-          ...p,
-          dislikes: wasDisliked ? p.dislikes - 1 : p.dislikes + 1,
-          likes: current.liked && !wasDisliked ? p.likes - 1 : p.likes,
-        };
-      });
-
-      setPosts(newPosts);
-      return {
-        ...prev,
-        [id]: {
-          liked: wasDisliked ? current.liked : false,
-          disliked: !wasDisliked,
-        },
-      };
-    });
-  };
-
   const handleSearch = () => {
     console.log('검색 실행:', searchTerm);
   };
 
   return (
-    <Container>
+    <div className="flex flex-col px-[2.4rem] pb-[5rem]">
       <SearchBox
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
@@ -149,23 +57,50 @@ const Feed: React.FC = () => {
         onToggle={() => setIsDropdownOpen(!isDropdownOpen)}
       />
 
-      <PostList>
+      <div className="flex flex-col gap-[1.6rem] mt-[1.2rem]">
         {loading
           ? Array.from({ length: 4 }).map((_, i) => <SkeletonPost key={i} />)
           : filteredAndSortedPosts.map((post) => (
               <PostItem
                 key={post.id}
                 post={post}
-                onLike={() => handleLike(post.id)}
-                onDislike={() => handleDislike(post.id)}
+                onLike={() =>
+                  handleLike(
+                    post.id,
+                    posts,
+                    postStates,
+                    setPosts,
+                    setPostStates,
+                  )
+                }
+                onDislike={() =>
+                  handleDislike(
+                    post.id,
+                    posts,
+                    postStates,
+                    setPosts,
+                    setPostStates,
+                  )
+                }
+                liked={postStates[post.id]?.liked}
+                disliked={postStates[post.id]?.disliked}
               />
             ))}
-      </PostList>
+      </div>
 
       {!loading && filteredAndSortedPosts.length === 0 && (
-        <EmptyState>검색 결과가 없어요.</EmptyState>
+        <div className={S.NoResultContainer}>
+          <img
+            src={NoResult}
+            alt="검색 결과 없음"
+            className="w-[16rem] h-[16rem] object-contain"
+          />
+          <span className="text-[1.4rem] text-[var(--color-G4)]">
+            검색 결과가 없어요.
+          </span>
+        </div>
       )}
-    </Container>
+    </div>
   );
 };
 

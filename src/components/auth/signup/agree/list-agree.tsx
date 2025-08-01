@@ -9,11 +9,11 @@ interface ListAgreeProps {
 
 const ListAgree = ({ agreeList, toggleItem }: ListAgreeProps) => {
   return (
-    <S.ListContainer>
+    <div className={S.ListContainer}>
       {agreeList.map((item) => (
         <ItemAgree key={item.id} item={item} toggleItem={toggleItem} />
       ))}
-    </S.ListContainer>
+    </div>
   );
 };
 

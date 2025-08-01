@@ -16,10 +16,15 @@ const Header = ({ onBack, title }: HeaderProps) => {
   };
 
   return (
-    <H.HeaderContainer>
-      <H.LeftArrowImg src={LeftArrow} alt="leftArrow" onClick={handleClick} />
-      <H.Title>{title}</H.Title>
-    </H.HeaderContainer>
+    <div className={H.HeaderContainer}>
+      <img
+        className={H.LeftArrowImg}
+        src={LeftArrow}
+        alt="leftArrow"
+        onClick={handleClick}
+      />
+      <p className={H.Title}>{title}</p>
+    </div>
   );
 };
 

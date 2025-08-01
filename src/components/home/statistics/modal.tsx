@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from '../../../styles/home/modal.style';
+import * as M from '../../../styles/home/modal.style';
 import type { ProcessedDataItem } from '../../../types/home/statistics';
 
 interface ModalProps {
@@ -13,25 +13,29 @@ const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
   );
 
   return (
-    <S.ModalBackdrop onClick={onClose}>
-      <S.ModalBox onClick={(e) => e.stopPropagation()}>
-        <S.ModalList>
+    <div className={M.ModalBackdrop} onClick={onClose}>
+      <div className={M.ModalBox} onClick={(e) => e.stopPropagation()}>
+        <ul className={M.ModalList}>
           {items.map((item) => (
-            <S.ModalItem key={item.name}>
-              <S.LeftGroup>
-                <S.ColorDot color={item.color} />
-                <S.CategoryName>{item.name}</S.CategoryName>
-              </S.LeftGroup>
-              <S.Percentage>
+            <li key={item.name} className={M.ModalItem}>
+              <div className={M.LeftGroup}>
+                <div
+                  className={M.ColorDot()}
+                  style={{ backgroundColor: item.color }}
+                  aria-label={`${item.name} color dot`}
+                />
+                <span className={M.CategoryName}>{item.name}</span>
+              </div>
+              <span className={M.Percentage}>
                 {allPercentagesAreIntegers
                   ? `${item.percentage}%`
                   : `${item.percentage.toFixed(1)}%`}
-              </S.Percentage>
-            </S.ModalItem>
+              </span>
+            </li>
           ))}
-        </S.ModalList>
-      </S.ModalBox>
-    </S.ModalBackdrop>
+        </ul>
+      </div>
+    </div>
   );
 };
 

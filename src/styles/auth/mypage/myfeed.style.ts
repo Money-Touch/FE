@@ -1,0 +1,27 @@
+// list-grid.tsx
+export const ListGridContainer =
+  'w-[37.7rem] mt-[1rem] mb-[1.2rem] flex items-center justify-end';
+
+// item-grid.tsx
+export const ItemGridImg = 'w-[1.8rem] h-[1.8rem] cursor-pointer';
+
+// list-grid4.tsx
+export const ListGrid4Container = 'w-[37.7rem] grid grid-cols-3 gap-[0.4rem]';
+
+// item-grid4.tsx
+export const ItemGrid4Div =
+  'w-full h-[11.8rem] rounded-[0.5rem] bg-[var(--color-G1)] cursor-pointer';
+
+// list-grid2.tsx
+export const ListGrid2Container = 'w-[37.7rem] flex flex-col gap-[2rem]';
+
+// item-grid2.tsx
+export const ItemGrid2Contaienr =
+  'w-full flex flex-col gap-[0.6rem] cursor-pointer';
+
+export const ItemGrid2P = 'font-light text-[0.8rem] text-[var(--color-G3)]';
+
+export const ItemGrid2Img =
+  'w-full h-[36.5rem] rounded-[1rem] bg-[var(--color-G1)]';
+
+export const ItemGrid2PDiv = 'w-full mt-[0.6rem]';

@@ -1,12 +1,22 @@
-import { ClipLoader } from 'react-spinners';
+import { useEffect, useState } from 'react';
 import * as T from '../../../../styles/auth/test/test.style';
-import colors from '../../../../styles/common/colors';
+import ResultData from '../../../../mocks/auth/test/resultData';
 
 const Spinner = () => {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % ResultData.length);
+    }, 600);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <T.SpinnerWrapper>
-      <ClipLoader size={40} color={colors.mainColor1} />
-    </T.SpinnerWrapper>
+    <div className={T.SpinnerWrapper}>
+      <img src={ResultData[index].image} className={T.SpinnerImg} alt="mbti" />
+    </div>
   );
 };
 

@@ -10,19 +10,23 @@ interface TopUserCardProps {
 
 function TopUser({ user, medal, podium }: TopUserCardProps) {
   return (
-    <S.TopUser>
-      <S.ProfileWrapper>
-        <S.Medal src={medal} alt="medal" />
-        <S.Profile src={user.profileImage || profile_t} />
-      </S.ProfileWrapper>
+    <div className={S.TopUser}>
+      <div className={S.ProfileWrapper}>
+        <img src={medal} alt="medal" className={S.Medal} />
+        <img
+          src={user.profileImage || profile_t}
+          alt="profile"
+          className={S.Profile}
+        />
+      </div>
 
-      <S.InfoWrapper>
-        <S.UserName>{user.name}</S.UserName>
-        <S.Count>{user.wiseCount}회</S.Count>
-      </S.InfoWrapper>
+      <div className={S.InfoWrapper}>
+        <div className={S.UserName}>{user.name}</div>
+        <div className={S.Count}>{user.wiseCount}회</div>
+      </div>
 
-      <S.Podium src={podium} alt="podium" />
-    </S.TopUser>
+      <img src={podium} alt="podium" className={S.Podium} />
+    </div>
   );
 }
 

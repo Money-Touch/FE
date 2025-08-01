@@ -10,15 +10,19 @@ interface OtherUserRowProps {
 
 function OtherUser({ user, rank, icon }: OtherUserRowProps) {
   return (
-    <S.OtherUser>
-      <S.RankNumber>{rank}</S.RankNumber>
-      <S.RowProfile src={user.profileImage || profile_t} alt="profile" />
-      <S.RowName>{user.name}</S.RowName>
-      <S.RowRight>
-        <S.RowCount>{user.wiseCount}회</S.RowCount>
-        <S.RankChangeIcon src={icon} />
-      </S.RowRight>
-    </S.OtherUser>
+    <div className={S.OtherUser}>
+      <div className={S.RankNumber}>{rank}</div>
+      <img
+        src={user.profileImage || profile_t}
+        alt="profile"
+        className={S.RowProfile}
+      />
+      <div className={S.RowName}>{user.name}</div>
+      <div className={S.RowRight}>
+        <div className={S.RowCount}>{user.wiseCount}회</div>
+        <img src={icon} className={S.RankChangeIcon} />
+      </div>
+    </div>
   );
 }
 
