@@ -26,6 +26,7 @@ export interface Feed {
   imageUrls: string[];
   amount: number;
   content: string;
+  createdAt: string;
 }
 
 export interface FeedResponse {

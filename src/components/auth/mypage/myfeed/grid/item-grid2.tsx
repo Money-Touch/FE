@@ -9,9 +9,19 @@ const ItemGrid2 = ({ item }: ItemFeedProps) => {
     navigate(`/feed/post/${item.consumptionRecordId}`);
   };
 
+  const formatDate = (isoString: string): string => {
+    const date = new Date(isoString);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+
+    return `${month} • ${day} • ${hours}:${minutes}`;
+  };
+
   return (
     <div className={M.ItemGrid2Contaienr} onClick={handleItemClick}>
-      <p className={M.ItemGrid2P}>{item.content}</p>
+      <p className={M.ItemGrid2P}>{formatDate(item.createdAt)}</p>
 
       <img className={M.ItemGrid2Img} alt="image" src={item.imageUrls[0]} />
 
