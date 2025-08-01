@@ -10,6 +10,7 @@ const ResultData = [
     explain:
       '철저한 계획 아래 소비하며 비교, 계획, 분석!\n돈 쓸 줄 아는 똑똑한 절약러에요.',
     image: images['PTG'],
+    imageShadow: images['PTGshadow'],
     background: 'linear-gradient(180deg, #FFC058 0%, #FFFFFF 100%)',
   },
   {
@@ -19,6 +20,7 @@ const ResultData = [
     explain:
       '계획적이고 절약적이지만\n기분파 소비 성향이 약간 있는 현실타협형이에요.',
     image: images['PTE'],
+    imageShadow: images['PTEshadow'],
     background: 'linear-gradient(180deg, #A3C3FF 0%, #FFFFFF 100%)',
   },
   {
@@ -28,6 +30,7 @@ const ResultData = [
     explain:
       '예산 안에서 내가 원하는 것을\n합리적으로 누릴 줄 아는 감성 절약파에요.',
     image: images['PFG'],
+    imageShadow: images['PFGshadow'],
     background: 'linear-gradient(180deg, #E4C28B 0%, #FFFFFF 100%)',
   },
   {
@@ -37,6 +40,7 @@ const ResultData = [
     explain:
       '지출에 기준이 있어 잘 절약하다가도,\n순간의 즐거움을 추구하는 기분파 절약러에요.',
     image: images['PFE'],
+    imageShadow: images['PFEshadow'],
     background: 'linear-gradient(180deg, #BEF4C7 0%, #FFFFFF 100%)',
   },
   {
@@ -46,6 +50,7 @@ const ResultData = [
     explain:
       '즉흥적인 소비 욕구가 크지만\n소비 계획을 지키기 위해 노력하는 유형이에요.',
     image: images['STG'],
+    imageShadow: images['STGshadow'],
     background: 'linear-gradient(180deg, #FFA1C8 0%, #FFFFFF 100%)',
   },
   {
@@ -55,6 +60,7 @@ const ResultData = [
     explain:
       '스트레스를 받으면 참지 못하고 지르지만\n다음 날 반성하고 후회하는 변덕쟁이에요.',
     image: images['STE'],
+    imageShadow: images['STEshadow'],
     background: 'linear-gradient(180deg, #FF5E5E 0%, #FFFFFF 100%)',
   },
   {
@@ -64,6 +70,7 @@ const ResultData = [
     explain:
       '돈 쓸 때는 확실히 쓰는 감정적 소비자지만\n나름의 기준을 찾기 위해 노력하는 유형이에요.',
     image: images['SFG'],
+    imageShadow: images['SFGshadow'],
     background: 'linear-gradient(180deg, #FFD119 0%, #FFFFFF 100%)',
   },
   {
@@ -73,6 +80,7 @@ const ResultData = [
     explain:
       '계획? 예산? 그런 거 없어!\n소비를 통해 자유를 느끼는 flex 만렙러!',
     image: images['SFE'],
+    imageShadow: images['SFEshadow'],
     background: 'linear-gradient(180deg, #9987A7 0%, #FFFFFF 100%)',
   },
 ];
