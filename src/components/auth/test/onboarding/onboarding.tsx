@@ -44,11 +44,11 @@ const Onboarding = ({
       nickname,
       profileImgUrl,
     };
-    // console.log(payload);
+    console.log(payload);
 
     mutate(payload, {
       onSuccess: (data) => {
-        // console.log('응답: ', data);
+        console.log('응답: ', data);
         localStorage.setItem('userId', data.result.userId);
         onNext();
       },

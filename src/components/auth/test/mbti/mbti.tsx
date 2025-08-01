@@ -14,13 +14,13 @@ const Mbti = ({ onNext, onBack }: MbtiProps) => {
 
   const handleSkip = () => {
     localStorage.removeItem('userId');
-    localStorage.removeItem('profileImageUrl');
+    localStorage.removeItem('profileImgUrl');
     navigate('/home');
   };
 
   const handleQna = () => {
     localStorage.removeItem('userId');
-    localStorage.removeItem('profileImageUrl');
+    localStorage.removeItem('profileImgUrl');
     onNext();
   };
 
