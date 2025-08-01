@@ -3,17 +3,29 @@ import Header from '../../../components/header/header';
 import Footer from '../../../components/footer/footer';
 import PencilIcon from '../../../assets/images/auth/badge/Pencil.png';
 import PencilFilledIcon from '../../../assets/images/auth/badge/Pencil_Filled.png';
-import { badgeList } from '../../../mocks/auth/badge/badgeList';
 import Nobadge from '../../../assets/images/auth/badge/Represent/NoBadge.png';
 import * as S from '../../../styles/auth/mypage/mybadge.style';
 
+import {
+  useMyBadgesQuery,
+  useRepresentativeBadgeQuery,
+  useSetRepresentativeBadgeMutation,
+} from '../../../hooks/auth/mypage/useBadgeQuery';
+
+import { badgeList } from '../../../mocks/auth/badge/badgeList';
+
 const Mybadge = () => {
-  const [representBadgeId, setRepresentBadgeId] = useState<string | null>(null);
-  const [selectedBadgeId, setSelectedBadgeId] = useState<string | null>(null);
-  const [isEditMode, setIsEditMode] = useState(false);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  const handleBadgeClick = (badgeId: string) => {
+  const [selectedBadgeId, setSelectedBadgeId] = useState<number | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  const { data: badgeListData = [] } = useMyBadgesQuery();
+  const { data: representativeBadge } = useRepresentativeBadgeQuery();
+  const { mutate: setRepresentativeBadge } =
+    useSetRepresentativeBadgeMutation();
+
+  const handleBadgeClick = (badgeId: number) => {
     if (!isEditMode) return;
     setSelectedBadgeId(badgeId === selectedBadgeId ? null : badgeId);
   };
@@ -24,8 +36,8 @@ const Mybadge = () => {
   };
 
   const handleSelect = () => {
-    if (selectedBadgeId) {
-      setRepresentBadgeId(selectedBadgeId);
+    if (selectedBadgeId !== null) {
+      setRepresentativeBadge(selectedBadgeId);
     }
     setSelectedBadgeId(null);
     setIsEditMode(false);
@@ -43,7 +55,9 @@ const Mybadge = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const representBadge = badgeList.find((b) => b.id === representBadgeId);
+  const matchedRepresentImage = representativeBadge
+    ? badgeList.find((b) => b.id === representativeBadge.badgeId)?.represent
+    : null;
 
   return (
     <div ref={wrapperRef} className={S.container}>
@@ -61,8 +75,8 @@ const Mybadge = () => {
         </div>
         <div className={S.representBadgeImageWrapper}>
           <img
-            src={representBadge?.represent || Nobadge}
-            alt={representBadge ? '대표 배지' : '대표 배지 없음'}
+            src={matchedRepresentImage || Nobadge}
+            alt={representativeBadge ? '대표 배지' : '대표 배지 없음'}
             className={S.representBadgeImage}
           />
         </div>
@@ -77,13 +91,13 @@ const Mybadge = () => {
             : 'opacity-40 pointer-events-none'
         }`}
       >
-        {badgeList.map((badge) => {
-          const isSelected = selectedBadgeId === badge.id;
+        {badgeListData.map((badge) => {
+          const isSelected = selectedBadgeId === badge.badgeId;
           return (
             <div
-              key={badge.id}
+              key={badge.badgeId}
               className={S.badgeItem}
-              onClick={() => handleBadgeClick(badge.id)}
+              onClick={() => handleBadgeClick(badge.badgeId)}
             >
               <div
                 className={`${S.badgeImageWrapper} ${
@@ -91,7 +105,7 @@ const Mybadge = () => {
                 }`}
               >
                 <img
-                  src={badge.image}
+                  src={badge.imageUrl}
                   alt={badge.name}
                   className="w-[5.8rem] h-[6.6rem] object-contain"
                 />
@@ -109,12 +123,12 @@ const Mybadge = () => {
           </button>
           <button
             className={`${S.selectButton} ${
-              selectedBadgeId
+              selectedBadgeId !== null
                 ? '!bg-[var(--color-mainColor1)] !text-[var(--color-white)]'
                 : '!bg-[var(--color-G7)] !text-[var(--color-G4)] pointer-events-none'
             }`}
             onClick={handleSelect}
-            disabled={!selectedBadgeId}
+            disabled={selectedBadgeId === null}
           >
             선택
           </button>
