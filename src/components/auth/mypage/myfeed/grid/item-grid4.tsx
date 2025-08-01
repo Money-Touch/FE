@@ -6,10 +6,17 @@ const ItemGrid4 = ({ item }: ItemFeedProps) => {
   const navigate = useNavigate();
 
   const handleItemClick = () => {
-    navigate(`/feed/post/${item.id}`);
+    navigate(`/feed/post/${item.consumptionRecordId}`);
   };
 
-  return <div className={M.ItemGrid4Div} onClick={handleItemClick} />;
+  return (
+    <img
+      className={M.ItemGrid4Div}
+      src={item.imageUrls[0]}
+      alt="image"
+      onClick={handleItemClick}
+    />
+  );
 };
 
 export default ItemGrid4;

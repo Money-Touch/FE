@@ -6,7 +6,7 @@ const ListGrid2 = ({ data }: ListFeedProps) => {
   return (
     <div className={M.ListGrid2Container}>
       {data?.map((item) => (
-        <ItemGrid2 key={item.id} item={item} />
+        <ItemGrid2 key={item.consumptionRecordId} item={item} />
       ))}
     </div>
   );

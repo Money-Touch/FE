@@ -1,16 +1,15 @@
 import * as S from '../../../styles/home/home.style';
 import { useNavigate } from 'react-router-dom';
 import illust from '../../../assets/images/home/illust.png';
-import { mockUser } from '../../../mocks/home/mockUser'; // mock data
+import { useMypageQuery } from '../../../hooks/auth/mypage/useMypageQuery';
 
 const ConsumptionWelcome = () => {
   const navigate = useNavigate();
+  const { data } = useMypageQuery();
 
   const handleClick = () => {
     navigate('/record');
   };
-
-  const user = mockUser.find((user) => user.id === 11);
 
   return (
     <div className={S.WelcomeContainer}>
@@ -18,9 +17,10 @@ const ConsumptionWelcome = () => {
 
       <div className={S.WelcomeTopRow}>
         <div className={S.WelcomeTitle}>
-          {user && (
+          {data && (
             <p>
-              안녕하세요, <span className={S.Username}>{user.username}</span>님.{' '}
+              안녕하세요,{' '}
+              <span className={S.Username}>{data?.result?.nickname}</span>님.{' '}
               <br />
               오늘의 소비 계획은 세우셨나요?
             </p>

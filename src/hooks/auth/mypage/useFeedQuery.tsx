@@ -1,20 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { API } from '../../../apis/axios';
+import type { FeedResponse } from '../../../types/auth/mypage/myfeed';
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
+const fetchFeed = async (viewMode: 'CARD' | 'LIST'): Promise<FeedResponse> => {
+  const accessToken = localStorage.getItem('accessToken');
 
-const fetchUsers = async (): Promise<User[]> => {
-  const { data } = await API.get('/users');
+  const { data } = await API.get<FeedResponse>('/api/feed/my', {
+    params: { viewMode },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return data;
 };
 
-export const useFeedQuery = () => {
-  return useQuery<User[]>({
-    queryKey: ['feed'],
-    queryFn: fetchUsers,
+export const useFeedQuery = (viewMode: 'CARD' | 'LIST') => {
+  return useQuery<FeedResponse>({
+    queryKey: ['feed', viewMode],
+    queryFn: () => fetchFeed(viewMode),
   });
 };

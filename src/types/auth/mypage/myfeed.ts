@@ -10,6 +10,7 @@ interface ItemGrid {
   name: string;
   image: string;
   imageClick: string;
+  viewMode: string;
 }
 
 export interface ItemGridProps {
@@ -19,10 +20,27 @@ export interface ItemGridProps {
 }
 
 // list-grid4.tsx, list-grid2.tsx, item-grid4.tsx, item-grid2.tsx
-interface Feed {
-  id: number;
-  name: string;
-  email: string;
+export interface Feed {
+  consumptionRecordId: number;
+  userId: number;
+  imageUrls: string[];
+  amount: number;
+  content: string;
+  createdAt: string;
+}
+
+export interface FeedResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    feedList: Feed[];
+    isFirst: boolean;
+    hasNext: boolean;
+    nextCursorId: number;
+    nextCursorViewCount: number;
+    feedListSize: number;
+  };
 }
 
 export interface ListFeedProps {
