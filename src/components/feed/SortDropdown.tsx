@@ -24,32 +24,36 @@ export const SortDropdown: React.FC<SortDropdownProps> = ({
   };
 
   return (
-    <S.DropdownContainer>
-      <S.DropdownButton onClick={onToggle}>
-        <S.DropdownText>
+    <div className={S.DropdownContainer}>
+      <button className={S.DropdownButton} onClick={onToggle}>
+        <span className={S.DropdownText}>
           {sortBy === 'popular' ? '인기순' : '최신순'}
-        </S.DropdownText>
-        <S.ChevronIcon>
-          <img src={isOpen ? CaretUpIcon : CaretDownIcon} alt="정렬 아이콘" />
-        </S.ChevronIcon>
-      </S.DropdownButton>
+        </span>
+        <div className={S.ChevronIcon}>
+          <img
+            src={isOpen ? CaretUpIcon : CaretDownIcon}
+            alt="정렬 아이콘"
+            className="w-[0.48rem] h-[0.35rem]"
+          />
+        </div>
+      </button>
 
       {isOpen && (
-        <S.DropdownMenu>
-          <S.DropdownItem
-            isActive={sortBy === 'popular'}
+        <div className={S.DropdownMenu}>
+          <button
+            className={`${S.DropdownItem} ${sortBy === 'popular' ? '!text-[var(--color-G1)]' : ''}`}
             onClick={() => handleSortChange('popular')}
           >
             인기순
-          </S.DropdownItem>
-          <S.DropdownItem
-            isActive={sortBy === 'latest'}
+          </button>
+          <button
+            className={`${S.DropdownItem} ${sortBy === 'latest' ? '!text-[var(--color-G1)]' : ''}`}
             onClick={() => handleSortChange('latest')}
           >
             최신순
-          </S.DropdownItem>
-        </S.DropdownMenu>
+          </button>
+        </div>
       )}
-    </S.DropdownContainer>
+    </div>
   );
 };
