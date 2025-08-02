@@ -1,22 +1,22 @@
 import * as S from '../../../styles/home/ranking.style';
 import profile_t from '../../../assets/images/home/profile_t.png';
-import type { UserRanking } from '../../../types/home/ranking';
+import type { MyRank } from '../../../types/home/ranking';
 
 interface MyRankProps {
-  user: UserRanking;
+  user: MyRank;
 }
 
-function MyRank({ user }: MyRankProps) {
+function MyRankInfo({ user }: MyRankProps) {
   return (
     <div className={S.MyRankBox}>
       <div className={S.RankBox}>
         <img
-          src={user.profileImage || profile_t}
+          src={user.profileImgUrl || profile_t}
           alt="profile"
           className={S.ProfileImg}
         />
         <div className={S.ProfileDes}>
-          {user.name}님의 순위는 {user.currentRank}위({user.wiseCount}회)
+          {user.nickname}님의 순위는 {user.ranking}위({user.totalWiseCount}회)
           입니다.
         </div>
       </div>
@@ -24,4 +24,4 @@ function MyRank({ user }: MyRankProps) {
   );
 }
 
-export default MyRank;
+export default MyRankInfo;
