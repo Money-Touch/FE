@@ -49,7 +49,7 @@ const Ranking = () => {
           {others.map((user, idx) => {
             const rankNow = idx + 4;
             const icon = getRankChangeIcon(
-              user.rankChangeStatus as 'UP' | 'DOWN' | 'KEEP',
+              user.rankChangeStatus as 'UP' | 'DOWN' | 'SAME',
             );
             return (
               <OtherUserInfo
