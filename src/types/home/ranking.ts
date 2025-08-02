@@ -1,4 +1,4 @@
-export type RankChangeStatus = 'UP' | 'DOWN' | 'KEEP';
+export type RankChangeStatus = 'UP' | 'DOWN' | 'SAME';
 
 export type TopUser = {
   nickname: string;
