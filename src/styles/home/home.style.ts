@@ -38,7 +38,7 @@ export const StatisticsSection =
 export const ChartAndLegendWrapper = 'flex flex-row items-center mt-[3rem]';
 export const DonutChartWrapper =
   'relative w-[13.5rem] h-[13.5rem] flex-shrink-0 mr-[2rem]';
-export const LegendList = 'w-[10.8rem] flex flex-col gap-[0.8rem] ml-[1.5rem]';
+export const LegendList = 'w-[10.8rem] flex flex-col gap-[0.8rem] ml-[1.5rem] ';
 export const LegendItemWrapper =
   'flex items-center justify-between w-[10.8rem] h-[1.6rem]';
 export const LegendItemLeft = 'flex items-center gap-[0.5rem] w-[9rem]';

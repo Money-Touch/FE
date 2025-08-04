@@ -2,22 +2,22 @@ import React from 'react';
 
 interface DonutChartProps {
   data: {
-    name: string;
-    amount: number;
+    categoryName: string;
     percentage: number;
     color: string;
   }[];
+  hasSpending?: boolean;
 }
 
-const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
+const DonutChart: React.FC<DonutChartProps> = ({ data, hasSpending }) => {
   const centerX = 67.5;
   const centerY = 67.5;
   const outerRadius = 67;
   const innerRadius = 40;
-  const baserotateOffset = 35;
+  const baserotateOffset = 0;
 
-  const noSpending = data.every((item) => item.amount === 0);
-  const rotateOffset = noSpending ? baserotateOffset - 53 : baserotateOffset;
+  const rotateOffset =
+    hasSpending === true ? baserotateOffset + 8 : baserotateOffset - 18;
 
   const filteredData = [...data]
     .filter((item) => item.percentage > 0)
@@ -65,7 +65,9 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
             'Z',
           ].join(' ');
 
-          return <path key={item.name} d={pathData} fill={item.color} />;
+          return (
+            <path key={item.categoryName} d={pathData} fill={item.color} />
+          );
         })}
       </svg>
     </div>
