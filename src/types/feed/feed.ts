@@ -20,6 +20,53 @@ export interface Post {
   comments?: Comment[];
 }
 
+export type ReactionType = 'WISE' | 'WASTE' | null;
+
+export type SortType = 'RECENT' | 'POPULAR';
+
+export interface User {
+  userId: number;
+  nickname: string;
+  profileImgUrl: string;
+}
+
+export interface FeedPost {
+  consumptionRecordId: number;
+  user: {
+    userId: number;
+    nickname: string;
+    profileImgUrl: string;
+  };
+  imageUrls: string[];
+  createdAt: string;
+  wiseCount: number;
+  wasteCount: number;
+  viewCount: number;
+  myReaction: 'WISE' | 'WASTE' | null;
+}
+
+export interface FeedListResultDTO {
+  feedList: FeedPost[];
+  isFirst: boolean;
+  hasNext: boolean;
+  nextCursorId: number;
+  nextCursorViewCount: number;
+  feedListSize: number;
+}
+
+export interface FeedRequestParams {
+  sortType: 'RECENT' | 'POPULAR';
+  cursorId?: number | null;
+  cursorViewCount?: number | null;
+}
+
+export interface ApiResponse<T> {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: T;
+}
+
 export interface Comment {
   id: number;
   author: Author;
