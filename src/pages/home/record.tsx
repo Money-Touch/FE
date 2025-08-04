@@ -1,5 +1,6 @@
 import * as S from '../../styles/home/record.style';
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/header/header';
 import CategorySection from '../../components/home/record/categorySection';
 import AmountSection from '../../components/home/record/amountSection';
@@ -13,6 +14,7 @@ import { useSubmitRecord } from '../../hooks/home/record/useSubmitRecord';
 import { useCategories } from '../../hooks/home/record/useCategories';
 
 function record() {
+  const navigate = useNavigate();
   const { data: categories = [], isLoading, error } = useCategories();
   const [formData, setFormData] = useState<UserRecord>({
     categoryName: '',
@@ -74,7 +76,14 @@ function record() {
       formData,
       file,
     });
-    submitRecord({ formData, file });
+    submitRecord(
+      { formData, file },
+      {
+        onSuccess: () => {
+          navigate('/money-routine');
+        },
+      },
+    );
   };
 
   return (
