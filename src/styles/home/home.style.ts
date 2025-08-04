@@ -35,7 +35,7 @@ export const IllustrationBox =
 export const StatisticsContainer = 'mt-[4rem] w-full h-[27.7rem] gap-[0.8rem]';
 export const StatisticsSection =
   'h-[24.3rem] rounded-[1.5rem] shadow-[0_0_1rem_0_#0000000d] flex items-center justify-start flex-col mt-[0.8rem]';
-export const ChartAndLegendWrapper = 'flex flex-row mt-[3rem]';
+export const ChartAndLegendWrapper = 'flex flex-row items-center mt-[3rem]';
 export const DonutChartWrapper =
   'relative w-[13.5rem] h-[13.5rem] flex-shrink-0 mr-[2rem]';
 export const LegendList = 'w-[10.8rem] flex flex-col gap-[0.8rem] ml-[1.5rem] ';

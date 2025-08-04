@@ -39,7 +39,7 @@ function ConsumptionStatistics() {
       <div className={S.StatisticsSection}>
         <div className={S.ChartAndLegendWrapper}>
           <div className={S.DonutChartWrapper}>
-            <DonutChart data={processedData} />
+            <DonutChart data={processedData} hasSpending={hasSpending} />
           </div>
           <Legend
             data={processedData}

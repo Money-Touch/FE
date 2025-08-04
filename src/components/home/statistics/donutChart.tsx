@@ -6,19 +6,18 @@ interface DonutChartProps {
     percentage: number;
     color: string;
   }[];
+  hasSpending?: boolean;
 }
 
-const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
+const DonutChart: React.FC<DonutChartProps> = ({ data, hasSpending }) => {
   const centerX = 67.5;
   const centerY = 67.5;
   const outerRadius = 67;
   const innerRadius = 40;
-  const baserotateOffset = 35;
+  const baserotateOffset = 0;
 
-  const noSpending = data.every((item) => item.percentage === 0);
-  const rotateOffset = noSpending
-    ? baserotateOffset - 53
-    : baserotateOffset - 40;
+  const rotateOffset =
+    hasSpending === true ? baserotateOffset + 8 : baserotateOffset - 18;
 
   const filteredData = [...data]
     .filter((item) => item.percentage > 0)
