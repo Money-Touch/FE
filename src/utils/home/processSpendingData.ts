@@ -1,74 +1,42 @@
 import type {
-  SpendingCategory,
+  StatisticsResult,
   ProcessedDataItem,
 } from '../../types/home/statistics';
-import colors from '../../styles/common/colors';
 import {
   DEFAULT_CATEGORIES,
   DEFAULT_COLORS,
 } from '../../constants/home/defaultSpending';
 
 export function processSpendingData(
-  spendingData: SpendingCategory[],
+  data: StatisticsResult,
   hasSpending: boolean,
+  otherCategories: ProcessedDataItem[] = [],
 ): ProcessedDataItem[] {
-  const nonZeroData = spendingData.filter((item) => item.amount > 0);
+  const { topCategories, hasOthers, othersPercent } = data;
 
-  if (!hasSpending || nonZeroData.length === 0) {
-    return DEFAULT_CATEGORIES.map((name, idx) => {
-      const matchedItem = spendingData.find((item) => item.name === name) || {
-        name,
-        amount: 0,
-      };
-
-      return {
-        ...matchedItem,
-        percentage: 20,
-        color: DEFAULT_COLORS[idx],
-      };
-    });
+  if (!hasSpending || topCategories.length === 0) {
+    return DEFAULT_CATEGORIES.map((categoryName, idx) => ({
+      categoryName,
+      percentage: 20,
+      color: DEFAULT_COLORS[idx % DEFAULT_COLORS.length],
+    }));
   }
 
-  const totalAmount = nonZeroData.reduce((sum, item) => sum + item.amount, 0);
-
-  if (nonZeroData.length === 1) {
-    return [
-      {
-        ...nonZeroData[0],
-        percentage: 100,
-        color: colors.mainColor1,
-      },
-    ];
-  }
-
-  const sorted = [...nonZeroData].sort((a, b) => b.amount - a.amount);
-  const top5 = sorted.slice(0, 5);
-  const others = sorted.slice(5);
-  const otherAmount = others.reduce((sum, item) => sum + item.amount, 0);
-
-  const colorOrder = DEFAULT_COLORS;
-
-  let processedData: ProcessedDataItem[] = top5.map((item, idx) => ({
-    ...item,
-    percentage: +((item.amount / totalAmount) * 100).toFixed(1),
-    color: colorOrder[idx % colorOrder.length],
+  const processedData: ProcessedDataItem[] = topCategories.map((item, idx) => ({
+    categoryName: item.categoryName,
+    amount: 0,
+    percentage: +item.percentage.toFixed(1),
+    color: DEFAULT_COLORS[idx % DEFAULT_COLORS.length],
   }));
 
-  if (otherAmount > 0) {
-    const othersProcessed: ProcessedDataItem[] = others.map((item) => ({
-      ...item,
-      percentage: +((item.amount / totalAmount) * 100).toFixed(1),
-      color: colors.mainColor2,
-    }));
-
+  if (hasOthers) {
     processedData.push({
-      name: '그 외',
-      amount: otherAmount,
-      percentage: +((otherAmount / totalAmount) * 100).toFixed(1),
-      color: colors.mainColor2,
+      categoryName: '그 외',
+      percentage: +othersPercent.toFixed(1),
+      color: 'var(--color-mainColor2)',
       isOther: true,
-      items: othersProcessed,
-    } as ProcessedDataItem);
+      items: otherCategories,
+    });
   }
 
   const percentSum = processedData.reduce(
@@ -76,10 +44,11 @@ export function processSpendingData(
     0,
   );
   const diff = +(100 - percentSum).toFixed(1);
+
   if (diff !== 0) {
     const maxIdx = processedData.reduce(
       (maxIdx, item, idx) =>
-        item.amount > processedData[maxIdx].amount ? idx : maxIdx,
+        item.percentage > processedData[maxIdx].percentage ? idx : maxIdx,
       0,
     );
     processedData[maxIdx].percentage = +(

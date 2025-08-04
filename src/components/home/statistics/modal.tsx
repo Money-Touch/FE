@@ -17,14 +17,14 @@ const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
       <div className={M.ModalBox} onClick={(e) => e.stopPropagation()}>
         <ul className={M.ModalList}>
           {items.map((item) => (
-            <li key={item.name} className={M.ModalItem}>
+            <li key={item.categoryName} className={M.ModalItem}>
               <div className={M.LeftGroup}>
                 <div
                   className={M.ColorDot()}
-                  style={{ backgroundColor: item.color }}
-                  aria-label={`${item.name} color dot`}
+                  style={{ backgroundColor: 'var(--color-mainColor2)' }}
+                  aria-label={`${item.categoryName} color dot`}
                 />
-                <span className={M.CategoryName}>{item.name}</span>
+                <span className={M.CategoryName}>{item.categoryName}</span>
               </div>
               <span className={M.Percentage}>
                 {allPercentagesAreIntegers

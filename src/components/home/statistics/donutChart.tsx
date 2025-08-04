@@ -2,8 +2,7 @@ import React from 'react';
 
 interface DonutChartProps {
   data: {
-    name: string;
-    amount: number;
+    categoryName: string;
     percentage: number;
     color: string;
   }[];
@@ -16,8 +15,10 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
   const innerRadius = 40;
   const baserotateOffset = 35;
 
-  const noSpending = data.every((item) => item.amount === 0);
-  const rotateOffset = noSpending ? baserotateOffset - 53 : baserotateOffset;
+  const noSpending = data.every((item) => item.percentage === 0);
+  const rotateOffset = noSpending
+    ? baserotateOffset - 53
+    : baserotateOffset - 40;
 
   const filteredData = [...data]
     .filter((item) => item.percentage > 0)
@@ -65,7 +66,9 @@ const DonutChart: React.FC<DonutChartProps> = ({ data }) => {
             'Z',
           ].join(' ');
 
-          return <path key={item.name} d={pathData} fill={item.color} />;
+          return (
+            <path key={item.categoryName} d={pathData} fill={item.color} />
+          );
         })}
       </svg>
     </div>

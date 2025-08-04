@@ -1,16 +1,25 @@
 import * as S from '../../../styles/home/home.style';
 import { useState } from 'react';
 import type { ProcessedDataItem } from '../../../types/home/statistics';
-import { useSpendingData } from '../../../hooks/home/useSpendingData';
+import {
+  useStatistics,
+  useOtherCategories,
+} from '../../../hooks/home/statistics/useStatistics';
+import { useSpendingData } from '../../../hooks/home/statistics/useSpendingData';
 import DonutChart from '../statistics/donutChart';
 import Legend from '../statistics/legend';
 import Modal from '../statistics/modal';
 import BottomText from '../statistics/bottomText';
-import { mockSpendingData } from '../../../mocks/home/mockSpendingData'; // mock data
 
 function ConsumptionStatistics() {
-  const { hasSpending, processedData, topCategory } =
-    useSpendingData(mockSpendingData);
+  const { data, isLoading, error } = useStatistics();
+  const statisticsData = data?.result;
+  const { data: otherCategoriesData } = useOtherCategories();
+
+  const { hasSpending, processedData, topCategory } = useSpendingData(
+    statisticsData,
+    otherCategoriesData || [],
+  );
   const [showModal, setShowModal] = useState(false);
   const [othersList, setOthersList] = useState<ProcessedDataItem[]>([]);
 
@@ -20,6 +29,9 @@ function ConsumptionStatistics() {
       setShowModal(true);
     }
   };
+
+  if (isLoading) return null;
+  if (error || !statisticsData) return null;
 
   return (
     <div className={S.StatisticsContainer}>
@@ -36,7 +48,13 @@ function ConsumptionStatistics() {
           />
         </div>
         <div className={S.BottomBorderBox}>
-          <BottomText hasSpending={hasSpending} topCategory={topCategory} />
+          <BottomText
+            hasSpending={hasSpending}
+            topCategory={
+              processedData.find((item) => item.categoryName === topCategory) ||
+              null
+            }
+          />
         </div>
       </div>
       {showModal && (
