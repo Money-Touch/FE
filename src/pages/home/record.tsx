@@ -80,7 +80,7 @@ function record() {
       { formData, file },
       {
         onSuccess: () => {
-          navigate('/money-routine');
+          navigate('/budget-register');
         },
       },
     );
