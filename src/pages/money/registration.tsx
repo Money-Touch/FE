@@ -12,7 +12,7 @@ const MOBILE_MAX = '430px';
 const BudgetRegister = () => {
   const navigate = useNavigate();
 
-  const [monthBudget, setMonthBudget] = useState(500_000);
+  const [monthBudget, setMonthBudget] = useState(0);
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
   const [editMode, setEditMode] = useState(false);
   const [myEditMode, setMyEditMode] = useState(false);
@@ -65,6 +65,7 @@ const BudgetRegister = () => {
 
     if (targetIdx === -1) {
       setMonthBudget(n);
+      localStorage.setItem('monthBudget', String(n));
     } else if (!targetIsCustom) {
       setCatBudget((prev) => {
         const next = [...prev];

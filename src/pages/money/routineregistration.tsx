@@ -17,7 +17,6 @@ const RoutineRegistration = () => {
   }, [setHideFooter]);
 
   const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
   const [tags, setTags] = useState<string[]>(['']);
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
@@ -27,8 +26,8 @@ const RoutineRegistration = () => {
 
     const input = inputRefs.current[idx];
     if (input) {
-      input.style.width = '20px'; // 줄이기 위해 초기화
-      input.style.width = `${input.scrollWidth}px`; // 내용 기반 너비 설정
+      input.style.width = '20px';
+      input.style.width = `${input.scrollWidth}px`;
     }
   };
 
@@ -63,7 +62,7 @@ const RoutineRegistration = () => {
     const routine = {
       id: Date.now(),
       title: title.trim(),
-      desc: desc.trim(),
+      desc: '',
       tags: tags.map((t) => t.trim()).filter((t) => t && t !== '#'),
     };
     const prev = JSON.parse(localStorage.getItem('routineEntries') || '[]');
@@ -93,40 +92,34 @@ const RoutineRegistration = () => {
         <Label>
           소개<span>*</span>
         </Label>
-        <TextareaWrap>
-          <Textarea
-            placeholder="1000자 이내로 작성해 주세요."
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
-          <TagsInBox>
-            <PlusBtn type="button" onClick={addTagField}>
-              +
-            </PlusBtn>
-            {tags.map((tag, idx) => (
-              <TagInput
-                key={idx}
-                ref={(el) => {
-                  if (el) {
-                    inputRefs.current[idx] = el;
-                    el.style.width = `${el.scrollWidth}px`;
-                  }
-                }}
-                value={tag}
-                placeholder="#해시태그"
-                onChange={(e) => onChangeTag(idx, e.target.value)}
-                onFocus={() => onFocusTag(idx)}
-                onBlur={() => onBlurTag(idx)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    inputRefs.current[idx]?.blur();
-                  }
-                }}
-              />
-            ))}
-          </TagsInBox>
-        </TextareaWrap>
+
+        <TagsInBox>
+          <PlusBtn type="button" onClick={addTagField}>
+            +
+          </PlusBtn>
+          {tags.map((tag, idx) => (
+            <TagInput
+              key={idx}
+              ref={(el) => {
+                if (el) {
+                  inputRefs.current[idx] = el;
+                  el.style.width = `${el.scrollWidth}px`;
+                }
+              }}
+              value={tag}
+              placeholder="#해시태그"
+              onChange={(e) => onChangeTag(idx, e.target.value)}
+              onFocus={() => onFocusTag(idx)}
+              onBlur={() => onBlurTag(idx)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  inputRefs.current[idx]?.blur();
+                }
+              }}
+            />
+          ))}
+        </TagsInBox>
 
         <Save disabled={!valid} onClick={save}>
           등록
@@ -137,8 +130,6 @@ const RoutineRegistration = () => {
 };
 
 export default RoutineRegistration;
-
-/* ---------------- styled-components ---------------- */
 
 const Wrap = styled.div`
   max-width: 430px;
@@ -170,9 +161,12 @@ const IconBase = styled.button`
   border: none;
   padding: 0;
 
-  img {
+  img,
+  svg {
     width: 20px;
     height: 20px;
+    display: block;
+    object-fit: contain;
   }
 `;
 
@@ -215,30 +209,8 @@ const Input = styled.input`
   }
 `;
 
-const TextareaWrap = styled.div`
-  position: relative;
-  margin-bottom: 24px;
-`;
-
-const Textarea = styled.textarea`
-  width: 100%;
-  height: 180px;
-  padding: 14px;
-  padding-bottom: 60px;
-  border: 1px solid ${colors.G7};
-  border-radius: 10px;
-  font-size: 14px;
-  resize: none;
-
-  &::placeholder {
-    color: ${colors.G6};
-  }
-`;
-
 const TagsInBox = styled.div`
-  position: absolute;
-  bottom: 12px;
-  left: 12px;
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
