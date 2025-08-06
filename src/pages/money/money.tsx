@@ -5,7 +5,6 @@ import colors from '../../styles/common/colors';
 import leftArrow from '../../assets/images/header/leftArrow.png';
 import plusIcon from '../../assets/images/budget/Plus.png';
 import pencilIcon from '../../assets/images/budget/Pencil.png';
-import signalIcon from '../../assets/images/budget/signal.png';
 import arrowIconImg from '../../assets/images/budget/arrow.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 import basicImage from '../../assets/images/budget/basic2.png';
@@ -217,9 +216,6 @@ const Money = () => {
           <img src={leftArrow} alt="back" />
         </IconBtnLeft>
         <HeaderTitle>가계부</HeaderTitle>
-        <IconBtnRight aria-label="알림">
-          <img src={signalIcon} alt="알림" />
-        </IconBtnRight>
       </Header>
 
       <GreetingCard>
@@ -235,7 +231,7 @@ const Money = () => {
       <MonthRow>
         <ArrowBtn
           onClick={activeTab === '달력' ? prevMonth : undefined}
-          disabled={activeTab !== '달력' ? true : false}
+          disabled={activeTab !== '달력'}
         >
           ◀
         </ArrowBtn>
@@ -264,32 +260,32 @@ const Money = () => {
       </TotalRow>
 
       <BudgetCardWrapper>
-        {monthBudget ? (
-          <>
-            <Summary>
+        <Summary>
+          {monthBudget > 0 ? (
+            <>
               한 달 예산 {comma(monthBudget)}원 중{' '}
               <Used>{comma(usedAbs)}원</Used> 사용했어요!
-            </Summary>
+            </>
+          ) : (
+            <>한 달 예산을 등록해주세요!</>
+          )}
+        </Summary>
 
-            <BarWrapper>
-              <Bar>
-                <Fill style={{ width: `${fillPercent}%` }} />
-              </Bar>
-            </BarWrapper>
+        <BarWrapper>
+          <Bar>
+            <Fill style={{ width: `${fillPercent}%` }} />
+          </Bar>
+        </BarWrapper>
 
-            <Below $fillPercent={fillPercent}>
-              <span className="used-amount">
-                <img src={starIcon} alt="star" />
-                <span>{comma(usedAbs)}원</span>
-              </span>
-              <span style={{ position: 'absolute', right: 0 }}>
-                {comma(monthBudget)}원
-              </span>
-            </Below>
-          </>
-        ) : (
-          <NoBudgetTxt>한 달 예산을 등록해주세요!</NoBudgetTxt>
-        )}
+        <Below $fillPercent={fillPercent}>
+          <span className="used-amount">
+            <img src={starIcon} alt="star" />
+            <span>{comma(usedAbs)}원</span>
+          </span>
+          <span style={{ position: 'absolute', right: 0 }}>
+            {comma(monthBudget)}원
+          </span>
+        </Below>
       </BudgetCardWrapper>
 
       <TabMenu>
@@ -452,7 +448,7 @@ const Money = () => {
                   <EmptyBoxSmall>해당 날짜에 기록이 없어요.</EmptyBoxSmall>
                 )}
 
-                <FloatingPlus onClick={() => navigate('/add-day')}>
+                <FloatingPlus onClick={() => navigate('/record')}>
                   <img src={plusCircle} alt="add" />
                 </FloatingPlus>
               </CalListSection>
@@ -520,7 +516,12 @@ const Money = () => {
                   .reverse()
                   .map((r) => {
                     const date = new Date(r.createdAt || Date.now());
-                    const dateStr = `${date.getFullYear()} • ${String(date.getMonth() + 1).padStart(2, '0')} • ${String(date.getDate()).padStart(2, '0')}`;
+                    const dateStr = `${date.getFullYear()} • ${String(
+                      date.getMonth() + 1,
+                    ).padStart(2, '0')} • ${String(date.getDate()).padStart(
+                      2,
+                      '0',
+                    )}`;
 
                     return (
                       <RoutineWideCard
@@ -589,13 +590,13 @@ const Header = styled.header`
   height: 56px;
   border-bottom: 1px solid ${colors.G8};
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 `;
 
 const HeaderTitle = styled.h1`
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
 `;
 
 const IconBase = styled.button`
@@ -610,20 +611,18 @@ const IconBase = styled.button`
   background: none;
   border: none;
   padding: 0;
-  cursor: pointer;
 
-  img {
+  img,
+  svg {
     width: 20px;
     height: 20px;
+    display: block;
     object-fit: contain;
   }
 `;
 
 const IconBtnLeft = styled(IconBase)`
   left: 16px;
-`;
-const IconBtnRight = styled(IconBase)`
-  right: 16px;
 `;
 
 const GreetingCard = styled.section`
@@ -733,10 +732,6 @@ const BudgetCardWrapper = styled.div`
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
   font-size: 14px;
-`;
-
-const NoBudgetTxt = styled.p`
-  color: ${colors.G4};
 `;
 
 const Summary = styled.p`
@@ -972,6 +967,7 @@ const RoutineWideCard = styled.button`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   position: relative;
+  align-items: center;
 
   &:active {
     transform: translateY(1px);
@@ -992,12 +988,14 @@ const RoutineContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding-top: 2px;
 `;
 
 const DateLine = styled.div`
   font-size: 11px;
   font-weight: 500;
   color: ${colors.G4};
+  text-align: left;
 `;
 
 const TitleRow = styled.div`
@@ -1005,6 +1003,8 @@ const TitleRow = styled.div`
   align-items: center;
   gap: 8px;
   min-width: 0;
+  text-align: left;
+  margin-top: -8px;
 
   .title {
     flex: 1;
@@ -1020,7 +1020,7 @@ const TitleRow = styled.div`
 const ArrowIcon = styled.img`
   position: absolute;
   right: 23px;
-  top: 52%;
+  top: 42px;
   transform: translateY(-50%);
   width: 11px;
   height: 11px;
@@ -1030,6 +1030,8 @@ const TagsRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  position: relative;
+  top: -6px;
 
   .tag {
     font-size: 11px;

@@ -85,14 +85,11 @@ const AddDay = () => {
     setDateOpen(true);
 
     requestAnimationFrame(() => {
-      const baseTop = Math.max(0, idx * ROW_H - ROW_H / 2);
+      const baseTop = idx * ROW_H;
       dateRef.current?.scrollTo(0, baseTop);
-      meriRef.current?.scrollTo(
-        0,
-        (initMeri === '오후' ? ROW_H : 0) - ROW_H / 2,
-      );
-      hourRef.current?.scrollTo(0, (initHour12 - 1) * ROW_H - ROW_H / 2);
-      minRef.current?.scrollTo(0, initMin * ROW_H - ROW_H / 2);
+      meriRef.current?.scrollTo(0, (initMeri === '오후' ? 3 : 2) * ROW_H);
+      hourRef.current?.scrollTo(0, (initHour12 - 1) * ROW_H);
+      minRef.current?.scrollTo(0, initMin * ROW_H);
     });
   };
 
@@ -137,13 +134,12 @@ const AddDay = () => {
     setIdx: (i: number) => void,
   ) => {
     const top = e.currentTarget.scrollTop;
-    const i = Math.round((top + ROW_H / 2) / ROW_H); // 중앙 기준 인덱스
+    const i = Math.round(top / ROW_H);
     setIdx(i);
   };
 
   return (
     <Wrap>
-      {/* Header */}
       <Header>
         <IconBtnLeft onClick={() => nav(-1)}>
           <img src={leftArrow} alt="back" />
@@ -151,7 +147,6 @@ const AddDay = () => {
         <H1>일일</H1>
       </Header>
 
-      {/* Body */}
       <Body>
         <Section>
           <Label2>거래처</Label2>
@@ -218,7 +213,6 @@ const AddDay = () => {
         </Save>
       </Body>
 
-      {/* keypad modal */}
       {padOpen && (
         <Dim>
           <Modal>
@@ -264,7 +258,6 @@ const AddDay = () => {
         </Dim>
       )}
 
-      {/* date wheel modal */}
       {dateOpen && (
         <Dim>
           <DateModal>
@@ -282,15 +275,21 @@ const AddDay = () => {
                   </WheelItem>
                 ))}
                 <WheelSpacer />
+                <WheelSpacer />
               </WheelCol>
 
               <WheelCol
                 ref={meriRef}
-                onScroll={(e) => snap(e, (i) => setMeri(i ? '오후' : '오전'))}
+                onScroll={(e) => {
+                  const i = Math.round(e.currentTarget.scrollTop / ROW_H);
+                  setMeri(i === 2 ? '오후' : '오전');
+                }}
               >
+                <WheelSpacer />
                 <WheelSpacer />
                 <WheelItem $active={meri === '오전'}>오전</WheelItem>
                 <WheelItem $active={meri === '오후'}>오후</WheelItem>
+                <WheelSpacer />
                 <WheelSpacer />
               </WheelCol>
 
@@ -305,6 +304,7 @@ const AddDay = () => {
                   </WheelItem>
                 ))}
                 <WheelSpacer />
+                <WheelSpacer />
               </WheelCol>
 
               <WheelCol ref={minRef} onScroll={(e) => snap(e, setMinute)}>
@@ -314,6 +314,7 @@ const AddDay = () => {
                     {two(m)}
                   </WheelItem>
                 ))}
+                <WheelSpacer />
                 <WheelSpacer />
               </WheelCol>
 
@@ -621,10 +622,10 @@ const WheelSpacer = styled.div`
 
 const WheelItem = styled.div<{ $active?: boolean }>`
   height: ${ROW_H}px;
-  line-height: ${ROW_H}px;
-  text-align: center;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  font-size: 16px;
   font-weight: ${({ $active }) => ($active ? 700 : 400)};
   color: ${({ $active }) => ($active ? colors.G1 : colors.G4)};
   scroll-snap-align: center;
@@ -633,11 +634,14 @@ const WheelItem = styled.div<{ $active?: boolean }>`
 const WheelCenter = styled.div`
   pointer-events: none;
   position: absolute;
-  left: 16px;
-  right: 16px;
+  left: 0;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
   height: ${ROW_H}px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   background: rgba(0, 209, 181, 0.08);
   outline: 1px solid ${colors.mainColor1};
