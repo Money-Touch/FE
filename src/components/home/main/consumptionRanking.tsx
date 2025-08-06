@@ -5,18 +5,19 @@ import medal1 from '../../../assets/images/home/medal1.png';
 import medal2 from '../../../assets/images/home/medal2.png';
 import medal3 from '../../../assets/images/home/medal3.png';
 import profile_t from '../../../assets/images/home/profile_t.png';
+import { useRanking } from '../../../hooks/home/ranking/useRanking';
 import { getRankChangeIcon } from '../../../utils/home/getRankChangeIcon';
-import { mockRankingData } from '../../../mocks/home/mockRankingData'; // mock data
 
 function ConsumptionRanking() {
   const navigate = useNavigate();
+  const { data } = useRanking();
 
   const handleMoreClick = () => {
     navigate('/ranking');
   };
 
   const medalImages = [medal1, medal2, medal3];
-  const top3 = mockRankingData.slice(0, 3);
+  const top3 = data?.result.top10Users.slice(0, 3) || [];
 
   return (
     <div className={S.RankingContainer}>
@@ -32,7 +33,7 @@ function ConsumptionRanking() {
 
       <div className={S.RankingSection}>
         {top3.map((user, index) => (
-          <div key={user.id} className={S.RankingList}>
+          <div key={user.nickname} className={S.RankingList}>
             <img
               src={medalImages[index]}
               alt={`${index + 1}등`}
@@ -40,15 +41,15 @@ function ConsumptionRanking() {
             />
             <div className={S.ProfileAndName}>
               <img
-                src={user.profileImage || profile_t}
+                src={user.profileImgUrl || profile_t}
                 alt="userProfile"
                 className={S.Profile}
               />
-              <div className={S.UserName}>{user.name}</div>
+              <div className={S.UserName}>{user.nickname}</div>
             </div>
             <div className={S.WiseCount}>{user.wiseCount}회</div>
             <img
-              src={getRankChangeIcon(index + 1, user.previousRank)}
+              src={getRankChangeIcon(user.rankChangeStatus)}
               alt="rankingChange"
               className={S.RankChangeIcon}
             />
