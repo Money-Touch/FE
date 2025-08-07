@@ -1,3 +1,14 @@
+export interface RoutinePreview {
+  routineId: number;
+  routineName: string;
+  new: boolean;
+}
+
+export interface RoutinesPreviewResponse {
+  isSuccess: boolean;
+  result: RoutinePreview[];
+}
+
 export interface UserRoutine {
   id: number;
   title: string;
