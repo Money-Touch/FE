@@ -2,7 +2,7 @@ import * as S from '../../../styles/home/routine.style';
 
 interface BudgetListProps {
   totalBudget: number;
-  budgetList: { label: string; amount: number }[];
+  budgetList: { categoryName: string; amount: number }[];
 }
 
 export default function BudgetList({
@@ -21,7 +21,7 @@ export default function BudgetList({
       <div className={S.BudgetListWrapper}>
         {budgetList.map((item, index) => (
           <div key={index} className={S.BudgetItem}>
-            <div className={S.BudgetLabel}>{item.label}</div>
+            <div className={S.BudgetLabel}>{item.categoryName}</div>
             <div className={S.BudgetAmountPerItem}>
               {item.amount.toLocaleString()}원
             </div>
