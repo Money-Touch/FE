@@ -4,7 +4,6 @@ import ProtectedRoute from './protectedRoute';
 
 import Splash from '../components/splash/splash';
 import LoginPage from '../pages/auth/login/login';
-import KakaoCallbackPage from '../pages/auth/login/kakaoCallback';
 import SignupPage from '../pages/auth/signup/signup';
 import TestPage from '../pages/auth/test/test';
 
@@ -44,15 +43,16 @@ const router = createBrowserRouter([
         path: 'login',
         children: [
           { index: true, element: <LoginPage /> },
-          { path: 'auth', element: <KakaoCallbackPage /> },
+          { path: 'auth', element: <LoginPage /> },
         ],
       },
       { path: 'signup', element: <SignupPage /> },
-      { path: 'test', element: <TestPage /> },
 
       {
         element: <ProtectedRoute />,
         children: [
+          { path: 'test', element: <TestPage /> },
+
           { path: 'home', element: <HomePage /> },
           { path: 'notify', element: <NotifyPage /> },
           { path: 'record', element: <RecordPage /> },
