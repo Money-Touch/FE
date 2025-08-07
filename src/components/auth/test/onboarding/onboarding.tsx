@@ -28,28 +28,17 @@ const Onboarding = ({
     const { age, gender, job, isIncome } = getOnboarding(onboardingList);
     // console.log(onboardingData);
 
-    const nickname = localStorage.getItem('nickname');
-    const profileImgUrl = localStorage.getItem('profileImgUrl') || null;
-
-    if (!nickname) {
-      alert('닉네임이 없습니다.');
-      return;
-    }
-
     const payload: SubmitPayload = {
       age,
       gender,
       job,
       isIncome,
-      nickname,
-      profileImgUrl,
     };
     console.log(payload);
 
     mutate(payload, {
       onSuccess: (data) => {
         console.log('응답: ', data);
-        localStorage.setItem('userId', data.result.userId);
         onNext();
       },
       onError: (err) => {
