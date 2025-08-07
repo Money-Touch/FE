@@ -348,6 +348,10 @@ const CatLi = styled.li<{ $editable: boolean }>`
   font-size: 16px;
   font-weight: 500;
 
+  span:first-child {
+    color: ${colors.G5};
+  }
+
   ${({ $editable }) =>
     $editable &&
     css`
@@ -475,7 +479,7 @@ const Pad = styled.div`
 `;
 
 const Key = styled.button`
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 600;
   color: ${colors.G1};
   padding: 20px 0;

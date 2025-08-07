@@ -189,7 +189,7 @@ const AddDay = () => {
         <Label>
           날짜<span>*</span>
         </Label>
-        <DateBtn onClick={openDate}>
+        <DateBtn $placeholder={!dateStr} onClick={openDate}>
           {dateStr
             ? (() => {
                 const d = new Date(dateStr);
@@ -455,7 +455,7 @@ const Input = styled.input`
   }
 `;
 
-const DateBtn = styled.button`
+const DateBtn = styled.button<{ $placeholder?: boolean }>`
   width: 100%;
   height: 48px;
   padding: 0 14px;
@@ -465,7 +465,7 @@ const DateBtn = styled.button`
   text-align: left;
   margin-bottom: 24px;
   background: #fff;
-  color: ${colors.G1};
+  color: ${({ $placeholder }) => ($placeholder ? colors.G6 : colors.G1)};
 `;
 
 const Textarea = styled.textarea`
@@ -571,7 +571,7 @@ const Pad = styled.div`
 
 const Key = styled.button`
   padding: 20px 0;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 600;
   border: none;
   background: none;

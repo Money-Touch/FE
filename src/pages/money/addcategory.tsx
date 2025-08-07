@@ -123,7 +123,7 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   width: 100%;
-  font-size: 16px;
+  font-size: 20px;
   padding: 12px;
   border: none;
   border-bottom: 2px solid ${colors.G6};

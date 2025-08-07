@@ -15,6 +15,7 @@ import transportImage from '../../assets/images/budget/budget.png';
 import eatImage from '../../assets/images/budget/eat.png';
 import playImage from '../../assets/images/budget/play.png';
 import fixedCostImage from '../../assets/images/budget/fixedcost.png';
+import { useCallback } from 'react';
 
 const TAB_LIST = ['일일', '달력', '고정비', '소비 루틴'] as const;
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'] as const;
@@ -28,6 +29,7 @@ const categoryImages: Record<string, string> = {
   '배달/외식': eatImage,
   기타: playImage,
   '패션/쇼핑': playImage,
+  고정비: fixedCostImage,
 };
 
 interface Entry {
@@ -133,12 +135,39 @@ const Money = () => {
     }
   };
 
+  const injectFixedToEntries = useCallback(() => {
+    const now = new Date();
+    const firstDayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-01`;
+
+    const raw = localStorage.getItem('dailyEntries');
+    const existing: Entry[] = raw ? JSON.parse(raw) : [];
+
+    const alreadyInjected = existing.some(
+      (e) => e.date === firstDayStr && e.memo === '[고정비]',
+    );
+    if (alreadyInjected) return;
+
+    const injected = fixed.map((f) => ({
+      id: Date.now() + Math.random(),
+      date: firstDayStr,
+      item: f.item,
+      amount: f.amount,
+      memo: f.memo,
+      category: '고정비',
+    }));
+
+    const newList = [...existing, ...injected];
+    localStorage.setItem('dailyEntries', JSON.stringify(newList));
+    setEntries(newList);
+  }, [fixed]);
+
   useEffect(() => {
     setMonthBudget(Number(localStorage.getItem('monthBudget') || 0));
     loadEntries();
     loadFixed();
     loadRoutines();
-  }, []);
+    injectFixedToEntries();
+  }, [injectFixedToEntries]);
 
   useEffect(() => {
     const onFocus = () => {
@@ -334,7 +363,9 @@ const Money = () => {
                     {list.map((e) => (
                       <ItemRow key={e.id}>
                         <Dot>
-                          {categoryImages[e.category] ? (
+                          {e.memo === '[고정비]' || e.category === '고정비' ? (
+                            <img src={fixedCostImage} alt="고정비" />
+                          ) : categoryImages[e.category] ? (
                             <img
                               src={categoryImages[e.category]}
                               alt={e.category}
@@ -431,7 +462,9 @@ const Money = () => {
                   selectedList.map((e) => (
                     <CalItemRow key={e.id}>
                       <CalDot>
-                        {categoryImages[e.category] ? (
+                        {e.memo === '[고정비]' || e.category === '고정비' ? (
+                          <img src={fixedCostImage} alt="고정비" />
+                        ) : categoryImages[e.category] ? (
                           <img
                             src={categoryImages[e.category]}
                             alt={e.category}
@@ -494,7 +527,7 @@ const Money = () => {
             ) : (
               <EmptyBox>
                 <EmptyCircle src={emptyImage} alt="비어 있음" />
-                <EmptyText>등록된 소비 내역이 없어요.</EmptyText>
+                <EmptyText>등록된 고정비가 없어요.</EmptyText>
               </EmptyBox>
             )}
           </>
@@ -934,19 +967,26 @@ const EmptyBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding-bottom: 60px;
   color: ${colors.G4};
 `;
 
 const EmptyCircle = styled.img`
-  width: 180px;
+  width: 140px;
   height: 180px;
   object-fit: contain;
-  margin-bottom: 24px;
+  margin: 0 auto 12px auto;
+  display: block;
 `;
 
 const EmptyText = styled.p`
   font-size: 14px;
   font-weight: 500;
+  margin: 0;
+  line-height: 1.4;
+  text-align: center;
+  width: 100%;
 `;
 
 const RoutineCardList = styled.div`
