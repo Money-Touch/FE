@@ -11,6 +11,4 @@ export interface SubmitPayload {
   gender: string;
   job: string;
   isIncome: string;
-  nickname: string;
-  profileImgUrl: string | null;
 }
