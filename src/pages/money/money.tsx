@@ -1,8 +1,10 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import leftArrow from '../../assets/images/header/leftArrow.png';
+import Header from '../../components/header/header';
+import LeftArrowActive from '../../assets/images/budget/leftArrowActive.png';
+import pencilIcon from '../../assets/images/budget/pencil.png';
 import plusIcon from '../../assets/images/budget/Plus.png';
-import pencilIcon from '../../assets/images/budget/Pencil.png';
+import minusIcon from '../../assets/images/budget/minus.png';
 import arrowIconImg from '../../assets/images/budget/arrow.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 import basicImage from '../../assets/images/budget/basic2.png';
@@ -16,9 +18,6 @@ import fixedCostImage from '../../assets/images/budget/fixedcost.png';
 
 import {
   Container,
-  Header,
-  HeaderTitle,
-  IconBtnLeft,
   GreetingCard,
   GreetText,
   MiniCard,
@@ -27,19 +26,19 @@ import {
   MonthText,
   TotalRow,
   TotalSpent,
-  Slash,
-  TotalBudget,
   EditBtn,
   BudgetCardWrapper,
   Summary,
-  Used,
+  SummaryP,
   BarWrapper,
   Bar,
   Fill,
   Below,
   TabMenu,
+  TabItemMenu,
   TabItem,
   ContentArea,
+  ButtonContainer,
   PlusBtn,
   DeleteToggleBtn,
   Section,
@@ -228,8 +227,11 @@ const Money = () => {
     loadEntries();
     loadFixed();
     loadRoutines();
+  }, []);
+
+  useEffect(() => {
     injectFixedToEntries();
-  }, [injectFixedToEntries]);
+  }, [fixed]);
 
   useEffect(() => {
     const onFocus = () => {
@@ -302,30 +304,28 @@ const Money = () => {
 
   return (
     <Container>
-      <Header>
-        <IconBtnLeft onClick={() => navigate(-1)}>
-          <img src={leftArrow} alt="back" />
-        </IconBtnLeft>
-        <HeaderTitle>가계부</HeaderTitle>
-      </Header>
+      <Header title="가계부" />
 
       <GreetingCard>
         <GreetText>
-          <span>라인님!</span>
-          <p>소비 내역을 작성해 주세요.</p>
+          라인
+          <span>
+            님!
+            <br />
+            소비 내역을 작성해 주세요.
+          </span>
         </GreetText>
-        <MiniCard>
-          <img src={basicImage} alt="일러스트" />
-        </MiniCard>
+
+        <MiniCard src={basicImage} alt="일러스트" />
       </GreetingCard>
 
       <MonthRow>
         <ArrowBtn
+          src={LeftArrowActive}
+          alt="left"
           onClick={activeTab === '달력' ? prevMonth : undefined}
           disabled={activeTab !== '달력'}
-        >
-          ◀
-        </ArrowBtn>
+        />
 
         <MonthText>
           {activeTab === '달력'
@@ -334,81 +334,93 @@ const Money = () => {
         </MonthText>
 
         <ArrowBtn
+          style={{ transform: 'rotate(180deg)' }}
+          src={LeftArrowActive}
+          alt="right"
           onClick={activeTab === '달력' ? nextMonth : undefined}
           disabled={activeTab !== '달력' ? true : isCurrentMonth}
-        >
-          ▶
-        </ArrowBtn>
+        />
       </MonthRow>
 
       <TotalRow>
-        <TotalSpent>{comma(usedAbs)}원</TotalSpent>
-        <Slash>/</Slash>
-        <TotalBudget>{comma(monthBudget)}원</TotalBudget>
-        <EditBtn onClick={() => navigate('/budget-register')}>
-          <img src={pencilIcon} alt="edit" />
-        </EditBtn>
+        <TotalSpent>
+          {comma(usedAbs)}원
+          <span>
+            <span className="slash"> / </span>
+            {comma(monthBudget)}원
+          </span>
+        </TotalSpent>
+        <EditBtn
+          src={pencilIcon}
+          alt="edit"
+          onClick={() => navigate('/budget-register')}
+        />
       </TotalRow>
 
       <BudgetCardWrapper>
         <Summary>
           {monthBudget > 0 ? (
-            <>
+            <SummaryP>
               한 달 예산 {comma(monthBudget)}원 중{' '}
-              <Used>{comma(usedAbs)}원</Used> 사용했어요!
-            </>
+              <span>{comma(usedAbs)}원 </span>사용했어요!
+            </SummaryP>
           ) : (
-            <>한 달 예산을 등록해주세요!</>
+            <SummaryP>한 달 예산을 등록해주세요!</SummaryP>
           )}
+
+          <BarWrapper>
+            <Bar>
+              <Fill style={{ width: `${fillPercent}%` }} />
+            </Bar>
+
+            <Below $fillPercent={fillPercent}>
+              <span className="used-amount">
+                <img src={starIcon} alt="star" />
+                <span>{comma(usedAbs)}원</span>
+              </span>
+              <span
+                style={{ position: 'absolute', right: 0, bottom: '-0.6rem' }}
+              >
+                {comma(monthBudget)}원
+              </span>
+            </Below>
+          </BarWrapper>
         </Summary>
-
-        <BarWrapper>
-          <Bar>
-            <Fill style={{ width: `${fillPercent}%` }} />
-          </Bar>
-        </BarWrapper>
-
-        <Below $fillPercent={fillPercent}>
-          <span className="used-amount">
-            <img src={starIcon} alt="star" />
-            <span>{comma(usedAbs)}원</span>
-          </span>
-          <span style={{ position: 'absolute', right: 0 }}>
-            {comma(monthBudget)}원
-          </span>
-        </Below>
       </BudgetCardWrapper>
 
       <TabMenu>
-        {TAB_LIST.map((t) => (
-          <TabItem
-            key={t}
-            $active={activeTab === t}
-            onClick={() => setActiveTab(t)}
-          >
-            {t}
-          </TabItem>
-        ))}
+        <TabItemMenu>
+          {TAB_LIST.map((t) => (
+            <TabItem
+              key={t}
+              $active={activeTab === t}
+              onClick={() => setActiveTab(t)}
+            >
+              {t}
+            </TabItem>
+          ))}
+        </TabItemMenu>
       </TabMenu>
 
       <ContentArea>
         {activeTab === '일일' && (
           <>
-            <PlusBtn
-              $shifted={entries.length > 0}
-              onClick={() => navigate('/add-day')}
-            >
-              <img src={plusIcon} alt="add" />
-            </PlusBtn>
+            <ButtonContainer>
+              <PlusBtn
+                onClick={() => navigate('/add-day')}
+                src={plusIcon}
+                alt="plus"
+              />
 
-            {entries.length > 0 && (
-              <DeleteToggleBtn
-                $active={deleteMode}
-                onClick={() => setDeleteMode((v) => !v)}
-              >
-                –
-              </DeleteToggleBtn>
-            )}
+              {entries.length > 0 && (
+                <DeleteToggleBtn
+                  src={minusIcon}
+                  alt="minus"
+                  $active={deleteMode}
+                  onClick={() => setDeleteMode((v) => !v)}
+                />
+              )}
+            </ButtonContainer>
 
             {entries.length ? (
               groupArr.map(([dateKey, list]) => {
@@ -556,10 +568,7 @@ const Money = () => {
 
         {activeTab === '고정비' && (
           <>
-            <PlusBtn
-              $shifted={fixed.length > 0}
-              onClick={() => navigate('/fixed-cost')}
-            >
+            <PlusBtn onClick={() => navigate('/fixed-cost')}>
               <img src={plusIcon} alt="add" />
             </PlusBtn>
 
@@ -600,10 +609,7 @@ const Money = () => {
 
         {activeTab === '소비 루틴' && (
           <>
-            <PlusBtn
-              $shifted={false}
-              onClick={() => navigate('/money-routine')}
-            >
+            <PlusBtn onClick={() => navigate('/money-routine')}>
               <img src={plusIcon} alt="add" />
             </PlusBtn>
 

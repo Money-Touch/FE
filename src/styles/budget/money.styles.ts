@@ -3,231 +3,187 @@ import colors from '../common/colors';
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
   background: ${colors.B1};
   display: flex;
   flex-direction: column;
-`;
-
-export const Header = styled.header`
-  position: relative;
-  height: 56px;
-  border-bottom: 1px solid ${colors.G8};
-  display: flex;
-  justify-content: center;
   align-items: center;
-`;
-
-export const HeaderTitle = styled.h1`
-  font-size: 18px;
-  font-weight: 700;
-`;
-
-const IconBase = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  padding: 0;
-
-  img,
-  svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-    object-fit: contain;
-  }
-`;
-
-export const IconBtnLeft = styled(IconBase)`
-  left: 16px;
 `;
 
 export const GreetingCard = styled.section`
-  margin: 16px;
-  padding: 24px 28px;
+  width: 37.7rem;
+  height: 11rem;
   background: linear-gradient(135deg, ${colors.subColor3} 0%, #4be3a5 100%);
-  border-radius: 20px;
+  border-radius: 1.5rem;
   display: flex;
-  justify-content: space-between;
+  gap: 2.2rem;
   align-items: center;
+  margin: 1rem 0 2.4rem 0;
 `;
 
-export const GreetText = styled.div`
-  flex: 1;
-  margin-right: 16px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
+export const GreetText = styled.p`
+  margin-left: 3.9rem;
+  color: ${colors.white};
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.8rem;
+
   span {
-    font-size: 22px;
-    font-weight: 700;
-  }
-  p {
-    font-size: 20px;
     font-weight: 500;
-    margin: 0;
   }
 `;
 
-export const MiniCard = styled.div`
-  width: 72px;
-  height: 72px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    margin-left: -40px;
-    transform: scale(1.25);
-  }
+export const MiniCard = styled.img`
+  width: 8.4rem;
+  height: 9.2rem;
 `;
 
 export const MonthRow = styled.div`
-  margin: 0 16px 4px;
   display: flex;
+  width: 37.7rem;
   align-items: center;
+  gap: 0.4rem;
 `;
 
-export const ArrowBtn = styled.button<{ disabled?: boolean }>`
-  background: none;
-  border: none;
-  font-size: 18px;
-  padding: 2px 4px;
+export const ArrowBtn = styled.img<{ disabled?: boolean }>`
+  width: 2.4rem;
+  height: 2.4rem;
   cursor: pointer;
-  opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
+  // opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 `;
 
 export const MonthText = styled.span`
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 8px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: ${colors.G1};
 `;
 
 export const TotalRow = styled.div`
-  margin: 0 16px 8px;
+  margin: 0.6rem 0;
+  width: 37.7rem;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 `;
 
-export const TotalSpent = styled.span`
-  font-size: 24px;
+export const TotalSpent = styled.p`
+  font-size: 2.4rem;
   font-weight: 700;
-`;
+  color: ${colors.G1};
 
-export const Slash = styled.span`
-  margin: 0 4px;
-  font-size: 18px;
-  color: ${colors.G3};
-`;
+  .slash {
+    font-size: 1.6rem;
+  }
 
-export const TotalBudget = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${colors.G3};
-`;
-
-export const EditBtn = styled.button`
-  background: none;
-  border: none;
-  padding-left: 4px;
-  cursor: pointer;
-  img {
-    width: 18px;
-    height: 18px;
+  span {
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: ${colors.G4};
   }
 `;
 
+export const EditBtn = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+  margin-top: 0.2rem;
+`;
+
 export const BudgetCardWrapper = styled.div`
-  margin: 0 16px 12px;
-  padding: 20px 16px 0;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  font-size: 14px;
+  width: 37.7rem;
+  height: 10.1rem;
+  margin: 0.6rem 0 2.4rem 0;
+  padding: 0 1.5rem;
+  background: ${colors.white};
+  border-radius: 1.5rem;
+  box-shadow: 0 0 1rem 0 #0000000d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const Summary = styled.p`
-  font-weight: 600;
-  line-height: 1.4;
-  color: ${colors.G4};
+export const Summary = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 0.8rem;
 `;
 
-export const Used = styled.span`
-  color: ${colors.mainColor1};
+export const SummaryP = styled.p`
+  width: 100%;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: ${colors.G3};
+
+  span {
+    font-weight: 700;
+    color: ${colors.subColor3};
+  }
 `;
 
 export const BarWrapper = styled.div`
+  width: 100%;
   position: relative;
-  margin-top: 16px;
+  height: 3.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Bar = styled.div`
-  width: 100%;
-  height: 6px;
+  width: 33.3rem;
+  height: 0.6rem;
   background: ${colors.G8};
-  border-radius: 3px;
+  border-radius: 1rem;
   overflow: hidden;
 `;
 
 export const Fill = styled.div`
   height: 100%;
   background: ${colors.mainColor1};
+  border-radius: 1rem;
   transition: width 0.25s ease;
 `;
 
 export const Below = styled.div<{ $fillPercent: number }>`
-  margin-top: 8px;
-  position: relative;
-  height: 32px;
-  font-size: 13px;
-  color: ${colors.G4};
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: ${colors.G5};
 
   .used-amount {
     position: absolute;
+    bottom: -0.6rem;
     left: ${({ $fillPercent }) => $fillPercent}%;
-    transform: translateX(-50%);
-    top: -30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
     img {
-      width: 16px;
-      height: 16px;
-      margin-bottom: 2px;
-    }
-    span {
-      position: relative;
-      top: 12px;
+      width: 1.6rem;
+      height: 1.5rem;
+      margin-bottom: 1.4rem;
     }
   }
 `;
 
 export const TabMenu = styled.nav`
-  display: flex;
   width: 100%;
-  border-bottom: 1px solid ${colors.G8};
+  height: 4.3rem;
+  display: flex;
+  justify-content: center;
+  background: ${colors.white};
+  border-radius: 1.5rem 1.5rem 0 0;
+  border-bottom: 0.1rem solid ${colors.G7};
+  box-shadow: 0 0 1rem 0 #0000000d;
+`;
+
+export const TabItemMenu = styled.div`
+  width: 31.2rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const TabItem = styled.button<{ $active: boolean }>`
-  flex: 1;
-  padding: 12px 0;
-  font-size: 14px;
-  font-weight: 600;
-  background: none;
-  border: none;
+  font-size: 1.5rem;
+  font-weight: 500;
   cursor: pointer;
   position: relative;
 
@@ -240,55 +196,36 @@ export const TabItem = styled.button<{ $active: boolean }>`
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 56%;
-        max-width: 40px;
-        height: 3px;
+        width: 4.4rem;
+        height: 0.4rem;
         background: ${colors.mainColor1};
-        border-radius: 1.5px;
+        border-radius: 1rem;
       }
     `}
 `;
 
 export const ContentArea = styled.div`
-  flex: 1;
+  background: ${colors.white};
+  width: 100%;
   position: relative;
-  padding-top: 44px;
+  padding-top: 2.71rem;
 `;
 
-export const PlusBtn = styled.button<{ $shifted: boolean }>`
-  position: absolute;
-  top: ${({ $shifted }) => ($shifted ? '12px' : '7px')};
-  right: ${({ $shifted }) => ($shifted ? '56px' : '25px')};
-  width: 32px;
-  height: 32px;
+export const ButtonContainer = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
+  justify-content: flex-end;
+  padding-right: 2.4rem;
+  gap: 1.6rem;
 `;
 
-export const DeleteToggleBtn = styled.button<{ $active: boolean }>`
-  position: absolute;
-  top: 7px;
-  right: 25px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 1;
+export const PlusBtn = styled.img`
+  width: 2.4rem;
+  height: 2.4rem;
   cursor: pointer;
+`;
+
+export const DeleteToggleBtn = styled(PlusBtn)<{ $active: boolean }>`
   color: ${({ $active }) => ($active ? colors.mainColor1 : colors.G3)};
 `;
 
@@ -353,31 +290,27 @@ export const Dot = styled.span`
   }
 `;
 
+// 비어있을 때
 export const EmptyBox = styled.div`
-  margin-top: 64px;
+  margin: 12.3rem 0 25.9rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 60px;
-  color: ${colors.G4};
+  text-align: center;
+  gap: 2rem;
 `;
 
 export const EmptyCircle = styled.img`
-  width: 140px;
-  height: 180px;
-  object-fit: contain;
-  margin: 0 auto 12px auto;
-  display: block;
+  width: 13.822rem;
+  height: 13rem;
+  margin-right: 1rem;
 `;
 
 export const EmptyText = styled.p`
-  font-size: 14px;
+  font-size: 1.6rem;
+  color: ${colors.G1};
   font-weight: 500;
-  margin: 0;
-  line-height: 1.4;
-  text-align: center;
-  width: 100%;
 `;
 
 export const RoutineCardList = styled.div`
