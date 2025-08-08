@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import leftArrow from '../../assets/images/header/leftArrow.png';
+import Header from '../../components/header/header';
 import pencilIcon from '../../assets/images/budget/Pencil.png';
+import closeIcon from '../../assets/images/budget/Close.png';
+import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
+
 import {
   Wrap,
-  Header,
-  IconBtnLeft,
-  H1,
   Body,
   Section,
   Row,
@@ -17,6 +17,7 @@ import {
   CatBox,
   CatBtn,
   Input,
+  DeleteIcon,
   DateBtn,
   Textarea,
   Save,
@@ -25,10 +26,11 @@ import {
   ModalHead,
   Close,
   InputRow,
+  InputIcon,
   Money,
-  Won,
   Pad,
   Key,
+  ApplyContainer,
   Apply,
   DateModal,
   WheelWrap,
@@ -39,7 +41,7 @@ import {
 } from '../../styles/budget/addday.styles';
 
 const CATEGORIES = ['배달/외식', '교통', '패션/쇼핑', '카페', '기타'] as const;
-const ROW_H = 44;
+const ROW_H = 53;
 
 const comma = (v: string | number) =>
   String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -47,8 +49,9 @@ const two = (n: number) => String(n).padStart(2, '0');
 const weekdayKo = ['일', '월', '화', '수', '목', '금', '토'] as const;
 const fmtDateKo = (d: Date) =>
   `${d.getMonth() + 1}월${d.getDate()}일 ${weekdayKo[d.getDay()]}`;
+
 const toLocalDt = (d: Date) =>
-  `${d.getFullYear()}-${two(d.getMonth() + 1)}-${two(d.getDate())}T${two(
+  `${d.getFullYear()}-${two(d.getMonth() + 1)}-${two(d.getDate())} ${two(
     d.getHours(),
   )}:${two(d.getMinutes())}`;
 
@@ -58,6 +61,7 @@ const AddDay = () => {
   const nav = useNavigate();
   const layoutCtx = useOutletContext<LayoutCtx | null>();
   const hideFooter = layoutCtx?.setHideFooter;
+
   useEffect(() => {
     hideFooter?.(true);
     return () => hideFooter?.(false);
@@ -71,8 +75,8 @@ const AddDay = () => {
 
   const [padOpen, setPadOpen] = useState(false);
   const [rawAmt, setRawAmt] = useState('');
-
   const [dateOpen, setDateOpen] = useState(false);
+  const [isInitScroll, setIsInitScroll] = useState(false); // ✅ 추가
 
   const dateList = useMemo(() => {
     const today = new Date();
@@ -83,6 +87,7 @@ const AddDay = () => {
       return d;
     });
   }, []);
+
   const hours12 = useMemo(
     () => Array.from({ length: 12 }, (_, i) => i + 1),
     [],
@@ -100,7 +105,14 @@ const AddDay = () => {
   const minRef = useRef<HTMLDivElement>(null);
 
   const openDate = () => {
-    const base = dateStr ? new Date(dateStr) : new Date();
+    let base: Date;
+    if (dateStr) {
+      base = new Date(dateStr);
+    } else {
+      base = new Date();
+      setDateStr(toLocalDt(base));
+    }
+
     const today0 = new Date();
     today0.setHours(0, 0, 0, 0);
     const diff = Math.round((+base.setHours(0, 0, 0, 0) - +today0) / 864e5);
@@ -115,16 +127,21 @@ const AddDay = () => {
     setMeri(initMeri);
     setHour12(initHour12);
     setMinute(initMin);
-    setDateOpen(true);
 
-    requestAnimationFrame(() => {
-      const baseTop = idx * ROW_H;
-      dateRef.current?.scrollTo(0, baseTop);
-      meriRef.current?.scrollTo(0, (initMeri === '오후' ? 3 : 2) * ROW_H);
-      hourRef.current?.scrollTo(0, (initHour12 - 1) * ROW_H);
-      minRef.current?.scrollTo(0, initMin * ROW_H);
-    });
+    setIsInitScroll(true);
+    setDateOpen(true);
   };
+
+  useEffect(() => {
+    if (!dateOpen) return;
+    setTimeout(() => {
+      dateRef.current?.scrollTo(0, idxDate * ROW_H);
+      meriRef.current?.scrollTo(0, (meri === '오후' ? 3 : 2) * ROW_H);
+      hourRef.current?.scrollTo(0, (hour12 - 1) * ROW_H);
+      minRef.current?.scrollTo(0, minute * ROW_H);
+      setIsInitScroll(false);
+    }, 50);
+  }, [dateOpen]);
 
   const applyDate = () => {
     const d = new Date(dateList[idxDate]);
@@ -132,6 +149,7 @@ const AddDay = () => {
     if (meri === '오후') h24 += 12;
     if (meri === '오전' && hour12 === 12) h24 = 0;
     d.setHours(h24, minute, 0, 0);
+
     setDateStr(toLocalDt(d));
     setDateOpen(false);
   };
@@ -140,6 +158,7 @@ const AddDay = () => {
     setRawAmt((p) =>
       k === 'back' ? p.slice(0, -1) : (p + k).replace(/^0+(?=\d)/, ''),
     );
+
   const saveAmt = () => {
     const n = +rawAmt;
     if (!isNaN(n)) setAmount(n);
@@ -147,6 +166,7 @@ const AddDay = () => {
   };
 
   const valid = category && item.trim() && dateStr;
+
   const save = () => {
     if (!valid) return;
     const entry = {
@@ -166,6 +186,7 @@ const AddDay = () => {
     e: React.UIEvent<HTMLDivElement>,
     setIdx: (i: number) => void,
   ) => {
+    if (isInitScroll) return;
     const top = e.currentTarget.scrollTop;
     const i = Math.round(top / ROW_H);
     setIdx(i);
@@ -173,12 +194,7 @@ const AddDay = () => {
 
   return (
     <Wrap>
-      <Header>
-        <IconBtnLeft onClick={() => nav(-1)}>
-          <img src={leftArrow} alt="back" />
-        </IconBtnLeft>
-        <H1>일일</H1>
-      </Header>
+      <Header title="일일" />
 
       <Body>
         <Section>
@@ -191,78 +207,109 @@ const AddDay = () => {
               }}
             >
               {comma(amount)}원
-              <img src={pencilIcon} alt="" />
+              <img src={pencilIcon} alt="edit" />
             </AmountBtn>
           </Row>
         </Section>
 
         <Divider />
 
-        <Label>
-          카테고리 선택<span>*</span>
-        </Label>
-        <CatBox>
-          {CATEGORIES.map((c) => (
-            <CatBtn key={c} $on={c === category} onClick={() => setCategory(c)}>
-              {c}
-            </CatBtn>
-          ))}
-        </CatBox>
+        <Section style={{ margin: '1.8rem 0 6.6rem 0' }}>
+          <Label>
+            카테고리 선택<span>*</span>
+          </Label>
+          <CatBox>
+            {CATEGORIES.map((c) => (
+              <CatBtn
+                key={c}
+                $on={c === category}
+                onClick={() => setCategory(c)}
+              >
+                {c}
+              </CatBtn>
+            ))}
+          </CatBox>
 
-        <Label>
-          항목명<span>*</span>
-        </Label>
-        <Input
-          value={item}
-          maxLength={20}
-          placeholder="지출 항목을 입력..."
-          onChange={(e) => setItem(e.target.value)}
-        />
+          <Label>
+            항목명<span>*</span>
+          </Label>
+          <div style={{ position: 'relative' }}>
+            <Input
+              value={item}
+              maxLength={20}
+              placeholder="지출 항목에 대해 작성해주세요.(최대 20자)"
+              onChange={(e) => setItem(e.target.value)}
+            />
+            {item && (
+              <DeleteIcon
+                src={circleCloseIcon}
+                alt="delete"
+                onClick={() => setItem('')}
+              />
+            )}
+          </div>
 
-        <Label>
-          날짜<span>*</span>
-        </Label>
-        <DateBtn $placeholder={!dateStr} onClick={openDate}>
-          {dateStr
-            ? (() => {
-                const d = new Date(dateStr);
-                const ap = d.getHours() >= 12 ? '오후' : '오전';
-                const h = d.getHours() % 12 || 12;
-                return `${fmtDateKo(d)}  ${ap} ${two(h)}:${two(
-                  d.getMinutes(),
-                )}`;
-              })()
-            : '날짜를 입력하세요.'}
-        </DateBtn>
+          <Label>
+            날짜<span>*</span>
+          </Label>
+          <div style={{ position: 'relative' }}>
+            <DateBtn $placeholder={!dateStr} onClick={openDate}>
+              {dateStr
+                ? (() => {
+                    const d = new Date(dateStr);
+                    const ap = d.getHours() >= 12 ? '오후' : '오전';
+                    const h = d.getHours() % 12 || 12;
+                    return `${fmtDateKo(d)}  ${ap} ${two(h)}:${two(d.getMinutes())}`;
+                  })()
+                : '날짜를 입력하세요.'}
+            </DateBtn>
+            {dateStr && (
+              <DeleteIcon
+                src={circleCloseIcon}
+                alt="delete"
+                onClick={() => setDateStr('')}
+              />
+            )}
+          </div>
 
-        <Label>메모</Label>
-        <Textarea
-          value={memo}
-          maxLength={1000}
-          placeholder="1000자 이내로 작성"
-          onChange={(e) => setMemo(e.target.value)}
-        />
+          <Label>메모</Label>
+          <Textarea
+            value={memo}
+            maxLength={1000}
+            placeholder="1000자 이내로 작성"
+            onChange={(e) => setMemo(e.target.value)}
+          />
 
-        <Save disabled={!valid} onClick={save}>
-          확인
-        </Save>
+          <Save disabled={!valid} onClick={save}>
+            확인
+          </Save>
+        </Section>
       </Body>
 
       {padOpen && (
         <Dim>
           <Modal>
             <ModalHead>
-              <span>금액 입력</span>
-              <Close onClick={() => setPadOpen(false)}>×</Close>
+              <Close
+                src={closeIcon}
+                alt="close"
+                onClick={() => setPadOpen(false)}
+              />
+              <span>금액</span>
             </ModalHead>
 
             <InputRow>
               <Money
                 readOnly
                 value={rawAmt ? comma(rawAmt) : ''}
-                placeholder="0"
+                hasValue={!!rawAmt}
               />
-              <Won>원</Won>
+              <span>원</span>
+              <InputIcon
+                src={circleCloseIcon}
+                alt="delete"
+                onClick={() => setRawAmt('')}
+              />
             </InputRow>
 
             <Pad>
@@ -286,9 +333,11 @@ const AddDay = () => {
               ))}
             </Pad>
 
-            <Apply disabled={!rawAmt} onClick={saveAmt}>
-              수정하기
-            </Apply>
+            <ApplyContainer>
+              <Apply disabled={!rawAmt} onClick={saveAmt}>
+                수정하기
+              </Apply>
+            </ApplyContainer>
           </Modal>
         </Dim>
       )}
@@ -297,8 +346,11 @@ const AddDay = () => {
         <Dim>
           <DateModal>
             <ModalHead>
-              <span>날짜 선택</span>
-              <Close onClick={() => setDateOpen(false)}>×</Close>
+              <Close
+                src={closeIcon}
+                alt="close"
+                onClick={() => setDateOpen(false)}
+              />
             </ModalHead>
 
             <WheelWrap>
@@ -316,6 +368,7 @@ const AddDay = () => {
               <WheelCol
                 ref={meriRef}
                 onScroll={(e) => {
+                  if (isInitScroll) return;
                   const i = Math.round(e.currentTarget.scrollTop / ROW_H);
                   setMeri(i === 2 ? '오후' : '오전');
                 }}
@@ -330,7 +383,11 @@ const AddDay = () => {
 
               <WheelCol
                 ref={hourRef}
-                onScroll={(e) => snap(e, (i) => setHour12(i + 1))}
+                onScroll={(e) => {
+                  if (isInitScroll) return;
+                  const i = Math.round(e.currentTarget.scrollTop / ROW_H);
+                  setHour12(i + 1);
+                }}
               >
                 <WheelSpacer />
                 {hours12.map((h) => (
@@ -342,7 +399,14 @@ const AddDay = () => {
                 <WheelSpacer />
               </WheelCol>
 
-              <WheelCol ref={minRef} onScroll={(e) => snap(e, setMinute)}>
+              <WheelCol
+                ref={minRef}
+                onScroll={(e) => {
+                  if (isInitScroll) return;
+                  const i = Math.round(e.currentTarget.scrollTop / ROW_H);
+                  setMinute(i);
+                }}
+              >
                 <WheelSpacer />
                 {minutes.map((m) => (
                   <WheelItem key={m} $active={m === minute}>
