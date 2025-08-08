@@ -9,8 +9,13 @@ export const Container = styled.div`
   align-items: center;
 `;
 
+export const TopContainer = styled.div`
+  width: 100%;
+  padding: 0 2.4rem;
+`;
+
 export const GreetingCard = styled.section`
-  width: 37.7rem;
+  width: 100%;
   height: 11rem;
   background: linear-gradient(135deg, ${colors.subColor3} 0%, #4be3a5 100%);
   border-radius: 1.5rem;
@@ -39,7 +44,7 @@ export const MiniCard = styled.img`
 
 export const MonthRow = styled.div`
   display: flex;
-  width: 37.7rem;
+  width: 100%;
   align-items: center;
   gap: 0.4rem;
 `;
@@ -60,7 +65,7 @@ export const MonthText = styled.span`
 
 export const TotalRow = styled.div`
   margin: 0.6rem 0;
-  width: 37.7rem;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -90,7 +95,7 @@ export const EditBtn = styled.img`
 `;
 
 export const BudgetCardWrapper = styled.div`
-  width: 37.7rem;
+  width: 100%;
   height: 10.1rem;
   margin: 0.6rem 0 2.4rem 0;
   padding: 0 1.5rem;
@@ -132,7 +137,7 @@ export const BarWrapper = styled.div`
 `;
 
 export const Bar = styled.div`
-  width: 33.3rem;
+  width: 98%;
   height: 0.6rem;
   background: ${colors.G8};
   border-radius: 1rem;

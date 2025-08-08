@@ -18,6 +18,7 @@ import fixedCostImage from '../../assets/images/budget/fixedcost.png';
 
 import {
   Container,
+  TopContainer,
   GreetingCard,
   GreetText,
   MiniCard,
@@ -306,87 +307,89 @@ const Money = () => {
     <Container>
       <Header title="가계부" />
 
-      <GreetingCard>
-        <GreetText>
-          라인
-          <span>
-            님!
-            <br />
-            소비 내역을 작성해 주세요.
-          </span>
-        </GreetText>
+      <TopContainer>
+        <GreetingCard>
+          <GreetText>
+            라인
+            <span>
+              님!
+              <br />
+              소비 내역을 작성해 주세요.
+            </span>
+          </GreetText>
 
-        <MiniCard src={basicImage} alt="일러스트" />
-      </GreetingCard>
+          <MiniCard src={basicImage} alt="일러스트" />
+        </GreetingCard>
 
-      <MonthRow>
-        <ArrowBtn
-          src={LeftArrowActive}
-          alt="left"
-          onClick={activeTab === '달력' ? prevMonth : undefined}
-          disabled={activeTab !== '달력'}
-        />
+        <MonthRow>
+          <ArrowBtn
+            src={LeftArrowActive}
+            alt="left"
+            onClick={activeTab === '달력' ? prevMonth : undefined}
+            disabled={activeTab !== '달력'}
+          />
 
-        <MonthText>
-          {activeTab === '달력'
-            ? `${calMonth + 1}월`
-            : `${new Date().getMonth() + 1}월`}
-        </MonthText>
+          <MonthText>
+            {activeTab === '달력'
+              ? `${calMonth + 1}월`
+              : `${new Date().getMonth() + 1}월`}
+          </MonthText>
 
-        <ArrowBtn
-          style={{ transform: 'rotate(180deg)' }}
-          src={LeftArrowActive}
-          alt="right"
-          onClick={activeTab === '달력' ? nextMonth : undefined}
-          disabled={activeTab !== '달력' ? true : isCurrentMonth}
-        />
-      </MonthRow>
+          <ArrowBtn
+            style={{ transform: 'rotate(180deg)' }}
+            src={LeftArrowActive}
+            alt="right"
+            onClick={activeTab === '달력' ? nextMonth : undefined}
+            disabled={activeTab !== '달력' ? true : isCurrentMonth}
+          />
+        </MonthRow>
 
-      <TotalRow>
-        <TotalSpent>
-          {comma(usedAbs)}원
-          <span>
-            <span className="slash"> / </span>
-            {comma(monthBudget)}원
-          </span>
-        </TotalSpent>
-        <EditBtn
-          src={pencilIcon}
-          alt="edit"
-          onClick={() => navigate('/budget-register')}
-        />
-      </TotalRow>
+        <TotalRow>
+          <TotalSpent>
+            {comma(usedAbs)}원
+            <span>
+              <span className="slash"> / </span>
+              {comma(monthBudget)}원
+            </span>
+          </TotalSpent>
+          <EditBtn
+            src={pencilIcon}
+            alt="edit"
+            onClick={() => navigate('/budget-register')}
+          />
+        </TotalRow>
 
-      <BudgetCardWrapper>
-        <Summary>
-          {monthBudget > 0 ? (
-            <SummaryP>
-              한 달 예산 {comma(monthBudget)}원 중{' '}
-              <span>{comma(usedAbs)}원 </span>사용했어요!
-            </SummaryP>
-          ) : (
-            <SummaryP>한 달 예산을 등록해주세요!</SummaryP>
-          )}
+        <BudgetCardWrapper>
+          <Summary>
+            {monthBudget > 0 ? (
+              <SummaryP>
+                한 달 예산 {comma(monthBudget)}원 중{' '}
+                <span>{comma(usedAbs)}원 </span>사용했어요!
+              </SummaryP>
+            ) : (
+              <SummaryP>한 달 예산을 등록해주세요!</SummaryP>
+            )}
 
-          <BarWrapper>
-            <Bar>
-              <Fill style={{ width: `${fillPercent}%` }} />
-            </Bar>
+            <BarWrapper>
+              <Bar>
+                <Fill style={{ width: `${fillPercent}%` }} />
+              </Bar>
 
-            <Below $fillPercent={fillPercent}>
-              <span className="used-amount">
-                <img src={starIcon} alt="star" />
-                <span>{comma(usedAbs)}원</span>
-              </span>
-              <span
-                style={{ position: 'absolute', right: 0, bottom: '-0.6rem' }}
-              >
-                {comma(monthBudget)}원
-              </span>
-            </Below>
-          </BarWrapper>
-        </Summary>
-      </BudgetCardWrapper>
+              <Below $fillPercent={fillPercent}>
+                <span className="used-amount">
+                  <img src={starIcon} alt="star" />
+                  <span>{comma(usedAbs)}원</span>
+                </span>
+                <span
+                  style={{ position: 'absolute', right: 0, bottom: '-0.6rem' }}
+                >
+                  {comma(monthBudget)}원
+                </span>
+              </Below>
+            </BarWrapper>
+          </Summary>
+        </BudgetCardWrapper>
+      </TopContainer>
 
       <TabMenu>
         <TabItemMenu>
