@@ -10,7 +10,7 @@ export const kakaoLogin = async (
 ): Promise<KakaoLoginResponse> => {
   console.log('인가코드 전송', payload);
   const res = await API.get<KakaoLoginResponse>('/auth/login/kakao', {
-    params: { code: payload.code },
+    params: payload,
   });
   return res.data;
 };
