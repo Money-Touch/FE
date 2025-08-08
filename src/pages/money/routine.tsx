@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import leftArrow from '../../assets/images/header/leftArrow.png';
-import pencilIcon from '../../assets/images/budget/Pencil.png';
+import pencilIcon from '../../assets/images/budget/pencil.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 
 import {

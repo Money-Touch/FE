@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/header/header';
-import pencilIcon from '../../assets/images/budget/Pencil.png';
+import pencilIcon from '../../assets/images/budget/pencil.png';
 import editPencilIcon from '../../assets/images/budget/editPencil.png';
 import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';

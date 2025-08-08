@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import Header from '../../components/header/header';
-import pencilIcon from '../../assets/images/budget/Pencil.png';
+import pencilIcon from '../../assets/images/budget/pencil.png';
 import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 
@@ -76,7 +76,7 @@ const AddDay = () => {
   const [padOpen, setPadOpen] = useState(false);
   const [rawAmt, setRawAmt] = useState('');
   const [dateOpen, setDateOpen] = useState(false);
-  const [isInitScroll, setIsInitScroll] = useState(false); // ✅ 추가
+  const [isInitScroll, setIsInitScroll] = useState(false);
 
   const dateList = useMemo(() => {
     const today = new Date();
