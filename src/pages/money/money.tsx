@@ -15,6 +15,7 @@ import transportImage from '../../assets/images/budget/budget.png';
 import eatImage from '../../assets/images/budget/eat.png';
 import playImage from '../../assets/images/budget/play.png';
 import fixedCostImage from '../../assets/images/budget/fixedcost.png';
+import closeIcon from '../../assets/images/budget/Close.png';
 
 import {
   Container,
@@ -45,6 +46,8 @@ import {
   Section,
   DateRow,
   ItemRow,
+  ItemRowLeft,
+  ItemRowRight,
   DeleteBtn,
   Dot,
   EmptyBox,
@@ -439,27 +442,35 @@ const Money = () => {
 
                     {list.map((e) => (
                       <ItemRow key={e.id}>
-                        <Dot>
-                          {e.memo === '[고정비]' || e.category === '고정비' ? (
-                            <img src={fixedCostImage} alt="고정비" />
-                          ) : categoryImages[e.category] ? (
-                            <img
-                              src={categoryImages[e.category]}
-                              alt={e.category}
+                        <ItemRowLeft>
+                          <Dot $hide={deleteMode}>
+                            {e.memo === '[고정비]' ||
+                            e.category === '고정비' ? (
+                              <img src={fixedCostImage} alt="고정비" />
+                            ) : categoryImages[e.category] ? (
+                              <img
+                                src={categoryImages[e.category]}
+                                alt={e.category}
+                              />
+                            ) : (
+                              e.category
+                            )}
+                          </Dot>
+
+                          <span className="memo">{e.item}</span>
+                        </ItemRowLeft>
+
+                        <ItemRowRight>
+                          <span className="amount">{comma(e.amount)}원</span>
+
+                          {deleteMode && (
+                            <DeleteBtn
+                              src={closeIcon}
+                              alt="delete"
+                              onClick={() => deleteEntry(e.id)}
                             />
-                          ) : (
-                            e.category
                           )}
-                        </Dot>
-
-                        <span className="memo">{e.item}</span>
-                        <span className="amount">{comma(e.amount)}원</span>
-
-                        {deleteMode && (
-                          <DeleteBtn onClick={() => deleteEntry(e.id)}>
-                            ×
-                          </DeleteBtn>
-                        )}
+                        </ItemRowRight>
                       </ItemRow>
                     ))}
                   </Section>

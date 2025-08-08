@@ -157,9 +157,12 @@ export const Below = styled.div<{ $fillPercent: number }>`
   color: ${colors.G5};
 
   .used-amount {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     position: absolute;
     bottom: -0.6rem;
-    left: ${({ $fillPercent }) => $fillPercent}%;
+    left: ${({ $fillPercent }) => `calc(${$fillPercent}% - 1.5rem)`};
 
     img {
       width: 1.6rem;
@@ -235,58 +238,62 @@ export const DeleteToggleBtn = styled(PlusBtn)<{ $active: boolean }>`
 `;
 
 export const Section = styled.section`
-  padding: 0 16px;
-  margin-bottom: 20px;
+  padding: 2rem 2.4rem 2.4rem 2.4rem;
+  border-bottom: 0.1rem solid ${colors.G7};
+
+  &:last-of-type {
+    border-bottom: none;
+  }
 `;
 
 export const DateRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  width: 100%;
+  margin-bottom: 1.9rem;
 
   .date {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: ${colors.G1};
   }
 `;
 
 export const ItemRow = styled.div`
+  width: 100%;
+  height: 4rem;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid ${colors.G8};
-  border-radius: 10px;
+  justify-content: space-between;
+  margin-bottom: 1.8rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: ${colors.G1};
 
-  .memo {
-    flex: 1;
-    font-size: 14px;
-  }
-
-  .amount {
-    font-size: 14px;
-    font-weight: 600;
+  &:last-of-type {
+    margin: 0;
   }
 `;
 
-export const DeleteBtn = styled.button`
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: ${colors.G3};
-  margin-left: 4px;
+export const ItemRowLeft = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+`;
+
+export const ItemRowRight = styled(ItemRowLeft)`
+  gap: 2.8rem;
+`;
+
+export const DeleteBtn = styled.img`
   cursor: pointer;
+  width: 2.4rem;
+  height: 2.4rem;
 `;
 
-export const Dot = styled.span`
-  flex: 0 0 44px;
-  height: 44px;
+export const Dot = styled.span<{ $hide?: boolean }>`
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
-  background: #f6f6f6;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: ${({ $hide }) => ($hide ? 'none' : 'flex')};
 
   img {
     width: 100%;
