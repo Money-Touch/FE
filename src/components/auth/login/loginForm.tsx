@@ -4,6 +4,7 @@ import LoginInput from './loginInput';
 import { useLoginMutation } from '../../../hooks/auth/login/useLoginMutation';
 import { useKakaoLoginMutation } from '../../../hooks/auth/login/useKakaoLoginMutation';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getRedirectUri } from '../../../utils/auth/login/kakao/getRedirectUri';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -17,20 +18,21 @@ const LoginForm = () => {
     const searchParams = new URLSearchParams(location.search);
     const code = searchParams.get('code');
 
-    console.log('🔍 현재 URL에서 추출한 인가 코드:', code);
+    console.log('현재 URL에서 추출한 인가 코드:', code);
 
     // 카카오 로그인
     if (code) {
       kakaoLoginMutate(
         {
           code,
+          redirect: getRedirectUri(),
         },
         {
           onSuccess: (data) => {
             console.log('카카오 로그인 성공:', data);
             localStorage.setItem('accessToken', data.result.accessToken);
             localStorage.setItem('refreshToken', data.result.refreshToken);
-            navigate('/home');
+            navigate('/test');
           },
           onError: (err) => {
             console.error('카카오 로그인 실패:', err);
