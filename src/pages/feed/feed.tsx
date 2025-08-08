@@ -7,22 +7,19 @@ import { SkeletonPost } from '../../components/feed/SkeletonPost';
 import NoResult from '../../assets/images/feed/NO_RESULT.png';
 import * as S from '../../styles/feed/feed.style';
 
-import type { SortType } from '../../types/feed/feed';
+import type { SortType, FeedItem } from '../../types/feed/feed';
 
 const Feed: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<SortType>('POPULAR');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState<FeedItem[]>([]);
+  const [isSearchMode, setIsSearchMode] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useFeedPosts(sortBy);
 
   const allPosts = data?.pages.flatMap((page) => page.feedList) ?? [];
-
-  const filtered = allPosts.filter((post) =>
-    post.user?.nickname?.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
 
   const [showSkeleton, setShowSkeleton] = useState(true);
   useEffect(() => {
@@ -33,11 +30,16 @@ const Feed: React.FC = () => {
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+      if (
+        target.isIntersecting &&
+        hasNextPage &&
+        !isFetchingNextPage &&
+        !isSearchMode
+      ) {
         fetchNextPage();
       }
     },
-    [fetchNextPage, hasNextPage, isFetchingNextPage],
+    [fetchNextPage, hasNextPage, isFetchingNextPage, isSearchMode],
   );
 
   useEffect(() => {
@@ -52,39 +54,44 @@ const Feed: React.FC = () => {
     };
   }, [handleObserver, sortBy]);
 
+  const handleSearchResults = (results: FeedItem[]) => {
+    setSearchResults(results);
+    setIsSearchMode(true);
+  };
+
+  const displayPosts = isSearchMode ? searchResults : allPosts;
+
   return (
     <div className="flex flex-col px-[2.4rem] pb-[5rem]">
-      <SearchBox
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        onSearch={() => {
-          console.log('검색:', searchTerm);
-        }}
-      />
-      <SortDropdown
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        isOpen={isDropdownOpen}
-        onToggle={() => setIsDropdownOpen((prev) => !prev)}
-      />
+      <SearchBox onSearchResults={handleSearchResults} />
+
+      {!isSearchMode && (
+        <SortDropdown
+          sortBy={sortBy}
+          onSortChange={setSortBy}
+          isOpen={isDropdownOpen}
+          onToggle={() => setIsDropdownOpen((prev) => !prev)}
+        />
+      )}
 
       <div className="flex flex-col gap-[1.6rem] mt-[1.2rem]">
         {showSkeleton ? (
           <SkeletonPost />
-        ) : filtered.length > 0 ? (
-          filtered.map((post) => (
+        ) : displayPosts.length > 0 ? (
+          displayPosts.map((post) => (
             <PostItem key={post.consumptionRecordId} post={post} />
           ))
         ) : (
-          !isLoading && (
+          !isLoading &&
+          !isSearchMode && (
             <div className={S.NoResultContainer}>
               <img
                 src={NoResult}
-                alt="검색 결과 없음"
+                alt="게시글 없음"
                 className="w-[16rem] h-[16rem] object-contain"
               />
               <span className="text-[1.4rem] text-[var(--color-G4)]">
-                검색 결과가 없어요.
+                게시글이 없어요.
               </span>
             </div>
           )
@@ -92,7 +99,9 @@ const Feed: React.FC = () => {
 
         <div ref={observerRef} />
 
-        {!showSkeleton && isFetchingNextPage && <SkeletonPost />}
+        {!showSkeleton && isFetchingNextPage && !isSearchMode && (
+          <SkeletonPost />
+        )}
       </div>
     </div>
   );

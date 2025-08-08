@@ -54,7 +54,7 @@ export const useFeedPosts = (sortType: SortType) => {
       lastPage.hasNext
         ? {
             cursorId: lastPage.nextCursorId,
-            cursorViewCount: lastPage.nextCursorViewCount,
+            cursorViewCount: lastPage.nextCursorViewCount ?? null,
           }
         : undefined,
     staleTime: 1000 * 60,

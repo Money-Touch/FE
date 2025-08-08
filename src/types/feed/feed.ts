@@ -10,13 +10,10 @@ export interface Post {
   likes: number;
   dislikes: number;
   timestamp: Date;
-
   category?: string;
-
   companyName?: string;
   price?: number;
   content?: string;
-
   comments?: Comment[];
 }
 
@@ -24,33 +21,29 @@ export type ReactionType = 'WISE' | 'WASTE' | null;
 
 export type SortType = 'RECENT' | 'POPULAR';
 
-export interface User {
+export interface FeedUser {
   userId: number;
   nickname: string;
-  profileImgUrl: string;
+  profileImgUrl?: string;
 }
 
-export interface FeedPost {
+export interface FeedItem {
   consumptionRecordId: number;
-  user: {
-    userId: number;
-    nickname: string;
-    profileImgUrl: string;
-  };
+  user: FeedUser;
   imageUrls: string[];
   createdAt: string;
   wiseCount: number;
   wasteCount: number;
   viewCount: number;
-  myReaction: 'WISE' | 'WASTE' | null;
+  myReaction: ReactionType;
 }
 
 export interface FeedListResultDTO {
-  feedList: FeedPost[];
+  feedList: FeedItem[];
   isFirst: boolean;
   hasNext: boolean;
-  nextCursorId: number;
-  nextCursorViewCount: number;
+  nextCursorId: number | null;
+  nextCursorViewCount?: number | null;
   feedListSize: number;
 }
 
@@ -67,6 +60,7 @@ export interface ApiResponse<T> {
   result: T;
 }
 
+//COMMENT
 export interface Comment {
   id: number;
   author: Author;
@@ -83,3 +77,12 @@ export interface PostStates {
     disliked: boolean;
   };
 }
+
+// Search 관련
+export type PageParam = { cursorId: number | null };
+
+export type InfiniteQueryDataWithFlatList = {
+  pages: FeedListResultDTO[];
+  pageParams: PageParam[];
+  flatList: FeedItem[];
+};
