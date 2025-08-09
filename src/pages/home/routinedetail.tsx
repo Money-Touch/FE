@@ -29,7 +29,7 @@ function RoutineDetail() {
       />
 
       <button
-        className={S.BudgetButton(reflected || !routine.canApply, reflected)}
+        className={S.BudgetButton(reflected || !routine.canApply)}
         disabled={reflected || !routine.canApply}
         onClick={() => {
           if (!reflected && routine.canApply) setShowModal(true);

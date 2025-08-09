@@ -22,7 +22,7 @@ export const WhiteBackground =
 export const WelcomeTopRow =
   'flex justify-between items-start relative z-[3] px-[1.5rem]';
 export const WelcomeTitle =
-  'flex-1 h-[5.2rem] mt-[3.9rem] relative z-[3] whitespace-nowrap font-extrabold text-[1.8rem] leading-[2.6rem]';
+  'flex-1 h-[5.2rem] mt-[3.9rem] relative z-[3] whitespace-nowrap font-bold text-[1.8rem] leading-[2.6rem]';
 export const Username = 'text-[var(--color-subColor2)]';
 export const RecordButton =
   'w-[calc(100%-3rem)] h-[5rem] mt-[0.9rem] mx-[1.5rem] rounded-[1rem] bg-[var(--color-mainColor1)] relative z-[3] text-[var(--color-white)] font-medium text-[1.5rem] leading-[2.3rem] tracking-[-0.03em]';

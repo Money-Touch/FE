@@ -70,22 +70,3 @@ export interface RoutineDetailResponse {
   canApply: boolean;
   cannotApplyMessage: string | null;
 }
-
-//
-export interface RoutineDetail extends UserRoutine {
-  thumbnail: string;
-  author: string;
-  authorProfileImg: string;
-}
-
-export type RoutineBudget = {
-  label: string;
-  amount: number;
-};
-
-export interface FullRoutineDetail extends RoutineDetail {
-  totalBudget: number;
-  budgetList: RoutineBudget[];
-  isReflected: boolean;
-  hashtags: string[];
-}
