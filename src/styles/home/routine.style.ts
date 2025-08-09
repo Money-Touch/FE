@@ -50,11 +50,11 @@ export const BudgetItem = 'flex justify-between items-center h-[2.6rem]';
 export const BudgetLabel = 'font-medium text-[1.5rem] text-[var(--color-G5)]';
 export const BudgetAmountPerItem =
   'font-medium text-[1.8rem] text-[var(--color-G1)]';
-export const BudgetButton = (isReflected: boolean, disabled?: boolean) =>
+export const BudgetButton = (disabled: boolean) =>
   `w-full h-[5rem] mt-[24.3rem] rounded-[1rem] ${
-    disabled ? 'bg-[var(--color-G6)]' : 'bg-[var(--color-mainColor1)]'
-  } text-white font-medium text-[1.8rem] ${
-    isReflected ? 'cursor-default' : 'cursor-pointer'
-  }`;
+    disabled
+      ? 'bg-[var(--color-G6)] cursor-default'
+      : 'bg-[var(--color-mainColor1)] cursor-pointer'
+  } text-white font-medium text-[1.8rem]`;
 export const ErrorMessage =
   'w-full mt-[0.6rem] font-light text-[1.1rem] text-[var(--color-M1)] text-center';
