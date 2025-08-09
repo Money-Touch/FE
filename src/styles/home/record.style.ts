@@ -59,12 +59,12 @@ export const ErrorMessage =
 // image
 export const ImageInputWrapper = (disabled: boolean): string =>
   `relative w-full h-[36.5rem] border border-[var(--color-G7)] rounded-[0.5rem] flex items-center box-border ${
-    disabled ? 'bg-transparent' : 'bg-[var(--color-G7)]'
+    disabled ? 'bg-transparent' : 'bg-[#1111111A]'
   }`;
 export const ImageLabel =
   'w-full h-full cursor-pointer flex justify-center items-center';
 export const CameraIcon = 'w-[3rem] h-[3rem] text-[var(--color-G6)]';
-export const ImagePreview = 'w-full h-full object-cover';
+export const ImagePreview = 'w-full h-full object-cover rounded-[0.5rem]';
 export const ImageInput = 'hidden';
 
 // memo
@@ -77,7 +77,7 @@ export const MemoTextareaWrapper = (error: boolean): string =>
 export const MemoTextarea = (error: boolean, disabled: boolean) =>
   `w-full h-[18rem] rounded-[0.5rem] box-border p-[1.5rem_1.5rem_0_1.5rem] m-0 block font-light text-[1.4rem] leading-[2.2rem] font-Pretendard placeholder:text-[var(--color-G5)]resize-none
    text-[var(--color-G1)]
-   ${disabled ? 'bg-transparent' : 'bg-[var(--color-G7)]'}
+   ${disabled ? 'bg-transparent' : 'bg-[#1111111A]'}
    border ${error ? 'border-[var(--color-M1)]' : 'border-[var(--color-G7)]'}
    focus:outline-none focus:border-${
      error ? '[var(--color-M1)]' : '[var(--color-G7)]'
