@@ -1,44 +1,92 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import LikeIcon from '../../assets/images/feed/Like.png';
 import LikeIconFill from '../../assets/images/feed/Like_Fill.png';
 import DislikeIcon from '../../assets/images/feed/Dislike.png';
 import DislikeIconFill from '../../assets/images/feed/Dislike_Fill.png';
+import type { FeedItem } from '../../types/feed/feed';
+import { useReaction } from '../../hooks/feed/useReaction';
 
-import type { FeedPost } from '../../types/feed/feed';
+type Props = { post: FeedItem };
 
-interface PostItemProps {
-  post: FeedPost;
-  onLike?: (postId: number) => void;
-  onDislike?: (postId: number) => void;
-  liked?: boolean;
-  disliked?: boolean;
+function ReactionBar({
+  id,
+  wiseCount,
+  wasteCount,
+  myReaction,
+}: {
+  id: number;
+  wiseCount: number;
+  wasteCount: number;
+  myReaction: 'WISE' | 'WASTE' | null;
+}) {
+  const {
+    wiseCount: w,
+    wasteCount: wa,
+    myReaction: mine,
+    isReacting,
+    reactWise,
+    reactWaste,
+  } = useReaction(
+    id,
+    { wiseCount, wasteCount, myReaction },
+    {
+      invalidateKeys: [
+        ['feed', 'POPULAR'],
+        ['feed', 'RECENT'],
+        ['feedDetail', id],
+      ],
+    },
+  );
+
+  const onLike = useCallback(() => {
+    if (!isReacting) reactWise();
+  }, [isReacting, reactWise]);
+
+  const onDislike = useCallback(() => {
+    if (!isReacting) reactWaste();
+  }, [isReacting, reactWaste]);
+
+  return (
+    <div className="flex items-center gap-[1.6rem] pt-[0.5rem]">
+      <button
+        onClick={onLike}
+        disabled={isReacting}
+        aria-pressed={mine === 'WISE'}
+        className="flex items-center justify-center gap-[0.4rem] w-[5rem] h-[3.6rem] cursor-pointer disabled:cursor-not-allowed"
+      >
+        <img src={mine === 'WISE' ? LikeIconFill : LikeIcon} alt="현명해요" />
+        <span className="w-[2rem] text-center text-[1.4rem] text-[var(--color-G1)]">
+          {w}
+        </span>
+      </button>
+
+      <button
+        onClick={onDislike}
+        disabled={isReacting}
+        aria-pressed={mine === 'WASTE'}
+        className="flex items-center justify-center gap-[0.4rem] w-[5rem] h-[3.6rem] cursor-pointer disabled:cursor-not-allowed"
+      >
+        <img
+          src={mine === 'WASTE' ? DislikeIconFill : DislikeIcon}
+          alt="낭비에요"
+        />
+        <span className="w-[2rem] text-center text-[1.4rem] text-[var(--color-G1)]">
+          {wa}
+        </span>
+      </button>
+    </div>
+  );
 }
 
-export const PostItem: React.FC<PostItemProps> = ({
-  post,
-  onLike,
-  onDislike,
-  liked = false,
-  disliked = false,
-}) => {
+function PostItem({ post }: Props) {
   const navigate = useNavigate();
+  const profileStyle = 'w-[3rem] h-[3rem] rounded-full';
+  const imageUrl = post.imageUrls?.[0];
 
   const handleNavigate = useCallback(() => {
     navigate(`/feed/post/${post.consumptionRecordId}`);
   }, [navigate, post.consumptionRecordId]);
-
-  const handleLike = useCallback(() => {
-    onLike?.(post.consumptionRecordId);
-  }, [onLike, post.consumptionRecordId]);
-
-  const handleDislike = useCallback(() => {
-    onDislike?.(post.consumptionRecordId);
-  }, [onDislike, post.consumptionRecordId]);
-
-  const profileStyle = 'w-[3rem] h-[3rem] rounded-full';
-  const imageUrl = post.imageUrls?.[0];
 
   return (
     <div className="bg-[var(--color-white)] overflow-hidden pb-[1.6rem]">
@@ -82,27 +130,14 @@ export const PostItem: React.FC<PostItemProps> = ({
         )}
       </div>
 
-      <div className="flex items-center gap-[1.6rem] pt-[0.5rem]">
-        <button
-          onClick={handleLike}
-          className="flex items-center justify-center gap-[0.4rem] w-[5rem] h-[3.6rem] cursor-pointer"
-        >
-          <img src={liked ? LikeIconFill : LikeIcon} alt="좋아요" />
-          <span className="w-[2rem] text-center text-[1.4rem] text-[var(--color-G1)]">
-            {post.wiseCount}
-          </span>
-        </button>
-
-        <button
-          onClick={handleDislike}
-          className="flex items-center justify-center gap-[0.4rem] w-[5rem] h-[3.6rem] cursor-pointer"
-        >
-          <img src={disliked ? DislikeIconFill : DislikeIcon} alt="싫어요" />
-          <span className="w-[2rem] text-center text-[1.4rem] text-[var(--color-G1)]">
-            {post.wasteCount}
-          </span>
-        </button>
-      </div>
+      <ReactionBar
+        id={post.consumptionRecordId}
+        wiseCount={post.wiseCount}
+        wasteCount={post.wasteCount}
+        myReaction={post.myReaction}
+      />
     </div>
   );
-};
+}
+
+export default PostItem;

@@ -17,8 +17,6 @@ export interface Post {
   comments?: Comment[];
 }
 
-export type ReactionType = 'WISE' | 'WASTE' | null;
-
 export type SortType = 'RECENT' | 'POPULAR';
 
 export interface FeedUser {
@@ -86,3 +84,34 @@ export type InfiniteQueryDataWithFlatList = {
   pageParams: PageParam[];
   flatList: FeedItem[];
 };
+/////////////
+
+// useReaction.tsx
+export type ReactionType = 'WISE' | 'WASTE';
+
+export type MyReaction = ReactionType | null;
+
+export interface ReactionState {
+  wiseCount: number;
+  wasteCount: number;
+  myReaction: MyReaction;
+}
+
+export interface ReactionAPIResult {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: ReactionResultDTO;
+}
+
+export interface ReactionResultDTO {
+  consumptionRecordId: number;
+  wiseCount: number;
+  wasteCount: number;
+  myReaction: MyReaction;
+}
+
+export interface UseReactionOptions {
+  invalidateKeys?: unknown[][];
+}
+/////////////

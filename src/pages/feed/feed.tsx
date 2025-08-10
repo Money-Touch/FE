@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { useFeedPosts } from '../../hooks/feed/useFeedPosts';
 import { SearchBox } from '../../components/feed/SearchBox';
 import { SortDropdown } from '../../components/feed/SortDropdown';
-import { PostItem } from '../../components/feed/PostItem';
+import PostItem from '../../components/feed/PostItem';
 import { SkeletonPost } from '../../components/feed/SkeletonPost';
 import NoResult from '../../assets/images/feed/NO_RESULT.png';
 import * as S from '../../styles/feed/feed.style';

@@ -5,7 +5,7 @@ export const handleLike = (
   posts: Post[],
   postStates: PostStates,
   setPosts: (posts: Post[]) => void,
-  setPostStates: (states: PostStates) => void
+  setPostStates: (states: PostStates) => void,
 ) => {
   const current = postStates[id] || { liked: false, disliked: false };
   const wasLiked = current.liked;
@@ -37,7 +37,7 @@ export const handleDislike = (
   posts: Post[],
   postStates: PostStates,
   setPosts: (posts: Post[]) => void,
-  setPostStates: (states: PostStates) => void
+  setPostStates: (states: PostStates) => void,
 ) => {
   const current = postStates[id] || { liked: false, disliked: false };
   const wasDisliked = current.disliked;
