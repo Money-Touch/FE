@@ -2,6 +2,6 @@ export {};
 
 declare global {
   interface Window {
-    Kakao: any;
+    Kakao: typeof Kakao;
   }
 }

@@ -24,7 +24,7 @@ const Legend: React.FC<LegendProps> = ({ data, active, onClickItem }) => {
 
         return (
           <div
-            key={item.name}
+            key={item.categoryName}
             onClick={() => item.isOther && onClickItem?.(item)}
             className={`${S.LegendItemWrapper} ${cursorClass}`}
           >
@@ -32,10 +32,10 @@ const Legend: React.FC<LegendProps> = ({ data, active, onClickItem }) => {
               <div
                 className={S.LegendColorDot()}
                 style={{ backgroundColor: item.color }}
-                aria-label={`${item.name} color dot`}
+                aria-label={`${item.categoryName} color dot`}
               />
               <span className={`${S.LegendText} ${textColorClass}`}>
-                {item.name}
+                {item.categoryName}
               </span>
             </div>
             <span className={`${S.LegendPercentage} ${percentageColorClass}`}>

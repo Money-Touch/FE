@@ -1,3 +1,14 @@
+export interface RoutinePreview {
+  routineId: number;
+  routineName: string;
+  new: boolean;
+}
+
+export interface RoutinesPreviewResponse {
+  isSuccess: boolean;
+  result: RoutinePreview[];
+}
+
 export interface UserRoutine {
   id: number;
   title: string;
@@ -47,20 +58,15 @@ export interface RoutineSearchResponse {
   result: RoutineSearchResult;
 }
 
-export interface RoutineDetail extends UserRoutine {
-  thumbnail: string;
-  author: string;
-  authorProfileImg: string;
+export interface CategoryBudget {
+  categoryName: string;
+  amount: number;
 }
 
-export type RoutineBudget = {
-  label: string;
-  amount: number;
-};
-
-export interface FullRoutineDetail extends RoutineDetail {
+export interface RoutineDetailResponse {
   totalBudget: number;
-  budgetList: RoutineBudget[];
-  isReflected: boolean;
-  hashtags: string[];
+  routineName: string;
+  categoryBudgetList: CategoryBudget[];
+  canApply: boolean;
+  cannotApplyMessage: string | null;
 }

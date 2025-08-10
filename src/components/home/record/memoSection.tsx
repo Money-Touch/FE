@@ -23,7 +23,9 @@ const MemoSection = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        placeholder="1000자 이내로 작성해 주세요."
+        placeholder={
+          !isDisabled ? '선택 사항입니다.' : '1000자 이내로 작성해 주세요.'
+        }
         className={S.MemoTextarea(isError, isDisabled)}
       />
       {isError && (

@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rightArrow from '../../../assets/images/home/rightArrow.png';
 import dateDot from '../../../assets/images/home/routine/dateDot.png';
+import profile_t from '../../../assets/images/home/profile_t.png';
 import type { UserRoutineDetail } from '../../../types/home/routine';
 
 interface Props {
@@ -65,7 +66,7 @@ export default function RoutineCard({ item }: Props) {
 
         <div className={S.Author}>
           <img
-            src={item.profileImgUrl}
+            src={item.profileImgUrl || profile_t}
             alt="profile"
             className={S.ProfileImg}
           />

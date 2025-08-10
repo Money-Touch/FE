@@ -22,7 +22,7 @@ export const WhiteBackground =
 export const WelcomeTopRow =
   'flex justify-between items-start relative z-[3] px-[1.5rem]';
 export const WelcomeTitle =
-  'flex-1 h-[5.2rem] mt-[3.9rem] relative z-[3] whitespace-nowrap font-extrabold text-[1.8rem] leading-[2.6rem]';
+  'flex-1 h-[5.2rem] mt-[3.9rem] relative z-[3] whitespace-nowrap font-bold text-[1.8rem] leading-[2.6rem]';
 export const Username = 'text-[var(--color-subColor2)]';
 export const RecordButton =
   'w-[calc(100%-3rem)] h-[5rem] mt-[0.9rem] mx-[1.5rem] rounded-[1rem] bg-[var(--color-mainColor1)] relative z-[3] text-[var(--color-white)] font-medium text-[1.5rem] leading-[2.3rem] tracking-[-0.03em]';
@@ -38,7 +38,7 @@ export const StatisticsSection =
 export const ChartAndLegendWrapper = 'flex flex-row items-center mt-[3rem]';
 export const DonutChartWrapper =
   'relative w-[13.5rem] h-[13.5rem] flex-shrink-0 mr-[2rem]';
-export const LegendList = 'w-[10.8rem] flex flex-col gap-[0.8rem] ml-[1.5rem]';
+export const LegendList = 'w-[10.8rem] flex flex-col gap-[0.8rem] ml-[1.5rem] ';
 export const LegendItemWrapper =
   'flex items-center justify-between w-[10.8rem] h-[1.6rem]';
 export const LegendItemLeft = 'flex items-center gap-[0.5rem] w-[9rem]';

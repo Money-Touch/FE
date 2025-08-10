@@ -1,11 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import styled, { css } from 'styled-components';
-import colors from '../../styles/common/colors';
 import leftArrow from '../../assets/images/header/leftArrow.png';
 import plusIcon from '../../assets/images/budget/Plus.png';
 import pencilIcon from '../../assets/images/budget/Pencil.png';
-import signalIcon from '../../assets/images/budget/signal.png';
 import arrowIconImg from '../../assets/images/budget/arrow.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 import basicImage from '../../assets/images/budget/basic2.png';
@@ -16,6 +13,69 @@ import transportImage from '../../assets/images/budget/budget.png';
 import eatImage from '../../assets/images/budget/eat.png';
 import playImage from '../../assets/images/budget/play.png';
 import fixedCostImage from '../../assets/images/budget/fixedcost.png';
+
+import {
+  Container,
+  Header,
+  HeaderTitle,
+  IconBtnLeft,
+  GreetingCard,
+  GreetText,
+  MiniCard,
+  MonthRow,
+  ArrowBtn,
+  MonthText,
+  TotalRow,
+  TotalSpent,
+  Slash,
+  TotalBudget,
+  EditBtn,
+  BudgetCardWrapper,
+  Summary,
+  Used,
+  BarWrapper,
+  Bar,
+  Fill,
+  Below,
+  TabMenu,
+  TabItem,
+  ContentArea,
+  PlusBtn,
+  DeleteToggleBtn,
+  Section,
+  DateRow,
+  ItemRow,
+  DeleteBtn,
+  Dot,
+  EmptyBox,
+  EmptyCircle,
+  EmptyText,
+  RoutineCardList,
+  RoutineWideCard,
+  PreviewBox,
+  RoutineContent,
+  DateLine,
+  TitleRow,
+  ArrowIcon,
+  TagsRow,
+  UserRow,
+  Avatar,
+  CalendarWrap,
+  WeekRow,
+  WeekCell,
+  DayGrid,
+  WeekDivider,
+  DayCell,
+  DayNumButton,
+  SpendPill,
+  CalListSection,
+  CalDateTitle,
+  CalItemRow,
+  CalDot,
+  EmptyBoxSmall,
+  SheetHandle,
+  FloatingPlus,
+} from '../../styles/budget/money.styles';
 
 const TAB_LIST = ['일일', '달력', '고정비', '소비 루틴'] as const;
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'] as const;
@@ -29,6 +89,7 @@ const categoryImages: Record<string, string> = {
   '배달/외식': eatImage,
   기타: playImage,
   '패션/쇼핑': playImage,
+  고정비: fixedCostImage,
 };
 
 interface Entry {
@@ -134,12 +195,41 @@ const Money = () => {
     }
   };
 
+  const injectFixedToEntries = useCallback(() => {
+    const now = new Date();
+    const firstDayStr = `${now.getFullYear()}-${String(
+      now.getMonth() + 1,
+    ).padStart(2, '0')}-01`;
+
+    const raw = localStorage.getItem('dailyEntries');
+    const existing: Entry[] = raw ? JSON.parse(raw) : [];
+
+    const alreadyInjected = existing.some(
+      (e) => e.date === firstDayStr && e.memo === '[고정비]',
+    );
+    if (alreadyInjected) return;
+
+    const injected = fixed.map((f) => ({
+      id: Date.now() + Math.random(),
+      date: firstDayStr,
+      item: f.item,
+      amount: f.amount,
+      memo: f.memo,
+      category: '고정비',
+    }));
+
+    const newList = [...existing, ...injected];
+    localStorage.setItem('dailyEntries', JSON.stringify(newList));
+    setEntries(newList);
+  }, [fixed]);
+
   useEffect(() => {
     setMonthBudget(Number(localStorage.getItem('monthBudget') || 0));
     loadEntries();
     loadFixed();
     loadRoutines();
-  }, []);
+    injectFixedToEntries();
+  }, [injectFixedToEntries]);
 
   useEffect(() => {
     const onFocus = () => {
@@ -217,9 +307,6 @@ const Money = () => {
           <img src={leftArrow} alt="back" />
         </IconBtnLeft>
         <HeaderTitle>가계부</HeaderTitle>
-        <IconBtnRight aria-label="알림">
-          <img src={signalIcon} alt="알림" />
-        </IconBtnRight>
       </Header>
 
       <GreetingCard>
@@ -235,7 +322,7 @@ const Money = () => {
       <MonthRow>
         <ArrowBtn
           onClick={activeTab === '달력' ? prevMonth : undefined}
-          disabled={activeTab !== '달력' ? true : false}
+          disabled={activeTab !== '달력'}
         >
           ◀
         </ArrowBtn>
@@ -264,32 +351,32 @@ const Money = () => {
       </TotalRow>
 
       <BudgetCardWrapper>
-        {monthBudget ? (
-          <>
-            <Summary>
+        <Summary>
+          {monthBudget > 0 ? (
+            <>
               한 달 예산 {comma(monthBudget)}원 중{' '}
               <Used>{comma(usedAbs)}원</Used> 사용했어요!
-            </Summary>
+            </>
+          ) : (
+            <>한 달 예산을 등록해주세요!</>
+          )}
+        </Summary>
 
-            <BarWrapper>
-              <Bar>
-                <Fill style={{ width: `${fillPercent}%` }} />
-              </Bar>
-            </BarWrapper>
+        <BarWrapper>
+          <Bar>
+            <Fill style={{ width: `${fillPercent}%` }} />
+          </Bar>
+        </BarWrapper>
 
-            <Below $fillPercent={fillPercent}>
-              <span className="used-amount">
-                <img src={starIcon} alt="star" />
-                <span>{comma(usedAbs)}원</span>
-              </span>
-              <span style={{ position: 'absolute', right: 0 }}>
-                {comma(monthBudget)}원
-              </span>
-            </Below>
-          </>
-        ) : (
-          <NoBudgetTxt>한 달 예산을 등록해주세요!</NoBudgetTxt>
-        )}
+        <Below $fillPercent={fillPercent}>
+          <span className="used-amount">
+            <img src={starIcon} alt="star" />
+            <span>{comma(usedAbs)}원</span>
+          </span>
+          <span style={{ position: 'absolute', right: 0 }}>
+            {comma(monthBudget)}원
+          </span>
+        </Below>
       </BudgetCardWrapper>
 
       <TabMenu>
@@ -338,7 +425,9 @@ const Money = () => {
                     {list.map((e) => (
                       <ItemRow key={e.id}>
                         <Dot>
-                          {categoryImages[e.category] ? (
+                          {e.memo === '[고정비]' || e.category === '고정비' ? (
+                            <img src={fixedCostImage} alt="고정비" />
+                          ) : categoryImages[e.category] ? (
                             <img
                               src={categoryImages[e.category]}
                               alt={e.category}
@@ -383,7 +472,10 @@ const Money = () => {
                 {calendarCells.map((d, i) => {
                   if (!d) return <DayCell key={`empty-${i}`} />;
 
-                  const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+                  const dateStr = `${calYear}-${String(calMonth + 1).padStart(
+                    2,
+                    '0',
+                  )}-${String(d).padStart(2, '0')}`;
                   const daySpent = (groups[dateStr] || []).reduce(
                     (s, c) => s + c.amount,
                     0,
@@ -435,7 +527,9 @@ const Money = () => {
                   selectedList.map((e) => (
                     <CalItemRow key={e.id}>
                       <CalDot>
-                        {categoryImages[e.category] ? (
+                        {e.memo === '[고정비]' || e.category === '고정비' ? (
+                          <img src={fixedCostImage} alt="고정비" />
+                        ) : categoryImages[e.category] ? (
                           <img
                             src={categoryImages[e.category]}
                             alt={e.category}
@@ -452,7 +546,7 @@ const Money = () => {
                   <EmptyBoxSmall>해당 날짜에 기록이 없어요.</EmptyBoxSmall>
                 )}
 
-                <FloatingPlus onClick={() => navigate('/add-day')}>
+                <FloatingPlus onClick={() => navigate('/record')}>
                   <img src={plusCircle} alt="add" />
                 </FloatingPlus>
               </CalListSection>
@@ -498,7 +592,7 @@ const Money = () => {
             ) : (
               <EmptyBox>
                 <EmptyCircle src={emptyImage} alt="비어 있음" />
-                <EmptyText>등록된 소비 내역이 없어요.</EmptyText>
+                <EmptyText>등록된 고정비가 없어요.</EmptyText>
               </EmptyBox>
             )}
           </>
@@ -520,7 +614,12 @@ const Money = () => {
                   .reverse()
                   .map((r) => {
                     const date = new Date(r.createdAt || Date.now());
-                    const dateStr = `${date.getFullYear()} • ${String(date.getMonth() + 1).padStart(2, '0')} • ${String(date.getDate()).padStart(2, '0')}`;
+                    const dateStr = `${date.getFullYear()} • ${String(
+                      date.getMonth() + 1,
+                    ).padStart(2, '0')} • ${String(date.getDate()).padStart(
+                      2,
+                      '0',
+                    )}`;
 
                     return (
                       <RoutineWideCard
@@ -575,627 +674,3 @@ const Money = () => {
 };
 
 export default Money;
-
-const Container = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  background: ${colors.B1};
-  display: flex;
-  flex-direction: column;
-`;
-
-const Header = styled.header`
-  position: relative;
-  height: 56px;
-  border-bottom: 1px solid ${colors.G8};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const HeaderTitle = styled.h1`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
-const IconBase = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-
-  img {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
-  }
-`;
-
-const IconBtnLeft = styled(IconBase)`
-  left: 16px;
-`;
-const IconBtnRight = styled(IconBase)`
-  right: 16px;
-`;
-
-const GreetingCard = styled.section`
-  margin: 16px;
-  padding: 24px 28px;
-  background: linear-gradient(135deg, ${colors.subColor3} 0%, #4be3a5 100%);
-  border-radius: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const GreetText = styled.div`
-  flex: 1;
-  margin-right: 16px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  span {
-    font-size: 22px;
-    font-weight: 700;
-  }
-  p {
-    font-size: 20px;
-    font-weight: 500;
-    margin: 0;
-  }
-`;
-
-const MiniCard = styled.div`
-  width: 72px;
-  height: 72px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    margin-left: -40px;
-    transform: scale(1.25);
-  }
-`;
-
-const MonthRow = styled.div`
-  margin: 0 16px 4px;
-  display: flex;
-  align-items: center;
-`;
-
-const ArrowBtn = styled.button<{ disabled?: boolean }>`
-  background: none;
-  border: none;
-  font-size: 18px;
-  padding: 2px 4px;
-  cursor: pointer;
-  opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
-  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-`;
-
-const MonthText = styled.span`
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 8px;
-`;
-
-const TotalRow = styled.div`
-  margin: 0 16px 8px;
-  display: flex;
-  align-items: center;
-`;
-
-const TotalSpent = styled.span`
-  font-size: 24px;
-  font-weight: 700;
-`;
-
-const Slash = styled.span`
-  margin: 0 4px;
-  font-size: 18px;
-  color: ${colors.G3};
-`;
-
-const TotalBudget = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${colors.G3};
-`;
-
-const EditBtn = styled.button`
-  background: none;
-  border: none;
-  padding-left: 4px;
-  cursor: pointer;
-  img {
-    width: 18px;
-    height: 18px;
-  }
-`;
-
-const BudgetCardWrapper = styled.div`
-  margin: 0 16px 12px;
-  padding: 20px 16px 0;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  font-size: 14px;
-`;
-
-const NoBudgetTxt = styled.p`
-  color: ${colors.G4};
-`;
-
-const Summary = styled.p`
-  font-weight: 600;
-  line-height: 1.4;
-  color: ${colors.G4};
-`;
-
-const Used = styled.span`
-  color: ${colors.mainColor1};
-`;
-
-const BarWrapper = styled.div`
-  position: relative;
-  margin-top: 16px;
-`;
-
-const Bar = styled.div`
-  width: 100%;
-  height: 6px;
-  background: ${colors.G8};
-  border-radius: 3px;
-  overflow: hidden;
-`;
-
-const Fill = styled.div`
-  height: 100%;
-  background: ${colors.mainColor1};
-  transition: width 0.25s ease;
-`;
-
-const Below = styled.div<{ $fillPercent: number }>`
-  margin-top: 8px;
-  position: relative;
-  height: 32px;
-  font-size: 13px;
-  color: ${colors.G4};
-
-  .used-amount {
-    position: absolute;
-    left: ${({ $fillPercent }) => $fillPercent}%;
-    transform: translateX(-50%);
-    top: -30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    img {
-      width: 16px;
-      height: 16px;
-      margin-bottom: 2px;
-    }
-    span {
-      position: relative;
-      top: 12px;
-    }
-  }
-`;
-
-const TabMenu = styled.nav`
-  display: flex;
-  width: 100%;
-  border-bottom: 1px solid ${colors.G8};
-`;
-
-const TabItem = styled.button<{ $active: boolean }>`
-  flex: 1;
-  padding: 12px 0;
-  font-size: 14px;
-  font-weight: 600;
-  background: none;
-  border: none;
-  cursor: pointer;
-  position: relative;
-
-  ${({ $active }) =>
-    $active &&
-    css`
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 56%;
-        max-width: 40px;
-        height: 3px;
-        background: ${colors.mainColor1};
-        border-radius: 1.5px;
-      }
-    `}
-`;
-
-const ContentArea = styled.div`
-  flex: 1;
-  position: relative;
-  padding-top: 44px;
-`;
-
-const PlusBtn = styled.button<{ $shifted: boolean }>`
-  position: absolute;
-  top: ${({ $shifted }) => ($shifted ? '12px' : '7px')};
-  right: ${({ $shifted }) => ($shifted ? '56px' : '25px')};
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
-`;
-
-const DeleteToggleBtn = styled.button<{ $active: boolean }>`
-  position: absolute;
-  top: 7px;
-  right: 25px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 1;
-  cursor: pointer;
-  color: ${({ $active }) => ($active ? colors.mainColor1 : colors.G3)};
-`;
-
-const Section = styled.section`
-  padding: 0 16px;
-  margin-bottom: 20px;
-`;
-
-const DateRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-
-  .date {
-    font-size: 14px;
-    font-weight: 700;
-  }
-`;
-
-const ItemRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid ${colors.G8};
-  border-radius: 10px;
-
-  .memo {
-    flex: 1;
-    font-size: 14px;
-  }
-
-  .amount {
-    font-size: 14px;
-    font-weight: 600;
-  }
-`;
-
-const DeleteBtn = styled.button`
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: ${colors.G3};
-  margin-left: 4px;
-  cursor: pointer;
-`;
-
-const Dot = styled.span`
-  flex: 0 0 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: #f6f6f6;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const EmptyBox = styled.div`
-  margin-top: 64px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: ${colors.G4};
-`;
-
-const EmptyCircle = styled.img`
-  width: 180px;
-  height: 180px;
-  object-fit: contain;
-  margin-bottom: 24px;
-`;
-
-const EmptyText = styled.p`
-  font-size: 14px;
-  font-weight: 500;
-`;
-
-const RoutineCardList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 8px 16px 40px;
-`;
-
-const RoutineWideCard = styled.button`
-  display: flex;
-  width: 100%;
-  gap: 14px;
-  padding: 14px 16px;
-  border: none;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  position: relative;
-
-  &:active {
-    transform: translateY(1px);
-  }
-`;
-
-const PreviewBox = styled.div`
-  width: 84px;
-  height: 84px;
-  border-radius: 12px;
-  background: ${colors.G8};
-  flex-shrink: 0;
-  align-self: center;
-`;
-
-const RoutineContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-`;
-
-const DateLine = styled.div`
-  font-size: 11px;
-  font-weight: 500;
-  color: ${colors.G4};
-`;
-
-const TitleRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-
-  .title {
-    flex: 1;
-    font-size: 15px;
-    font-weight: 700;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    color: ${colors.G2};
-  }
-`;
-
-const ArrowIcon = styled.img`
-  position: absolute;
-  right: 23px;
-  top: 52%;
-  transform: translateY(-50%);
-  width: 11px;
-  height: 11px;
-`;
-
-const TagsRow = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-
-  .tag {
-    font-size: 11px;
-    color: ${colors.G4};
-  }
-`;
-
-const UserRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  .nick {
-    font-size: 12px;
-    font-weight: 600;
-    color: ${colors.G3};
-  }
-`;
-
-const Avatar = styled.div`
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: ${colors.G7};
-`;
-
-const CalendarWrap = styled.div`
-  padding: 0 16px 20px;
-`;
-
-const WeekRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  text-align: center;
-  font-size: 12px;
-  color: ${colors.G4};
-  margin-bottom: 6px;
-`;
-
-const WeekCell = styled.div``;
-
-const DayGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  row-gap: 18px;
-  min-height: 260px;
-`;
-
-const WeekDivider = styled.div`
-  grid-column: 1 / -1;
-  border-top: 1px solid ${colors.G7};
-  margin: 4px 0 1px;
-`;
-
-const DayCell = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 58px;
-  position: relative;
-`;
-
-const DayNumButton = styled.button<{ $selected: boolean }>`
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  font-size: 13px;
-  font-weight: 600;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: ${({ $selected }) => ($selected ? '0.5px solid #00D1B5' : 'none')};
-  background: ${({ $selected }) => ($selected ? '#DDFAEA' : 'transparent')};
-  color: ${({ $selected }) => ($selected ? '#00D1B5' : colors.G1)};
-`;
-
-const SpendPill = styled.div<{ $minus: boolean }>`
-  margin: 4px auto 0;
-  padding: 0 4px;
-  height: 16px;
-  min-width: 28px;
-  border-radius: 5px;
-  font-size: 10px;
-  line-height: 16px;
-  color: ${colors.subColor1};
-  background: ${({ $minus }) => ($minus ? '#DDFAEA' : colors.G3)};
-`;
-
-const CalListSection = styled.section`
-  padding: 16px;
-  background: #f0fff9;
-  border-radius: 16px 16px 0 0;
-  margin-top: -300px;
-  padding-bottom: 190px;
-`;
-
-const CalDateTitle = styled.h3`
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 12px;
-`;
-
-const CalItemRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid ${colors.G8};
-
-  .memo {
-    flex: 1;
-    font-size: 14px;
-  }
-  .amount {
-    font-size: 14px;
-    font-weight: 600;
-  }
-`;
-
-const CalDot = styled.span`
-  flex: 0 0 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #f6f6f6;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-`;
-
-const EmptyBoxSmall = styled.div`
-  padding: 12px 0 24px;
-  text-align: center;
-  color: ${colors.G4};
-  font-size: 13px;
-`;
-
-const SheetHandle = styled.div`
-  width: 36px;
-  height: 4px;
-  border-radius: 2px;
-  background: ${colors.G4};
-  margin: 0 auto 12px;
-`;
-
-const FloatingPlus = styled.button`
-  position: absolute;
-  right: 18px;
-  bottom: 24px;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-`;

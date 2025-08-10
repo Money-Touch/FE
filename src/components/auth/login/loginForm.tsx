@@ -1,22 +1,57 @@
 import * as L from '../../../styles/auth/login/login.style';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LoginInput from './loginInput';
 import { useLoginMutation } from '../../../hooks/auth/login/useLoginMutation';
-import { useNavigate } from 'react-router-dom';
+import { useKakaoLoginMutation } from '../../../hooks/auth/login/useKakaoLoginMutation';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { getRedirectUri } from '../../../utils/auth/login/kakao/getRedirectUri';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { mutate, isPending } = useLoginMutation();
+  const { mutate: loginMutate, isPending } = useLoginMutation();
+  const { mutate: kakaoLoginMutate } = useKakaoLoginMutation();
   const navigate = useNavigate();
+  const location = useLocation();
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const code = searchParams.get('code');
+
+    console.log('현재 URL에서 추출한 인가 코드:', code);
+
+    // 카카오 로그인
+    if (code) {
+      kakaoLoginMutate(
+        {
+          code,
+          redirect: getRedirectUri(),
+        },
+        {
+          onSuccess: (data) => {
+            console.log('카카오 로그인 성공:', data);
+            localStorage.setItem('accessToken', data.result.accessToken);
+            localStorage.setItem('refreshToken', data.result.refreshToken);
+            navigate('/test');
+          },
+          onError: (err) => {
+            console.error('카카오 로그인 실패:', err);
+            alert('카카오 로그인에 실패했습니다.');
+            navigate('/login');
+          },
+        },
+      );
+    }
+  }, [location.search, kakaoLoginMutate, navigate]);
+
+  // 일반 로그인
   const handleLogin = () => {
     if (!email || !password) {
       alert('이메일과 비밀번호를 모두 입력해주세요.');
       return;
     }
 
-    mutate(
+    loginMutate(
       { email, password },
       {
         onSuccess: (data) => {
@@ -32,7 +67,6 @@ const LoginForm = () => {
       },
     );
   };
-
   return (
     <div className={L.LoginFormContainer}>
       <div className={L.InputContainer}>

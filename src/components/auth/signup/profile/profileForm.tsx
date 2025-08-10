@@ -10,7 +10,6 @@ import ProfileImage from './profileImage';
 import { useSignUpMutation } from '../../../../hooks/auth/signup/useSignUpMutation';
 import { useProfileMutation } from '../../../../hooks/auth/signup/useProfileMutation';
 import { useLoginMutation } from '../../../../hooks/auth/login/useLoginMutation';
-import type { ProfileFormPayload } from '../../../../types/auth/signup/profile';
 import SettingInput from '../setting/settingInput';
 
 interface ProfileFormProps {
@@ -19,7 +18,7 @@ interface ProfileFormProps {
 
 const ProfileForm = ({ onNext }: ProfileFormProps) => {
   const [nicknameCheck, setNicknameCheck] = useState('');
-  const [shouldCheck, setShoulCheck] = useState(false);
+  const [shouldCheck, setShouldCheck] = useState(false);
 
   const { data } = useProfileNicknameQuery(nicknameCheck, shouldCheck);
   useEffect(() => {
@@ -31,7 +30,7 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
   const handleCheckNickname = () => {
     const nickname = methods.getValues('nickname');
     setNicknameCheck(nickname);
-    setShoulCheck(true);
+    setShouldCheck(true);
   };
 
   const methods = useForm<z.infer<typeof profileSchema>>({
@@ -51,81 +50,85 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
   // 폼 제출
   const onSubmit = (formDataInput: z.infer<typeof profileSchema>) => {
     const file = fileInputRef.current?.files?.[0];
-    const payload: ProfileFormPayload = { profileImage: file };
 
     const email = localStorage.getItem('email') || '';
     const password = localStorage.getItem('password') || '';
     const agreeTerms = JSON.parse(localStorage.getItem('agreeTerms') || '[]');
     const nickname = formDataInput.nickname;
 
-    const signUpPayload = {
-      email,
-      password,
-      agreeTerms,
-      nickname,
+    const proceedToSignUp = (profileImgUrl?: string) => {
+      const signUpPayload = {
+        email,
+        password,
+        nickname,
+        agreeTerms,
+        profileImgUrl,
+      };
+
+      signUp(signUpPayload, {
+        onSuccess: (signUpRes) => {
+          const userId = signUpRes?.result?.userId;
+          if (!userId) {
+            alert('회원가입에 실패하였습니다.');
+            return;
+          }
+
+          console.log('회원가입 성공:', userId);
+
+          login(
+            { email, password },
+            {
+              onSuccess: (loginRes) => {
+                localStorage.clear();
+                const { accessToken, refreshToken } = loginRes.result;
+
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+
+                console.log('로그인 성공');
+                onNext();
+              },
+              onError: (err) => {
+                console.error('로그인 실패:', err);
+                alert(
+                  '자동 로그인에 실패했습니다. 로그인 페이지로 이동해 주세요.',
+                );
+                onNext();
+              },
+            },
+          );
+        },
+        onError: (err) => {
+          console.error('회원가입 실패:', err);
+          alert('회원가입에 실패하였습니다.');
+        },
+      });
     };
 
-    signUp(signUpPayload, {
-      onSuccess: (res) => {
-        localStorage.removeItem('agreeTerms');
-        const userId = res?.result?.userId;
-        if (!userId) {
-          alert('회원가입에 실패하였습니다.');
-          return;
-        }
+    // 이미지 있을 시
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
 
-        login(
-          { email, password },
-          {
-            onSuccess: (loginRes) => {
-              const { accessToken, refreshToken } = loginRes.result;
-              localStorage.removeItem('email');
-              localStorage.removeItem('password');
-              localStorage.setItem('accessToken', accessToken);
-              localStorage.setItem('refreshToken', refreshToken);
+      uploadImage(formData, {
+        onSuccess: (uploadRes) => {
+          const profileImgUrl = uploadRes?.result;
+          if (!profileImgUrl) {
+            alert('프로필 이미지 업로드에 실패했습니다.');
+            return;
+          }
 
-              localStorage.setItem('userId', String(userId));
-              localStorage.setItem('nickname', nickname);
-
-              if (!file) {
-                onNext();
-                return;
-              }
-
-              const formData = new FormData();
-              formData.append('file', payload.profileImage!);
-
-              uploadImage(formData, {
-                onSuccess: (uploadRes) => {
-                  const uploadedUrl = uploadRes?.result;
-                  if (uploadedUrl) {
-                    localStorage.setItem('profileImgUrl', uploadedUrl);
-                  }
-                  console.log('이미지 업로드 성공');
-                  onNext();
-                },
-                onError: (err) => {
-                  console.error('이미지 업로드 실패:', err);
-                  alert('프로필 사진 등록에 실패하였습니다.');
-                  onNext();
-                },
-              });
-            },
-            onError: (err) => {
-              console.error('로그인 실패:', err);
-              alert(
-                '자동 로그인에 실패했습니다. 로그인 페이지로 이동해 주세요.',
-              );
-              onNext();
-            },
-          },
-        );
-      },
-      onError: (err) => {
-        console.error('회원가입 실패:', err);
-        alert('회원가입에 실패하였습니다.');
-      },
-    });
+          console.log('이미지 업로드 성공:', profileImgUrl);
+          proceedToSignUp(profileImgUrl);
+        },
+        onError: (err) => {
+          console.error('이미지 업로드 실패:', err);
+          alert('프로필 이미지 업로드에 실패하였습니다.');
+        },
+      });
+    } else {
+      proceedToSignUp();
+    }
   };
 
   return (

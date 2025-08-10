@@ -12,7 +12,8 @@ const BottomText = ({ hasSpending, topCategory }: BottomTextProps) => {
       {hasSpending && topCategory ? (
         <>
           이번 달 최다 소비 항목은{' '}
-          <span className={S.HighlightedText}>{topCategory.name}</span>이에요.
+          <span className={S.HighlightedText}>{topCategory.categoryName}</span>
+          이에요.
         </>
       ) : (
         <>

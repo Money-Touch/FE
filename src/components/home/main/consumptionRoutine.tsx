@@ -2,19 +2,18 @@ import * as S from '../../../styles/home/home.style';
 import { useNavigate } from 'react-router-dom';
 import more from '../../../assets/images/home/more.png';
 import rightArrow from '../../../assets/images/home/rightArrow.png';
-import { isToday } from '../../../utils/home/todayCheck';
-import { mockRoutineData } from '../../../mocks/home/mockRoutineData'; // mock data
+import routine_t from '../../../assets/images/home/routine_t.png';
+import { useRoutinePreview } from '../../../hooks/home/routine/useRoutinePreview';
 
 function ConsumptionRoutine() {
   const navigate = useNavigate();
-
+  const { data, isLoading, isError } = useRoutinePreview();
   const handleMoreClick = () => {
     navigate('/routine');
   };
 
-  const sortedRoutineData = [...mockRoutineData].sort(
-    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
-  );
+  if (isLoading) return null;
+  if (isError || !data) return null;
 
   return (
     <div className={S.RoutineContainer}>
@@ -28,18 +27,16 @@ function ConsumptionRoutine() {
         />
       </div>
       <div className={S.RoutineSection}>
-        {sortedRoutineData.map((routine) => (
+        {data.result.map((routine) => (
           <div
-            key={routine.id}
+            key={routine.routineId}
             className={S.RoutineCard + ' cursor-pointer'}
-            onClick={() => navigate(`/routine/${routine.id}`)}
+            onClick={() => navigate(`/routine/${routine.routineId}`)}
           >
-            <img src={routine.icon} alt="routine" className={S.RoutineIcon} />
+            <img src={routine_t} alt="routine" className={S.RoutineIcon} />
             <div className={S.RoutineText}>
-              {routine.title}
-              {isToday(routine.startDate) && (
-                <span className={S.NewBadge}>NEW</span>
-              )}
+              {routine.routineName}
+              {routine.new && <span className={S.NewBadge}>NEW</span>}
             </div>
             <img src={rightArrow} alt="arrow" className={S.RoutineArrow} />
           </div>
