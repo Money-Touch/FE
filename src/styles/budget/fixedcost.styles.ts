@@ -62,7 +62,6 @@ export const Label = styled.p`
   }
 `;
 
-//
 export const CatBox = styled.div`
   width: 100%;
   display: flex;
