@@ -12,6 +12,8 @@ export const useValidateToken = () => {
       const res = await API.post('/api/auth/validate', body, {
         headers: {
           Authorization: `Bearer ${body.token}`,
+          'Content-Type': 'application/json',
+          Accept: '*/*',
         },
       });
       return res.data;
