@@ -25,7 +25,7 @@ const LoginForm = () => {
       kakaoLoginMutate(
         {
           code,
-          redirect: getRedirectUri(),
+          redirectUri: getRedirectUri(),
         },
         {
           onSuccess: (data) => {
