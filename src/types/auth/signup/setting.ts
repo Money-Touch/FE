@@ -24,6 +24,7 @@ export interface SettingInputProps {
 
 export interface RequestEmailCodePayload {
   to: string;
+  isResend: boolean;
 }
 
 export interface EmailSendResponse {

@@ -29,5 +29,6 @@ export interface KakaoLoginResponse {
     accessToken: string;
     refreshToken: string;
     newUser: boolean;
+    nickname: string;
   };
 }

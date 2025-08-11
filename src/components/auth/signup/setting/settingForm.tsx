@@ -50,7 +50,7 @@ const SettingForm = ({ onNext }: SettingFormProps) => {
     const email = rawEmail.trim();
 
     requestEmailCode(
-      { to: email },
+      { to: email, isResend: emailSent },
       {
         onSuccess: () => {
           console.log('이메일 전송 성공');
@@ -76,15 +76,20 @@ const SettingForm = ({ onNext }: SettingFormProps) => {
     verifyEmailCode(
       { email, code },
       {
-        onSuccess: () => {
-          setVerified(true);
-          setCooldown(0);
-          console.log('인증 성공');
-          alert('인증에 성공했습니다.');
+        onSuccess: (data) => {
+          if (data.isSuccess) {
+            setVerified(true);
+            setCooldown(0);
+            console.log('인증 성공');
+            alert('인증에 성공했습니다.');
+          } else {
+            console.error('인증 실패', data.message);
+            alert(data.message || '인증번호가 올바르지 않거나 만료되었습니다.');
+          }
         },
         onError: (err) => {
-          console.error('인증 실패', err);
-          alert('인증번호가 올바르지 않습니다.');
+          console.error('요청 에러', err);
+          alert('인증 요청 중 오류가 발생했습니다.');
         },
       },
     );

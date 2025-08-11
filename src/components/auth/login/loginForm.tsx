@@ -32,6 +32,7 @@ const LoginForm = () => {
             console.log('카카오 로그인 성공:', data);
             localStorage.setItem('accessToken', data.result.accessToken);
             localStorage.setItem('refreshToken', data.result.refreshToken);
+            localStorage.setItem('nickname', data.result.nickname);
 
             if (data.result.newUser) {
               navigate('/test');

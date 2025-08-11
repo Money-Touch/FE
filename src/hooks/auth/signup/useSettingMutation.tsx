@@ -8,9 +8,9 @@ import type {
 } from '../../../types/auth/signup/setting';
 
 // 이메일 인증 요청
-const requestEmailCode = async ({ to }: RequestEmailCodePayload) => {
+const requestEmailCode = async ({ to, isResend }: RequestEmailCodePayload) => {
   const response = await API.get<EmailSendResponse>('/api/user/email/send', {
-    params: { to },
+    params: { to, isResend },
   });
   return response.data;
 };

@@ -15,9 +15,11 @@ const Profile = ({ data }: ProfileProps) => {
     navigate('/mypage/badge');
   };
 
-  const profileImg = data?.result?.profileImgUrl?.trim()
-    ? data.result.profileImgUrl
+  const profileImg = data?.result?.profileImgUrl
+    ? data.result.profileImgUrl.trim()
     : ProfileImage;
+
+  console.log(profileImg);
 
   const badgeImg = data?.result?.representativeBadgeImageUrl?.trim()
     ? data.result.representativeBadgeImageUrl
