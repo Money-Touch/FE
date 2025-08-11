@@ -44,6 +44,7 @@ import {
   PlusBtn,
   DeleteToggleBtn,
   Section,
+  Section2,
   DateRow,
   ItemRow,
   ItemRowLeft,
@@ -600,26 +601,30 @@ const Money = () => {
             </ButtonContainer>
 
             {fixed.length ? (
-              <Section>
+              <Section2>
                 {fixed.map((e) => (
                   <ItemRow key={e.id}>
-                    <Dot>
-                      <img src={fixedCostImage} alt="fixed cost" />
-                    </Dot>
+                    <ItemRowLeft>
+                      <Dot>
+                        <img src={fixedCostImage} alt="fixed cost" />
+                      </Dot>
+                      <span className="memo">{e.item}</span>
+                    </ItemRowLeft>
 
-                    <span className="memo">{e.item}</span>
-                    <span className="amount">{comma(e.amount)}원</span>
+                    <ItemRowRight>
+                      <span className="amount">{comma(e.amount)}원</span>
 
-                    {fixedDel && (
-                      <DeleteBtn
-                        src={closeIcon}
-                        alt="close"
-                        onClick={() => deleteFixed(e.id)}
-                      />
-                    )}
+                      {fixedDel && (
+                        <DeleteBtn
+                          src={closeIcon}
+                          alt="close"
+                          onClick={() => deleteFixed(e.id)}
+                        />
+                      )}
+                    </ItemRowRight>
                   </ItemRow>
                 ))}
-              </Section>
+              </Section2>
             ) : (
               <EmptyBox>
                 <EmptyCircle src={emptyImage} alt="비어 있음" />

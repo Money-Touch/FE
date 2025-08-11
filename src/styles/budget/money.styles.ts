@@ -253,6 +253,13 @@ export const Section = styled.section`
   }
 `;
 
+export const Section2 = styled(Section)`
+  padding: 2rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+`;
+
 export const DateRow = styled.div`
   width: 100%;
   margin-bottom: 1.9rem;
