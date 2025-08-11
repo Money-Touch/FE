@@ -22,6 +22,6 @@ export interface LoginResponse {
 // 카카오 로그인
 export interface KakaoLoginRequest {
   code: string;
-  redirectUri: string;
+  redirectUrl: string;
 }
 export type KakaoLoginResponse = LoginResponse;
