@@ -32,7 +32,12 @@ const LoginForm = () => {
             console.log('카카오 로그인 성공:', data);
             localStorage.setItem('accessToken', data.result.accessToken);
             localStorage.setItem('refreshToken', data.result.refreshToken);
-            navigate('/test');
+
+            if (data.result.newUser) {
+              navigate('/test');
+            } else {
+              navigate('/home');
+            }
           },
           onError: (err) => {
             console.error('카카오 로그인 실패:', err);
