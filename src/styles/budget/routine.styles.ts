@@ -1,90 +1,50 @@
 import styled, { css } from 'styled-components';
 import colors from '../common/colors';
 
-const MOBILE_MAX = '430px';
-
 export const Wrap = styled.div`
-  position: relative;
-  max-width: ${MOBILE_MAX};
-  margin: 0 auto;
+  width: 100%;
   min-height: 100vh;
-  background: ${colors.B1};
   display: flex;
   flex-direction: column;
 `;
 
-export const Header = styled.header`
-  position: relative;
-  height: 56px;
-  border-bottom: 1px solid ${colors.G8};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const IconBase = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  border: none;
-  padding: 0;
-
-  img {
-    width: 20px;
-    height: 20px;
-    display: block;
-    object-fit: contain;
-  }
-`;
-
-export const IconBtnLeft = styled(IconBase)`
-  left: 16px;
-`;
-
-export const H1 = styled.h1`
-  font-size: 18px;
-  font-weight: 700;
-`;
-
 export const Body = styled.main`
-  flex: 1;
-  padding: 24px 16px 0;
+  margin-top: 2.6rem;
 `;
 
 export const Section = styled.section`
-  margin-bottom: 32px;
+  margin: 0 2.4rem;
 `;
 
 export const Row = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
+  gap: 0.6rem;
 `;
 
-export const Label = styled.h2`
-  font-size: 16px;
-  font-weight: 600;
-  margin-right: 8px;
+export const Label = styled.p`
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: ${colors.G1};
+`;
+
+export const Month = styled.p`
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: ${colors.G1};
 `;
 
 export const IconBtn = styled.button<{ $active?: boolean }>`
-  width: 32px;
-  height: 32px;
+  width: 2.4rem;
+  height: 2.4rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: none;
-  border: none;
+  cursor: pointer;
 
   img {
-    width: 20px;
-    height: 20px;
+    width: 100%;
+    height: 100%;
 
     ${({ $active }) =>
       $active &&
@@ -94,34 +54,32 @@ export const IconBtn = styled.button<{ $active?: boolean }>`
   }
 `;
 
-export const Month = styled.p`
-  font-size: 28px;
-  font-weight: 700;
-  color: ${colors.G1};
-`;
-
-export const Divider = styled.hr`
-  height: 8px;
-  margin: -10px -16px 24px;
-  border: none;
+export const Divider = styled.div`
+  width: 100%;
+  height: 0.7rem;
   background: ${colors.G8};
+  margin: 2.4rem 0 1.8rem 0;
 `;
 
 export const CatUl = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1.4rem;
+  margin: 1.4rem 0 4.7rem 0;
 `;
 
 export const CatLi = styled.li<{ $editable: boolean }>`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 16px;
+  font-size: 1.8rem;
   font-weight: 500;
+  color: ${colors.G1};
 
   span:first-child {
     color: ${colors.G5};
+    font-size: 1.5rem;
   }
 
   ${({ $editable }) =>
@@ -186,7 +144,6 @@ export const Dim = styled.div`
 
 export const Modal = styled.div`
   width: 100%;
-  max-width: ${MOBILE_MAX};
   background: #fff;
   border-radius: 28px 28px 0 0;
   display: flex;

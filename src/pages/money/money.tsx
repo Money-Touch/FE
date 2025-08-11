@@ -636,9 +636,13 @@ const Money = () => {
 
         {activeTab === '소비 루틴' && (
           <>
-            <PlusBtn onClick={() => navigate('/money-routine')}>
-              <img src={plusIcon} alt="add" />
-            </PlusBtn>
+            <ButtonContainer>
+              <PlusBtn
+                onClick={() => navigate('/money-routine')}
+                src={plusIcon}
+                alt="plus"
+              />
+            </ButtonContainer>
 
             {routines.length ? (
               <RoutineCardList>

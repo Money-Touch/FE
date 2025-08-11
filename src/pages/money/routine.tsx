@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import leftArrow from '../../assets/images/header/leftArrow.png';
+import Header from '../../components/header/header';
 import pencilIcon from '../../assets/images/budget/pencil.png';
+import editPencilIcon from '../../assets/images/budget/editPencil.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 
 import {
   Wrap,
-  Header,
-  IconBtnLeft,
-  H1,
   Body,
   Section,
   Row,
@@ -134,12 +132,7 @@ const Routine = () => {
 
   return (
     <Wrap>
-      <Header>
-        <IconBtnLeft onClick={() => navigate(-1)}>
-          <img src={leftArrow} alt="back" />
-        </IconBtnLeft>
-        <H1>예산 등록</H1>
-      </Header>
+      <Header title="소비 루틴 등록" />
 
       <Body>
         <Section>
@@ -156,9 +149,17 @@ const Routine = () => {
 
         <Section>
           <Row>
-            <Label>소비 루틴</Label>
-            <IconBtn $active={editMode} onClick={() => setEditMode((v) => !v)}>
-              <img src={pencilIcon} alt="edit" />
+            <Label>나의 소비 루틴</Label>
+            <IconBtn
+              $active={editMode}
+              onClick={() => setEditMode((v) => !v)}
+              style={{ width: '2rem', height: '2rem' }}
+            >
+              <img
+                src={editMode ? editPencilIcon : pencilIcon}
+                alt="edit"
+                onClick={() => setEditMode((v) => !v)}
+              />
             </IconBtn>
           </Row>
 
