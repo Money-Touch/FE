@@ -209,7 +209,6 @@ const Routine = () => {
           <ConfirmBtn disabled={!canConfirm} onClick={handleConfirm}>
             확인
           </ConfirmBtn>
-          s
         </Section>
       </Body>
 

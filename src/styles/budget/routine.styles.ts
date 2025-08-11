@@ -6,6 +6,7 @@ export const Wrap = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export const Body = styled.main`

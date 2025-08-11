@@ -340,91 +340,76 @@ export const EmptyText = styled.p`
 `;
 
 export const RoutineCardList = styled.div`
+  margin: 1.8rem 2.4rem;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 8px 16px 40px;
+  gap: 1rem;
 `;
 
 export const RoutineWideCard = styled.button`
-  display: flex;
   width: 100%;
-  gap: 14px;
-  padding: 14px 16px;
-  border: none;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  height: 10.6rem;
+  padding: 0 1.5rem;
+  gap: 1.1rem;
+  border-radius: 1.5rem;
+  background: ${colors.white};
+  box-shadow: 0 0 1rem 0 #0000000d;
   cursor: pointer;
-  position: relative;
+  justify-content: flex-start;
   align-items: center;
-
-  &:active {
-    transform: translateY(1px);
-  }
 `;
 
 export const PreviewBox = styled.div`
-  width: 84px;
-  height: 84px;
-  border-radius: 12px;
+  width: 8.4rem;
+  height: 8.4rem;
+  flex: 0 0 8.4rem;
+  border-radius: 1rem;
   background: ${colors.G8};
-  flex-shrink: 0;
-  align-self: center;
+  opacity: 0.8;
+  box-shadow: 0 0 1rem 0 #0000000d;
 `;
 
 export const RoutineContent = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding-top: 2px;
+  width: 100%;
 `;
 
 export const DateLine = styled.div`
-  font-size: 11px;
-  font-weight: 500;
-  color: ${colors.G4};
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: ${colors.G3};
   text-align: left;
 `;
 
 export const TitleRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  text-align: left;
-  margin-top: -8px;
+  justify-content: space-between;
 
   .title {
-    flex: 1;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: ${colors.G2};
+    color: ${colors.G1};
   }
 `;
 
 export const ArrowIcon = styled.img`
-  position: absolute;
-  right: 23px;
-  top: 42px;
-  transform: translateY(-50%);
-  width: 11px;
-  height: 11px;
+  width: 0.8rem;
+  height: auto;
 `;
 
 export const TagsRow = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  position: relative;
-  top: -6px;
+  gap: 0.6rem;
 
   .tag {
-    font-size: 11px;
+    font-size: 1.1rem;
+    font-weight: 300;
     color: ${colors.G4};
   }
 `;
@@ -432,18 +417,19 @@ export const TagsRow = styled.div`
 export const UserRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
+  margin-top: 2.1rem;
+  gap: 0.6rem;
 
   .nick {
-    font-size: 12px;
-    font-weight: 600;
-    color: ${colors.G3};
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: ${colors.G1};
   }
 `;
 
 export const Avatar = styled.div`
-  width: 24px;
-  height: 24px;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 50%;
   background: ${colors.G7};
 `;
