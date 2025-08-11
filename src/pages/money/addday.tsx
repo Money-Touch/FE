@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import pencilIcon from '../../assets/images/budget/pencil.png';
 import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
+import { useDailyMutation } from '../../hooks/money/addday/useDailyMutation';
 
 import {
   Wrap,
@@ -55,12 +56,22 @@ const toLocalDt = (d: Date) =>
     d.getHours(),
   )}:${two(d.getMinutes())}`;
 
+// 인서 추가
+const localToISO = (s: string) => {
+  const [d, t] = s.split(' ');
+  const [y, m, day] = d.split('-').map(Number);
+  const [hh, mm] = t.split(':').map(Number);
+  const dt = new Date(y, (m ?? 1) - 1, day ?? 1, hh ?? 0, mm ?? 0);
+  return dt.toISOString();
+};
+
 type LayoutCtx = { setHideFooter: (b: boolean) => void };
 
 const AddDay = () => {
   const nav = useNavigate();
   const layoutCtx = useOutletContext<LayoutCtx | null>();
   const hideFooter = layoutCtx?.setHideFooter;
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     hideFooter?.(true);
@@ -167,19 +178,28 @@ const AddDay = () => {
 
   const valid = category && item.trim() && dateStr;
 
-  const save = () => {
-    if (!valid) return;
-    const entry = {
-      id: Date.now(),
-      category,
-      item: item.trim(),
-      amount: -Math.abs(amount),
-      date: dateStr,
-      memo,
-    };
-    const prev = JSON.parse(localStorage.getItem('dailyEntries') || '[]');
-    localStorage.setItem('dailyEntries', JSON.stringify([...prev, entry]));
-    nav('/money', { state: { tab: '일일' } });
+  const save = async () => {
+    if (!valid || !dateStr) return;
+
+    try {
+      setSaving(true);
+
+      await useDailyMutation({
+        categoryName: category,
+        amount: Math.abs(amount),
+        content: item.trim(),
+        memo,
+        consumeDate: localToISO(dateStr),
+      });
+
+      alert('저장되었습니다.');
+      nav('/money', { state: { tab: '일일' } });
+    } catch (e) {
+      console.error(e);
+      alert('저장에 실패했습니다. 다시 시도해 주세요.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const snap = (
@@ -280,8 +300,8 @@ const AddDay = () => {
             onChange={(e) => setMemo(e.target.value)}
           />
 
-          <Save disabled={!valid} onClick={save}>
-            확인
+          <Save disabled={!valid || saving} onClick={save}>
+            {saving ? '저장 중...' : '확인'}
           </Save>
         </Section>
       </Body>

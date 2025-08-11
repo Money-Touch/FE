@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/header/header';
 import pencilIcon from '../../assets/images/budget/pencil.png';
 import editPencilIcon from '../../assets/images/budget/editPencil.png';
@@ -7,6 +7,8 @@ import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 import minusIcon from '../../assets/images/budget/minus.png';
+import { useBudgetMutation } from '../../hooks/money/registration/useBudgetsMutation';
+import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
 
 import {
   Wrap,
@@ -46,39 +48,120 @@ const CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기�
 
 const BudgetRegister = () => {
   const navigate = useNavigate();
+  // 인서 추가
+  const { state } = useLocation() as {
+    state?: { year?: number; month?: number; budgetId?: number };
+  };
+  const year = state?.year ?? new Date().getFullYear();
+  const month = state?.month ?? new Date().getMonth() + 1;
+  const budgetId = state?.budgetId;
+
+  const budgetMutation = useBudgetMutation();
+  const { data: budgetDetail } = useBudgetDetailQuery(budgetId);
+  console.log(budgetId);
+  console.log(budgetDetail);
+  //
 
   const [monthBudget, setMonthBudget] = useState(0);
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
   const [editMode, setEditMode] = useState(false);
   const [myEditMode, setMyEditMode] = useState(false);
+  const [routineEditMode, setRoutineEditMode] = useState(false);
   const [myDeleteMode, setMyDeleteMode] = useState(false);
+  const [routineDeleteMode, setRoutineDeleteMode] = useState(false);
   const [myCategories, setMyCategories] = useState<string[]>([]);
   const [myCatBudget, setMyCatBudget] = useState<number[]>([]);
+  const [routineCategories, setRoutineCategories] = useState<string[]>([]);
+  const [routineCatBudget, setRoutineCatBudget] = useState<number[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [raw, setRaw] = useState('');
   const [targetIdx, setTargetIdx] = useState<-1 | number>(-1);
   const [targetIsCustom, setTargetIsCustom] = useState(false);
 
+  // 인서 추가
   useEffect(() => {
-    const savedCats = JSON.parse(
-      localStorage.getItem('customCategories') || '[]',
-    );
-    setMyCategories(savedCats);
-    setMyCatBudget(Array(savedCats.length).fill(0));
+    if (budgetDetail?.result) {
+      const {
+        totalBudget,
+        defaultCategoryBudgets,
+        customCategoryBudgets,
+        routineCategoryBudgets,
+      } = budgetDetail.result;
 
-    const savedMonth = Number(localStorage.getItem('monthBudget') || 0);
-    if (savedMonth) setMonthBudget(savedMonth);
+      const defaultArr = CATEGORIES.map(
+        (name) =>
+          defaultCategoryBudgets.find((c) => c.categoryName === name)?.amount ??
+          0,
+      );
 
-    const savedCatBudgets = JSON.parse(
-      localStorage.getItem('categoryBudgets') || '[]',
-    );
-    if (savedCatBudgets.length === 5) setCatBudget(savedCatBudgets);
+      const customNames =
+        customCategoryBudgets?.map((c) => c.categoryName) ?? [];
+      const customAmounts = customCategoryBudgets?.map((c) => c.amount) ?? [];
 
-    const savedMyBudgets = JSON.parse(
-      localStorage.getItem('customCategoryBudgets') || '[]',
-    );
-    if (savedMyBudgets.length) setMyCatBudget(savedMyBudgets);
-  }, []);
+      const routineNames =
+        routineCategoryBudgets?.map((c) => c.categoryName) ?? [];
+      const routineAmounts = routineCategoryBudgets?.map((c) => c.amount) ?? [];
+
+      localStorage.setItem('monthBudget', String(totalBudget));
+      localStorage.setItem('categoryBudgets', JSON.stringify(defaultArr));
+      localStorage.setItem('customCategories', JSON.stringify(customNames));
+      localStorage.setItem(
+        'customCategoryBudgets',
+        JSON.stringify(customAmounts),
+      );
+      localStorage.setItem('routineCategories', JSON.stringify(routineNames));
+      localStorage.setItem(
+        'routineCategoryBudgets',
+        JSON.stringify(routineAmounts),
+      );
+
+      setMonthBudget(totalBudget);
+      setCatBudget(defaultArr);
+      setMyCategories(customNames);
+      setMyCatBudget(customAmounts);
+      setRoutineCategories(routineNames);
+      setRoutineCatBudget(routineAmounts);
+    }
+  }, [budgetDetail]);
+
+  useEffect(() => {
+    if (!budgetId) {
+      const savedCats = JSON.parse(
+        localStorage.getItem('customCategories') || '[]',
+      );
+      setMyCategories(savedCats);
+
+      const savedMonth = Number(localStorage.getItem('monthBudget') || 0);
+      if (savedMonth) setMonthBudget(savedMonth);
+
+      const savedCatBudgets = JSON.parse(
+        localStorage.getItem('categoryBudgets') || '[]',
+      );
+      if (savedCatBudgets.length === 5) setCatBudget(savedCatBudgets);
+
+      const savedMyBudgets = JSON.parse(
+        localStorage.getItem('customCategoryBudgets') || '[]',
+      );
+      setMyCatBudget(
+        savedMyBudgets.length
+          ? savedMyBudgets
+          : Array(savedCats.length).fill(0),
+      );
+
+      const savedRoutineCats = JSON.parse(
+        localStorage.getItem('routineCategories') || '[]',
+      );
+      const savedRoutineBudgets = JSON.parse(
+        localStorage.getItem('routineCategoryBudgets') || '[]',
+      );
+      setRoutineCategories(savedRoutineCats);
+      setRoutineCatBudget(
+        savedRoutineBudgets.length
+          ? savedRoutineBudgets
+          : Array(savedRoutineCats.length).fill(0),
+      );
+    }
+  }, [budgetId]);
 
   const comma = (v: string | number) =>
     String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -105,12 +188,14 @@ const BudgetRegister = () => {
       setCatBudget((prev) => {
         const next = [...prev];
         next[targetIdx] = n;
+        localStorage.setItem('categoryBudgets', JSON.stringify(next));
         return next;
       });
     } else {
       setMyCatBudget((prev) => {
         const next = [...prev];
         next[targetIdx] = n;
+        localStorage.setItem('customCategoryBudgets', JSON.stringify(next));
         return next;
       });
     }
@@ -129,17 +214,58 @@ const BudgetRegister = () => {
 
   const totalDefault = catBudget.reduce((a, b) => a + b, 0);
   const totalCustom = myCatBudget.reduce((a, b) => a + b, 0);
+  const totalRoutine = routineCatBudget.reduce((a, b) => a + b, 0);
   const canConfirm =
-    monthBudget > 0 && monthBudget === totalDefault + totalCustom;
+    monthBudget > 0 &&
+    monthBudget === totalDefault + totalCustom + totalRoutine;
 
   const handleConfirm = () => {
     if (!canConfirm) return;
 
-    localStorage.setItem('monthBudget', String(monthBudget));
-    localStorage.setItem('categoryBudgets', JSON.stringify(catBudget));
-    localStorage.setItem('customCategoryBudgets', JSON.stringify(myCatBudget));
+    const defaultCategoryBudgets = CATEGORIES.map((name, idx) => ({
+      categoryName: name,
+      amount: catBudget[idx],
+      categoryType: 'DEFAULT' as const,
+    }));
 
-    navigate('/money', { replace: true });
+    const customCategoryBudgets = myCategories.map((name, idx) => ({
+      categoryName: name,
+      amount: myCatBudget[idx],
+      categoryType: 'CUSTOM' as const,
+    }));
+
+    budgetMutation.mutate(
+      {
+        year,
+        month,
+        data: {
+          totalBudget: monthBudget,
+          defaultCategoryBudgets,
+          customCategoryBudgets:
+            customCategoryBudgets.length > 0
+              ? customCategoryBudgets
+              : undefined,
+        },
+      },
+      {
+        onSuccess: (data) => {
+          alert('한달 예산이 등록되었습니다.');
+          // console.log(data);
+          localStorage.removeItem('monthBudget');
+          localStorage.removeItem('categoryBudgets');
+          localStorage.removeItem('customCategories');
+          localStorage.removeItem('customCategoryBudgets');
+          localStorage.removeItem('routineCategories');
+          localStorage.removeItem('routineCategoryBudgets');
+
+          navigate('/money', {
+            replace: true,
+            state: { total: data.result.totalBudget },
+          });
+          console.log(data.totalBudget);
+        },
+      },
+    );
   };
 
   return (
@@ -240,6 +366,73 @@ const BudgetRegister = () => {
                       )}
 
                       {myDeleteMode && (
+                        <DeleteBtn
+                          src={closeIcon}
+                          alt="delete"
+                          onClick={() => deleteCategory(i)}
+                        />
+                      )}
+                    </RightBox>
+                  </CatLi>
+                ))}
+              </CatUl>
+            </Section>
+          </>
+        )}
+
+        {routineCategories.length > 0 && (
+          <>
+            <Divider />
+            <Section>
+              <RowContainer>
+                <Row>
+                  <Label>내 소비루틴</Label>
+
+                  <IconBtn
+                    src={
+                      routineEditMode && !routineDeleteMode
+                        ? editPencilIcon
+                        : pencilIcon
+                    }
+                    alt="edit"
+                    onClick={() => setRoutineEditMode((v) => !v)}
+                    style={{ width: '2rem', height: '2rem' }}
+                  />
+                </Row>
+
+                <DeleteToggleBtn
+                  $active={routineDeleteMode}
+                  onClick={() => setRoutineDeleteMode((v) => !v)}
+                  src={minusIcon}
+                  alt="delete"
+                />
+              </RowContainer>
+
+              <CatUl>
+                {routineCategories.map((name, i) => (
+                  <CatLi
+                    key={name}
+                    $editable={routineEditMode || routineDeleteMode}
+                    onClick={() =>
+                      routineEditMode &&
+                      !routineDeleteMode &&
+                      openModal(i, true)
+                    }
+                  >
+                    {name}
+
+                    <RightBox>
+                      {routineEditMode && !routineDeleteMode ? (
+                        <EditWrapper>
+                          <EditInput>
+                            {comma(routineCatBudget[i] || 0)}원
+                          </EditInput>
+                        </EditWrapper>
+                      ) : (
+                        <span>{comma(routineCatBudget[i] || 0)}원</span>
+                      )}
+
+                      {routineDeleteMode && (
                         <DeleteBtn
                           src={closeIcon}
                           alt="delete"

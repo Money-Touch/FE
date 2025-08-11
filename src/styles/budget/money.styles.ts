@@ -435,67 +435,69 @@ export const Avatar = styled.div`
 `;
 
 export const CalendarWrap = styled.div`
-  padding: 0 16px 20px;
+  padding: 0 2.4rem;
 `;
 
 export const WeekRow = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  font-size: 12px;
-  color: ${colors.G4};
-  margin-bottom: 6px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: ${colors.G1};
 `;
 
-export const WeekCell = styled.div``;
+export const WeekCell = styled.div`
+  margin-bottom: 2rem;
+`;
 
 export const DayGrid = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  row-gap: 18px;
-  min-height: 260px;
+  row-gap: 1.6rem;
 `;
 
-export const WeekDivider = styled.div`
-  grid-column: 1 / -1;
-  border-top: 1px solid ${colors.G7};
-  margin: 4px 0 1px;
-`;
+export const WeekDivider = styled.div``;
 
 export const DayCell = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 58px;
+  height: 7.6rem;
   position: relative;
 `;
 
 export const DayNumButton = styled.button<{ $selected: boolean }>`
-  width: 28px;
-  height: 28px;
+  width: 2.7rem;
+  height: 2.7rem;
   border-radius: 50%;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 500;
   display: grid;
   place-items: center;
   padding: 0;
-  border: ${({ $selected }) => ($selected ? '0.5px solid #00D1B5' : 'none')};
-  background: ${({ $selected }) => ($selected ? '#DDFAEA' : 'transparent')};
-  color: ${({ $selected }) => ($selected ? '#00D1B5' : colors.G1)};
+  border: ${({ $selected }) =>
+    $selected ? `0.05rem solid ${colors.mainColor1}` : 'none'};
+  background: ${({ $selected }) =>
+    $selected ? `${colors.subColor5}` : 'transparent'};
+  color: ${({ $selected }) => ($selected ? `${colors.mainColor1}` : colors.G1)};
 `;
 
 export const SpendPill = styled.div<{ $minus: boolean }>`
-  margin: 4px auto 0;
+  margin-top: 0.5rem;
   padding: 0 4px;
-  height: 16px;
-  min-width: 28px;
-  border-radius: 5px;
-  font-size: 10px;
-  line-height: 16px;
+  height: 1.6rem;
+  min-width: 4.1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   color: ${colors.subColor1};
-  background: ${({ $minus }) => ($minus ? '#DDFAEA' : colors.G3)};
+  background: ${({ $minus }) =>
+    $minus ? `${colors.subColor5}` : 'transparent'};
 `;
 
+// 여기서부터 수정
 export const CalListSection = styled.section`
   padding: 16px;
   background: #f0fff9;

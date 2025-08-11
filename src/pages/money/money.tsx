@@ -16,6 +16,12 @@ import eatImage from '../../assets/images/budget/eat.png';
 import playImage from '../../assets/images/budget/play.png';
 import fixedCostImage from '../../assets/images/budget/fixedcost.png';
 import closeIcon from '../../assets/images/budget/Close.png';
+import { useTotalQuery } from '../../hooks/money/money/useTotalQuery';
+import { useMonthlyQuery } from '../../hooks/money/money/useMonthlyQuery';
+import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
+import { useDailyDeleteMutation } from '../../hooks/money/money/useDailyDeleteMutation';
+import { useMonthlyCalendarQuery } from '../../hooks/money/money/useMonthlyCalendarQuery';
+import { useDailyCalendarQuery } from '../../hooks/money/money/useDailyCalendarQuery';
 
 import {
   Container,
@@ -131,6 +137,75 @@ const Money = () => {
   const [anim, setAnim] = useState(false);
   const startYRef = useRef(0);
   const sheetOpen = !!selectedDate;
+
+  // 인서 추가
+  const targetYear = calYear;
+  const targetMonth = calMonth + 1;
+  // console.log(targetYear, targetMonth);
+  const { data: totalData } = useTotalQuery(targetYear, targetMonth);
+  // console.log(totalData);
+  const totalAmount = totalData?.result?.budgetId;
+  // console.log(totalAmount);
+
+  const { data } = useBudgetDetailQuery(totalAmount || 0);
+  // console.log(data);
+
+  const isDaily = activeTab === '일일';
+  const {
+    data: monthlyData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useMonthlyQuery(targetYear, targetMonth, isDaily);
+
+  // console.log(monthlyData);
+
+  // 무한 스크롤
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!hasNextPage || isFetchingNextPage) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.5 },
+    );
+
+    const target = loadMoreRef.current;
+    if (target) observer.observe(target);
+
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  // 달력
+  const { data: calendarData } = useMonthlyCalendarQuery(
+    targetYear,
+    targetMonth,
+  );
+
+  // 달력 세부
+  const selectedYear = selectedDate
+    ? new Date(selectedDate).getFullYear()
+    : undefined;
+  const selectedMonth = selectedDate
+    ? new Date(selectedDate).getMonth() + 1
+    : undefined;
+  const selectedDay = selectedDate
+    ? new Date(selectedDate).getDate()
+    : undefined;
+
+  const { data: dailyData } = useDailyCalendarQuery(
+    selectedYear ?? 0,
+    selectedMonth ?? 0,
+    selectedDay ?? 0,
+    Boolean(selectedDate),
+  );
+  //
 
   const isCurrentMonth =
     calYear === today.getFullYear() && calMonth === today.getMonth();
@@ -252,13 +327,21 @@ const Money = () => {
     if (activeTab === '소비 루틴') loadRoutines();
   }, [activeTab]);
 
-  const deleteEntry = (id: number) => {
-    setEntries((prev) => {
-      const next = prev.filter((e) => e.id !== id);
-      localStorage.setItem('dailyEntries', JSON.stringify(next));
-      if (!next.length) setDeleteMode(false);
-      return next;
-    });
+  const deleteEntry = async (id: number) => {
+    try {
+      const res = await useDailyDeleteMutation(id);
+      if (res.isSuccess) {
+        alert('삭제 되었습니다.');
+        window.location.reload();
+        setEntries((prev) => {
+          const next = prev.filter((e) => e.id !== id);
+          if (!next.length) setDeleteMode(false);
+          return next;
+        });
+      }
+    } catch (err) {
+      console.error('삭제 실패', err);
+    }
   };
 
   const deleteFixed = (id: number) => {
@@ -276,14 +359,9 @@ const Money = () => {
     ? Math.min((usedAbs / monthBudget) * 100, 100)
     : 0;
 
-  const groups = entries.reduce<Record<string, Entry[]>>((acc, cur) => {
-    const key = cur.date.slice(0, 10);
-    acc[key] = acc[key] ? [...acc[key], cur] : [cur];
-    return acc;
-  }, {});
-
-  const groupArr = Object.entries(groups).sort(([a], [b]) => (a < b ? 1 : -1));
-  const selectedList = selectedDate ? groups[selectedDate] || [] : [];
+  const selectedList = selectedDate
+    ? (dailyData?.pages.flatMap((page) => page.result.items) ?? [])
+    : [];
 
   const onDragStart = (e: React.PointerEvent) => {
     if (!sheetOpen) return;
@@ -329,46 +407,53 @@ const Money = () => {
           <ArrowBtn
             src={LeftArrowActive}
             alt="left"
-            onClick={activeTab === '달력' ? prevMonth : undefined}
-            disabled={activeTab !== '달력'}
+            onClick={prevMonth}
+            disabled={false}
           />
 
-          <MonthText>
-            {activeTab === '달력'
-              ? `${calMonth + 1}월`
-              : `${new Date().getMonth() + 1}월`}
-          </MonthText>
+          <MonthText>{`${calMonth + 1}월`}</MonthText>
 
           <ArrowBtn
             style={{ transform: 'rotate(180deg)' }}
             src={LeftArrowActive}
             alt="right"
-            onClick={activeTab === '달력' ? nextMonth : undefined}
-            disabled={activeTab !== '달력' ? true : isCurrentMonth}
+            onClick={nextMonth}
+            disabled={isCurrentMonth}
           />
         </MonthRow>
 
         <TotalRow>
           <TotalSpent>
-            {comma(usedAbs)}원
+            {comma(totalData?.result?.totalConsumptionAmount ?? 0)}원
             <span>
               <span className="slash"> / </span>
-              {comma(monthBudget)}원
+              {comma(data?.result?.totalBudget ?? 0)}원
             </span>
           </TotalSpent>
           <EditBtn
             src={pencilIcon}
             alt="edit"
-            onClick={() => navigate('/budget-register')}
+            onClick={() =>
+              navigate('/budget-register', {
+                state: {
+                  year: targetYear,
+                  month: targetMonth,
+                  budgetId: totalData?.result?.budgetId,
+                },
+              })
+            }
           />
         </TotalRow>
 
         <BudgetCardWrapper>
           <Summary>
-            {monthBudget > 0 ? (
+            {(totalData?.result?.totalConsumptionAmount ?? 0) > 0 ? (
               <SummaryP>
-                한 달 예산 {comma(monthBudget)}원 중{' '}
-                <span>{comma(usedAbs)}원 </span>사용했어요!
+                한 달 예산 {comma(data?.result?.totalBudget ?? 0)}원 중{' '}
+                <span>
+                  {comma(totalData?.result?.totalConsumptionAmount ?? 0)}원{' '}
+                </span>
+                사용했어요!
               </SummaryP>
             ) : (
               <SummaryP>한 달 예산을 등록해주세요!</SummaryP>
@@ -387,7 +472,7 @@ const Money = () => {
                 <span
                   style={{ position: 'absolute', right: 0, bottom: '-0.6rem' }}
                 >
-                  {comma(monthBudget)}원
+                  {comma(totalData?.result?.totalConsumptionAmount ?? 0)}원
                 </span>
               </Below>
             </BarWrapper>
@@ -419,7 +504,8 @@ const Money = () => {
                 alt="plus"
               />
 
-              {entries.length > 0 && (
+              {(monthlyData?.pages?.[0]?.result?.monthlyHistory?.length ?? 0) >
+                0 && (
                 <DeleteToggleBtn
                   src={minusIcon}
                   alt="minus"
@@ -429,60 +515,68 @@ const Money = () => {
               )}
             </ButtonContainer>
 
-            {entries.length ? (
-              groupArr.map(([dateKey, list]) => {
-                const d = new Date(dateKey);
-                const day = d.getDate();
-                const wd = WEEKDAY[d.getDay()];
+            {(monthlyData?.pages?.[0]?.result?.monthlyHistory?.length ?? 0) >
+            0 ? (
+              monthlyData?.pages?.map((page) =>
+                page.result.monthlyHistory.map((day) => {
+                  const dateObj = new Date(day.date);
+                  const dayNum = dateObj.getDate();
+                  const wd = WEEKDAY[dateObj.getDay()];
 
-                return (
-                  <Section key={dateKey}>
-                    <DateRow>
-                      <span className="date">{`${day} ${wd}`}</span>
-                    </DateRow>
+                  return (
+                    <Section key={day.date}>
+                      <DateRow>
+                        <span className="date">{`${dayNum} ${wd}`}</span>
+                      </DateRow>
 
-                    {list.map((e) => (
-                      <ItemRow key={e.id}>
-                        <ItemRowLeft>
-                          <Dot $hide={deleteMode}>
-                            {e.memo === '[고정비]' ||
-                            e.category === '고정비' ? (
-                              <img src={fixedCostImage} alt="고정비" />
-                            ) : categoryImages[e.category] ? (
-                              <img
-                                src={categoryImages[e.category]}
-                                alt={e.category}
+                      {day.items.map((item) => (
+                        <ItemRow key={item.consumptionRecordId}>
+                          <ItemRowLeft>
+                            <Dot $hide={deleteMode}>
+                              {item.categoryName === '[고정비]' ||
+                              item.categoryName === '고정비' ? (
+                                <img src={fixedCostImage} alt="고정비" />
+                              ) : categoryImages[item.categoryName] ? (
+                                <img
+                                  src={categoryImages[item.categoryName]}
+                                  alt={item.categoryName}
+                                />
+                              ) : (
+                                item.categoryName
+                              )}
+                            </Dot>
+                            <span className="memo">{item.content}</span>
+                          </ItemRowLeft>
+
+                          <ItemRowRight>
+                            <span className="amount">
+                              {comma(item.amount)}원
+                            </span>
+
+                            {deleteMode && (
+                              <DeleteBtn
+                                src={closeIcon}
+                                alt="delete"
+                                onClick={() =>
+                                  deleteEntry(item.consumptionRecordId)
+                                }
                               />
-                            ) : (
-                              e.category
                             )}
-                          </Dot>
-
-                          <span className="memo">{e.item}</span>
-                        </ItemRowLeft>
-
-                        <ItemRowRight>
-                          <span className="amount">{comma(e.amount)}원</span>
-
-                          {deleteMode && (
-                            <DeleteBtn
-                              src={closeIcon}
-                              alt="delete"
-                              onClick={() => deleteEntry(e.id)}
-                            />
-                          )}
-                        </ItemRowRight>
-                      </ItemRow>
-                    ))}
-                  </Section>
-                );
-              })
+                          </ItemRowRight>
+                        </ItemRow>
+                      ))}
+                    </Section>
+                  );
+                }),
+              )
             ) : (
               <EmptyBox>
                 <EmptyCircle src={emptyImage} alt="비어 있음" />
                 <EmptyText>등록된 소비 내역이 없어요.</EmptyText>
               </EmptyBox>
             )}
+
+            {hasNextPage && <div ref={loadMoreRef} style={{ height: 40 }} />}
           </>
         )}
 
@@ -503,10 +597,8 @@ const Money = () => {
                     2,
                     '0',
                   )}-${String(d).padStart(2, '0')}`;
-                  const daySpent = (groups[dateStr] || []).reduce(
-                    (s, c) => s + c.amount,
-                    0,
-                  );
+
+                  const daySpent = calendarData?.result?.data?.[dateStr] ?? 0;
                   const isSelected = selectedDate === dateStr;
 
                   return (
@@ -519,7 +611,7 @@ const Money = () => {
                       </DayNumButton>
 
                       {daySpent !== 0 && (
-                        <SpendPill $minus={daySpent < 0}>
+                        <SpendPill $minus={true}>
                           -{comma(Math.abs(daySpent))}
                         </SpendPill>
                       )}
@@ -551,22 +643,23 @@ const Money = () => {
                 </CalDateTitle>
 
                 {selectedList.length ? (
-                  selectedList.map((e) => (
-                    <CalItemRow key={e.id}>
+                  selectedList.map((item) => (
+                    <CalItemRow key={item.consumptionRecordId}>
                       <CalDot>
-                        {e.memo === '[고정비]' || e.category === '고정비' ? (
+                        {item.categoryName === '[고정비]' ||
+                        item.categoryName === '고정비' ? (
                           <img src={fixedCostImage} alt="고정비" />
-                        ) : categoryImages[e.category] ? (
+                        ) : categoryImages[item.categoryName] ? (
                           <img
-                            src={categoryImages[e.category]}
-                            alt={e.category}
+                            src={categoryImages[item.categoryName]}
+                            alt={item.categoryName}
                           />
                         ) : (
-                          e.category
+                          item.categoryName
                         )}
                       </CalDot>
-                      <span className="memo">{e.item}</span>
-                      <span className="amount">{comma(e.amount)}원</span>
+                      <span className="memo">{item.content}</span>
+                      <span className="amount">{comma(item.amount)}원</span>
                     </CalItemRow>
                   ))
                 ) : (
