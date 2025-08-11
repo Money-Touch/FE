@@ -4,6 +4,8 @@ import Header from '../../components/header/header';
 import pencilIcon from '../../assets/images/budget/pencil.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import closeIcon from '../../assets/images/budget/Close.png';
+import { useFixedCostMutation } from '../../hooks/money/fixedcost/useFixedCostMutation';
+
 import {
   Wrap,
   Body,
@@ -42,6 +44,8 @@ const FixedCost = () => {
   const navigate = useNavigate();
   const outletCtx = useOutletContext<LayoutCtx | null>();
   const setHideFooter = outletCtx?.setHideFooter;
+  const fixedCostMutation = useFixedCostMutation();
+  const { isPending } = fixedCostMutation;
 
   useEffect(() => {
     setHideFooter?.(true);
@@ -77,17 +81,27 @@ const FixedCost = () => {
   const save = () => {
     if (!valid) return;
 
-    const entry = {
-      id: Date.now(),
-      category,
-      item: item.trim(),
-      amount: -Math.abs(amount),
-      memo,
-    };
-    const prev = JSON.parse(localStorage.getItem('fixedEntries') || '[]');
-    localStorage.setItem('fixedEntries', JSON.stringify([...prev, entry]));
-
-    navigate('/money', { replace: true, state: { tab: '고정비' } });
+    fixedCostMutation.mutate(
+      {
+        amount: Math.abs(amount),
+        categoryName: category,
+        content: item.trim(),
+        memo: memo || undefined,
+      },
+      {
+        onSuccess: (res) => {
+          if (res.isSuccess) {
+            alert('고정비가 등록되었습니다.');
+            navigate('/money', { replace: true, state: { tab: '고정비' } });
+          } else {
+            alert(res.message || '고정비 등록에 실패했습니다.');
+          }
+        },
+        onError: () => {
+          alert('고정비 등록에 실패했습니다.');
+        },
+      },
+    );
   };
 
   return (
@@ -150,8 +164,8 @@ const FixedCost = () => {
             onChange={(e) => setMemo(e.target.value)}
           />
 
-          <Save disabled={!valid} onClick={save}>
-            확인
+          <Save disabled={!valid || isPending} onClick={save}>
+            {isPending ? '등록 중...' : '확인'}
           </Save>
         </Section>
       </Body>

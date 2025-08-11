@@ -22,6 +22,7 @@ import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDe
 import { useDailyDeleteMutation } from '../../hooks/money/money/useDailyDeleteMutation';
 import { useMonthlyCalendarQuery } from '../../hooks/money/money/useMonthlyCalendarQuery';
 import { useDailyCalendarQuery } from '../../hooks/money/money/useDailyCalendarQuery';
+import { useFixedCostQuery } from '../../hooks/money/money/useFixedCostQuery';
 
 import {
   Container,
@@ -205,6 +206,38 @@ const Money = () => {
     selectedDay ?? 0,
     Boolean(selectedDate),
   );
+
+  // 고정비 목록 조회
+  const {
+    data: fixedListData,
+    fetchNextPage: fetchNextFixed,
+    hasNextPage: hasNextFixed,
+    isFetchingNextPage: isFetchingNextFixed,
+  } = useFixedCostQuery();
+
+  const fixedItems =
+    fixedListData?.pages.flatMap((p) => p.result.fixedConsumptions) ?? [];
+
+  const fixedLoadMoreRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (activeTab !== '고정비') return;
+    if (!hasNextFixed || isFetchingNextFixed) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          fetchNextFixed();
+        }
+      },
+      { threshold: 0.5 },
+    );
+
+    const target = fixedLoadMoreRef.current;
+    if (target) observer.observe(target);
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [activeTab, hasNextFixed, isFetchingNextFixed, fetchNextFixed]);
   //
 
   const isCurrentMonth =
@@ -683,7 +716,7 @@ const Money = () => {
                 alt="plus"
               />
 
-              {fixed.length > 0 && (
+              {fixedItems.length > 0 && (
                 <DeleteToggleBtn
                   src={minusIcon}
                   alt="minus"
@@ -693,15 +726,17 @@ const Money = () => {
               )}
             </ButtonContainer>
 
-            {fixed.length ? (
+            {fixedItems.length ? (
               <Section2>
-                {fixed.map((e) => (
-                  <ItemRow key={e.id}>
+                {fixedItems.map((e) => (
+                  <ItemRow key={e.fixedConsumptionId}>
                     <ItemRowLeft>
                       <Dot>
                         <img src={fixedCostImage} alt="fixed cost" />
                       </Dot>
-                      <span className="memo">{e.item}</span>
+                      <span className="memo">
+                        {e.memo || e.categoryName || ''}
+                      </span>
                     </ItemRowLeft>
 
                     <ItemRowRight>
@@ -711,12 +746,16 @@ const Money = () => {
                         <DeleteBtn
                           src={closeIcon}
                           alt="close"
-                          onClick={() => deleteFixed(e.id)}
+                          onClick={() => deleteFixed(e.fixedConsumptionId)}
                         />
                       )}
                     </ItemRowRight>
                   </ItemRow>
                 ))}
+
+                {hasNextFixed && (
+                  <div ref={fixedLoadMoreRef} style={{ height: 40 }} />
+                )}
               </Section2>
             ) : (
               <EmptyBox>
