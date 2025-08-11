@@ -162,12 +162,18 @@ export const Below = styled.div<{ $fillPercent: number }>`
     align-items: center;
     position: absolute;
     bottom: -0.6rem;
-    left: ${({ $fillPercent }) => `calc(${$fillPercent}% - 1.5rem)`};
+    left: ${({ $fillPercent }) =>
+      $fillPercent === 0 ? '0' : `calc(${$fillPercent}% - 1.5rem)`};
 
     img {
       width: 1.6rem;
       height: 1.5rem;
       margin-bottom: 1.4rem;
+    }
+
+    span {
+      visibility: ${({ $fillPercent }) =>
+        $fillPercent === 0 ? 'hidden' : 'visible'};
     }
   }
 `;
@@ -177,16 +183,17 @@ export const TabMenu = styled.nav`
   height: 4.3rem;
   display: flex;
   justify-content: center;
-  background: ${colors.white};
+  // background: ${colors.white};
   border-radius: 1.5rem 1.5rem 0 0;
   border-bottom: 0.1rem solid ${colors.G7};
   box-shadow: 0 0 1rem 0 #0000000d;
 `;
 
 export const TabItemMenu = styled.div`
-  width: 31.2rem;
   display: flex;
+  gap: 5.6rem;
   justify-content: space-between;
+  padding-top: 1rem;
 `;
 
 export const TabItem = styled.button<{ $active: boolean }>`

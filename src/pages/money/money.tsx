@@ -582,18 +582,22 @@ const Money = () => {
 
         {activeTab === '고정비' && (
           <>
-            <PlusBtn onClick={() => navigate('/fixed-cost')}>
-              <img src={plusIcon} alt="add" />
-            </PlusBtn>
+            <ButtonContainer>
+              <PlusBtn
+                onClick={() => navigate('/fixed-cost')}
+                src={plusIcon}
+                alt="plus"
+              />
 
-            {fixed.length > 0 && (
-              <DeleteToggleBtn
-                $active={fixedDel}
-                onClick={() => setFixedDel((v) => !v)}
-              >
-                –
-              </DeleteToggleBtn>
-            )}
+              {fixed.length > 0 && (
+                <DeleteToggleBtn
+                  src={minusIcon}
+                  alt="minus"
+                  $active={fixedDel}
+                  onClick={() => setFixedDel((v) => !v)}
+                />
+              )}
+            </ButtonContainer>
 
             {fixed.length ? (
               <Section>
@@ -607,7 +611,11 @@ const Money = () => {
                     <span className="amount">{comma(e.amount)}원</span>
 
                     {fixedDel && (
-                      <DeleteBtn onClick={() => deleteFixed(e.id)}>×</DeleteBtn>
+                      <DeleteBtn
+                        src={closeIcon}
+                        alt="close"
+                        onClick={() => deleteFixed(e.id)}
+                      />
                     )}
                   </ItemRow>
                 ))}
