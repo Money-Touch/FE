@@ -72,15 +72,17 @@ function record() {
 
   const handleSubmit = () => {
     if (!isFormValid) return;
-    console.log('data:', {
-      formData,
-      file,
-    });
+    console.log('data:', { formData, file });
+
     submitRecord(
       { formData, file },
       {
         onSuccess: () => {
-          navigate('/budget-register');
+          if (formData.isPublic) {
+            navigate('/feed');
+          } else {
+            navigate('/home');
+          }
         },
       },
     );
