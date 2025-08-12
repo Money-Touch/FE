@@ -16,9 +16,11 @@ const fetchResult = async (): Promise<ResultProps> => {
   return response.data;
 };
 
-export const useResultQuery = () => {
+export const useResultQuery = ({ enabled = true } = {}) => {
   return useQuery<ResultProps>({
     queryKey: ['result'],
     queryFn: fetchResult,
+    enabled,
+    retry: false,
   });
 };

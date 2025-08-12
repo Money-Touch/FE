@@ -12,6 +12,8 @@ export const useRefreshToken = () => {
       const res = await API.post('/api/auth/refresh', body, {
         headers: {
           Authorization: `Bearer ${body.refreshToken}`,
+          'Content-Type': 'application/json',
+          Accept: '*/*',
         },
       });
       return res.data;

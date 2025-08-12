@@ -3,18 +3,24 @@ import { API } from '../../../apis/axios';
 import type {
   RequestEmailCodePayload,
   VerifyEmailCodePayload,
-  // SignUpPayload,
+  EmailSendResponse,
+  VerifyEmailCodeResponse,
 } from '../../../types/auth/signup/setting';
 
 // 이메일 인증 요청
-const requestEmailCode = async ({ email }: RequestEmailCodePayload) => {
-  const response = await API.post('/users', { email });
+const requestEmailCode = async ({ to, isResend }: RequestEmailCodePayload) => {
+  const response = await API.get<EmailSendResponse>('/api/user/email/send', {
+    params: { to, isResend },
+  });
   return response.data;
 };
 
 // 인증번호 검증 요청
 const verifyEmailCode = async ({ email, code }: VerifyEmailCodePayload) => {
-  const response = await API.post('/users', { email, code });
+  const response = await API.get<VerifyEmailCodeResponse>(
+    '/api/user/email/verify',
+    { params: { email, code } },
+  );
   return response.data;
 };
 

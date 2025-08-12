@@ -15,6 +15,7 @@ const Mbti = ({ onNext, onBack }: MbtiProps) => {
   const handleSkip = () => {
     localStorage.removeItem('userId');
     localStorage.removeItem('profileImgUrl');
+    localStorage.removeItem('nickname');
     navigate('/home');
   };
 

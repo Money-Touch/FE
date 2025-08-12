@@ -8,7 +8,7 @@ import type {
 export const kakaoLogin = async (
   payload: KakaoLoginRequest,
 ): Promise<KakaoLoginResponse> => {
-  console.log('인가코드 전송', payload);
+  // console.log('인가코드 전송', payload);
   const res = await API.get<KakaoLoginResponse>('/auth/login/kakao', {
     params: payload,
   });

@@ -19,27 +19,59 @@ interface ProfileFormProps {
 const ProfileForm = ({ onNext }: ProfileFormProps) => {
   const [nicknameCheck, setNicknameCheck] = useState('');
   const [shouldCheck, setShouldCheck] = useState(false);
-
-  const { data } = useProfileNicknameQuery(nicknameCheck, shouldCheck);
-  useEffect(() => {
-    if (data) {
-      console.log('닉네임 중복확인 응답:', data);
-    }
-  }, [data]);
-
-  const handleCheckNickname = () => {
-    const nickname = methods.getValues('nickname');
-    setNicknameCheck(nickname);
-    setShouldCheck(true);
-  };
+  const [isNicknameOk, setIsNicknameOk] = useState<boolean | null>(null);
 
   const methods = useForm<z.infer<typeof profileSchema>>({
     resolver: zodResolver(profileSchema),
     mode: 'onChange',
   });
-
-  const { handleSubmit, formState, register } = methods;
+  const { handleSubmit, formState, register, setError, clearErrors, watch } =
+    methods;
   const { errors, isValid } = formState;
+
+  const nicknameValue = watch('nickname');
+
+  const { data, isFetching } = useProfileNicknameQuery(
+    nicknameCheck,
+    shouldCheck,
+  );
+
+  useEffect(() => {
+    setIsNicknameOk(null);
+    setShouldCheck(false);
+    if (errors.nickname?.type === 'server') {
+      clearErrors('nickname');
+    }
+  }, [nicknameValue]);
+
+  useEffect(() => {
+    if (!data) return;
+
+    if (data.isSuccess) {
+      setIsNicknameOk(true);
+      clearErrors('nickname');
+      alert('사용 가능한 닉네임입니다.');
+    } else {
+      setIsNicknameOk(false);
+      setError('nickname', {
+        type: 'server',
+        message: data.message || '사용할 수 없는 닉네임입니다.',
+      });
+    }
+  }, [data, setError, clearErrors]);
+
+  const handleCheckNickname = () => {
+    const nickname = methods.getValues('nickname');
+    if (!nickname || nickname.trim().length < 2) {
+      setError('nickname', {
+        type: 'manual',
+        message: '닉네임은 2자 이상 입력해주세요.',
+      });
+      return;
+    }
+    setNicknameCheck(nickname.trim());
+    setShouldCheck(true);
+  };
 
   const { preview, fileInputRef, handleImgClick, handleChange } =
     useProfileImage();
@@ -47,10 +79,16 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
   const { mutate: login } = useLoginMutation();
   const { mutate: uploadImage } = useProfileMutation();
 
-  // 폼 제출
   const onSubmit = (formDataInput: z.infer<typeof profileSchema>) => {
-    const file = fileInputRef.current?.files?.[0];
+    if (isNicknameOk !== true) {
+      setError('nickname', {
+        type: 'server',
+        message: '닉네임 중복확인을 완료해주세요.',
+      });
+      return;
+    }
 
+    const file = fileInputRef.current?.files?.[0];
     const email = localStorage.getItem('email') || '';
     const password = localStorage.getItem('password') || '';
     const agreeTerms = JSON.parse(localStorage.getItem('agreeTerms') || '[]');
@@ -73,23 +111,18 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
             return;
           }
 
-          console.log('회원가입 성공:', userId);
-
           login(
             { email, password },
             {
               onSuccess: (loginRes) => {
                 localStorage.clear();
                 const { accessToken, refreshToken } = loginRes.result;
-
                 localStorage.setItem('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken);
-
-                console.log('로그인 성공');
+                localStorage.setItem('nickname', nickname);
                 onNext();
               },
-              onError: (err) => {
-                console.error('로그인 실패:', err);
+              onError: () => {
                 alert(
                   '자동 로그인에 실패했습니다. 로그인 페이지로 이동해 주세요.',
                 );
@@ -98,14 +131,12 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
             },
           );
         },
-        onError: (err) => {
-          console.error('회원가입 실패:', err);
+        onError: () => {
           alert('회원가입에 실패하였습니다.');
         },
       });
     };
 
-    // 이미지 있을 시
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
@@ -117,12 +148,9 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
             alert('프로필 이미지 업로드에 실패했습니다.');
             return;
           }
-
-          console.log('이미지 업로드 성공:', profileImgUrl);
           proceedToSignUp(profileImgUrl);
         },
-        onError: (err) => {
-          console.error('이미지 업로드 실패:', err);
+        onError: () => {
           alert('프로필 이미지 업로드에 실패하였습니다.');
         },
       });
@@ -153,15 +181,18 @@ const ProfileForm = ({ onNext }: ProfileFormProps) => {
             name="nickname"
             placeholder="닉네임 (2~10자)"
             onClickButton={handleCheckNickname}
+            buttonDisabled={!nicknameValue || nicknameValue.trim().length < 2}
+            loading={isFetching}
+            loadingText="확인 중..."
           />
         </div>
       </form>
 
       <div className={`${S.BottomContainer} !mt-[25.3rem]`}>
         <button
-          className={S.NextButton(isValid)}
+          className={S.NextButton(isValid && isNicknameOk === true)}
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid || isNicknameOk !== true}
           form="profileForm"
         >
           다음

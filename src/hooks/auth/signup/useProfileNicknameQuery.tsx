@@ -5,7 +5,7 @@ export const useProfileNicknameQuery = (nickname: string, enabled: boolean) => {
   return useQuery({
     queryKey: ['nicknameCheck', nickname],
     queryFn: async () => {
-      const res = await API.get('/users/1', {
+      const res = await API.get('/api/user/nickname', {
         params: { nickname },
       });
       return res.data;
