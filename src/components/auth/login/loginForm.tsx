@@ -18,7 +18,7 @@ const LoginForm = () => {
     const searchParams = new URLSearchParams(location.search);
     const code = searchParams.get('code');
 
-    console.log('현재 URL에서 추출한 인가 코드:', code);
+    // console.log('현재 URL에서 추출한 인가 코드:', code);
 
     // 카카오 로그인
     if (code) {
