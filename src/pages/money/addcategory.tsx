@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import leftArrow from '../../assets/images/header/leftArrow.png';
+import Header from '../../components/header/header';
+import CircleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import {
   Wrap,
-  Header,
-  IconBtnLeft,
-  Title,
   Body,
   InputWrapper,
   Input,
+  CircleClose,
   CharCount,
+  SubmitBtnContainer,
   SubmitBtn,
 } from '../../styles/budget/addcategory.styles';
 
@@ -42,12 +42,7 @@ const AddCategory = () => {
 
   return (
     <Wrap>
-      <Header>
-        <IconBtnLeft onClick={() => navigate(from)}>
-          <img src={leftArrow} alt="back" />
-        </IconBtnLeft>
-        <Title>카테고리 추가</Title>
-      </Header>
+      <Header title="카테고리 추가" />
 
       <Body>
         <InputWrapper>
@@ -56,15 +51,23 @@ const AddCategory = () => {
             value={category}
             onChange={handleChange}
           />
+          <CircleClose
+            src={CircleCloseIcon}
+            alt="delete"
+            onClick={() => setCategory('')}
+          />
           <CharCount>
-            {category.length}/{MAX_LEN}
+            {category.length}
+            <span>/{MAX_LEN}</span>
           </CharCount>
         </InputWrapper>
       </Body>
 
-      <SubmitBtn disabled={!category.trim()} onClick={handleSubmit}>
-        등록
-      </SubmitBtn>
+      <SubmitBtnContainer>
+        <SubmitBtn disabled={!category.trim()} onClick={handleSubmit}>
+          등록
+        </SubmitBtn>
+      </SubmitBtnContainer>
     </Wrap>
   );
 };

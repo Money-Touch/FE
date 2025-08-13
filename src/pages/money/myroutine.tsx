@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import leftArrow from '../../assets/images/header/leftArrow.png';
+import Header from '../../components/header/header';
 import {
   Wrap,
-  Header,
-  IconBtnLeft,
-  H1,
   Body,
   Section,
   Label,
@@ -22,7 +18,6 @@ const comma = (v: string | number) =>
   String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
 const MyRoutine = () => {
-  const navigate = useNavigate();
   const [routineTitle, setRoutineTitle] = useState('소비 루틴');
   const [monthBudget, setMonthBudget] = useState(0);
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
@@ -69,12 +64,7 @@ const MyRoutine = () => {
 
   return (
     <Wrap>
-      <Header>
-        <IconBtnLeft onClick={() => navigate(-1)}>
-          <img src={leftArrow} alt="back" />
-        </IconBtnLeft>
-        <H1>{routineTitle}</H1>
-      </Header>
+      <Header title={routineTitle} />
 
       <Body>
         <Section>
@@ -92,13 +82,13 @@ const MyRoutine = () => {
             {DEFAULT_CATEGORIES.map((c, i) => (
               <CatLi key={c}>
                 <span>{c}</span>
-                <span>{comma(catBudget[i])}원</span>
+                <span className="wonP">{comma(catBudget[i])}원</span>
               </CatLi>
             ))}
             {customCats.map((name, i) => (
               <CatLi key={name}>
                 <span>{name}</span>
-                <span>{comma(customBudget[i])}원</span>
+                <span className="wonP">{comma(customBudget[i])}원</span>
               </CatLi>
             ))}
           </CatUl>

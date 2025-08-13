@@ -3,231 +3,202 @@ import colors from '../common/colors';
 
 export const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
   background: ${colors.B1};
   display: flex;
   flex-direction: column;
-`;
-
-export const Header = styled.header`
-  position: relative;
-  height: 56px;
-  border-bottom: 1px solid ${colors.G8};
-  display: flex;
-  justify-content: center;
   align-items: center;
 `;
 
-export const HeaderTitle = styled.h1`
-  font-size: 18px;
-  font-weight: 700;
-`;
-
-const IconBase = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  padding: 0;
-
-  img,
-  svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-    object-fit: contain;
-  }
-`;
-
-export const IconBtnLeft = styled(IconBase)`
-  left: 16px;
+export const TopContainer = styled.div`
+  width: 100%;
+  padding: 0 2.4rem;
 `;
 
 export const GreetingCard = styled.section`
-  margin: 16px;
-  padding: 24px 28px;
+  width: 100%;
+  height: 11rem;
   background: linear-gradient(135deg, ${colors.subColor3} 0%, #4be3a5 100%);
-  border-radius: 20px;
+  border-radius: 1.5rem;
   display: flex;
-  justify-content: space-between;
+  gap: 2.2rem;
   align-items: center;
+  margin: 1rem 0 2.4rem 0;
 `;
 
-export const GreetText = styled.div`
-  flex: 1;
-  margin-right: 16px;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
+export const GreetText = styled.p`
+  margin-left: 3.9rem;
+  color: ${colors.white};
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.8rem;
+
   span {
-    font-size: 22px;
-    font-weight: 700;
-  }
-  p {
-    font-size: 20px;
     font-weight: 500;
-    margin: 0;
   }
 `;
 
-export const MiniCard = styled.div`
-  width: 72px;
-  height: 72px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-
-  img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    margin-left: -40px;
-    transform: scale(1.25);
-  }
+export const MiniCard = styled.img`
+  width: 8.4rem;
+  height: 9.2rem;
 `;
 
 export const MonthRow = styled.div`
-  margin: 0 16px 4px;
   display: flex;
+  width: 100%;
   align-items: center;
+  gap: 0.4rem;
 `;
 
-export const ArrowBtn = styled.button<{ disabled?: boolean }>`
-  background: none;
-  border: none;
-  font-size: 18px;
-  padding: 2px 4px;
+export const ArrowBtn = styled.img<{ disabled?: boolean }>`
+  width: 2.4rem;
+  height: 2.4rem;
   cursor: pointer;
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 `;
 
 export const MonthText = styled.span`
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 8px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: ${colors.G1};
 `;
 
 export const TotalRow = styled.div`
-  margin: 0 16px 8px;
+  margin: 0.6rem 0;
+  width: 100%;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 `;
 
-export const TotalSpent = styled.span`
-  font-size: 24px;
+export const TotalSpent = styled.p`
+  font-size: 2.4rem;
   font-weight: 700;
-`;
+  color: ${colors.G1};
 
-export const Slash = styled.span`
-  margin: 0 4px;
-  font-size: 18px;
-  color: ${colors.G3};
-`;
+  .slash {
+    font-size: 1.6rem;
+  }
 
-export const TotalBudget = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  color: ${colors.G3};
-`;
-
-export const EditBtn = styled.button`
-  background: none;
-  border: none;
-  padding-left: 4px;
-  cursor: pointer;
-  img {
-    width: 18px;
-    height: 18px;
+  span {
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: ${colors.G4};
   }
 `;
 
+export const EditBtn = styled.img`
+  width: 1.8rem;
+  height: 1.8rem;
+  cursor: pointer;
+  margin-top: 0.2rem;
+`;
+
 export const BudgetCardWrapper = styled.div`
-  margin: 0 16px 12px;
-  padding: 20px 16px 0;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-  font-size: 14px;
+  width: 100%;
+  height: 10.1rem;
+  margin: 0.6rem 0 2.4rem 0;
+  padding: 0 1.5rem;
+  background: ${colors.white};
+  border-radius: 1.5rem;
+  box-shadow: 0 0 1rem 0 #0000000d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const Summary = styled.p`
-  font-weight: 600;
-  line-height: 1.4;
-  color: ${colors.G4};
+export const Summary = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 0.8rem;
 `;
 
-export const Used = styled.span`
-  color: ${colors.mainColor1};
+export const SummaryP = styled.p`
+  width: 100%;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: ${colors.G3};
+
+  span {
+    font-weight: 700;
+    color: ${colors.subColor3};
+  }
 `;
 
 export const BarWrapper = styled.div`
+  width: 100%;
   position: relative;
-  margin-top: 16px;
+  height: 3.9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Bar = styled.div`
-  width: 100%;
-  height: 6px;
+  width: 98%;
+  height: 0.6rem;
   background: ${colors.G8};
-  border-radius: 3px;
+  border-radius: 1rem;
   overflow: hidden;
 `;
 
 export const Fill = styled.div`
   height: 100%;
   background: ${colors.mainColor1};
+  border-radius: 1rem;
   transition: width 0.25s ease;
 `;
 
 export const Below = styled.div<{ $fillPercent: number }>`
-  margin-top: 8px;
-  position: relative;
-  height: 32px;
-  font-size: 13px;
-  color: ${colors.G4};
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: ${colors.G5};
 
   .used-amount {
-    position: absolute;
-    left: ${({ $fillPercent }) => $fillPercent}%;
-    transform: translateX(-50%);
-    top: -30px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    bottom: -0.6rem;
+    left: ${({ $fillPercent }) =>
+      $fillPercent === 0 ? '0' : `calc(${$fillPercent}% - 1.5rem)`};
 
     img {
-      width: 16px;
-      height: 16px;
-      margin-bottom: 2px;
+      width: 1.6rem;
+      height: 1.5rem;
+      margin-bottom: 1.4rem;
     }
+
     span {
-      position: relative;
-      top: 12px;
+      visibility: ${({ $fillPercent }) =>
+        $fillPercent === 0 ? 'hidden' : 'visible'};
     }
   }
 `;
 
 export const TabMenu = styled.nav`
-  display: flex;
   width: 100%;
-  border-bottom: 1px solid ${colors.G8};
+  height: 4.3rem;
+  display: flex;
+  justify-content: center;
+  // background: ${colors.white};
+  border-radius: 1.5rem 1.5rem 0 0;
+  border-bottom: 0.1rem solid ${colors.G7};
+  box-shadow: 0 0 1rem 0 #0000000d;
+`;
+
+export const TabItemMenu = styled.div`
+  display: flex;
+  gap: 5.6rem;
+  justify-content: space-between;
+  padding-top: 1rem;
 `;
 
 export const TabItem = styled.button<{ $active: boolean }>`
-  flex: 1;
-  padding: 12px 0;
-  font-size: 14px;
-  font-weight: 600;
-  background: none;
-  border: none;
+  font-size: 1.5rem;
+  font-weight: 500;
   cursor: pointer;
   position: relative;
 
@@ -240,111 +211,103 @@ export const TabItem = styled.button<{ $active: boolean }>`
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 56%;
-        max-width: 40px;
-        height: 3px;
+        width: 4.4rem;
+        height: 0.4rem;
         background: ${colors.mainColor1};
-        border-radius: 1.5px;
+        border-radius: 1rem;
       }
     `}
 `;
 
 export const ContentArea = styled.div`
-  flex: 1;
+  background: ${colors.white};
+  width: 100%;
   position: relative;
-  padding-top: 44px;
+  padding-top: 2.71rem;
 `;
 
-export const PlusBtn = styled.button<{ $shifted: boolean }>`
-  position: absolute;
-  top: ${({ $shifted }) => ($shifted ? '12px' : '7px')};
-  right: ${({ $shifted }) => ($shifted ? '56px' : '25px')};
-  width: 32px;
-  height: 32px;
+export const ButtonContainer = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  cursor: pointer;
-
-  img {
-    width: 24px;
-    height: 24px;
-  }
+  justify-content: flex-end;
+  padding-right: 2.4rem;
+  gap: 1.6rem;
 `;
 
-export const DeleteToggleBtn = styled.button<{ $active: boolean }>`
-  position: absolute;
-  top: 7px;
-  right: 25px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  font-size: 36px;
-  font-weight: bold;
-  line-height: 1;
+export const PlusBtn = styled.img`
+  width: 2.4rem;
+  height: 2.4rem;
   cursor: pointer;
+`;
+
+export const DeleteToggleBtn = styled(PlusBtn)<{ $active: boolean }>`
   color: ${({ $active }) => ($active ? colors.mainColor1 : colors.G3)};
 `;
 
 export const Section = styled.section`
-  padding: 0 16px;
-  margin-bottom: 20px;
+  padding: 2rem 2.4rem 2.4rem 2.4rem;
+  border-bottom: 0.1rem solid ${colors.G7};
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+`;
+
+export const Section2 = styled(Section)`
+  padding: 2rem 2.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
 `;
 
 export const DateRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
+  width: 100%;
+  margin-bottom: 1.9rem;
 
   .date {
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: ${colors.G1};
   }
 `;
 
 export const ItemRow = styled.div`
+  width: 100%;
+  height: 4rem;
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid ${colors.G8};
-  border-radius: 10px;
+  justify-content: space-between;
+  margin-bottom: 1.8rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: ${colors.G1};
 
-  .memo {
-    flex: 1;
-    font-size: 14px;
-  }
-
-  .amount {
-    font-size: 14px;
-    font-weight: 600;
+  &:last-of-type {
+    margin: 0;
   }
 `;
 
-export const DeleteBtn = styled.button`
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: ${colors.G3};
-  margin-left: 4px;
+export const ItemRowLeft = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+`;
+
+export const ItemRowRight = styled(ItemRowLeft)`
+  gap: 2.8rem;
+`;
+
+export const DeleteBtn = styled.img`
   cursor: pointer;
+  width: 2.4rem;
+  height: 2.4rem;
 `;
 
-export const Dot = styled.span`
-  flex: 0 0 44px;
-  height: 44px;
+export const Dot = styled.span<{ $hide?: boolean }>`
+  width: 4rem;
+  height: 4rem;
   border-radius: 50%;
-  background: #f6f6f6;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: ${({ $hide }) => ($hide ? 'none' : 'flex')};
 
   img {
     width: 100%;
@@ -353,119 +316,100 @@ export const Dot = styled.span`
   }
 `;
 
+// 비어있을 때
 export const EmptyBox = styled.div`
-  margin-top: 64px;
+  margin: 12.3rem 0 25.9rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 60px;
-  color: ${colors.G4};
+  text-align: center;
+  gap: 2rem;
 `;
 
 export const EmptyCircle = styled.img`
-  width: 140px;
-  height: 180px;
-  object-fit: contain;
-  margin: 0 auto 12px auto;
-  display: block;
+  width: 13.822rem;
+  height: 13rem;
+  margin-right: 1rem;
 `;
 
 export const EmptyText = styled.p`
-  font-size: 14px;
+  font-size: 1.6rem;
+  color: ${colors.G1};
   font-weight: 500;
-  margin: 0;
-  line-height: 1.4;
-  text-align: center;
-  width: 100%;
 `;
 
 export const RoutineCardList = styled.div`
+  margin: 1.8rem 2.4rem;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 8px 16px 40px;
+  gap: 1rem;
 `;
 
 export const RoutineWideCard = styled.button`
-  display: flex;
   width: 100%;
-  gap: 14px;
-  padding: 14px 16px;
-  border: none;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  height: 10.6rem;
+  padding: 0 1.5rem;
+  gap: 1.1rem;
+  border-radius: 1.5rem;
+  background: ${colors.white};
+  box-shadow: 0 0 1rem 0 #0000000d;
   cursor: pointer;
-  position: relative;
+  justify-content: flex-start;
   align-items: center;
-
-  &:active {
-    transform: translateY(1px);
-  }
 `;
 
 export const PreviewBox = styled.div`
-  width: 84px;
-  height: 84px;
-  border-radius: 12px;
+  width: 8.4rem;
+  height: 8.4rem;
+  flex: 0 0 8.4rem;
+  border-radius: 1rem;
   background: ${colors.G8};
-  flex-shrink: 0;
-  align-self: center;
+  opacity: 0.8;
+  box-shadow: 0 0 1rem 0 #0000000d;
 `;
 
 export const RoutineContent = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding-top: 2px;
+  width: 100%;
 `;
 
 export const DateLine = styled.div`
-  font-size: 11px;
-  font-weight: 500;
-  color: ${colors.G4};
+  font-size: 0.8rem;
+  font-weight: 300;
+  color: ${colors.G3};
   text-align: left;
 `;
 
 export const TitleRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
-  text-align: left;
-  margin-top: -8px;
+  justify-content: space-between;
 
   .title {
-    flex: 1;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 500;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: ${colors.G2};
+    color: ${colors.G1};
   }
 `;
 
 export const ArrowIcon = styled.img`
-  position: absolute;
-  right: 23px;
-  top: 42px;
-  transform: translateY(-50%);
-  width: 11px;
-  height: 11px;
+  width: 0.8rem;
+  height: auto;
 `;
 
 export const TagsRow = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  position: relative;
-  top: -6px;
+  gap: 0.6rem;
 
   .tag {
-    font-size: 11px;
+    font-size: 1.1rem;
+    font-weight: 300;
     color: ${colors.G4};
   }
 `;
@@ -473,84 +417,87 @@ export const TagsRow = styled.div`
 export const UserRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
+  margin-top: 2.1rem;
+  gap: 0.6rem;
 
   .nick {
-    font-size: 12px;
-    font-weight: 600;
-    color: ${colors.G3};
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: ${colors.G1};
   }
 `;
 
 export const Avatar = styled.div`
-  width: 24px;
-  height: 24px;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 50%;
   background: ${colors.G7};
 `;
 
 export const CalendarWrap = styled.div`
-  padding: 0 16px 20px;
+  padding: 0 2.4rem;
 `;
 
 export const WeekRow = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  font-size: 12px;
-  color: ${colors.G4};
-  margin-bottom: 6px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: ${colors.G1};
 `;
 
-export const WeekCell = styled.div``;
+export const WeekCell = styled.div`
+  margin-bottom: 2rem;
+`;
 
 export const DayGrid = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  row-gap: 18px;
-  min-height: 260px;
+  row-gap: 1.6rem;
 `;
 
-export const WeekDivider = styled.div`
-  grid-column: 1 / -1;
-  border-top: 1px solid ${colors.G7};
-  margin: 4px 0 1px;
-`;
+export const WeekDivider = styled.div``;
 
 export const DayCell = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 58px;
+  height: 7.6rem;
   position: relative;
 `;
 
 export const DayNumButton = styled.button<{ $selected: boolean }>`
-  width: 28px;
-  height: 28px;
+  width: 2.7rem;
+  height: 2.7rem;
   border-radius: 50%;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 500;
   display: grid;
   place-items: center;
   padding: 0;
-  border: ${({ $selected }) => ($selected ? '0.5px solid #00D1B5' : 'none')};
-  background: ${({ $selected }) => ($selected ? '#DDFAEA' : 'transparent')};
-  color: ${({ $selected }) => ($selected ? '#00D1B5' : colors.G1)};
+  border: ${({ $selected }) =>
+    $selected ? `0.05rem solid ${colors.mainColor1}` : 'none'};
+  background: ${({ $selected }) =>
+    $selected ? `${colors.subColor5}` : 'transparent'};
+  color: ${({ $selected }) => ($selected ? `${colors.mainColor1}` : colors.G1)};
 `;
 
 export const SpendPill = styled.div<{ $minus: boolean }>`
-  margin: 4px auto 0;
+  margin-top: 0.5rem;
   padding: 0 4px;
-  height: 16px;
-  min-width: 28px;
-  border-radius: 5px;
-  font-size: 10px;
-  line-height: 16px;
+  height: 1.6rem;
+  min-width: 4.1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
   color: ${colors.subColor1};
-  background: ${({ $minus }) => ($minus ? '#DDFAEA' : colors.G3)};
+  background: ${({ $minus }) =>
+    $minus ? `${colors.subColor5}` : 'transparent'};
 `;
 
+// 여기서부터 수정
 export const CalListSection = styled.section`
   padding: 16px;
   background: #f0fff9;
