@@ -92,9 +92,10 @@ export const FeedDetail: React.FC = () => {
 
   return (
     <>
+      <Header title={categoryName} />
+
       <div className={S.container}>
         <div className={S.contentContainer}>
-          <Header title={categoryName} />
           <DetailPostItem
             data={data}
             wiseCount={reaction.wiseCount}
