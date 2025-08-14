@@ -10,7 +10,7 @@ export interface CategoryInfo {
   budgetCategoryName: string;
 }
 
-export type MyReactionType = 'WISE' | 'WASTE' | null;
+export type MyReactionType = 'WISE' | 'WASTE' | 'NONE' | null;
 
 export interface FeedDetailResultDTO {
   consumptionRecordId: number;
