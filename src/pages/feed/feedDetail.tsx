@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import * as S from '../../styles/feed/feedDetail.style';
 
@@ -14,27 +14,21 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 
 import CommentInput from '../../components/feed/feedDetail/CommentInput';
-import CommentItem from '../../components/feed/feedDetail/CommentItem';
-
-import { handleLike, handleDislike } from '../../utils/feed/reaction';
-import type { Post, PostStates, Comment } from '../../types/feed/feed';
-
-import { Posts } from '../../mocks/feed/feed';
+import { useFeedDetail } from '../../hooks/feed/useFeedDetail';
 
 export const FeedDetail: React.FC = () => {
   const { postId } = useParams();
-  const numericPostId = Number(postId);
+  const consumptionRecordId = Number(postId);
+  const { data } = useFeedDetail(consumptionRecordId);
 
-  const [posts, setPosts] = useState<Post[]>(Posts);
-  const [postStates, setPostStates] = useState<PostStates>({});
-  const [likedComments, setLikedComments] = useState<{
-    [commentId: number]: boolean;
-  }>({});
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
   const [mentionName, setMentionName] = useState<string | null>(null);
 
-  const post = posts.find((p) => p.id === numericPostId);
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisliked] = useState(false);
+  const [wiseCount, setWiseCount] = useState(0);
+  const [wasteCount, setWasteCount] = useState(0);
 
   useEffect(() => {
     const footer = document.querySelector('footer');
@@ -45,14 +39,13 @@ export const FeedDetail: React.FC = () => {
     };
   }, [isReplying]);
 
-  if (!post) {
-    return <div className="text-center p-10">게시글을 찾을 수 없습니다.</div>;
-  }
-
-  const { liked, disliked } = postStates[post.id] || {
-    liked: false,
-    disliked: false,
-  };
+  useEffect(() => {
+    if (!data) return;
+    setLiked(data.myReaction === 'WISE');
+    setDisliked(data.myReaction === 'WASTE');
+    setWiseCount(data.wiseCount ?? 0);
+    setWasteCount(data.wasteCount ?? 0);
+  }, [data]);
 
   const handleComment = (mention?: string) => {
     setIsReplying(true);
@@ -65,46 +58,71 @@ export const FeedDetail: React.FC = () => {
     setReplyText('');
   };
 
-  const toggleLike = (commentId: number) => {
-    setLikedComments((prev) => ({
-      ...prev,
-      [commentId]: !prev[commentId],
-    }));
+  const onToggleWise = () => {
+    if (!data) return;
+    if (liked) {
+      setLiked(false);
+      setWiseCount((c) => Math.max(0, c - 1));
+    } else {
+      setLiked(true);
+      setWiseCount((c) => c + 1);
+      if (disliked) {
+        setDisliked(false);
+        setWasteCount((c) => Math.max(0, c - 1));
+      }
+    }
   };
 
-  const renderComments = (comments: Comment[]) =>
-    comments.map((cmt) => (
-      <CommentItem
-        key={cmt.id}
-        comment={cmt}
-        likedComments={likedComments}
-        onLike={toggleLike}
-        onReply={handleComment}
-      />
-    ));
+  const onToggleWaste = () => {
+    if (!data) return;
+    if (disliked) {
+      setDisliked(false);
+      setWasteCount((c) => Math.max(0, c - 1));
+    } else {
+      setDisliked(true);
+      setWasteCount((c) => c + 1);
+      if (liked) {
+        setLiked(false);
+        setWiseCount((c) => Math.max(0, c - 1));
+      }
+    }
+  };
 
-  const date = new Date(post.timestamp);
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const time = date.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  });
+  const createdAt = useMemo(
+    () => (data ? new Date(data.createdAt) : null),
+    [data],
+  );
+  const month = createdAt ? createdAt.getMonth() + 1 : '';
+  const day = createdAt ? createdAt.getDate() : '';
+  const time = createdAt
+    ? createdAt.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      })
+    : '';
+
+  if (!data)
+    return <div className="text-center p-10">게시글을 찾을 수 없습니다.</div>;
+
+  const image = data.imageUrls?.[0];
+  const categoryName = data.consumptionCategory?.budgetCategoryName ?? '';
+  const authorName = data.user?.nickname ?? '';
+  const authorProfile = data.user?.profileImgUrl || PersonIcon;
 
   return (
     <>
       <div className={S.container}>
         <div className={S.contentContainer}>
-          <Header title={post.category} />
+          <Header title={categoryName} />
           <div className={S.authorSection}>
             <img
-              src={post.author.profileImage || PersonIcon}
+              src={authorProfile}
               className={S.profileImage}
               alt="작성자 프로필"
             />
             <div className={S.authorInfo}>
-              <span className={S.authorName}>{post.author.name}</span>
+              <span className={S.authorName}>{authorName}</span>
               <span className={S.timestamp}>
                 {month}
                 <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
@@ -114,74 +132,44 @@ export const FeedDetail: React.FC = () => {
               </span>
             </div>
           </div>
-
           <img
-            src={post.image || ''}
+            src={image || ''}
             alt="본문 이미지"
-            className={`${S.postImage} ${!post.image ? S.noImage : ''}`}
+            className={`${S.postImage} ${!image ? S.noImage : ''}`}
           />
-
           <div className={S.actionButtons}>
-            <button
-              className={S.actionButton}
-              onClick={() =>
-                handleLike(post.id, posts, postStates, setPosts, setPostStates)
-              }
-            >
+            <button className={S.actionButton} onClick={onToggleWise}>
               <img
                 src={liked ? LikeActiveIcon : LikeIcon}
                 className={S.actionIcon}
                 alt="현명해요"
               />
-              <span className={S.actionCount}>{post.likes}</span>
+              <span className={S.actionCount}>{wiseCount}</span>
             </button>
-
-            <button
-              className={S.actionButton}
-              onClick={() =>
-                handleDislike(
-                  post.id,
-                  posts,
-                  postStates,
-                  setPosts,
-                  setPostStates,
-                )
-              }
-            >
+            <button className={S.actionButton} onClick={onToggleWaste}>
               <img
                 src={disliked ? DislikeActiveIcon : DislikeIcon}
                 className={S.actionIcon}
                 alt="낭비에요"
               />
-              <span className={S.actionCount}>{post.dislikes}</span>
+              <span className={S.actionCount}>{wasteCount}</span>
             </button>
-
             <button className={S.actionButton} onClick={() => handleComment()}>
               <img src={CommentIcon} className={S.actionIcon} alt="댓글" />
-              <span className={S.actionCount}>
-                {post.comments?.length ?? 0}
-              </span>
+              <span className={S.actionCount}>{data.commentCount ?? 0}</span>
             </button>
           </div>
-
-          {post.companyName && (
-            <div className={S.infoContainer}>
-              <h2 className={S.companyName}>{post.companyName}</h2>
-              <div className={S.price}>{post.price?.toLocaleString()}원</div>
-              <p className={S.content}>{post.content}</p>
+          <div className={S.infoContainer}>
+            <h2 className={S.companyName}>{categoryName}</h2>
+            <div className={S.price}>
+              {(data.amount ?? 0).toLocaleString()}원
             </div>
-          )}
-        </div>
-
-        <div className={S.divider} />
-
-        {post.comments && post.comments.length > 0 && (
-          <div className={S.commentContainer}>
-            {renderComments(post.comments)}
+            <p className={S.content}>{data.content}</p>
+            {data.memo && <p className={S.content}>{data.memo}</p>}
           </div>
-        )}
+        </div>
+        <div className={S.divider} />
       </div>
-
       {isReplying && (
         <CommentInput
           mentionName={mentionName}
@@ -190,7 +178,6 @@ export const FeedDetail: React.FC = () => {
           onClose={closeReplyInput}
         />
       )}
-
       {!isReplying && <Footer />}
     </>
   );
