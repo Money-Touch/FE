@@ -18,6 +18,7 @@ import CommentItem from '../../components/feed/feedDetail/CommentItem';
 import { useFeedDetail } from '../../hooks/feed/useFeedDetail';
 import { useFeedComments } from '../../hooks/feed/useFeedComments';
 import { useCreateComment } from '../../hooks/feed/useCreateComment';
+import { useReaction } from '../../hooks/feed/useReaction';
 
 export const FeedDetail: React.FC = () => {
   const { postId } = useParams();
@@ -33,13 +34,24 @@ export const FeedDetail: React.FC = () => {
   const [mentionName, setMentionName] = useState<string | null>(null);
   const [selectedParentId, setSelectedParentId] = useState<number | null>(null);
 
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
-  const [wiseCount, setWiseCount] = useState(0);
-  const [wasteCount, setWasteCount] = useState(0);
-
   const [likedComments, setLikedComments] = useState<Record<number, boolean>>(
     {},
+  );
+
+  const reaction = useReaction(
+    consumptionRecordId,
+    {
+      wiseCount: data?.wiseCount ?? 0,
+      wasteCount: data?.wasteCount ?? 0,
+      myReaction: data?.myReaction ?? null,
+    },
+    {
+      invalidateKeys: [
+        ['feed', 'POPULAR'],
+        ['feed', 'RECENT'],
+        ['feedDetail', consumptionRecordId],
+      ],
+    },
   );
 
   useEffect(() => {
@@ -50,14 +62,6 @@ export const FeedDetail: React.FC = () => {
       if (footer) footer.style.display = 'none';
     };
   }, [isReplying]);
-
-  useEffect(() => {
-    if (!data) return;
-    setLiked(data.myReaction === 'WISE');
-    setDisliked(data.myReaction === 'WASTE');
-    setWiseCount(data.wiseCount ?? 0);
-    setWasteCount(data.wasteCount ?? 0);
-  }, [data]);
 
   const handleComment = (mention?: string, parentId?: number) => {
     setIsReplying(true);
@@ -80,36 +84,6 @@ export const FeedDetail: React.FC = () => {
       { parentId: selectedParentId ?? undefined, content },
       { onSuccess: closeReplyInput },
     );
-  };
-
-  const onToggleWise = () => {
-    if (!data) return;
-    if (liked) {
-      setLiked(false);
-      setWiseCount((c) => Math.max(0, c - 1));
-    } else {
-      setLiked(true);
-      setWiseCount((c) => c + 1);
-      if (disliked) {
-        setDisliked(false);
-        setWasteCount((c) => Math.max(0, c - 1));
-      }
-    }
-  };
-
-  const onToggleWaste = () => {
-    if (!data) return;
-    if (disliked) {
-      setDisliked(false);
-      setWasteCount((c) => Math.max(0, c - 1));
-    } else {
-      setDisliked(true);
-      setWasteCount((c) => c + 1);
-      if (liked) {
-        setLiked(false);
-        setWiseCount((c) => Math.max(0, c - 1));
-      }
-    }
   };
 
   const onLikeComment = (id: number) => {
@@ -142,6 +116,13 @@ export const FeedDetail: React.FC = () => {
   const authorName = data.user?.nickname ?? '';
   const authorProfile = data.user?.profileImgUrl || PersonIcon;
 
+  const wiseCount = reaction?.wiseCount ?? 0;
+  const wasteCount = reaction?.wasteCount ?? 0;
+  const mine = reaction?.myReaction ?? null;
+  const isReacting = reaction?.isReacting ?? false;
+  const reactWise = reaction?.reactWise ?? (() => {});
+  const reactWaste = reaction?.reactWaste ?? (() => {});
+
   return (
     <>
       <div className={S.container}>
@@ -172,17 +153,27 @@ export const FeedDetail: React.FC = () => {
           />
 
           <div className={S.actionButtons}>
-            <button className={S.actionButton} onClick={onToggleWise}>
+            <button
+              className={S.actionButton}
+              onClick={() => !isReacting && reactWise()}
+              disabled={isReacting}
+              aria-pressed={mine === 'WISE'}
+            >
               <img
-                src={liked ? LikeActiveIcon : LikeIcon}
+                src={mine === 'WISE' ? LikeActiveIcon : LikeIcon}
                 className={S.actionIcon}
                 alt="현명해요"
               />
               <span className={S.actionCount}>{wiseCount}</span>
             </button>
-            <button className={S.actionButton} onClick={onToggleWaste}>
+            <button
+              className={S.actionButton}
+              onClick={() => !isReacting && reactWaste()}
+              disabled={isReacting}
+              aria-pressed={mine === 'WASTE'}
+            >
               <img
-                src={disliked ? DislikeActiveIcon : DislikeIcon}
+                src={mine === 'WASTE' ? DislikeActiveIcon : DislikeIcon}
                 className={S.actionIcon}
                 alt="낭비에요"
               />
