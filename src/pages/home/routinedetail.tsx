@@ -20,7 +20,9 @@ function RoutineDetail() {
   const routine = data.result;
 
   return (
-    <div className={`pageContainer ${S.Container}`}>
+    <div
+      className={`pageContainer ${S.Container} !pt-[11rem] !overflow-y-auto !overflow-x-hidden`}
+    >
       <Header title={routine?.routineName} />
       <BudgetList
         totalBudget={routine.totalBudget}
