@@ -1,4 +1,4 @@
-export const container = '';
+export const container = '!h-[calc(100vh-13rem)] !overflow-y-auto !pt-[8.4rem]';
 
 export const contentContainer = 'flex flex-col mx-[2.4rem]';
 
@@ -61,7 +61,7 @@ export const replyIconContain = 'w-[0.8rem] h-[0.8rem] mt-[0.8rem] mr-[0.5rem]';
 export const commentMain = 'flex-1 flex flex-col';
 
 export const replyInputWrapper =
-  'border-t border-[var(--color-G7)] flex items-center h-[5rem] px-[2.4rem] pt-[0.7rem] pb-[1.2rem] mb-[5rem]';
+  'border-t border-[var(--color-G7)] flex items-center h-[5rem] px-[2.4rem] pt-[0.7rem] pb-[1.2rem]';
 
 export const replyInput =
   'flex-1 text-[1.2rem] h-[3rem] leading-[1.6rem] ml-[0.5rem] border-none outline-none resize-none py-[0.7rem] px-[0.5rem] font-inherit';
@@ -75,3 +75,5 @@ export const mentionLabel =
 export const replyInputFooter = 'ml-auto flex items-center gap-[0.8rem]';
 
 export const buttonGroup = 'flex items-center gap-[0.6rem]';
+
+export const footerMargin = '!mb-[13rem]';

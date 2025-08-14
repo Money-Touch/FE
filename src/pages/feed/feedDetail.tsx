@@ -92,9 +92,8 @@ export const FeedDetail: React.FC = () => {
 
   return (
     <>
-      <Header title={categoryName} />
-
       <div className={S.container}>
+        <Header title={categoryName} />
         <div className={S.contentContainer}>
           <DetailPostItem
             data={data}
@@ -124,7 +123,6 @@ export const FeedDetail: React.FC = () => {
           </div>
         )}
       </div>
-
       {isReplying && (
         <CommentInput
           mentionName={mentionName}
@@ -136,7 +134,12 @@ export const FeedDetail: React.FC = () => {
           maxLength={300}
         />
       )}
-      {!isReplying && <Footer />}
+      {!isReplying && (
+        <>
+          <div className={S.footerMargin} />
+          <Footer />
+        </>
+      )}
     </>
   );
 };
