@@ -61,7 +61,7 @@ export const replyIconContain = 'w-[0.8rem] h-[0.8rem] mt-[0.8rem] mr-[0.5rem]';
 export const commentMain = 'flex-1 flex flex-col';
 
 export const replyInputWrapper =
-  'border-t border-[var(--color-G7)] flex items-center h-[5rem] px-[2.4rem] pt-[0.7rem] pb-[1.2rem]  mb-[5rem]';
+  'border-t border-[var(--color-G7)] flex items-center h-[5rem] px-[2.4rem] pt-[0.7rem] pb-[1.2rem] mb-[5rem]';
 
 export const replyInput =
   'flex-1 text-[1.2rem] h-[3rem] leading-[1.6rem] ml-[0.5rem] border-none outline-none resize-none py-[0.7rem] px-[0.5rem] font-inherit';
@@ -71,3 +71,7 @@ export const submitButton =
 
 export const mentionLabel =
   'text-[var(--color-G1)] bg-[var(--color-subColor5)] rounded-[0.5rem] ml-[0.5rem] text-[1.2rem] leading-[1.8rem] w-[3.7rem] h-[2.4rem] flex items-center justify-center';
+
+export const replyInputFooter = 'ml-auto flex items-center gap-[0.8rem]';
+
+export const buttonGroup = 'flex items-center gap-[0.6rem]';

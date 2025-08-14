@@ -14,21 +14,33 @@ import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
 
 import CommentInput from '../../components/feed/feedDetail/CommentInput';
+import CommentItem from '../../components/feed/feedDetail/CommentItem';
 import { useFeedDetail } from '../../hooks/feed/useFeedDetail';
+import { useFeedComments } from '../../hooks/feed/useFeedComments';
+import { useCreateComment } from '../../hooks/feed/useCreateComment';
 
 export const FeedDetail: React.FC = () => {
   const { postId } = useParams();
   const consumptionRecordId = Number(postId);
+
   const { data } = useFeedDetail(consumptionRecordId);
+  const { data: comments } = useFeedComments(consumptionRecordId);
+  const { mutate: createComment, isPending } =
+    useCreateComment(consumptionRecordId);
 
   const [isReplying, setIsReplying] = useState(false);
   const [replyText, setReplyText] = useState('');
   const [mentionName, setMentionName] = useState<string | null>(null);
+  const [selectedParentId, setSelectedParentId] = useState<number | null>(null);
 
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
   const [wiseCount, setWiseCount] = useState(0);
   const [wasteCount, setWasteCount] = useState(0);
+
+  const [likedComments, setLikedComments] = useState<Record<number, boolean>>(
+    {},
+  );
 
   useEffect(() => {
     const footer = document.querySelector('footer');
@@ -47,15 +59,27 @@ export const FeedDetail: React.FC = () => {
     setWasteCount(data.wasteCount ?? 0);
   }, [data]);
 
-  const handleComment = (mention?: string) => {
+  const handleComment = (mention?: string, parentId?: number) => {
     setIsReplying(true);
     setMentionName(mention || null);
+    setSelectedParentId(parentId ?? null);
     setReplyText('');
   };
 
   const closeReplyInput = () => {
     setIsReplying(false);
     setReplyText('');
+    setMentionName(null);
+    setSelectedParentId(null);
+  };
+
+  const handleSubmitComment = () => {
+    const content = replyText.trim();
+    if (!content) return;
+    createComment(
+      { parentId: selectedParentId ?? undefined, content },
+      { onSuccess: closeReplyInput },
+    );
   };
 
   const onToggleWise = () => {
@@ -86,6 +110,14 @@ export const FeedDetail: React.FC = () => {
         setWiseCount((c) => Math.max(0, c - 1));
       }
     }
+  };
+
+  const onLikeComment = (id: number) => {
+    setLikedComments((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const onReplyTo = (parentId: number) => (mention: string) => {
+    handleComment(mention, parentId);
   };
 
   const createdAt = useMemo(
@@ -132,11 +164,13 @@ export const FeedDetail: React.FC = () => {
               </span>
             </div>
           </div>
+
           <img
             src={image || ''}
             alt="본문 이미지"
             className={`${S.postImage} ${!image ? S.noImage : ''}`}
           />
+
           <div className={S.actionButtons}>
             <button className={S.actionButton} onClick={onToggleWise}>
               <img
@@ -159,6 +193,7 @@ export const FeedDetail: React.FC = () => {
               <span className={S.actionCount}>{data.commentCount ?? 0}</span>
             </button>
           </div>
+
           <div className={S.infoContainer}>
             <h2 className={S.companyName}>{categoryName}</h2>
             <div className={S.price}>
@@ -168,16 +203,37 @@ export const FeedDetail: React.FC = () => {
             {data.memo && <p className={S.content}>{data.memo}</p>}
           </div>
         </div>
+
         <div className={S.divider} />
+
+        {comments && comments.length > 0 && (
+          <div className={S.commentContainer}>
+            {comments.map((c) => (
+              <div key={c.commentId} style={{ marginBottom: '1.2rem' }}>
+                <CommentItem
+                  comment={c}
+                  likedComments={likedComments}
+                  onLike={onLikeComment}
+                  onReply={onReplyTo(c.commentId)}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
+
       {isReplying && (
         <CommentInput
           mentionName={mentionName}
           replyText={replyText}
           onChange={setReplyText}
+          onSubmit={handleSubmitComment}
           onClose={closeReplyInput}
+          isSubmitting={isPending}
+          maxLength={300}
         />
       )}
+
       {!isReplying && <Footer />}
     </>
   );

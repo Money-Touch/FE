@@ -1,3 +1,4 @@
+// Feed Detail
 export interface UserInfo {
   userId: number;
   nickname: string;
@@ -32,4 +33,29 @@ export interface ApiResponseFeedDetailResultDTO {
   code: string;
   message: string;
   result: FeedDetailResultDTO;
+}
+
+// Comment
+export interface CommentListDTO {
+  commentId: number;
+  userId: number;
+  nickname: string;
+  profileImgUrl: string;
+  content: string;
+  likes: number;
+  liked: boolean;
+  createdAt: string;
+  replies: CommentListDTO[];
+}
+
+export interface ApiResponseListCommentListDTO {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: CommentListDTO[];
+}
+
+export interface CommentCreateDTO {
+  parentId?: number;
+  content: string;
 }

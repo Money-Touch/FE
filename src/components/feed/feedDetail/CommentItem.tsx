@@ -8,11 +8,11 @@ import LikeActiveIcon from '../../../assets/images/feed/Like_Fill.png';
 import ReplyIcon from '../../../assets/images/feed/Reply.png';
 import EllipseIcon from '../../../assets/images/feed/Ellipse_221.png';
 
-import type { Comment as CommentType } from '../../../types/feed/feed';
+import type { CommentListDTO } from '../../../types/feed/feedDetail';
 
 interface CommentItemProps {
-  comment: CommentType;
-  likedComments: { [commentId: number]: boolean };
+  comment: CommentListDTO;
+  likedComments: Record<number, boolean>;
   onLike: (id: number) => void;
   onReply: (mention: string) => void;
 }
@@ -23,8 +23,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
   onLike,
   onReply,
 }) => {
-  const formatCommentTime = (timestamp: Date) => {
-    const date = new Date(timestamp);
+  const formatCommentTime = (iso: string) => {
+    const date = new Date(iso);
     const month = date.getMonth() + 1;
     const day = date.getDate();
     const time = date.toLocaleTimeString([], {
@@ -51,28 +51,31 @@ const CommentItem: React.FC<CommentItemProps> = ({
           <div className={S.commentAuthorSection}>
             <div className={S.authorInfoGroup}>
               <img
-                src={comment.author.profileImage || PersonIcon}
+                src={comment.profileImgUrl || PersonIcon}
                 className={S.profileImage}
+                alt="작성자 프로필"
               />
               <div className={S.authorInfo}>
-                <span className={S.authorName}>{comment.author.name}</span>
-                {formatCommentTime(comment.timestamp)}
+                <span className={S.authorName}>{comment.nickname}</span>
+                {formatCommentTime(comment.createdAt)}
               </div>
             </div>
 
             <div className={S.authorActionGroup}>
               <button
                 className={S.iconButton}
-                onClick={() => onLike(comment.id)}
+                onClick={() => onLike(comment.commentId)}
               >
                 <img
-                  src={likedComments[comment.id] ? LikeActiveIcon : LikeIcon}
+                  src={
+                    likedComments[comment.commentId] ? LikeActiveIcon : LikeIcon
+                  }
                   alt="좋아요"
                 />
               </button>
               <button
                 className={S.iconButton}
-                onClick={() => onReply(comment.author.name)}
+                onClick={() => onReply(comment.nickname)}
               >
                 <img src={CommentIcon} alt="댓글" />
               </button>
@@ -84,37 +87,40 @@ const CommentItem: React.FC<CommentItemProps> = ({
 
       {comment.replies &&
         comment.replies.map((reply) => (
-          <div key={reply.id} className="ml-[1.8rem]">
+          <div key={reply.commentId} className="ml-[1.8rem]">
             <div className={S.commentItem}>
               <img src={ReplyIcon} alt="reply" className={S.replyIconContain} />
               <div className={S.commentMain}>
                 <div className={S.commentAuthorSection}>
                   <div className={S.authorInfoGroup}>
                     <img
-                      src={reply.author.profileImage || PersonIcon}
+                      src={reply.profileImgUrl || PersonIcon}
                       className={S.profileImage}
+                      alt="작성자 프로필"
                     />
                     <div className={S.authorInfo}>
-                      <span className={S.authorName}>{reply.author.name}</span>
-                      {formatCommentTime(reply.timestamp)}
+                      <span className={S.authorName}>{reply.nickname}</span>
+                      {formatCommentTime(reply.createdAt)}
                     </div>
                   </div>
 
                   <div className={S.authorActionGroup}>
                     <button
                       className={S.iconButton}
-                      onClick={() => onLike(reply.id)}
+                      onClick={() => onLike(reply.commentId)}
                     >
                       <img
                         src={
-                          likedComments[reply.id] ? LikeActiveIcon : LikeIcon
+                          likedComments[reply.commentId]
+                            ? LikeActiveIcon
+                            : LikeIcon
                         }
                         alt="좋아요"
                       />
                     </button>
                     <button
                       className={S.iconButton}
-                      onClick={() => onReply(reply.author.name)}
+                      onClick={() => onReply(reply.nickname)}
                     >
                       <img src={CommentIcon} alt="댓글" />
                     </button>
