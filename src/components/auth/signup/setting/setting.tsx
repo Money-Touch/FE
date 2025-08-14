@@ -9,7 +9,7 @@ interface SettingProps {
 
 const Setting = ({ onNext, onBack }: SettingProps) => {
   return (
-    <div className={S.AgreeContainer}>
+    <div className={`${S.AgreeContainer} pt-[8.4rem]`}>
       <Header onBack={onBack} />
 
       <p className={S.AgreeP}>

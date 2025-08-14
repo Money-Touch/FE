@@ -50,7 +50,7 @@ const Onboarding = ({
 
   return (
     <div className={S.AgreeContainer}>
-      <div className={T.OnboardingTopContainer}>
+      <div className={`${T.OnboardingTopContainer} !px-[2.4rem]`}>
         <p className={T.OnboardingP}>안녕하세요!</p>
         <p
           className={`${T.OnboardingP} !text-[2rem] !text-[var(--color-G1)] !leading-[2.8rem]`}

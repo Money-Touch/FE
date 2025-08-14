@@ -24,7 +24,9 @@ const Myfeed = () => {
   }, [inView, hasNextPage, fetchNextPage]);
 
   return (
-    <div className={`${S.AgreeContainer} !pb-[1.2rem]`}>
+    <div
+      className={`${S.AgreeContainer} !pt-[8.4rem] !h-[calc(100vh-13rem)] !mb-[13rem] !overflow-y-auto`}
+    >
       <Header title="MY 피드" />
       <ListGrid selectedId={selectedId} setSelectedId={setSelectedId} />
 
