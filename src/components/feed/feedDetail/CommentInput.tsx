@@ -1,6 +1,7 @@
 import React from 'react';
 import * as S from '../../../styles/feed/feedDetail.style';
 import PersonIcon from '../../../assets/images/feed/Person.png';
+import { useMypageQuery } from '../../../hooks/auth/mypage/useMypageQuery';
 
 interface CommentInputProps {
   mentionName: string | null;
@@ -22,9 +23,12 @@ const CommentInput: React.FC<CommentInputProps> = ({
 }) => {
   const disabled = replyText.trim().length === 0 || isSubmitting;
 
+  const { data: mypageData } = useMypageQuery();
+  const profileImageUrl = mypageData?.result?.profileImgUrl || PersonIcon;
+
   return (
     <div className={S.replyInputWrapper}>
-      <img src={PersonIcon} alt="내 프로필" className={S.profileImage} />
+      <img src={profileImageUrl} alt="내 프로필" className={S.profileImage} />
 
       {mentionName && <div className={S.mentionLabel}>@{mentionName}</div>}
 
@@ -43,7 +47,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             disabled={disabled}
             className={S.submitButton}
           >
-            {isSubmitting ? '등록중...' : '등록'}
+            {isSubmitting ? '등록중' : '등록'}
           </button>
         </div>
       </div>
