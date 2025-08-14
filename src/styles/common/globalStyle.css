@@ -69,7 +69,7 @@
   }
 
   .mainContent {
-    @apply flex-1 w-full bg-white h-full;
+    @apply flex-1 w-full bg-white;
   }
 
   .font-hakgyoB {

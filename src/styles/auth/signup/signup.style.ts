@@ -58,7 +58,7 @@ export const Input = ({ hasError, hasButton }: InputButtonProps): string =>
   `;
 
 export const Button = ({ hasError }: InputButtonProps): string => `
-  w-[8.3rem] h-[4.5rem] rounded-[0.5rem] text-[1.4rem] font-medium ${
+  w-[8.3rem] h-[4.5rem] rounded-[0.5rem] text-[1.4rem] font-medium whitespace-pre-line ${
     hasError
       ? 'bg-[var(--color-G7)] text-[var(--color-G5)] cursor-not-allowed'
       : 'bg-[var(--color-mainColor1)] text-[var(--color-white)] cursor-pointer'

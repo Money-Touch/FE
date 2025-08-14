@@ -11,7 +11,7 @@ const Mypage = () => {
 
   return (
     <div
-      className={`${S.AgreeContainer} !pb-[11.6rem] !bg-[var(--color-B2)] !px-0`}
+      className={`${S.AgreeContainer} !bg-[var(--color-B2)] !px-0 !h-[calc(100vh-13rem)] !mb-[13rem] !overflow-y-auto !pb-[11.6rem]`}
     >
       <Profile data={data} />
 
