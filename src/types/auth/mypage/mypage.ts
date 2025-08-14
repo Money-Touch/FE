@@ -19,5 +19,20 @@ export interface MypageResponse {
     nickname: string;
     profileImgUrl: string;
     representativeBadgeImageUrl: string;
+    userId: number;
+  };
+}
+
+export interface DeleteRequest {
+  userId: number;
+}
+
+export interface DeleteResponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    userId: number;
+    message: string;
   };
 }

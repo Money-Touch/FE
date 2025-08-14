@@ -59,7 +59,7 @@
   }
 
   .pageContainer {
-    @apply flex flex-col items-center w-[425px] min-h-screen;
+    @apply flex flex-col items-center w-[425px] h-[100vh] relative;
   }
 
   @media screen and (max-width: 424px) {

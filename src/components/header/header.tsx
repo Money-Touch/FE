@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 interface HeaderProps {
   onBack?: () => void;
   title?: string;
+  bgColor?: string;
 }
 
-const Header = ({ onBack, title }: HeaderProps) => {
+const Header = ({ onBack, title, bgColor = 'bg-white' }: HeaderProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -16,7 +17,7 @@ const Header = ({ onBack, title }: HeaderProps) => {
   };
 
   return (
-    <div className={H.HeaderContainer}>
+    <div className={`${H.HeaderContainer} ${bgColor}`}>
       <img
         className={H.LeftArrowImg}
         src={LeftArrow}
