@@ -31,7 +31,7 @@ const Result = ({ onBack }: ResultProps) => {
 
   return (
     <div
-      className={S.AgreeContainer}
+      className={`${S.AgreeContainer} !pt-[8.4rem]`}
       style={{ background: matchedResult?.background }}
     >
       <Header onBack={onBack} title={`${nickname}님의 소비 MBTI는?`} />

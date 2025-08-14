@@ -36,7 +36,7 @@ const QnaForm = ({ pageIndex, setPageIndex, onNext }: QnaFormProps) => {
   const isPageAnswered = currentPage.qnaList.every((qna) => answers[qna.qnaId]);
 
   return (
-    <div className={`${T.ListOnboardingContainer} !px-0 !gap-0`}>
+    <div className={`${T.ListOnboardingContainer} !px-0 !gap-0 !mt-[8.4rem]`}>
       <p className={`${T.MbtiP} !mt-[1rem] !mb-[3.4rem]`}>
         {currentPage.title}
       </p>

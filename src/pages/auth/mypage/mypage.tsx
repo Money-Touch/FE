@@ -19,7 +19,7 @@ const Mypage = () => {
 
       <ListButton />
 
-      <ListSection />
+      <ListSection userId={data?.result?.userId} />
     </div>
   );
 };

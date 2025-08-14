@@ -1,5 +1,5 @@
 export const HeaderContainer =
-  'w-full h-[6rem] flex items-center mt-[2.4rem] p-[2.4rem] relative';
+  'w-full top-0 fixed h-[6rem] flex items-center mt-[2.4rem] px-[2.4rem]';
 
 export const LeftArrowImg = 'w-[0.98rem] h-[1.78rem] cursor-pointer';
 
