@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import leftArrow from '../../assets/images/header/leftArrow.png';
-import pencilIcon from '../../assets/images/budget/Pencil.png';
+import Header from '../../components/header/header';
+import pencilIcon from '../../assets/images/budget/pencil.png';
+import editPencilIcon from '../../assets/images/budget/editPencil.png';
+import closeIcon from '../../assets/images/budget/Close.png';
+import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 
 import {
   Wrap,
-  Header,
-  IconBtnLeft,
-  H1,
   Body,
   Section,
   Row,
@@ -20,6 +20,7 @@ import {
   CatLi,
   EditWrapper,
   EditInput,
+  PlusBtnContainer,
   PlusBtn,
   ConfirmBtn,
   Dim,
@@ -28,9 +29,10 @@ import {
   Close,
   InputRow,
   Money,
-  Won,
+  InputIcon,
   Pad,
   Key,
+  ApplyContainer,
   Apply,
 } from '../../styles/budget/routine.styles';
 
@@ -134,12 +136,7 @@ const Routine = () => {
 
   return (
     <Wrap>
-      <Header>
-        <IconBtnLeft onClick={() => navigate(-1)}>
-          <img src={leftArrow} alt="back" />
-        </IconBtnLeft>
-        <H1>예산 등록</H1>
-      </Header>
+      <Header title="소비 루틴 등록" />
 
       <Body>
         <Section>
@@ -156,12 +153,15 @@ const Routine = () => {
 
         <Section>
           <Row>
-            <Label>소비 루틴</Label>
-            <IconBtn $active={editMode} onClick={() => setEditMode((v) => !v)}>
-              <img src={pencilIcon} alt="edit" />
+            <Label>나의 소비 루틴</Label>
+            <IconBtn
+              $active={editMode}
+              onClick={() => setEditMode((v) => !v)}
+              style={{ width: '2rem', height: '2rem' }}
+            >
+              <img src={editMode ? editPencilIcon : pencilIcon} alt="edit" />
             </IconBtn>
           </Row>
-
           <CatUl>
             {DEFAULT_CATEGORIES.map((c, i) => (
               <CatLi
@@ -169,7 +169,7 @@ const Routine = () => {
                 $editable={editMode}
                 onClick={() => editMode && openModal(i, false)}
               >
-                <span>{c}</span>
+                <span className="CatP">{c}</span>
                 {editMode ? (
                   <EditWrapper>
                     <EditInput>{comma(catBudget[i])}원</EditInput>
@@ -197,32 +197,41 @@ const Routine = () => {
               </CatLi>
             ))}
           </CatUl>
+          <PlusBtnContainer>
+            <PlusBtn
+              onClick={() =>
+                navigate('/add-category', { state: { from: '/routine' } })
+              }
+            >
+              <img src={plusCircle} alt="add" />
+            </PlusBtn>
+          </PlusBtnContainer>
+          <ConfirmBtn disabled={!canConfirm} onClick={handleConfirm}>
+            확인
+          </ConfirmBtn>
         </Section>
       </Body>
-
-      <PlusBtn
-        onClick={() =>
-          navigate('/add-category', { state: { from: '/routine' } })
-        }
-      >
-        <img src={plusCircle} alt="add" />
-      </PlusBtn>
-
-      <ConfirmBtn disabled={!canConfirm} onClick={handleConfirm}>
-        확인
-      </ConfirmBtn>
 
       {modalOpen && (
         <Dim>
           <Modal>
             <ModalHead>
-              <span>금액 입력</span>
-              <Close onClick={() => setModalOpen(false)}>×</Close>
+              <Close
+                src={closeIcon}
+                alt="close"
+                onClick={() => setModalOpen(false)}
+              />
+              <span>한 달 예산</span>
             </ModalHead>
 
             <InputRow>
-              <Money readOnly value={raw ? comma(raw) : ''} placeholder="0" />
-              <Won>원</Won>
+              <Money readOnly value={raw ? comma(raw) : ''} hasValue={!!raw} />
+              <span>원</span>
+              <InputIcon
+                src={circleCloseIcon}
+                alt="delete"
+                onClick={() => setRaw('')}
+              />
             </InputRow>
 
             <Pad>
@@ -246,9 +255,11 @@ const Routine = () => {
               ))}
             </Pad>
 
-            <Apply disabled={!raw} onClick={applyValue}>
-              수정하기
-            </Apply>
+            <ApplyContainer>
+              <Apply disabled={!raw} onClick={applyValue}>
+                수정하기
+              </Apply>
+            </ApplyContainer>
           </Modal>
         </Dim>
       )}

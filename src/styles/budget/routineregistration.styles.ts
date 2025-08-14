@@ -2,136 +2,107 @@ import styled from 'styled-components';
 import colors from '../common/colors';
 
 export const Wrap = styled.div`
-  max-width: 430px;
-  margin: 0 auto;
+  width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-`;
-
-export const Header = styled.header`
   position: relative;
-  height: 56px;
-  border-bottom: 1px solid ${colors.G8};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const IconBase = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  padding: 0;
-
-  img,
-  svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-    object-fit: contain;
-  }
-`;
-
-export const IconBtnLeft = styled(IconBase)`
-  left: 16px;
-`;
-
-export const H1 = styled.h1`
-  font-size: 18px;
-  font-weight: 700;
 `;
 
 export const Body = styled.main`
-  flex: 1;
-  padding: 24px 16px 0;
+  margin: 2.6rem 2.4rem 0 2.4rem;
 `;
 
-export const Label = styled.h2`
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-
-  span {
-    margin-left: 2px;
-    color: ${colors.M1};
-  }
+export const InputWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  position: relative;
 `;
 
 export const Input = styled.input`
   width: 100%;
-  height: 48px;
-  padding: 0 14px;
-  border: 1px solid ${colors.G7};
-  border-radius: 10px;
-  font-size: 14px;
-  margin-bottom: 24px;
+  height: 3.4rem;
+  font-size: 2rem;
+  font-weight: 500;
+  color: ${colors.G1};
+  border-bottom: 0.1rem solid ${colors.G5};
 
-  &::placeholder {
-    color: ${colors.G6};
+  &:focus {
+    outline: none;
+    border-color: ${colors.mainColor1};
+  }
+`;
+
+export const CircleClose = styled.img`
+  width: 2.4rem;
+  height: 2.4rem;
+  position: absolute;
+  right: 0;
+  top: 0.5rem;
+  cursor: pointer;
+`;
+
+export const CharCount = styled.p`
+  width: 100%;
+  text-align: right;
+  color: ${colors.G3};
+  font-size: 1.2rem;
+  font-weight: 300;
+
+  span {
+    color: ${colors.G5};
+  }
+`;
+
+export const Label = styled.p`
+  margin: 2.4rem 0 0.6rem 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: ${colors.G1};
+
+  span {
+    margin-left: 0.2rem;
+    color: ${colors.M1};
   }
 `;
 
 export const TagsInBox = styled.div`
-  margin-bottom: 24px;
+  width: 100%;
+  margin-bottom: 0.6rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.6rem;
 `;
 
 export const PlusBtn = styled.button`
-  width: 20px;
-  height: 20px;
-  font-size: 20px;
-  line-height: 1;
-  color: ${colors.G5};
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
   cursor: pointer;
 `;
 
 export const TagInput = styled.input`
-  width: 70px;
-  min-width: 20px;
-  max-width: 100%;
-  padding: 4px 6px;
-  font-size: 12px;
+  padding: 0.4rem 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: ${colors.G3};
   border: none;
-  border-radius: 8px;
-  background: #e5f8e7;
-  color: ${colors.mainColor1};
-  flex: 0 0 auto;
-
-  &::placeholder {
-    color: ${colors.mainColor1};
-    opacity: 0.5;
-  }
-
-  &:focus {
-    outline: 1px solid ${colors.mainColor1};
-  }
+  border-radius: 0.5rem;
+  background: ${colors.subColor5};
 `;
 
 export const Save = styled.button<{ disabled?: boolean }>`
-  margin: 24px 0 160px;
+  margin: 44.5rem 0 16.4rem 0;
   width: 100%;
-  height: 50px;
+  height: 5rem;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
+  border-radius: 1rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: ${colors.white};
+  cursor: pointer;
   background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
   pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
 `;

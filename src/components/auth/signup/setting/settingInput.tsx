@@ -13,6 +13,10 @@ const SettingInput = ({
   buttonText,
   onClickButton,
   placeholder,
+  inputDisabled = false,
+  buttonDisabled,
+  loading,
+  loadingText,
 }: SettingInputProps) => {
   const {
     value,
@@ -25,8 +29,9 @@ const SettingInput = ({
 
   const hasError = !!error || isEmpty;
   const hasButton = !!buttonText;
-  const showDelete = !!value;
-  const showToggle = !!value && !hasButton && type === 'password';
+  const showDelete = !!value && !inputDisabled;
+  const showToggle =
+    !!value && !hasButton && type === 'password' && !inputDisabled;
 
   return (
     <>
@@ -39,6 +44,7 @@ const SettingInput = ({
         <input
           type={inputType}
           {...register}
+          disabled={inputDisabled}
           placeholder={placeholder}
           className={S.Input({
             hasError: !!error,
@@ -61,8 +67,9 @@ const SettingInput = ({
             className={S.Button({ hasError })}
             type="button"
             onClick={onClickButton}
+            disabled={buttonDisabled || loading}
           >
-            {buttonText}
+            {loading ? (loadingText ?? '전송 중...') : buttonText}
           </button>
         )}
       </div>

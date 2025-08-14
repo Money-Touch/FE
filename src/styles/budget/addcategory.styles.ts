@@ -1,74 +1,34 @@
 import styled from 'styled-components';
 import colors from '../common/colors';
 
-const MOBILE_MAX = '430px';
-
 export const Wrap = styled.div`
   position: relative;
-  max-width: ${MOBILE_MAX};
-  margin: 0 auto;
-  min-height: 100vh;
-  background: ${colors.B1};
+  width: 100%;
+  height: 100vh;
+  background: ${colors.white};
   display: flex;
   flex-direction: column;
 `;
 
-export const Header = styled.header`
-  position: relative;
-  height: 56px;
-  border-bottom: 1px solid ${colors.G8};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const IconBase = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  border: none;
-  padding: 0;
-
-  img,
-  svg {
-    width: 20px;
-    height: 20px;
-    display: block;
-    object-fit: contain;
-  }
-`;
-
-export const IconBtnLeft = styled(IconBase)`
-  left: 16px;
-`;
-
-export const Title = styled.h1`
-  font-size: 18px;
-  font-weight: 700;
-`;
-
 export const Body = styled.main`
-  flex: 1;
-  padding: 24px 24px 0;
+  padding: 4.2rem 2.4rem 0 2.4rem;
 `;
 
 export const InputWrapper = styled.div`
-  margin-bottom: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  position: relative;
 `;
 
 export const Input = styled.input`
   width: 100%;
-  font-size: 20px;
-  padding: 12px;
-  border: none;
-  border-bottom: 2px solid ${colors.G6};
-  background: transparent;
+  height: 3.4rem;
+  font-size: 2rem;
+  font-weight: 500;
+  color: ${colors.G1};
+  border-bottom: 0.1rem solid ${colors.G5};
 
   &:focus {
     outline: none;
@@ -76,22 +36,40 @@ export const Input = styled.input`
   }
 `;
 
-export const CharCount = styled.div`
+export const CircleClose = styled.img`
+  width: 2.4rem;
+  height: 2.4rem;
+  position: absolute;
+  right: 0;
+  top: 0.5rem;
+  cursor: pointer;
+`;
+
+export const CharCount = styled.p`
+  width: 100%;
   text-align: right;
-  color: ${colors.G5};
-  font-size: 12px;
-  margin-top: 4px;
+  color: ${colors.G3};
+  font-size: 1.2rem;
+  font-weight: 300;
+
+  span {
+    color: ${colors.G5};
+  }
+`;
+
+export const SubmitBtnContainer = styled.div`
+  width: 100%;
+  padding: 0 2.4rem;
+  margin-top: 52.2rem;
 `;
 
 export const SubmitBtn = styled.button<{ disabled: boolean }>`
-  width: calc(100% - 32px);
-  margin: 0 16px 160px;
-  padding: 14px 0;
-  font-weight: 600;
-  font-size: 16px;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
+  width: 100%;
+  height: 5rem;
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: ${colors.white};
+  border-radius: 1rem;
   background-color: ${({ disabled }) =>
     disabled ? colors.G6 : colors.mainColor1};
 `;

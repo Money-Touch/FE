@@ -22,6 +22,13 @@ export interface LoginResponse {
 // 카카오 로그인
 export interface KakaoLoginRequest {
   code: string;
-  redirect: string;
+  redirectUrl: string;
 }
-export type KakaoLoginResponse = LoginResponse;
+export interface KakaoLoginResponse {
+  result: {
+    accessToken: string;
+    refreshToken: string;
+    newUser: boolean;
+    nickname: string;
+  };
+}

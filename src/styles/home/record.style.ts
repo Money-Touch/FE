@@ -30,7 +30,7 @@ export const ContentSection = 'w-full h-[7.4rem] mt-[2.4rem]';
 export const ImageSection = 'w-full h-[39.4rem] mt-[2.4rem]';
 export const MemoSection = 'w-full h-[20.9rem] mt-[2.4rem]';
 export const SubmitButton = (active: boolean) =>
-  `w-full h-[5rem] rounded-[1rem] font-medium text-[1.8rem] mt-[4.2rem] text-white ${
+  `w-full h-[5rem] rounded-[1rem] font-medium text-[1.8rem] mt-[4.2rem] mb-[7.4rem] text-white ${
     active
       ? 'bg-[var(--color-mainColor1)] cursor-pointer'
       : 'bg-[var(--color-G6)] cursor-default'

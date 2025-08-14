@@ -52,14 +52,19 @@ export const Wrapper = 'w-full flex items-center gap-[0.6rem] relative';
 export const Input = ({ hasError, hasButton }: InputButtonProps): string =>
   `w-full h-[4.5rem] rounded-[0.5rem] border px-[1.5rem] text-[1.4rem] font-medium text-[var(--color-G1)] placeholder:text-[var(--color-G5)] ${
     hasError ? 'border-[var(--color-M1)]' : 'border-[var(--color-G7)]'
-  } ${hasButton ? 'pr-[4rem]' : 'pr-[6.5rem]'}`;
+  } ${hasButton ? 'pr-[4rem]' : 'pr-[6.5rem]'}
+  disabled:cursor-not-allowed  disabled:bg-[var(--color-G8)]
+                      disabled:text-[var(--color-G5)]
+  `;
 
 export const Button = ({ hasError }: InputButtonProps): string => `
   w-[8.3rem] h-[4.5rem] rounded-[0.5rem] text-[1.4rem] font-medium ${
     hasError
       ? 'bg-[var(--color-G7)] text-[var(--color-G5)] cursor-not-allowed'
       : 'bg-[var(--color-mainColor1)] text-[var(--color-white)] cursor-pointer'
-  }`;
+  }
+    disabled:bg-[var(--color-G7)] disabled:text-[var(--color-G5)]
+  disabled:cursor-not-allowed`;
 
 export const Error =
   'absolute bottom-[-1.7rem] text-[1.1rem] font-light text-[var(--color-M1)]';

@@ -15,14 +15,11 @@ const Profile = ({ data }: ProfileProps) => {
     navigate('/mypage/badge');
   };
 
-  const profileImg = data?.result?.profileImgUrl?.trim()
-    ? data.result.profileImgUrl
-    : ProfileImage;
+  const profileImg = data?.result?.profileImgUrl || ProfileImage;
 
-  const badgeImg = data?.result?.representativeBadgeImageUrl?.trim()
-    ? data.result.representativeBadgeImageUrl
-    : NotBadgeImage;
+  // console.log(profileImg);
 
+  const badgeImg = data?.result?.representativeBadgeImageUrl || NotBadgeImage;
   return (
     <div className={M.ProfileContainer}>
       <div className={M.ProfileLeftContainer}>

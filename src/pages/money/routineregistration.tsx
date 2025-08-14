@@ -1,12 +1,15 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import leftArrow from '../../assets/images/header/leftArrow.png';
+import Header from '../../components/header/header';
+import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
+import plusIcon from '../../assets/images/budget/plus3.png';
+
 import {
   Wrap,
-  Header,
-  IconBtnLeft,
-  H1,
   Body,
+  InputWrapper,
+  CircleClose,
+  CharCount,
   Label,
   Input,
   TagsInBox,
@@ -14,6 +17,8 @@ import {
   TagInput,
   Save,
 } from '../../styles/budget/routineregistration.styles';
+
+const MAX_LEN = 20;
 
 const RoutineRegistration = () => {
   const navigate = useNavigate();
@@ -32,14 +37,8 @@ const RoutineRegistration = () => {
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
   const onChangeTag = (idx: number, raw: string) => {
-    const val = raw.startsWith('#') ? raw : `#${raw.replace(/^#+/, '')}`;
+    const val = raw.startsWith('#') ? raw : `# ${raw.replace(/^#+/, '')}`;
     setTags((prev) => prev.map((t, i) => (i === idx ? val : t)));
-
-    const input = inputRefs.current[idx];
-    if (input) {
-      input.style.width = '20px';
-      input.style.width = `${input.scrollWidth}px`;
-    }
   };
 
   const onFocusTag = (idx: number) => {
@@ -58,11 +57,7 @@ const RoutineRegistration = () => {
     setTags((prev) => [...prev, '']);
     setTimeout(() => {
       const len = inputRefs.current.length;
-      const el = inputRefs.current[len - 1];
-      if (el) {
-        el.style.width = `${el.scrollWidth}px`;
-        el.focus();
-      }
+      inputRefs.current[len - 1]?.focus();
     }, 0);
   };
 
@@ -83,22 +78,25 @@ const RoutineRegistration = () => {
 
   return (
     <Wrap>
-      <Header>
-        <IconBtnLeft onClick={() => navigate(-1)}>
-          <img src={leftArrow} alt="back" />
-        </IconBtnLeft>
-        <H1>소비 루틴 등록</H1>
-      </Header>
+      <Header title="소비 루틴 등록" />
 
       <Body>
-        <Label>
-          루틴 이름<span>*</span>
-        </Label>
-        <Input
-          placeholder="소비 루틴 이름을 입력해 주세요."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+        <InputWrapper>
+          <Input
+            placeholder="소비 루틴 이름"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <CircleClose
+            src={circleCloseIcon}
+            alt="delete"
+            onClick={() => setTitle('')}
+          />
+          <CharCount>
+            {title.length}
+            <span>/{MAX_LEN}</span>
+          </CharCount>
+        </InputWrapper>
 
         <Label>
           소개<span>*</span>
@@ -106,7 +104,7 @@ const RoutineRegistration = () => {
 
         <TagsInBox>
           <PlusBtn type="button" onClick={addTagField}>
-            +
+            <img src={plusIcon} alt="plus" />
           </PlusBtn>
           {tags.map((tag, idx) => (
             <TagInput
@@ -114,11 +112,10 @@ const RoutineRegistration = () => {
               ref={(el) => {
                 if (el) {
                   inputRefs.current[idx] = el;
-                  el.style.width = `${el.scrollWidth}px`;
                 }
               }}
               value={tag}
-              placeholder="#해시태그"
+              placeholder="# 해시태그"
               onChange={(e) => onChangeTag(idx, e.target.value)}
               onFocus={() => onFocusTag(idx)}
               onBlur={() => onBlurTag(idx)}

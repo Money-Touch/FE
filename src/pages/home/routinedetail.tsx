@@ -13,7 +13,6 @@ function RoutineDetail() {
   const { data, isLoading, isError } = useRoutineDetail(routineId);
 
   const [showModal, setShowModal] = useState(false);
-  const [reflected, setReflected] = useState(false);
 
   if (isLoading) return null;
   if (isError || !data?.result) return null;
@@ -29,27 +28,23 @@ function RoutineDetail() {
       />
 
       <button
-        className={S.BudgetButton(reflected || !routine.canApply)}
-        disabled={reflected || !routine.canApply}
+        className={S.BudgetButton(!routine.canApply)}
+        disabled={!routine.canApply}
         onClick={() => {
-          if (!reflected && routine.canApply) setShowModal(true);
+          if (routine.canApply) setShowModal(true);
         }}
       >
         내 예산에 반영
       </button>
 
-      {(!routine.canApply || reflected) && (
-        <div className={S.ErrorMessage}>
-          {routine.cannotApplyMessage ??
-            '소비 루틴은 한 달에 한 번만 반영할 수 있어요.'}
-        </div>
+      {!routine.canApply && (
+        <div className={S.ErrorMessage}>{routine.cannotApplyMessage}</div>
       )}
 
       {showModal && (
         <Modal
           text="내 예산에 반영할까요?"
           onConfirm={() => {
-            setReflected(true);
             setShowModal(false);
             navigate('/budget-register');
           }}
