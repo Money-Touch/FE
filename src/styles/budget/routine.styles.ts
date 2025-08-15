@@ -73,6 +73,11 @@ export const CatLi = styled.li<{ $editable: boolean }>`
   font-weight: 500;
   color: ${colors.G1};
 
+  & > span:first-child {
+    color: ${colors.G5};
+    font-size: 1.5rem;
+  }
+
   .CatP {
     color: ${colors.G5};
     font-size: 1.5rem;
@@ -129,7 +134,7 @@ export const ConfirmBtn = styled.button<{ disabled?: boolean }>`
 `;
 
 export const Dim = styled.div`
-  width 100%;
+  width: 100%;
   max-width: 425px;
   position: absolute;
   inset: 0;
