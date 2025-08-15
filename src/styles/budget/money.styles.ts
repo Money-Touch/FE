@@ -13,6 +13,7 @@ export const Container = styled.div`
 
 export const MainContainer = styled.div`
   overflow-y: auto;
+  width: 100%;
 `;
 
 export const TopContainer = styled.div`
@@ -175,9 +176,8 @@ export const Below = styled.div<{ $fillPercent: number }>`
     align-items: center;
 
     left: ${({ $fillPercent }) =>
-      $fillPercent <= 0
-        ? '0'
-        : `calc(${Math.min($fillPercent, 100)}% - 1.5rem)`};
+      `${Math.min(Math.max($fillPercent, 0), 100)}%`};
+    transform: translateX(-50%);
 
     img {
       width: 1.6rem;
@@ -197,7 +197,6 @@ export const TabMenu = styled.nav`
   height: 4.3rem;
   display: flex;
   justify-content: center;
-  // background: ${colors.white};
   border-radius: 1.5rem 1.5rem 0 0;
   border-bottom: 0.1rem solid ${colors.G7};
   box-shadow: 0 0 1rem 0 #0000000d;
@@ -236,6 +235,7 @@ export const TabItem = styled.button<{ $active: boolean }>`
 
 export const ContentArea = styled.div`
   background: ${colors.white};
+  height: 100%;
   width: 100%;
   position: relative;
   padding-top: 2.71rem;
@@ -331,7 +331,6 @@ export const Dot = styled.span<{ $hide?: boolean }>`
   }
 `;
 
-// 비어있을 때
 export const EmptyBox = styled.div`
   margin: 12.3rem 0 25.9rem 0;
   display: flex;
@@ -500,19 +499,23 @@ export const DayNumButton = styled.button<{ $selected: boolean }>`
   color: ${({ $selected }) => ($selected ? `${colors.mainColor1}` : colors.G1)};
 `;
 
-export const SpendPill = styled.div<{ $minus: boolean }>`
+/* 달력 금액 배지: 내용 길이에 딱 맞게 */
+export const SpendPill = styled.span<{ $minus: boolean }>`
   margin-top: 0.5rem;
-  padding: 0 4px;
+  padding: 0 6px;
   height: 1.6rem;
-  min-width: 4.1rem;
   border-radius: 0.5rem;
   font-size: 1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
   color: ${colors.subColor1};
   background: ${({ $minus }) =>
     $minus ? `${colors.subColor5}` : 'transparent'};
 `;
 
-/* 여기서부터 수정된 하단 시트/달력 리스트 영역 */
+/* 하단 시트 */
 export const CalListSection = styled.section`
   padding: 16px;
   background: #f0fff9;
