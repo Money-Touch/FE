@@ -43,6 +43,8 @@ function RoutineDetail() {
         <div className={S.ErrorMessage}>{routine.cannotApplyMessage}</div>
       )}
 
+      <div className="!mb-[7.4rem]" />
+
       {showModal && (
         <Modal
           text="내 예산에 반영할까요?"
