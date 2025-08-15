@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/header/header';
 import LeftArrowActive from '../../assets/images/budget/leftArrowActive.png';
@@ -16,13 +16,20 @@ import eatImage from '../../assets/images/budget/eat.png';
 import playImage from '../../assets/images/budget/play.png';
 import fixedCostImage from '../../assets/images/budget/fixedcost.png';
 import closeIcon from '../../assets/images/budget/Close.png';
+
 import { useTotalQuery } from '../../hooks/money/money/useTotalQuery';
 import { useMonthlyQuery } from '../../hooks/money/money/useMonthlyQuery';
 import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
-import { useDailyDeleteMutation } from '../../hooks/money/money/useDailyDeleteMutation';
+import { useDailyDeleteMutation as callDailyDeleteMutation } from '../../hooks/money/money/useDailyDeleteMutation';
 import { useMonthlyCalendarQuery } from '../../hooks/money/money/useMonthlyCalendarQuery';
 import { useDailyCalendarQuery } from '../../hooks/money/money/useDailyCalendarQuery';
 import { useFixedCostQuery } from '../../hooks/money/money/useFixedCostQuery';
+import { useMypageQuery } from '../../hooks/auth/mypage/useMypageQuery';
+import { useFixedCostDeleteMutation } from '../../hooks/money/fixedcost/useFixedCostDeleteMutation';
+import {
+  useMyRoutinesQuery,
+  type RoutineItem as RoutineListItem,
+} from '../../hooks/money/routine/useMyRoutinesQuery';
 
 import {
   Container,
@@ -103,33 +110,23 @@ const categoryImages: Record<string, string> = {
   고정비: fixedCostImage,
 };
 
-interface Entry {
-  id: number;
-  category: string;
-  item: string;
-  amount: number;
-  date: string;
-  memo: string;
-}
-
-interface Routine {
-  id: number;
-  title: string;
-  desc: string;
-  tags: string[];
-  createdAt?: string;
+// ---- 레거시 필드(routineImageUrl) 호환 ----
+type RoutineItemWithLegacyImage = RoutineListItem & {
+  routineImageUrl?: string;
+};
+function resolveRoutineImageUrl(item: RoutineListItem): string {
+  const r = item as RoutineItemWithLegacyImage;
+  return r.routineImgUrl ?? r.routineImageUrl ?? '';
 }
 
 const Money = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [activeTab, setActiveTab] = useState<(typeof TAB_LIST)[number]>('일일');
-  const [monthBudget, setMonthBudget] = useState(0);
-  const [entries, setEntries] = useState<Entry[]>([]);
   const [deleteMode, setDeleteMode] = useState(false);
-  const [fixed, setFixed] = useState<Entry[]>([]);
   const [fixedDel, setFixedDel] = useState(false);
-  const [routines, setRoutines] = useState<Routine[]>([]);
+
   const today = new Date();
   const [calYear, setCalYear] = useState(today.getFullYear());
   const [calMonth, setCalMonth] = useState(today.getMonth());
@@ -139,17 +136,16 @@ const Money = () => {
   const startYRef = useRef(0);
   const sheetOpen = !!selectedDate;
 
-  // 인서 추가
+  const { data: mypageData } = useMypageQuery();
+  const nickname: string =
+    (mypageData?.isSuccess && mypageData?.result?.nickname) || '라인';
+
   const targetYear = calYear;
   const targetMonth = calMonth + 1;
-  // console.log(targetYear, targetMonth);
-  const { data: totalData } = useTotalQuery(targetYear, targetMonth);
-  // console.log(totalData);
-  const totalAmount = totalData?.result?.budgetId;
-  // console.log(totalAmount);
 
+  const { data: totalData } = useTotalQuery(targetYear, targetMonth);
+  const totalAmount = totalData?.result?.budgetId;
   const { data } = useBudgetDetailQuery(totalAmount || 0);
-  // console.log(data);
 
   const isDaily = activeTab === '일일';
   const {
@@ -159,37 +155,29 @@ const Money = () => {
     isFetchingNextPage,
   } = useMonthlyQuery(targetYear, targetMonth, isDaily);
 
-  // console.log(monthlyData);
-
-  // 무한 스크롤
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (!hasNextPage || isFetchingNextPage) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchNextPage();
-        }
+        if (entries[0].isIntersecting) fetchNextPage();
       },
       { threshold: 0.5 },
     );
 
     const target = loadMoreRef.current;
     if (target) observer.observe(target);
-
     return () => {
       if (target) observer.unobserve(target);
     };
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  // 달력
   const { data: calendarData } = useMonthlyCalendarQuery(
     targetYear,
     targetMonth,
   );
 
-  // 달력 세부
   const selectedYear = selectedDate
     ? new Date(selectedDate).getFullYear()
     : undefined;
@@ -207,7 +195,6 @@ const Money = () => {
     Boolean(selectedDate),
   );
 
-  // 고정비 목록 조회
   const {
     data: fixedListData,
     fetchNextPage: fetchNextFixed,
@@ -225,9 +212,7 @@ const Money = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchNextFixed();
-        }
+        if (entries[0].isIntersecting) fetchNextFixed();
       },
       { threshold: 0.5 },
     );
@@ -238,7 +223,6 @@ const Money = () => {
       if (target) observer.unobserve(target);
     };
   }, [activeTab, hasNextFixed, isFetchingNextFixed, fetchNextFixed]);
-  //
 
   const isCurrentMonth =
     calYear === today.getFullYear() && calMonth === today.getMonth();
@@ -284,112 +268,45 @@ const Money = () => {
     }
   }, [location.state]);
 
-  const loadEntries = () => {
-    const raw = localStorage.getItem('dailyEntries');
-    setEntries(raw ? JSON.parse(raw) : []);
-  };
-  const loadFixed = () => {
-    const raw = localStorage.getItem('fixedEntries');
-    setFixed(raw ? JSON.parse(raw) : []);
-  };
-  const loadRoutines = () => {
-    try {
-      const raw = localStorage.getItem('routineEntries');
-      let list: Routine[] = raw ? JSON.parse(raw) : [];
-      list = list.map((r) =>
-        r.createdAt
-          ? r
-          : { ...r, createdAt: new Date(r.id || Date.now()).toISOString() },
-      );
-      setRoutines(list);
-    } catch {
-      setRoutines([]);
-    }
-  };
-
-  const injectFixedToEntries = useCallback(() => {
-    const now = new Date();
-    const firstDayStr = `${now.getFullYear()}-${String(
-      now.getMonth() + 1,
-    ).padStart(2, '0')}-01`;
-
-    const raw = localStorage.getItem('dailyEntries');
-    const existing: Entry[] = raw ? JSON.parse(raw) : [];
-
-    const alreadyInjected = existing.some(
-      (e) => e.date === firstDayStr && e.memo === '[고정비]',
-    );
-    if (alreadyInjected) return;
-
-    const injected = fixed.map((f) => ({
-      id: Date.now() + Math.random(),
-      date: firstDayStr,
-      item: f.item,
-      amount: f.amount,
-      memo: f.memo,
-      category: '고정비',
-    }));
-
-    const newList = [...existing, ...injected];
-    localStorage.setItem('dailyEntries', JSON.stringify(newList));
-    setEntries(newList);
-  }, [fixed]);
-
-  useEffect(() => {
-    setMonthBudget(Number(localStorage.getItem('monthBudget') || 0));
-    loadEntries();
-    loadFixed();
-    loadRoutines();
-  }, []);
-
-  useEffect(() => {
-    injectFixedToEntries();
-  }, [fixed]);
-
-  useEffect(() => {
-    const onFocus = () => {
-      loadEntries();
-      loadFixed();
-      if (activeTab === '소비 루틴') loadRoutines();
-    };
-    window.addEventListener('focus', onFocus);
-    return () => window.removeEventListener('focus', onFocus);
-  }, [activeTab]);
-
-  useEffect(() => {
-    if (activeTab === '소비 루틴') loadRoutines();
-  }, [activeTab]);
-
+  // 일일 삭제
   const deleteEntry = async (id: number) => {
     try {
-      const res = await useDailyDeleteMutation(id);
+      const res = await callDailyDeleteMutation(id);
       if (res.isSuccess) {
         alert('삭제 되었습니다.');
         window.location.reload();
-        setEntries((prev) => {
-          const next = prev.filter((e) => e.id !== id);
-          if (!next.length) setDeleteMode(false);
-          return next;
-        });
       }
     } catch (err) {
       console.error('삭제 실패', err);
     }
   };
 
+  // 고정비 삭제
+  const { mutate: deleteFixedCostMutate, isPending: isDeletingFixed } =
+    useFixedCostDeleteMutation();
+
   const deleteFixed = (id: number) => {
-    setFixed((prev) => {
-      const next = prev.filter((e) => e.id !== id);
-      localStorage.setItem('fixedEntries', JSON.stringify(next));
-      if (!next.length) setFixedDel(false);
-      return next;
+    if (!window.confirm('해당 고정비를 삭제할까요?')) return;
+
+    deleteFixedCostMutate(id, {
+      onSuccess: (res) => {
+        if (res.isSuccess) {
+          alert('삭제되었습니다.');
+        } else {
+          alert(res.message || '삭제에 실패했습니다.');
+        }
+      },
+      onError: () => {
+        alert('삭제에 실패했습니다.');
+      },
     });
   };
 
-  const totalSpent = [...entries, ...fixed].reduce((s, c) => s + c.amount, 0);
-  const usedAbs = Math.abs(totalSpent);
-  const fillPercent = monthBudget
-    ? Math.min((usedAbs / monthBudget) * 100, 100)
+  // ===== 게이지 값(두 번째 스샷처럼) : API 값 기준 =====
+  const totalBudgetAmt = data?.result?.totalBudget ?? 0;
+  const usedAmt = totalData?.result?.totalConsumptionAmount ?? 0;
+  const fillPercent = totalBudgetAmt
+    ? Math.min((usedAmt / totalBudgetAmt) * 100, 100)
     : 0;
 
   const selectedList = selectedDate
@@ -418,6 +335,36 @@ const Money = () => {
     startYRef.current = 0;
   };
 
+  // ===== 소비 루틴 목록 =====
+  const {
+    data: routinesPages,
+    fetchNextPage: fetchNextRoutines,
+    hasNextPage: hasNextRoutines,
+    isFetchingNextPage: isFetchingNextRoutines,
+  } = useMyRoutinesQuery();
+
+  const routines: RoutineListItem[] =
+    routinesPages?.pages.flatMap((p) => p.result.routineList) ?? [];
+
+  const routineLoadMoreRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (activeTab !== '소비 루틴') return;
+    if (!hasNextRoutines || isFetchingNextRoutines) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) fetchNextRoutines();
+      },
+      { threshold: 0.5 },
+    );
+
+    const target = routineLoadMoreRef.current;
+    if (target) observer.observe(target);
+    return () => {
+      if (target) observer.unobserve(target);
+    };
+  }, [activeTab, hasNextRoutines, isFetchingNextRoutines, fetchNextRoutines]);
+
   return (
     <Container>
       <Header title="가계부" />
@@ -425,7 +372,7 @@ const Money = () => {
       <TopContainer>
         <GreetingCard>
           <GreetText>
-            라인
+            {nickname}
             <span>
               님!
               <br />
@@ -443,9 +390,7 @@ const Money = () => {
             onClick={prevMonth}
             disabled={false}
           />
-
           <MonthText>{`${calMonth + 1}월`}</MonthText>
-
           <ArrowBtn
             style={{ transform: 'rotate(180deg)' }}
             src={LeftArrowActive}
@@ -457,10 +402,10 @@ const Money = () => {
 
         <TotalRow>
           <TotalSpent>
-            {comma(totalData?.result?.totalConsumptionAmount ?? 0)}원
+            {comma(usedAmt)}원
             <span>
               <span className="slash"> / </span>
-              {comma(data?.result?.totalBudget ?? 0)}원
+              {comma(totalBudgetAmt)}원
             </span>
           </TotalSpent>
           <EditBtn
@@ -480,12 +425,10 @@ const Money = () => {
 
         <BudgetCardWrapper>
           <Summary>
-            {(totalData?.result?.totalConsumptionAmount ?? 0) > 0 ? (
+            {usedAmt > 0 ? (
               <SummaryP>
-                한 달 예산 {comma(data?.result?.totalBudget ?? 0)}원 중{' '}
-                <span>
-                  {comma(totalData?.result?.totalConsumptionAmount ?? 0)}원{' '}
-                </span>
+                한 달 예산 {comma(totalBudgetAmt)}원 중{' '}
+                <span>{comma(usedAmt)}원 </span>
                 사용했어요!
               </SummaryP>
             ) : (
@@ -494,18 +437,23 @@ const Money = () => {
 
             <BarWrapper>
               <Bar>
-                <Fill style={{ width: `${fillPercent}%` }} />
+                <Fill
+                  style={{
+                    width: `${fillPercent}%`,
+                    transition: 'width .4s ease',
+                  }}
+                />
               </Bar>
 
               <Below $fillPercent={fillPercent}>
                 <span className="used-amount">
                   <img src={starIcon} alt="star" />
-                  <span>{comma(usedAbs)}원</span>
+                  <span>{comma(usedAmt)}원</span>
                 </span>
                 <span
                   style={{ position: 'absolute', right: 0, bottom: '-0.6rem' }}
                 >
-                  {comma(totalData?.result?.totalConsumptionAmount ?? 0)}원
+                  {comma(totalBudgetAmt)}원
                 </span>
               </Below>
             </BarWrapper>
@@ -747,6 +695,10 @@ const Money = () => {
                           src={closeIcon}
                           alt="close"
                           onClick={() => deleteFixed(e.fixedConsumptionId)}
+                          style={{
+                            opacity: isDeletingFixed ? 0.6 : 1,
+                            pointerEvents: isDeletingFixed ? 'none' : 'auto',
+                          }}
                         />
                       )}
                     </ItemRowRight>
@@ -770,7 +722,11 @@ const Money = () => {
           <>
             <ButtonContainer>
               <PlusBtn
-                onClick={() => navigate('/money-routine')}
+                onClick={() =>
+                  navigate('/money-routine', {
+                    state: { budgetId: totalData?.result?.budgetId ?? 0 },
+                  })
+                }
                 src={plusIcon}
                 alt="plus"
               />
@@ -778,56 +734,89 @@ const Money = () => {
 
             {routines.length ? (
               <RoutineCardList>
-                {routines
-                  .slice()
-                  .reverse()
-                  .map((r) => {
-                    const date = new Date(r.createdAt || Date.now());
-                    const dateStr = `${date.getFullYear()} • ${String(
-                      date.getMonth() + 1,
-                    ).padStart(2, '0')} • ${String(date.getDate()).padStart(
-                      2,
-                      '0',
-                    )}`;
+                {routines.map((r) => {
+                  const date = new Date(r.createDate);
+                  const dateStr = `${date.getFullYear()} • ${String(
+                    date.getMonth() + 1,
+                  ).padStart(2, '0')} • ${String(date.getDate()).padStart(
+                    2,
+                    '0',
+                  )}`;
 
-                    return (
-                      <RoutineWideCard
-                        key={r.id}
-                        onClick={() =>
-                          navigate(`/myroutine/${r.id}`, {
-                            state: { from: 'money' },
-                          })
+                  const imgUrl = resolveRoutineImageUrl(r);
+
+                  return (
+                    <RoutineWideCard
+                      key={r.routineId}
+                      onClick={() =>
+                        navigate(`/myroutine/${r.routineId}`, {
+                          state: { from: 'money' },
+                        })
+                      }
+                      style={{ overflow: 'visible' }}
+                    >
+                      <PreviewBox
+                        style={
+                          imgUrl
+                            ? {
+                                backgroundImage: `url(${imgUrl})`,
+                                backgroundSize: 'contain',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: 'left center',
+                                backgroundColor: '#fff',
+                              }
+                            : undefined
                         }
-                      >
-                        <PreviewBox />
+                      />
 
-                        <RoutineContent>
-                          <DateLine>{dateStr}</DateLine>
+                      <RoutineContent style={{ overflow: 'visible' }}>
+                        <DateLine>{dateStr}</DateLine>
 
-                          <TitleRow>
-                            <h3 className="title">{r.title}</h3>
-                            <ArrowIcon src={arrowIconImg} alt="arrow" />
-                          </TitleRow>
+                        {/* 제목 잘림 방지 */}
+                        <TitleRow
+                          style={{
+                            overflow: 'visible',
+                            alignItems: 'flex-start',
+                          }}
+                        >
+                          <h3
+                            className="title"
+                            style={{
+                              margin: 0,
+                              lineHeight: 1.35,
+                              paddingBottom: 2,
+                              overflow: 'visible',
+                              display: 'inline-block',
+                            }}
+                          >
+                            {r.routineName}
+                          </h3>
+                          <ArrowIcon src={arrowIconImg} alt="arrow" />
+                        </TitleRow>
 
-                          <TagsRow>
-                            {r.tags?.map((t) => {
-                              const tag = t.startsWith('#') ? t : `#${t}`;
-                              return (
-                                <span className="tag" key={tag}>
-                                  {tag}
-                                </span>
-                              );
-                            })}
-                          </TagsRow>
+                        <TagsRow>
+                          {(r.hashtags ?? []).map((t) => {
+                            const tag = t.startsWith('#') ? t : `#${t}`;
+                            return (
+                              <span className="tag" key={tag}>
+                                {tag}
+                              </span>
+                            );
+                          })}
+                        </TagsRow>
 
-                          <UserRow>
-                            <Avatar />
-                            <span className="nick">라인</span>
-                          </UserRow>
-                        </RoutineContent>
-                      </RoutineWideCard>
-                    );
-                  })}
+                        <UserRow>
+                          <Avatar />
+                          <span className="nick">{r.nickname || '라인'}</span>
+                        </UserRow>
+                      </RoutineContent>
+                    </RoutineWideCard>
+                  );
+                })}
+
+                {hasNextRoutines && (
+                  <div ref={routineLoadMoreRef} style={{ height: 40 }} />
+                )}
               </RoutineCardList>
             ) : (
               <EmptyBox>

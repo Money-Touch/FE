@@ -125,17 +125,29 @@ const FixedCost = () => {
           <Label>
             카테고리 선택<span>*</span>
           </Label>
-          <CatBox>
-            {CATEGORIES.map((c) => (
-              <CatBtn
-                key={c}
-                $on={c === category}
-                onClick={() => setCategory(c)}
-              >
-                {c}
-              </CatBtn>
-            ))}
-          </CatBox>
+
+          {/* ✅ addday.tsx와 동일: 한 줄 + 가로 스크롤 */}
+          <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
+            <CatBox
+              style={{
+                display: 'flex',
+                flexWrap: 'nowrap',
+                gap: '8px',
+                width: 'max-content',
+              }}
+            >
+              {CATEGORIES.map((c) => (
+                <CatBtn
+                  key={c}
+                  $on={c === category}
+                  onClick={() => setCategory(c)}
+                  style={{ flex: '0 0 auto', whiteSpace: 'nowrap' }}
+                >
+                  {c}
+                </CatBtn>
+              ))}
+            </CatBox>
+          </div>
 
           <Label>
             항목명<span>*</span>

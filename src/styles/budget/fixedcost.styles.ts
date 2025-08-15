@@ -73,7 +73,7 @@ export const CatBox = styled.div`
 `;
 
 export const CatBtn = styled.button<{ $on: boolean }>`
-  padding: 0.7rem 1.6rem;
+  padding: 0.7rem 1.4rem;
   border: 0.1rem solid ${colors.G7};
   border-radius: 2rem;
   font-size: 1.4rem;
