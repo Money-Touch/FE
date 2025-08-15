@@ -28,7 +28,6 @@ function RoutineDetail() {
         totalBudget={routine.totalBudget}
         budgetList={routine.categoryBudgetList}
       />
-
       <button
         className={S.BudgetButton(!routine.canApply)}
         disabled={!routine.canApply}
@@ -38,10 +37,11 @@ function RoutineDetail() {
       >
         내 예산에 반영
       </button>
-
       {!routine.canApply && (
         <div className={S.ErrorMessage}>{routine.cannotApplyMessage}</div>
       )}
+
+      <div className="!mb-[7.4rem]" />
 
       {showModal && (
         <Modal

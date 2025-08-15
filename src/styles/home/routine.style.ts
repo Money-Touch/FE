@@ -50,10 +50,10 @@ export const BudgetLabel = 'font-medium text-[1.5rem] text-[var(--color-G5)]';
 export const BudgetAmountPerItem =
   'font-medium text-[1.8rem] text-[var(--color-G1)]';
 export const BudgetButton = (disabled: boolean) =>
-  `flex-none w-full h-[5rem] mt-[24.3rem] mb-[7.4rem] rounded-[1rem] ${
+  `flex-none w-full h-[5rem] mt-[24.3rem] rounded-[1rem] ${
     disabled
       ? 'bg-[var(--color-G6)] cursor-default'
       : 'bg-[var(--color-mainColor1)] cursor-pointer'
   } text-white font-medium text-[1.8rem]`;
 export const ErrorMessage =
-  'w-full mt-[0.6rem] font-light text-[1.1rem] text-[var(--color-M1)] text-center';
+  'w-full mt-[0.6rem] text-[1.1rem] text-[var(--color-M1)] text-center font-light';

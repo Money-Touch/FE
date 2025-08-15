@@ -81,9 +81,15 @@ export const PlusBtn = styled.button`
   width: 1.8rem;
   height: 1.8rem;
   cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 `;
 
-export const TagInput = styled.input`
+export const TagInput = styled.input<{ $wpx?: number }>`
   padding: 0.4rem 0.5rem;
   font-size: 1.2rem;
   font-weight: 500;
@@ -91,6 +97,38 @@ export const TagInput = styled.input`
   border: none;
   border-radius: 0.5rem;
   background: ${colors.subColor5};
+  line-height: 1.6rem;
+  box-sizing: border-box;
+
+  width: ${({ $wpx }) => ($wpx ? `${$wpx}px` : 'auto')};
+  min-width: 0;
+  max-width: 100%;
+  transition: width 0.08s ease;
+
+  &::placeholder {
+    color: ${colors.G4};
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px ${colors.mainColor1} inset;
+    background: #effaf6;
+  }
+`;
+
+export const MeasureSpan = styled.span`
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+
+  padding: 0.4rem 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.6rem;
+  box-sizing: border-box;
+  border: none;
+  font-family: inherit;
 `;
 
 export const Save = styled.button<{ disabled?: boolean }>`
