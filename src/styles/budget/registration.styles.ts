@@ -1,276 +1,88 @@
-import styled, { css } from 'styled-components';
-import colors from '../common/colors';
+export const Wrap = `relative w-full h-screen bg-[var(--color-B1)] flex flex-col items-center pt-[8.4rem] overflow-y-auto`;
 
-export const Wrap = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  background: ${colors.B1};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 8.4rem;
-  overflow-y: auto;
-`;
+export const Body = `w-full`;
 
-export const Body = styled.main`
-  width: 100%;
-`;
+export const Section = `flex flex-col w-full px-[2.4rem]`;
 
-export const Section = styled.section`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 0 2.4rem;
-`;
+export const Label = `text-[1.8rem] font-medium text-[var(--color-G1)]`;
 
-export const Label = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.G1};
-`;
+export const RowContainer = `w-full flex justify-between`;
 
-export const RowContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
+export const Row = `flex items-center gap-[0.6rem]`;
 
-export const Row = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-`;
+export const Month = `text-[2.6rem] font-bold text-[var(--color-G1)]`;
 
-export const Month = styled.p`
-  font-size: 2.6rem;
-  font-weight: 700;
-  color: ${colors.G1};
-`;
+export const IconBtn = `w-[2.4rem] h-[2.4rem] cursor-pointer`;
 
-export const IconBtn = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
-  cursor: pointer;
-`;
+export const DeleteToggleBtn = (active: boolean) =>
+  `w-[2.4rem] h-[2.4rem] cursor-pointer ${
+    active ? 'text-[var(--color-mainColor1)]' : 'text-[var(--color-G3)]'
+  }`;
 
-export const DeleteToggleBtn = styled.img<{ $active: boolean }>`
-  width: 2.4rem;
-  height: 2.4rem;
-  cursor: pointer;
-  color: ${({ $active }) => ($active ? colors.mainColor1 : colors.G3)};
-`;
+export const Divider = `w-full h-[0.7rem] bg-[var(--color-G8)] my-[2.4rem]`;
 
-export const Divider = styled.div`
-  width: 100%;
-  height: 0.7rem;
-  background: ${colors.G8};
-  margin: 2.4rem 0;
-`;
+export const CatUl = `mt-[1.4rem] flex flex-col gap-[1.4rem]`;
 
-export const CatUl = styled.ul`
-  margin-top: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-`;
+export const CatLi = (
+  editable: boolean,
+) => `flex justify-between items-center text-[1.5rem] font-medium text-[var(--color-G5)] 
+              [&>span]:text-[1.8rem] [&>span]:text-[var(--color-G1)]
+              ${editable ? 'cursor-pointer' : ''}`;
 
-export const CatLi = styled.li<{ $editable: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: ${colors.G5};
+export const EditWrapper = `w-[14rem] flex items-center`;
 
-  span {
-    font-size: 1.8rem;
-    color: ${colors.G1};
-  }
+export const EditInput = `w-full text-[1.8rem] font-medium text-[var(--color-G1)] border-b-[0.1rem]  border-[var(--color-mainColor1)] text-right`;
 
-  ${({ $editable }) =>
-    $editable &&
-    css`
-      cursor: pointer;
-    `}
-`;
+export const RightBox = `flex items-center gap-[2.8rem]`;
 
-export const EditWrapper = styled.div`
-  width: 14rem;
-  display: flex;
-  align-items: center;
-`;
+export const DeleteBtn = `w-[2.4rem] h-[2.4rem] cursor-pointer`;
 
-export const EditInput = styled.span`
-  width: 100%;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.G1};
-  border-bottom: 0.1rem solid ${colors.mainColor1};
-  text-align: right;
-`;
+export const PlusBtnContainer = `w-full flex justify-end px-[2.4rem] mt-[16.7rem] mb-[2.3rem]`;
 
-export const RightBox = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2.8rem;
-`;
+export const PlusBtn = `cursor-pointer w-[5.8rem] h-[5.8rem]`;
 
-export const DeleteBtn = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
-  cursor: pointer;
-`;
+export const ConfirmBtnContainer = `w-full px-[2.4rem]`;
 
-export const PlusBtnContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  padding: 0 2.4rem;
-  margin: 16.7rem 0 2.3rem 0;
-`;
-
-export const PlusBtn = styled.img`
-  cursor: pointer;
-  width: 5.8rem;
-  height: 5.8rem;
-`;
-
-export const ConfirmBtnContainer = styled.div`
-  width: 100%;
-  padding: 0 2.4rem;
-`;
-
-export const ConfirmBtn = styled.button<{ disabled?: boolean }>`
-  width: 100%;
-  height: 5rem;
-  margin-bottom: 4.9rem;
-  border-radius: 1rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.white};
-  background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
+export const ConfirmBtn = (disabled: boolean) =>
+  `w-full h-[5rem] mb-[4.9rem] rounded-[1rem] text-[1.8rem] font-medium text-[var(--color-white)] ${disabled ? 'bg-[var(--color-G6)]' : 'bg-[var(--color-mainColor1)]'}
 `;
 
 // 모달
-export const Dim = styled.div`
-  width 100%;
-  max-width: 425px;
-  position: absolute;
-  inset: 0;
-  z-index: 999;
-  background: rgba(17, 17, 17, 0.6);
-  display: flex;
-  align-items: flex-end;
-  overflow-y: auto;
+export const Dim = `w-full max-w-[425px] absolute inset-0 z-[999] bg-[rgba(17,17,17,0.6)] flex items-end overflow-y-auto`;
+
+export const Modal = `fixed w-full max-w-[425px] bg-[var(--color-white)] rounded-t-[1.5rem] flex flex-col animate-slide-up`;
+
+export const ModalHead = `w-full px-[2rem] flex flex-col items-end
+  [&>span]:w-full 
+  [&>span]:text-[2rem] 
+  [&>span]:font-medium 
+  [&>span]:text-[var(--color-G1)] 
+  [&>span]:mb-[2rem]
 `;
 
-export const Modal = styled.div`
-  position: fixed;
-  width: 100%;
-  max-width: 425px;
-  background: ${colors.white};
-  border-radius: 1.5rem 1.5rem 0 0;
-  display: flex;
-  flex-direction: column;
-  animation: slide-up 0.25s ease;
+export const Close = `w-[2.4rem] h-[2.4rem] mt-[2rem] mb-[3rem] cursor-pointer`;
 
-  @keyframes slide-up {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
+export const InputRow = `w-full px-[2rem] relative
+  [&>span]:absolute 
+  [&>span]:text-[2.6rem] 
+  [&>span]:font-bold 
+  [&>span]:right-[4.5rem]
 `;
 
-export const ModalHead = styled.div`
-  width: 100%;
-  padding: 0 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+export const Money = (hasValue: boolean) =>
+  `mb-[3rem] w-full h-[3.8rem] pr-[5.5rem] box-border border-b-[0.1rem] text-[2.6rem] font-bold ${
+    hasValue ? 'border-[var(--color-mainColor1)]' : 'border-[var(--color-G1)]'
+  }`;
 
-  span {
-    width: 100%;
-    font-size: 2rem;
-    font-weight: 500;
-    color: ${colors.G1};
-    margin-bottom: 2rem;
-  }
-`;
+export const InputIcon = `absolute r-[2rem] t-[1rem] w-[2rem] h-[2rem] cursor-pointer`;
 
-export const Close = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
-  margin: 2rem 0 3rem 0;
-  cursor: pointer;
-`;
+export const Pad = `bg-[#f9f9f9] py-[1.8rem] px-[6.4rem] border-t-[0.1rem] border-[var(--color-G8)] grid grid-cols-3`;
 
-export const InputRow = styled.div`
-  width: 100%;
-  padding: 0 2rem;
-  position: relative;
+export const Key = `w-full text-[3rem] font-medium text-[var(--color-G1)] mb-[2.2rem]`;
 
-  span {
-    position: absolute;
-    font-size: 2.6rem;
-    font-weight: 700;
-    right: 4.5rem;
-  }
-`;
+export const ApplyContainer = `w-full h-full px-[2.4rem] pb-[6.8rem] bg-[#f9f9f9]`;
 
-export const Money = styled.input<{ hasValue: boolean }>`
-  margin-bottom: 3rem;
-  width: 100%;
-  height: 3.8rem;
-  padding-right: 5.5rem;
-  box-sizing: border-box;
-  border-bottom: 0.1rem solid
-    ${({ hasValue }) => (hasValue ? colors.mainColor1 : colors.G1)};
-  font-size: 2.6rem;
-  font-weight: 700;
-`;
-
-export const InputIcon = styled.img`
-  position: absolute;
-  right: 2rem;
-  top: 1rem;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-`;
-
-export const Pad = styled.div`
-  background: #f9f9f9;
-  padding: 1.8rem 6.4rem;
-  border-top: 0.1rem solid ${colors.G8};
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-`;
-
-export const Key = styled.button`
-  width: 100%;
-  font-size: 3rem;
-  font-weight: 500;
-  color: ${colors.G1};
-  margin-bottom: 2.2rem;
-`;
-
-export const ApplyContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 0 2.4rem 6.8rem 2.4rem;
-  background: #f9f9f9;
-`;
-
-export const Apply = styled.button<{ disabled?: boolean }>`
-  width: 100%;
-  height: 5rem;
-  border-radius: 1rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.white};
-  background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
-`;
+export const Apply = (disabled: boolean) =>
+  `w-full h-[5rem] rounded-[1rem] text-[1.8rem] font-medium text-[var(--color-white)] ${
+    disabled ? 'bg-[var(--color-G6)]' : 'bg-[var(--color-mainColor1)]'
+  }`;
