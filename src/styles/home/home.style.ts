@@ -1,8 +1,8 @@
 // home.tsx
 export const Container =
-  'flex flex-col h-screen bg-[var(--color-B2)] pb-[4rem] relative';
+  'flex flex-col h-full bg-[var(--color-B2)] pb-[4rem] relative';
 export const Header =
-  'w-full max-w-[425px] top-0 fixed flex items-center justify-between h-[6rem] pt-[2.4rem] z-[50]';
+  'w-full max-w-[425px] top-0 fixed flex items-center justify-between h-[6rem] pt-[2.4rem] pb-[1rem] z-[50]';
 export const LogoImg = 'w-[3.6rem] h-[3.6rem] ml-[1.7rem]';
 export const AlarmWrapper = 'relative w-[2.4rem] h-[2.4rem] mr-[2.4rem]';
 export const AlarmImg =
@@ -18,7 +18,9 @@ export const MoreIcon = 'h-[1.4rem] cursor-pointer';
 
 // consumptionWelcome.tsx
 export const WelcomeContainer =
-  "relative h-[18.9rem] p-0 rounded-[1.5rem] shadow-[0_0_1rem_0_#0000000d] overflow-hidden will-change-transform bg-gradient-to-b from-[#00dabd] to-[#94fff1] before:content-[''] before:absolute before:w-[17.6rem] before:h-[12.6rem] before:top-[-2.5rem] before:left-[21.9rem] before:bg-[linear-gradient(234.4deg,rgba(249,234,67,0.3)_8.28%,var(--color-white)_91.72%)] before:blur-[2rem] before:rounded-full before:z-[1] after:content-[''] after:absolute after:w-[17.6rem] after:h-[12.6rem] after:top-[3.6rem] after:left-[19.7rem] after:bg-[linear-gradient(234.4deg,var(--color-white)_8.28%,rgba(0,209,181,0.3)_91.72%)] after:blur-[2rem] after:rounded-full after:z-[1]";
+  "relative h-[18.9rem] p-0 rounded-[1.5rem] shadow-[0_0_1rem_0_#0000000d] overflow-hidden will-change-transform bg-gradient-to-b from-[#00dabd] to-[#94fff1] \
+   before:content-[''] before:absolute before:w-[17.6rem] before:h-[12.6rem] before:top-[-2.5rem] before:left-[80%] before:-translate-x-1/2 before:bg-[linear-gradient(234.4deg,rgba(249,234,67,0.3)_8.28%,var(--color-white)_91.72%)] before:blur-[2rem] before:rounded-full before:z-[1] \
+   after:content-[''] after:absolute after:w-[17.6rem] after:h-[12.6rem] after:top-[3.6rem] after:left-[80%] after:-translate-x-1/2 after:bg-[linear-gradient(234.4deg,var(--color-white)_8.28%,rgba(0,209,181,0.3)_91.72%)] after:blur-[2rem] after:rounded-full after:z-[1]";
 export const WhiteBackground =
   'absolute top-[0.1rem] left-[0.1rem] right-[0.1rem] bottom-[0.1rem] bg-[var(--color-white)] rounded-[1.4rem] z-0';
 export const WelcomeTopRow =
