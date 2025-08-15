@@ -1,7 +1,6 @@
 type CategoryItem = { name: string; amount: number };
 
 export type RoutinePreviewProps = {
-  /** 전체 카드('full') | 왼쪽 요약만('mini') */
   variant?: 'full' | 'mini';
   title?: string;
   nickname?: string;
@@ -13,7 +12,6 @@ export type RoutinePreviewProps = {
 const comma = (v: string | number) =>
   String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-// 캡처 기본 너비(정사각 고정 아님 — 높이는 내용에 맞춰 자동)
 const THUMB_WIDTH = 360;
 
 export default function RoutinePreview({
@@ -36,19 +34,15 @@ export default function RoutinePreview({
     '0',
   )} • ${String(now.getDate()).padStart(2, '0')}`;
 
-  // ✅ 전체 카테고리를 사용 (기존 4개 제한 제거)
   const allCats = categories;
 
-  /** 왼쪽 요약 카드 — grid로 이름/금액 배치, 말줄임 처리 */
   const LeftSummary = ({ fullBleed = false }: { fullBleed?: boolean }) => {
-    // 항목이 많으면 약간 촘촘하게
     const dense = allCats.length > 6;
 
     return (
       <div
         style={{
           width: fullBleed ? '100%' : 128,
-          // height 고정하지 않음 → 내용에 맞춰 자동으로 늘어나도록
           padding: fullBleed ? 24 : 12,
           borderRadius: fullBleed ? 0 : 12,
           background: '#f8fafc',
@@ -100,7 +94,7 @@ export default function RoutinePreview({
             >
               <span
                 style={{
-                  minWidth: 0, // 말줄임 동작
+                  minWidth: 0,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
@@ -117,13 +111,11 @@ export default function RoutinePreview({
     );
   };
 
-  /** 🔸 캡처용: 높이를 고정하지 않고(overflow도 숨기지 않고) 왼쪽 요약만 렌더 */
   if (variant === 'mini') {
     return (
       <div
         style={{
           width: THUMB_WIDTH,
-          // height 지정 X → 내용 전체가 캡처되도록
           background: '#fff',
           borderRadius: 16,
         }}
@@ -133,7 +125,6 @@ export default function RoutinePreview({
     );
   }
 
-  /** 기본: 전체 카드 */
   return (
     <div
       style={{

@@ -1,16 +1,6 @@
 import { useEffect, useState } from 'react';
 import Header from '../../components/header/header';
-import {
-  Wrap,
-  Body,
-  Section,
-  Label,
-  Row,
-  Month,
-  Divider,
-  CatUl,
-  CatLi,
-} from '../../styles/budget/myroutine.styles';
+import * as A from '../../styles/budget/myroutine.styles';
 
 const DEFAULT_CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
 
@@ -63,38 +53,38 @@ const MyRoutine = () => {
   }, []);
 
   return (
-    <Wrap>
+    <div className={A.Wrap}>
       <Header title={routineTitle} />
 
-      <Body>
-        <Section>
-          <Label>한 달 예산</Label>
-          <Row>
-            <Month>{comma(monthBudget)}원</Month>
-          </Row>
-        </Section>
+      <main className={A.Body}>
+        <section className={A.Section}>
+          <p className={A.Label}>한 달 예산</p>
+          <div className={A.Row}>
+            <p className={A.Month}>{comma(monthBudget)}원</p>
+          </div>
+        </section>
 
-        <Divider />
+        <div className={A.Divider} />
 
-        <Section>
-          <Row></Row>
-          <CatUl>
+        <section className={A.Section}>
+          <div className={A.Row}></div>
+          <ul className={A.CatUl}>
             {DEFAULT_CATEGORIES.map((c, i) => (
-              <CatLi key={c}>
+              <li className={A.CatLi} key={c}>
                 <span>{c}</span>
-                <span className="wonP">{comma(catBudget[i])}원</span>
-              </CatLi>
+                <span className={A.WonP}>{comma(catBudget[i])}원</span>
+              </li>
             ))}
             {customCats.map((name, i) => (
-              <CatLi key={name}>
+              <li className={A.CatLi} key={name}>
                 <span>{name}</span>
-                <span className="wonP">{comma(customBudget[i])}원</span>
-              </CatLi>
+                <span className={A.WonP}>{comma(customBudget[i])}원</span>
+              </li>
             ))}
-          </CatUl>
-        </Section>
-      </Body>
-    </Wrap>
+          </ul>
+        </section>
+      </main>
+    </div>
   );
 };
 

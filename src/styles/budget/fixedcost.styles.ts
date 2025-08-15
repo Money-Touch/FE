@@ -1,259 +1,88 @@
-import styled from 'styled-components';
-import colors from '../common/colors';
+export const Wrap = 'w-full h-screen flex flex-col relative pt-[8.4rem]';
 
-export const Wrap = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding-top: 8.4rem;
-`;
+export const Body = 'w-full overflow-y-auto';
 
-export const Body = styled.main`
-  width: 100%;
-  overflow-y: auto;
-`;
+export const Section = 'mx-[2.4rem]';
 
-export const Section = styled.section`
-  margin: 0 2.4rem;
-`;
+export const Label2 = 'text-[1.8rem] font-medium text-[var(--color-G1)]';
 
-export const Label2 = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.G1};
-`;
+export const Row = 'flex items-center gap-[0.6rem]';
 
-export const Row = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-`;
+export const AmountBtn =
+  'flex items-center gap-[0.6rem] border-0 text-[2.6rem] font-bold text-[var(--color-G1)] cursor-pointer';
 
-export const AmountBtn = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  border: none;
-  font-size: 2.6rem;
-  font-weight: 700;
-  color: ${colors.G1};
-  cursor: pointer;
+export const Divider =
+  'w-full h-[0.7rem] bg-[var(--color-G8)] mt-[2.4rem] mb-[1.8rem]';
 
-  img {
-    width: 2.4rem;
-    height: 2.4rem;
-  }
-`;
+export const Label = 'text-[1.5rem] font-medium mb-[0.6rem]';
 
-export const Divider = styled.div`
-  width: 100%;
-  height: 0.7rem;
-  background: ${colors.G8};
-  margin: 2.4rem 0 1.8rem 0;
-`;
+export const CatBox = 'w-full flex flex-wrap gap-[1rem] mb-[2.4rem]';
 
-export const Label = styled.p`
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-bottom: 0.6rem;
+export const CatBtn = (on: boolean) =>
+  [
+    'py-[0.7rem] px-[1.4rem]',
+    'border rounded-[2rem] text-[1.4rem] cursor-pointer',
+    'border-[var(--color-G7)]',
+    on
+      ? 'bg-[var(--color-mainColor1)] text-white'
+      : 'bg-white text-[var(--color-G2)]',
+  ].join(' ');
 
-  span {
-    margin-left: 0.2rem;
-    color: ${colors.M1};
-  }
-`;
+export const Input =
+  'w-full h-[4.5rem] px-[1.5rem] box-border border rounded-[0.5rem] text-[1.4rem] font-light text-[var(--color-G1)] mb-[2.4rem] placeholder:text-[var(--color-G5)] border-[var(--color-G7)]';
 
-export const CatBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2.4rem;
-`;
+export const DeleteIcon =
+  'w-[1.65rem] h-[1.65rem] cursor-pointer absolute right-[1.5rem] top-[1.3rem]';
 
-export const CatBtn = styled.button<{ $on: boolean }>`
-  padding: 0.7rem 1.4rem;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 2rem;
-  font-size: 1.4rem;
-  background: ${({ $on }) => ($on ? colors.mainColor1 : colors.white)};
-  color: ${({ $on }) => ($on ? colors.white : colors.G2)};
-  cursor: pointer;
-`;
+export const Textarea =
+  'w-full h-[18rem] p-[1.5rem] border rounded-[1rem] text-[1.4rem] font-light text-[var(--color-G1)] resize-none outline-none placeholder:text-[var(--color-G5)] border-[var(--color-G7)]';
 
-export const Input = styled.input`
-  width: 100%;
-  height: 4.5rem;
-  padding: 0 1.5rem;
-  box-sizing: border-box;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 0.5rem;
-  font-size: 1.4rem;
-  font-weight: 300;
-  color: ${colors.G1};
-  margin-bottom: 2.4rem;
+export const Save = (disabled?: boolean) =>
+  [
+    'mt-[16.4rem] mb-[8.4rem] w-full h-[5rem] rounded-[1rem]',
+    'text-[1.8rem] font-medium text-white cursor-pointer',
+    disabled
+      ? 'bg-[var(--color-G6)] pointer-events-none'
+      : 'bg-[var(--color-mainColor1)] pointer-events-auto',
+  ].join(' ');
 
-  &::placeholder {
-    color: ${colors.G5};
-  }
-`;
+export const Dim =
+  'absolute inset-0 z-[999] bg-[rgba(17,17,17,0.6)] flex items-end';
 
-export const DeleteIcon = styled.img`
-  width: 1.65rem;
-  height: 1.65rem;
-  cursor: pointer;
-  position: absolute;
-  right: 1.5rem;
-  top: 1.3rem;
-`;
+export const Modal =
+  'w-full bg-white rounded-t-[1.5rem] flex flex-col animate-[slide-up_0.25s_ease]';
 
-export const Textarea = styled.textarea`
-  width: 100%;
-  height: 18rem;
-  padding: 1.5rem;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 1rem;
-  font-size: 1.4rem;
-  font-weight: 300;
-  color: ${colors.G1};
-  resize: none;
-  outline: none;
+export const ModalHead = 'w-full px-[2.4rem] flex flex-col items-end';
 
-  &::placeholder {
-    color: ${colors.G5};
-  }
-`;
+export const Close = 'w-[2.4rem] h-[2.4rem] my-[2rem] mb-[3rem] cursor-pointer';
 
-export const Save = styled.button<{ disabled?: boolean }>`
-  margin: 16.4rem 0 8.4rem 0;
-  width: 100%;
-  height: 5rem;
-  border: none;
-  border-radius: 1rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.white};
-  cursor: pointer;
-  background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
-  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-`;
+export const InputRow = 'w-full px-[2rem] relative';
 
-// 모달
-export const Dim = styled.div`
-  position: absolute;
-  inset: 0;
-  z-index: 999;
-  background: rgba(17, 17, 17, 0.6);
-  display: flex;
-  align-items: flex-end;
-`;
+export const Money = (hasValue: boolean) =>
+  [
+    'mb-[3rem] w-full h-[3.8rem] pr-[5.5rem] box-border text-[2.6rem] font-bold',
+    'border-b',
+    hasValue
+      ? 'border-b-[var(--color-mainColor1)]'
+      : 'border-b-[var(--color-G1)]',
+  ].join(' ');
 
-export const Modal = styled.div`
-  width: 100%;
-  background: ${colors.white};
-  border-radius: 1.5rem 1.5rem 0 0;
-  display: flex;
-  flex-direction: column;
-  animation: slide-up 0.25s ease;
+export const InputIcon =
+  'absolute right-[2rem] top-[1rem] w-[2rem] h-[2rem] cursor-pointer';
 
-  @keyframes slide-up {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-`;
+export const Pad =
+  'bg-[#f9f9f9] py-[1.8rem] px-[6.4rem] border-t border-t-[var(--color-G8)] grid grid-cols-3';
 
-export const ModalHead = styled.div`
-  width: 100%;
-  padding: 0 2.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+export const Key =
+  'w-full text-[3rem] font-medium text-[var(--color-G1)] mb-[2.2rem]';
 
-  span {
-    width: 100%;
-    font-size: 2rem;
-    font-weight: 500;
-    color: ${colors.G1};
-    margin-bottom: 2rem;
-  }
-`;
+export const ApplyContainer =
+  'w-full h-full px-[2.4rem] pb-[6.8rem] bg-[#f9f9f9]';
 
-export const Close = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
-  margin: 2rem 0 3rem 0;
-  cursor: pointer;
-`;
-
-export const InputRow = styled.div`
-  width: 100%;
-  padding: 0 2rem;
-  position: relative;
-
-  span {
-    position: absolute;
-    font-size: 2.6rem;
-    font-weight: 700;
-    right: 4.5rem;
-  }
-`;
-
-export const Money = styled.input<{ hasValue: boolean }>`
-  margin-bottom: 3rem;
-  width: 100%;
-  height: 3.8rem;
-  padding-right: 5.5rem;
-  box-sizing: border-box;
-  border-bottom: 0.1rem solid
-    ${({ hasValue }) => (hasValue ? colors.mainColor1 : colors.G1)};
-  font-size: 2.6rem;
-  font-weight: 700;
-`;
-
-export const InputIcon = styled.img`
-  position: absolute;
-  right: 2rem;
-  top: 1rem;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-`;
-
-export const Pad = styled.div`
-  background: #f9f9f9;
-  padding: 1.8rem 6.4rem;
-  border-top: 0.1rem solid ${colors.G8};
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-`;
-
-export const Key = styled.button`
-  width: 100%;
-  font-size: 3rem;
-  font-weight: 500;
-  color: ${colors.G1};
-  margin-bottom: 2.2rem;
-`;
-
-export const ApplyContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 0 2.4rem 6.8rem 2.4rem;
-  background: #f9f9f9;
-`;
-
-export const Apply = styled.button<{ disabled?: boolean }>`
-  width: 100%;
-  height: 5rem;
-  border-radius: 1rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.white};
-  background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
-`;
+export const Apply = (disabled?: boolean) =>
+  [
+    'w-full h-[5rem] rounded-[1rem] text-[1.8rem] font-medium text-white',
+    disabled
+      ? 'bg-[var(--color-G6)] pointer-events-none'
+      : 'bg-[var(--color-mainColor1)] pointer-events-auto',
+  ].join(' ');

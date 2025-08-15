@@ -74,7 +74,7 @@ export const Money = (hasValue: boolean) =>
     hasValue ? 'border-[var(--color-mainColor1)]' : 'border-[var(--color-G1)]'
   }`;
 
-export const InputIcon = `absolute r-[2rem] t-[1rem] w-[2rem] h-[2rem] cursor-pointer`;
+export const InputIcon = `absolute right-[2rem] top-[1rem] w-[2rem] h-[2rem] cursor-pointer`;
 
 export const Pad = `bg-[#f9f9f9] py-[1.8rem] px-[6.4rem] border-t-[0.1rem] border-[var(--color-G8)] grid grid-cols-3`;
 
