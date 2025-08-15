@@ -8,41 +8,110 @@ import LikeActiveIcon from '../../../assets/images/feed/Like_Fill.png';
 import ReplyIcon from '../../../assets/images/feed/Reply.png';
 import EllipseIcon from '../../../assets/images/feed/Ellipse_221.png';
 
-import type { Comment as CommentType } from '../../../types/feed/feed';
+import type { CommentListDTO } from '../../../types/feed/feedDetail';
+import type { QueryKey } from '@tanstack/react-query';
+import { useCommentLike } from '../../../hooks/feed/useCommentLike';
 
 interface CommentItemProps {
-  comment: CommentType;
-  likedComments: { [commentId: number]: boolean };
-  onLike: (id: number) => void;
+  comment: CommentListDTO;
   onReply: (mention: string) => void;
+  invalidateKeys?: QueryKey[];
 }
+
+interface ReplyItemProps {
+  reply: CommentListDTO;
+  onReply: (mention: string) => void;
+  invalidateKeys?: QueryKey[];
+}
+
+const formatCommentTime = (iso: string) => {
+  const date = new Date(iso);
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const time = date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+
+  return (
+    <span className={S.timestamp}>
+      {month}
+      <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
+      {day}
+      <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
+      {time}
+    </span>
+  );
+};
+
+const ReplyItem: React.FC<ReplyItemProps> = ({
+  reply,
+  onReply,
+  invalidateKeys,
+}) => {
+  const { liked, isLiking, toggleLike } = useCommentLike(
+    reply.commentId,
+    { liked: reply.liked ?? false, likeCount: 0 },
+    { invalidateKeys },
+  );
+
+  return (
+    <div className="ml-[1.8rem]">
+      <div className={S.commentItem}>
+        <img src={ReplyIcon} alt="reply" className={S.replyIconContain} />
+        <div className={S.commentMain}>
+          <div className={S.commentAuthorSection}>
+            <div className={S.authorInfoGroup}>
+              <img
+                src={reply.profileImgUrl || PersonIcon}
+                className={S.profileImage}
+                alt="작성자 프로필"
+              />
+              <div className={S.authorInfo}>
+                <span className={S.authorName}>{reply.nickname}</span>
+                {formatCommentTime(reply.createdAt)}
+              </div>
+            </div>
+
+            <div className={S.authorActionGroup}>
+              <button
+                className={S.iconButton}
+                onClick={() => toggleLike()}
+                disabled={isLiking}
+                aria-label={liked ? '좋아요 취소' : '좋아요'}
+              >
+                <img src={liked ? LikeActiveIcon : LikeIcon} alt="좋아요" />
+              </button>
+              <button
+                className={S.iconButton}
+                onClick={() => onReply(reply.nickname)}
+              >
+                <img src={CommentIcon} alt="댓글" />
+              </button>
+            </div>
+          </div>
+          <div className={S.commentContent}>{reply.content}</div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const CommentItem: React.FC<CommentItemProps> = ({
   comment,
-  likedComments,
-  onLike,
   onReply,
+  invalidateKeys,
 }) => {
-  const formatCommentTime = (timestamp: Date) => {
-    const date = new Date(timestamp);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const time = date.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-
-    return (
-      <span className={S.timestamp}>
-        {month}
-        <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
-        {day}
-        <img src={EllipseIcon} className={S.eclipseIcon} alt="·" />
-        {time}
-      </span>
-    );
-  };
+  const {
+    liked: rootLiked,
+    isLiking: rootIsLiking,
+    toggleLike: toggleRootLike,
+  } = useCommentLike(
+    comment.commentId,
+    { liked: comment.liked ?? false, likeCount: 0 },
+    { invalidateKeys },
+  );
 
   return (
     <div>
@@ -51,28 +120,28 @@ const CommentItem: React.FC<CommentItemProps> = ({
           <div className={S.commentAuthorSection}>
             <div className={S.authorInfoGroup}>
               <img
-                src={comment.author.profileImage || PersonIcon}
+                src={comment.profileImgUrl || PersonIcon}
                 className={S.profileImage}
+                alt="작성자 프로필"
               />
               <div className={S.authorInfo}>
-                <span className={S.authorName}>{comment.author.name}</span>
-                {formatCommentTime(comment.timestamp)}
+                <span className={S.authorName}>{comment.nickname}</span>
+                {formatCommentTime(comment.createdAt)}
               </div>
             </div>
 
             <div className={S.authorActionGroup}>
               <button
                 className={S.iconButton}
-                onClick={() => onLike(comment.id)}
+                onClick={() => toggleRootLike()}
+                disabled={rootIsLiking}
+                aria-label={rootLiked ? '좋아요 취소' : '좋아요'}
               >
-                <img
-                  src={likedComments[comment.id] ? LikeActiveIcon : LikeIcon}
-                  alt="좋아요"
-                />
+                <img src={rootLiked ? LikeActiveIcon : LikeIcon} alt="좋아요" />
               </button>
               <button
                 className={S.iconButton}
-                onClick={() => onReply(comment.author.name)}
+                onClick={() => onReply(comment.nickname)}
               >
                 <img src={CommentIcon} alt="댓글" />
               </button>
@@ -82,49 +151,14 @@ const CommentItem: React.FC<CommentItemProps> = ({
         </div>
       </div>
 
-      {comment.replies &&
-        comment.replies.map((reply) => (
-          <div key={reply.id} className="ml-[1.8rem]">
-            <div className={S.commentItem}>
-              <img src={ReplyIcon} alt="reply" className={S.replyIconContain} />
-              <div className={S.commentMain}>
-                <div className={S.commentAuthorSection}>
-                  <div className={S.authorInfoGroup}>
-                    <img
-                      src={reply.author.profileImage || PersonIcon}
-                      className={S.profileImage}
-                    />
-                    <div className={S.authorInfo}>
-                      <span className={S.authorName}>{reply.author.name}</span>
-                      {formatCommentTime(reply.timestamp)}
-                    </div>
-                  </div>
-
-                  <div className={S.authorActionGroup}>
-                    <button
-                      className={S.iconButton}
-                      onClick={() => onLike(reply.id)}
-                    >
-                      <img
-                        src={
-                          likedComments[reply.id] ? LikeActiveIcon : LikeIcon
-                        }
-                        alt="좋아요"
-                      />
-                    </button>
-                    <button
-                      className={S.iconButton}
-                      onClick={() => onReply(reply.author.name)}
-                    >
-                      <img src={CommentIcon} alt="댓글" />
-                    </button>
-                  </div>
-                </div>
-                <div className={S.commentContent}>{reply.content}</div>
-              </div>
-            </div>
-          </div>
-        ))}
+      {comment.replies?.map((reply) => (
+        <ReplyItem
+          key={reply.commentId}
+          reply={reply}
+          onReply={onReply}
+          invalidateKeys={invalidateKeys}
+        />
+      ))}
     </div>
   );
 };

@@ -1,9 +1,10 @@
-export const Container = 'px-[2.4rem] bg-[var(--color-white)]';
+export const Container =
+  '!h-[calc(100vh-13rem)] !mb-[13rem] px-[2.4rem]  !overflow-y-auto';
 
 export const SearchContainer = 'w-full h-[6rem] rounded-[0.5rem]';
 
 export const SearchInputWrapper =
-  'w-[37.7rem] h-[4.5rem] border border-[var(--color-G7)] rounded-[0.5rem] my-[0.8rem] mx-auto flex items-center';
+  'w-full h-[4.5rem] border border-[var(--color-G7)] rounded-[0.5rem] my-[0.8rem] mx-auto flex items-center';
 
 export const SearchInput =
   'w-full h-full text-[1.4rem] px-[1.5rem] py-[1.2rem] text-[var(--color-G5)]';
@@ -22,6 +23,8 @@ export const DropdownItem = (isActive: boolean) => `
   w-full py-[0.4rem] text-center cursor-pointer flex justify-center items-center
   ${isActive ? 'text-[var(--color-G1)]' : 'text-[var(--color-G4)]'}
 `;
+
+export const PostContainer = 'flex flex-col gap-[1.6rem] mt-[1.2rem]';
 
 export const PostList = 'flex flex-col';
 
