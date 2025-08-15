@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import Header from '../../components/header/header';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
@@ -15,12 +15,12 @@ import {
   PlusBtn,
   TagInput,
   Save,
+  MeasureSpan,
 } from '../../styles/budget/routineregistration.styles';
 import { useCreateRoutineMutation } from '../../hooks/money/routine/useCreateRoutineMutation';
 import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
 import axios from 'axios';
 
-// 캡처 & 업로드
 import html2canvas from 'html2canvas';
 import RoutinePreview from './preview';
 import { useUploadRoutineImageMutation } from '../../hooks/money/routine/useUploadRoutineImageMutation';
@@ -48,6 +48,8 @@ type CategoryBudget = {
   categoryType?: string;
 };
 
+const PLACEHOLDER_TEXT = '# 해시태그';
+
 const RoutineRegistration = () => {
   const navigate = useNavigate();
   const location = useLocation() as { state?: { budgetId?: number } };
@@ -67,13 +69,16 @@ const RoutineRegistration = () => {
   const [tags, setTags] = useState<string[]>(['']);
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
-  // 캡처 대상
+  const valueMeasureRefs = useRef<HTMLSpanElement[]>([]);
+  const placeholderMeasureRefs = useRef<HTMLSpanElement[]>([]);
+  const [valueWidths, setValueWidths] = useState<number[]>([]);
+  const [placeholderWidths, setPlaceholderWidths] = useState<number[]>([]);
+  const [focused, setFocused] = useState<boolean[]>([]);
+
   const thumbRef = useRef<HTMLDivElement | null>(null);
 
-  // 업로드 훅
   const { mutateAsync: uploadImageAsync } = useUploadRoutineImageMutation();
 
-  // 로컬 금액들
   const [monthBudget, setMonthBudget] = useState(0);
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
   const [customCats, setCustomCats] = useState<string[]>([]);
@@ -100,7 +105,6 @@ const RoutineRegistration = () => {
     );
   }, []);
 
-  // 서버 예산 상세
   const { data: budgetDetail } = useBudgetDetailQuery(budgetId);
 
   const defaultServerCats: CategoryBudget[] =
@@ -124,7 +128,6 @@ const RoutineRegistration = () => {
     ...customCats.map((name, i) => [name, customBudget[i] || 0] as const),
   ]);
 
-  // 서버 기준 + 프론트에만 있는 추가 커스텀까지 모두 포함
   const buildBudgetListFromServer = () => {
     const base = serverCategoryNames.map((name) => ({
       categoryName: name,
@@ -136,7 +139,6 @@ const RoutineRegistration = () => {
     return [...base, ...extras];
   };
 
-  // === 미리보기용 데이터 (모든 카테고리 포함) ===
   const previewCategories = (() => {
     const base = serverCategoryNames.map((name) => ({
       name,
@@ -154,13 +156,11 @@ const RoutineRegistration = () => {
     .filter((t) => t !== '#')
     .map((t) => t.replace(/^#+\s*/, '#').replace(/\s+/g, ''));
 
-  // 캡처 + 업로드
   const captureAndUpload = async (): Promise<string | undefined> => {
     if (!thumbRef.current) return undefined;
 
     const canvas = await html2canvas(thumbRef.current, {
       backgroundColor: '#ffffff',
-      // 높이를 고정하지 않고 실제 렌더 높이를 그대로 사용
       scale: window.devicePixelRatio || 1,
       useCORS: true,
     });
@@ -178,7 +178,6 @@ const RoutineRegistration = () => {
       resp?.result?.routineImageUrl ??
       resp?.result?.routineImgUrl ??
       resp?.result?.url;
-
     return url;
   };
 
@@ -191,22 +190,31 @@ const RoutineRegistration = () => {
     const val = raw.startsWith('#') ? raw : `# ${raw.replace(/^#+/, '')}`;
     setTags((prev) => prev.map((t, i) => (i === idx ? val : t)));
   };
+
   const onFocusTag = (idx: number) => {
+    setFocused((prev) => {
+      const arr = [...prev];
+      arr[idx] = true;
+      return arr;
+    });
     if (tags[idx] === '') {
       setTags((prev) => prev.map((t, i) => (i === idx ? '#' : t)));
     }
   };
+
   const onBlurTag = (idx: number) => {
+    setFocused((prev) => {
+      const arr = [...prev];
+      arr[idx] = false;
+      return arr;
+    });
     if (tags[idx] === '#') {
       setTags((prev) => prev.map((t, i) => (i === idx ? '' : t)));
     }
   };
+
   const addTagField = () => {
     setTags((prev) => [...prev, '']);
-    setTimeout(() => {
-      const len = inputRefs.current.length;
-      inputRefs.current[len - 1]?.focus();
-    }, 0);
   };
 
   const valid = !!title.trim();
@@ -235,10 +243,8 @@ const RoutineRegistration = () => {
       .filter((t) => t !== '#')
       .map((t) => t.replace(/^#+\s*/, '#').replace(/\s+/g, ''));
 
-    // 1) 미니 썸네일 캡처 & 업로드
     const imageUrl = await captureAndUpload().catch(() => undefined);
 
-    // 2) 루틴 등록
     mutate(
       {
         budgetId,
@@ -272,6 +278,59 @@ const RoutineRegistration = () => {
     );
   };
 
+  const MIN_W = 28;
+  const PAD = 6;
+
+  const measureAll = () => {
+    setValueWidths((prev) => {
+      const arr = [...prev];
+      for (let i = 0; i < tags.length; i++) {
+        const span = valueMeasureRefs.current[i];
+        const w = span ? Math.ceil(span.offsetWidth + PAD) : MIN_W;
+        arr[i] = Math.max(MIN_W, w);
+      }
+      return arr;
+    });
+    setPlaceholderWidths((prev) => {
+      const arr = [...prev];
+      for (let i = 0; i < tags.length; i++) {
+        const span = placeholderMeasureRefs.current[i];
+        const w = span ? Math.ceil(span.offsetWidth + PAD) : 0;
+        arr[i] = w;
+      }
+      return arr;
+    });
+  };
+
+  useLayoutEffect(() => {
+    measureAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags.length]);
+
+  useEffect(() => {
+    measureAll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags.join('\u0001'), focused.join()]);
+
+  const calcWidth = (idx: number) => {
+    const val = tags[idx] ?? '';
+    const hasRealText = val.trim().length > 0;
+    const isFocused = !!focused[idx];
+
+    const base = placeholderWidths[idx] || 0;
+    const content = valueWidths[idx] || MIN_W;
+
+    if (!hasRealText) {
+      return base || 120;
+    }
+
+    if (isFocused) {
+      return Math.max(base, content);
+    }
+
+    return Math.max(MIN_W, content);
+  };
+
   return (
     <Wrap>
       <Header title="소비 루틴 등록" />
@@ -300,42 +359,78 @@ const RoutineRegistration = () => {
         </Label>
 
         <TagsInBox>
-          <PlusBtn type="button" onClick={addTagField}>
+          <PlusBtn
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={addTagField}
+          >
             <img src={plusIcon} alt="plus" />
           </PlusBtn>
-          {tags.map((tag, idx) => (
-            <TagInput
-              key={idx}
-              ref={(el) => {
-                if (el) inputRefs.current[idx] = el;
-              }}
-              value={tag}
-              placeholder="# 해시태그"
-              onChange={(e) => onChangeTag(idx, e.target.value)}
-              onFocus={() => onFocusTag(idx)}
-              onBlur={() => onBlurTag(idx)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  inputRefs.current[idx]?.blur();
-                }
-              }}
-            />
-          ))}
+
+          {tags.map((tag, idx) => {
+            const appliedWidth = calcWidth(idx);
+
+            return (
+              <span
+                key={idx}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.6rem',
+                  position: 'relative',
+                }}
+              >
+                <MeasureSpan
+                  ref={(el) => {
+                    if (el) valueMeasureRefs.current[idx] = el;
+                  }}
+                  aria-hidden
+                >
+                  {(tag && tag.length > 0 ? tag : '') || ' '}
+                </MeasureSpan>
+
+                <MeasureSpan
+                  ref={(el) => {
+                    if (el) placeholderMeasureRefs.current[idx] = el;
+                  }}
+                  aria-hidden
+                >
+                  {PLACEHOLDER_TEXT}
+                </MeasureSpan>
+
+                <TagInput
+                  $wpx={appliedWidth}
+                  ref={(el) => {
+                    if (el) inputRefs.current[idx] = el;
+                  }}
+                  value={tag}
+                  placeholder={PLACEHOLDER_TEXT}
+                  onChange={(e) => onChangeTag(idx, e.target.value)}
+                  onFocus={() => onFocusTag(idx)}
+                  onBlur={() => onBlurTag(idx)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      inputRefs.current[idx]?.blur();
+                    }
+                  }}
+                />
+              </span>
+            );
+          })}
         </TagsInBox>
 
         <Save disabled={!valid || isPending} onClick={save}>
           {isPending ? '등록 중…' : '등록'}
         </Save>
 
-        {/* 오프스크린 미리보기(캡처용) */}
         <div
           style={{ position: 'fixed', left: -99999, top: -99999 }}
           aria-hidden
         >
           <div ref={thumbRef}>
             <RoutinePreview
-              variant="mini" // 왼쪽 요약만(높이 자동)으로 캡처
+              variant="mini"
               title={title.trim() || '나의 소비 루틴'}
               hashtags={previewTags}
               totalBudget={totalBudget}
