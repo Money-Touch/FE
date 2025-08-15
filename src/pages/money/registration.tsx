@@ -9,40 +9,7 @@ import plusCircle from '../../assets/images/budget/Plus-2.png';
 import minusIcon from '../../assets/images/budget/minus.png';
 import { useBudgetMutation } from '../../hooks/money/registration/useBudgetsMutation';
 import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
-
-import {
-  Wrap,
-  Body,
-  Section,
-  RowContainer,
-  Row,
-  Label,
-  IconBtn,
-  DeleteToggleBtn,
-  Month,
-  Divider,
-  CatUl,
-  CatLi,
-  EditWrapper,
-  EditInput,
-  RightBox,
-  DeleteBtn,
-  PlusBtnContainer,
-  PlusBtn,
-  ConfirmBtnContainer,
-  ConfirmBtn,
-  Dim,
-  Modal,
-  ModalHead,
-  Close,
-  InputRow,
-  Money,
-  InputIcon,
-  Pad,
-  Key,
-  ApplyContainer,
-  Apply,
-} from '../../styles/budget/registration.styles';
+import * as R from '../../styles/budget/registration.styles';
 
 const CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
 
@@ -269,126 +236,131 @@ const BudgetRegister = () => {
   };
 
   return (
-    <Wrap>
+    <div className={R.Wrap}>
       <Header title="예산 등록" bgColor="bg-[var(--color-B1)]" />
 
-      <Body>
-        <Section>
-          <Label>한 달 예산</Label>
-          <Row>
-            <Month>{comma(monthBudget)}원</Month>
-            <IconBtn
+      <main className={R.Body}>
+        <section className={R.Section}>
+          <p className={R.Label}>한 달 예산</p>
+          <div className={R.Row}>
+            <p className={R.Month}>{comma(monthBudget)}원</p>
+            <img
+              className={R.IconBtn}
               src={pencilIcon}
               alt="edit"
               onClick={() => openModal(-1)}
             />
-          </Row>
-        </Section>
+          </div>
+        </section>
 
-        <Divider />
+        <div className={R.Divider} />
 
-        <Section>
-          <Row>
-            <Label>카테고리 별 예산</Label>
-            <IconBtn
+        <section className={R.Section}>
+          <div className={R.Row}>
+            <p className={R.Label}>카테고리 별 예산</p>
+            <img
+              className={`${R.IconBtn} !w-[2rem] !h-[2rem]`}
               src={editMode ? editPencilIcon : pencilIcon}
               alt="edit"
               onClick={() => setEditMode((v) => !v)}
-              style={{ width: '2rem', height: '2rem' }}
             />
-          </Row>
+          </div>
 
-          <CatUl>
+          <ul className={R.CatUl}>
             {CATEGORIES.map((c, i) => (
-              <CatLi
+              <li
+                className={R.CatLi(editMode)}
                 key={c}
-                $editable={editMode}
                 onClick={() => editMode && openModal(i, false)}
               >
                 {c}
 
                 {editMode ? (
-                  <EditWrapper>
-                    <EditInput>{comma(catBudget[i])}원</EditInput>
-                  </EditWrapper>
+                  <div className={R.EditWrapper}>
+                    <span className={R.EditInput}>{comma(catBudget[i])}원</span>
+                  </div>
                 ) : (
                   <span>{comma(catBudget[i])}원</span>
                 )}
-              </CatLi>
+              </li>
             ))}
-          </CatUl>
-        </Section>
+          </ul>
+        </section>
 
         {myCategories.length > 0 && (
           <>
-            <Divider />
-            <Section>
-              <RowContainer>
-                <Row>
-                  <Label>내 카테고리</Label>
+            <div className={R.Divider} />
+            <section className={R.Section}>
+              <div className={R.RowContainer}>
+                <div className={R.Row}>
+                  <p className={R.Label}>내 카테고리</p>
 
-                  <IconBtn
+                  <img
+                    className={`${R.IconBtn} !w-[2rem] !h-[2rem]`}
                     src={
                       myEditMode && !myDeleteMode ? editPencilIcon : pencilIcon
                     }
                     alt="edit"
                     onClick={() => setMyEditMode((v) => !v)}
-                    style={{ width: '2rem', height: '2rem' }}
                   />
-                </Row>
+                </div>
 
-                <DeleteToggleBtn
-                  $active={myDeleteMode}
+                <img
+                  className={R.DeleteToggleBtn(myDeleteMode)}
                   onClick={() => setMyDeleteMode((v) => !v)}
                   src={minusIcon}
                   alt="delete"
                 />
-              </RowContainer>
+              </div>
 
-              <CatUl>
+              <ul className={R.CatUl}>
                 {myCategories.map((name, i) => (
-                  <CatLi
+                  <li
+                    className={R.CatLi(myEditMode || myDeleteMode)}
                     key={name}
-                    $editable={myEditMode || myDeleteMode}
                     onClick={() =>
                       myEditMode && !myDeleteMode && openModal(i, true)
                     }
                   >
                     {name}
 
-                    <RightBox>
+                    <div className={R.RightBox}>
                       {myEditMode && !myDeleteMode ? (
-                        <EditWrapper>
-                          <EditInput>{comma(myCatBudget[i] || 0)}원</EditInput>
-                        </EditWrapper>
+                        <div className={R.EditWrapper}>
+                          <span className={R.EditInput}>
+                            {comma(myCatBudget[i] || 0)}원
+                          </span>
+                        </div>
                       ) : (
                         <span>{comma(myCatBudget[i] || 0)}원</span>
                       )}
 
                       {myDeleteMode && (
-                        <DeleteBtn
+                        <img
+                          className={R.DeleteBtn}
                           src={closeIcon}
                           alt="delete"
                           onClick={() => deleteCategory(i)}
                         />
                       )}
-                    </RightBox>
-                  </CatLi>
+                    </div>
+                  </li>
                 ))}
-              </CatUl>
-            </Section>
+              </ul>
+            </section>
           </>
         )}
 
         {routineCategories.length > 0 && (
           <>
-            <Divider />
-            <Section>
-              <RowContainer>
-                <Row>
-                  <Label>내 소비루틴</Label>
+            <div className={R.Divider} />
+            <section className={R.Section}>
+              <div className={R.RowContainer}>
+                <div className={R.Row}>
+                  <p className={R.Label}>내 소비루틴</p>
 
-                  <IconBtn
+                  <img
+                    className={R.IconBtn}
                     src={
                       routineEditMode && !routineDeleteMode
                         ? editPencilIcon
@@ -398,21 +370,21 @@ const BudgetRegister = () => {
                     onClick={() => setRoutineEditMode((v) => !v)}
                     style={{ width: '2rem', height: '2rem' }}
                   />
-                </Row>
+                </div>
 
-                <DeleteToggleBtn
-                  $active={routineDeleteMode}
+                <img
+                  className={R.DeleteToggleBtn(routineDeleteMode)}
                   onClick={() => setRoutineDeleteMode((v) => !v)}
                   src={minusIcon}
                   alt="delete"
                 />
-              </RowContainer>
+              </div>
 
-              <CatUl>
+              <ul className={R.CatUl}>
                 {routineCategories.map((name, i) => (
-                  <CatLi
+                  <li
+                    className={R.CatLi(routineEditMode || routineDeleteMode)}
                     key={name}
-                    $editable={routineEditMode || routineDeleteMode}
                     onClick={() =>
                       routineEditMode &&
                       !routineDeleteMode &&
@@ -421,52 +393,55 @@ const BudgetRegister = () => {
                   >
                     {name}
 
-                    <RightBox>
+                    <div className={R.RightBox}>
                       {routineEditMode && !routineDeleteMode ? (
-                        <EditWrapper>
-                          <EditInput>
+                        <div className={R.EditWrapper}>
+                          <span className={R.EditInput}>
                             {comma(routineCatBudget[i] || 0)}원
-                          </EditInput>
-                        </EditWrapper>
+                          </span>
+                        </div>
                       ) : (
                         <span>{comma(routineCatBudget[i] || 0)}원</span>
                       )}
 
                       {routineDeleteMode && (
-                        <DeleteBtn
+                        <img
+                          className={R.DeleteBtn}
                           src={closeIcon}
                           alt="delete"
                           onClick={() => deleteCategory(i)}
                         />
                       )}
-                    </RightBox>
-                  </CatLi>
+                    </div>
+                  </li>
                 ))}
-              </CatUl>
-            </Section>
+              </ul>
+            </section>
           </>
         )}
-      </Body>
+      </main>
 
-      <PlusBtnContainer>
-        <PlusBtn
+      <div className={R.PlusBtnContainer}>
+        <img
+          className={R.PlusBtn}
           src={plusCircle}
           alt="add"
           onClick={() => navigate('/add-category')}
         />
-      </PlusBtnContainer>
+      </div>
 
-      <ConfirmBtnContainer>
-        <ConfirmBtn disabled={!canConfirm} onClick={handleConfirm}>
+      <div className={R.ConfirmBtnContainer}>
+        <button className={R.ConfirmBtn(!canConfirm)} onClick={handleConfirm}>
           확인
-        </ConfirmBtn>
-      </ConfirmBtnContainer>
+        </button>
+      </div>
 
       {modalOpen && (
-        <Dim>
-          <Modal>
-            <ModalHead>
-              <Close
+        <div className={R.Dim}>
+          <div className={R.Modal}>
+            <div className={R.ModalHead}>
+              <img
+                className={R.Close}
                 src={closeIcon}
                 alt="close"
                 onClick={() => setModalOpen(false)}
@@ -478,19 +453,24 @@ const BudgetRegister = () => {
                     ? '내 카테고리 예산'
                     : '카테고리별 예산'}
               </span>
-            </ModalHead>
+            </div>
 
-            <InputRow>
-              <Money readOnly value={raw ? comma(raw) : ''} hasValue={!!raw} />
+            <div className={R.InputRow}>
+              <input
+                className={R.Money(!!raw)}
+                readOnly
+                value={raw ? comma(raw) : ''}
+              />
               <span>원</span>
-              <InputIcon
+              <img
+                className={R.InputIcon}
                 src={circleCloseIcon}
                 alt="delete"
                 onClick={() => setRaw('')}
               />
-            </InputRow>
+            </div>
 
-            <Pad>
+            <div className={R.Pad}>
               {[
                 '1',
                 '2',
@@ -505,21 +485,25 @@ const BudgetRegister = () => {
                 '0',
                 '←',
               ].map((k) => (
-                <Key key={k} onClick={() => pressKey(k === '←' ? 'back' : k)}>
+                <button
+                  className={R.Key}
+                  key={k}
+                  onClick={() => pressKey(k === '←' ? 'back' : k)}
+                >
                   {k}
-                </Key>
+                </button>
               ))}
-            </Pad>
+            </div>
 
-            <ApplyContainer>
-              <Apply disabled={!raw} onClick={applyValue}>
+            <div className={R.ApplyContainer}>
+              <button className={R.Apply(!raw)} onClick={applyValue}>
                 수정하기
-              </Apply>
-            </ApplyContainer>
-          </Modal>
-        </Dim>
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-    </Wrap>
+    </div>
   );
 };
 
