@@ -2,16 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/header/header';
 import CircleCloseIcon from '../../assets/images/budget/CircleClose.png';
-import {
-  Wrap,
-  Body,
-  InputWrapper,
-  Input,
-  CircleClose,
-  CharCount,
-  SubmitBtnContainer,
-  SubmitBtn,
-} from '../../styles/budget/addcategory.styles';
+import * as A from '../../styles/budget/addcategory.styles';
 
 const MAX_LEN = 8;
 
@@ -41,34 +32,39 @@ const AddCategory = () => {
   };
 
   return (
-    <Wrap>
+    <div className={A.Wrap}>
       <Header title="카테고리 추가" />
 
-      <Body>
-        <InputWrapper>
-          <Input
+      <main className={A.Body}>
+        <div className={A.InputWrapper}>
+          <input
+            className={A.Input}
             placeholder="카테고리 이름"
             value={category}
             onChange={handleChange}
           />
-          <CircleClose
+          <img
+            className={A.CircleClose}
             src={CircleCloseIcon}
             alt="delete"
             onClick={() => setCategory('')}
           />
-          <CharCount>
+          <p className={A.CharCount}>
             {category.length}
             <span>/{MAX_LEN}</span>
-          </CharCount>
-        </InputWrapper>
-      </Body>
+          </p>
+        </div>
+      </main>
 
-      <SubmitBtnContainer>
-        <SubmitBtn disabled={!category.trim()} onClick={handleSubmit}>
+      <div className={A.SubmitBtnContainer}>
+        <button
+          className={A.SubmitBtn(!category.trim())}
+          onClick={handleSubmit}
+        >
           등록
-        </SubmitBtn>
-      </SubmitBtnContainer>
-    </Wrap>
+        </button>
+      </div>
+    </div>
   );
 };
 

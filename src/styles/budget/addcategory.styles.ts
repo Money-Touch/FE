@@ -1,77 +1,18 @@
-import styled from 'styled-components';
-import colors from '../common/colors';
+export const Wrap = `relative pt-[8.4rem] w-full h-[100vh] bg-[var(—color-white)] flex flex-col overflow-y-auto`;
 
-export const Wrap = styled.div`
-  position: relative;
-  padding-top: 8.4rem;
-  width: 100%;
-  height: 100vh;
-  background: ${colors.white};
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-`;
+export const Body = `px-[2.4rem]`;
 
-export const Body = styled.main`
-  padding: 0 2.4rem 0 2.4rem;
-`;
+export const InputWrapper = `w-full flex flex-col gap-[0.3rem] relative`;
 
-export const InputWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  position: relative;
-`;
+export const Input = `w-full h-[3.4rem] text-[2rem] font-medium text-[var(—color-G1)] border-b-[0.1rem] border-[var(--color-G5)] focus:outline-none focus:border-[var(--color-mainColor1)]`;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 3.4rem;
-  font-size: 2rem;
-  font-weight: 500;
-  color: ${colors.G1};
-  border-bottom: 0.1rem solid ${colors.G5};
+export const CircleClose = `w-[2.4rem] h-[2.4rem] absolute r-0 top-[0.5rem] cursor-pointer`;
 
-  &:focus {
-    outline: none;
-    border-color: ${colors.mainColor1};
-  }
-`;
+export const CharCount = `w-full text-right text-[var(--color-G3)] text-[1.2rem] font-light [&>span]:text-[var(--color-G5)]`;
 
-export const CircleClose = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
-  position: absolute;
-  right: 0;
-  top: 0.5rem;
-  cursor: pointer;
-`;
+export const SubmitBtnContainer = `w-full px-[2.4rem] mt-[52.2rem]`;
 
-export const CharCount = styled.p`
-  width: 100%;
-  text-align: right;
-  color: ${colors.G3};
-  font-size: 1.2rem;
-  font-weight: 300;
-
-  span {
-    color: ${colors.G5};
-  }
-`;
-
-export const SubmitBtnContainer = styled.div`
-  width: 100%;
-  padding: 0 2.4rem;
-  margin-top: 52.2rem;
-`;
-
-export const SubmitBtn = styled.button<{ disabled: boolean }>`
-  width: 100%;
-  height: 5rem;
-  font-weight: 500;
-  font-size: 1.8rem;
-  color: ${colors.white};
-  border-radius: 1rem;
-  background-color: ${({ disabled }) =>
-    disabled ? colors.G6 : colors.mainColor1};
-`;
+export const SubmitBtn = (disabled: boolean) => `
+w-full h-[5rem] font-medium text-[1.8rem] text-[var(—color-white)] rounded-[1rem] ${
+  disabled ? 'bg-[var(--color-G6)]' : 'bg-[var(--color-mainColor1)]'
+}`;
