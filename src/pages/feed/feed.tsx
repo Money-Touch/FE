@@ -62,7 +62,7 @@ const Feed: React.FC = () => {
   const displayPosts = isSearchMode ? searchResults : allPosts;
 
   return (
-    <div className="flex flex-col px-[2.4rem] pb-[5rem]">
+    <div className={S.Container}>
       <SearchBox onSearchResults={handleSearchResults} />
 
       {!isSearchMode && (
@@ -74,7 +74,7 @@ const Feed: React.FC = () => {
         />
       )}
 
-      <div className="flex flex-col gap-[1.6rem] mt-[1.2rem]">
+      <div className={S.PostContainer}>
         {showSkeleton ? (
           <SkeletonPost />
         ) : displayPosts.length > 0 ? (

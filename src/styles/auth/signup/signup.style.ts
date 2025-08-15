@@ -1,17 +1,16 @@
 import type { InputButtonProps } from '../../../types/auth/signup/setting';
 
 // signup.tsx
-export const SignupContainer = 'flex';
+export const SignupContainer = 'flex w-full';
 
 // agree.tsx
-export const AgreeContainer =
-  'flex flex-col items-center w-full h-full px-[2.4rem]';
+export const AgreeContainer = 'flex flex-col items-center w-full h-full ';
 
 export const AgreeP =
-  'w-[37.7rem] text-[2.4rem] font-bold text-[var(--color-G1)] leading-[3.4rem] mt-[2.8rem]';
+  'w-full text-[2.4rem] font-bold text-[var(--color-G1)] leading-[3.4rem] mt-[2.8rem]  px-[2.4rem]';
 
 export const BottomContainer =
-  'w-[37.7rem] mt-[18.4rem] flex flex-col items-center gap-[1rem]';
+  'w-full mt-[18.4rem] flex flex-col items-center gap-[1rem]  px-[2.4rem]';
 
 export const NextButton = (active: boolean) =>
   `w-full h-[5rem] rounded-[1rem] text-[1.8rem] font-medium text-[var(--color-white)] ${
@@ -25,7 +24,7 @@ export const BottomP =
 
 // agreeForm.tsx
 export const AgreeFormContainer =
-  'w-[37.7rem] flex flex-col gap-[2.2rem] mt-[6rem]';
+  'w-full  px-[2.4rem] flex flex-col gap-[2.2rem] mt-[6rem]';
 
 export const AgreeItemContainer = 'flex items-center gap-[1rem] cursor-pointer';
 
@@ -39,7 +38,8 @@ export const AgreeBar = 'w-full h-[0.1rem] bg-[var(--color-G7)]';
 export const ListContainer = 'flex flex-col gap-[1.8rem]';
 
 // settingForm.tsx
-export const Container = 'w-[37.7rem] mt-[2.6rem] flex flex-col gap-[3.2rem]';
+export const Container =
+  'w-full px-[2.4rem] mt-[2.6rem] flex flex-col gap-[3.2rem]';
 
 export const InputWrapper = 'w-full flex flex-col gap-[0.6rem] relative';
 
@@ -58,7 +58,7 @@ export const Input = ({ hasError, hasButton }: InputButtonProps): string =>
   `;
 
 export const Button = ({ hasError }: InputButtonProps): string => `
-  w-[8.3rem] h-[4.5rem] rounded-[0.5rem] text-[1.4rem] font-medium ${
+  w-[8.3rem] h-[4.5rem] rounded-[0.5rem] text-[1.4rem] font-medium whitespace-pre-line ${
     hasError
       ? 'bg-[var(--color-G7)] text-[var(--color-G5)] cursor-not-allowed'
       : 'bg-[var(--color-mainColor1)] text-[var(--color-white)] cursor-pointer'
@@ -84,7 +84,7 @@ export const ToggleIcon = ({ hasDelete }: InputButtonProps): string =>
 
 // profileForm.tsx
 export const ProfileFormContainer =
-  'w-[37.7rem] flex flex-col items-center gap-[2.5rem] mt-[6rem]';
+  'w-full px-[2.4rem] flex flex-col items-center gap-[2.5rem] mt-[6rem]';
 
 // profileImage.tsx
 export const Img =

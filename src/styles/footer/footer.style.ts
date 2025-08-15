@@ -1,9 +1,9 @@
 // footer.tsx
 export const FooterContainer =
-  'w-full bg-white h-[13rem] rounded-t-[2rem] flex justify-center pt-[1.3rem] shadow-[0_0_0.2rem_0_rgba(0,0,0,0.16)]';
+  'w-full max-w-[425px] bottom-0 fixed bg-white h-[13rem] rounded-t-[2rem] flex justify-center pt-[1.3rem] shadow-[0_0_0.2rem_0_rgba(0,0,0,0.16)]';
 
 // list-footer.tsx
-export const ListContainer = 'flex gap-[6rem]';
+export const ListContainer = 'w-full justify-between flex px-[5.6rem]';
 
 // item-footer.tsx
 export const ItemContainer =

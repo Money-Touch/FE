@@ -30,7 +30,7 @@ const Agree = ({ onNext, agreeList, setAgreeList }: AgreeProps) => {
   };
 
   return (
-    <div className={S.AgreeContainer}>
+    <div className={`${S.AgreeContainer} pt-[8.4rem]`}>
       <Header />
 
       <p className={S.AgreeP}>

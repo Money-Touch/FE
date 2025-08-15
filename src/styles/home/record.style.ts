@@ -1,14 +1,13 @@
 // record.tsx
-export const Container = 'flex px-[2.4rem] items-start';
+export const Container = 'flex px-[2.4rem] overflow-y-auto overflow-x-hidden';
 
 // title
 export const Title =
-  'relative inline-block h-[2.3rem] mb-[0.6rem] leading-[2.3rem] font-medium text-[1.5rem] text-[var(--color-G1)]';
-export const StarImg = 'absolute w-[0.6rem] h-[0.6rem] top-0 right-[-0.5rem]';
+  'inline-block h-[2.3rem] mb-[0.6rem] leading-[2.3rem] font-medium text-[1.5rem] text-[var(--color-G1)]';
+export const StarImg = 'inline-block w-[0.6rem] h-[0.6rem] mt-[-2rem]';
 
 // category
-export const CategorySection =
-  'w-full h-[9.9rem] mt-[1rem] relative overflow-x-hidden';
+export const CategorySection = 'w-full h-[9.9rem] mt-[1rem]';
 export const CategoryButtonWrapper =
   'w-full h-[3.6rem] flex gap-[1rem] overflow-x-auto overflow-y-hidden whitespace-nowrap scroll';
 export const CategoryButton = (selected: boolean) =>
@@ -30,7 +29,7 @@ export const ContentSection = 'w-full h-[7.4rem] mt-[2.4rem]';
 export const ImageSection = 'w-full h-[39.4rem] mt-[2.4rem]';
 export const MemoSection = 'w-full h-[20.9rem] mt-[2.4rem]';
 export const SubmitButton = (active: boolean) =>
-  `w-full h-[5rem] rounded-[1rem] font-medium text-[1.8rem] mt-[4.2rem] text-white ${
+  `flex-none w-full h-[5rem] rounded-[1rem] font-medium text-[1.8rem] mt-[4.2rem] mb-[7.4rem] text-white ${
     active
       ? 'bg-[var(--color-mainColor1)] cursor-pointer'
       : 'bg-[var(--color-G6)] cursor-default'
@@ -48,7 +47,7 @@ export const ClearIcon =
 
 // content
 export const ContentInputWrapper = (error: boolean): string =>
-  `relative w-full h-[4.5rem] border rounded-[0.5rem] flex items-center px-[1.3rem] box-border ${
+  `w-full h-[4.5rem] border rounded-[0.5rem] flex items-center px-[1.3rem] box-border ${
     error ? 'border-[var(--color-M1)]' : 'border-[var(--color-G7)]'
   }`;
 export const ContentInput =
@@ -58,7 +57,7 @@ export const ErrorMessage =
 
 // image
 export const ImageInputWrapper = (disabled: boolean): string =>
-  `relative w-full h-[36.5rem] border border-[var(--color-G7)] rounded-[0.5rem] flex items-center box-border ${
+  `w-full h-[36.5rem] border border-[var(--color-G7)] rounded-[0.5rem] flex items-center box-border ${
     disabled ? 'bg-transparent' : 'bg-[#1111111A]'
   }`;
 export const ImageLabel =
@@ -69,7 +68,7 @@ export const ImageInput = 'hidden';
 
 // memo
 export const MemoTextareaWrapper = (error: boolean): string =>
-  `relative w-full border rounded-[0.5rem] p-[1.5rem] box-border ${
+  `w-full border rounded-[0.5rem] p-[1.5rem] box-border ${
     error
       ? 'border-[var(--color-M1)] bg-[#fff0f0]'
       : 'border-[var(--color-G7)] bg-transparent'

@@ -72,15 +72,17 @@ function record() {
 
   const handleSubmit = () => {
     if (!isFormValid) return;
-    console.log('data:', {
-      formData,
-      file,
-    });
+    console.log('data:', { formData, file });
+
     submitRecord(
       { formData, file },
       {
         onSuccess: () => {
-          navigate('/budget-register');
+          if (formData.isPublic) {
+            navigate('/feed');
+          } else {
+            navigate('/home');
+          }
         },
       },
     );
@@ -91,7 +93,7 @@ function record() {
       {isLoading && null}
       {error && null}
       {!isLoading && !error && (
-        <div className={`pageContainer ${S.Container}`}>
+        <div className={`pageContainer ${S.Container} !pt-[8.4rem] `}>
           <Header title="소비 기록" />
           <CategorySection
             selectedCategory={formData.categoryName}

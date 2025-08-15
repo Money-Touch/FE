@@ -61,8 +61,8 @@ const Mybadge = () => {
 
   return (
     <div ref={wrapperRef} className={S.container}>
+      <Header title="MY 배지" />
       <div className={S.topContainer}>
-        <Header title="MY 배지" />
         <div className={S.titleContainer}>
           <div className={S.title}>대표 배지</div>
           <button className={S.editImage} onClick={() => setIsEditMode(true)}>
