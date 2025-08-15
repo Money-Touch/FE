@@ -3,20 +3,9 @@ import { useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import Header from '../../components/header/header';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import plusIcon from '../../assets/images/budget/plus3.png';
-import {
-  Wrap,
-  Body,
-  InputWrapper,
-  CircleClose,
-  CharCount,
-  Label,
-  Input,
-  TagsInBox,
-  PlusBtn,
-  TagInput,
-  Save,
-  MeasureSpan,
-} from '../../styles/budget/routineregistration.styles';
+
+import * as A from '../../styles/budget/routineregistration.styles';
+
 import { useCreateRoutineMutation } from '../../hooks/money/routine/useCreateRoutineMutation';
 import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
 import axios from 'axios';
@@ -332,40 +321,47 @@ const RoutineRegistration = () => {
   };
 
   return (
-    <Wrap>
+    <div className={A.Wrap}>
       <Header title="소비 루틴 등록" />
 
-      <Body>
-        <InputWrapper>
-          <Input
+      <main className={A.Body}>
+        <div className={A.InputWrapper}>
+          <input
+            className={A.Input}
             placeholder="소비 루틴 이름"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             maxLength={MAX_LEN}
           />
-          <CircleClose
+          <img
+            className={A.CircleClose}
             src={circleCloseIcon}
             alt="delete"
             onClick={() => setTitle('')}
           />
-          <CharCount>
+          <p className={A.CharCount}>
             {title.length}
-            <span>/{MAX_LEN}</span>
-          </CharCount>
-        </InputWrapper>
+            <span className={A.CharCountSpan}>/{MAX_LEN}</span>
+          </p>
+        </div>
 
-        <Label>
-          소개<span>*</span>
-        </Label>
+        <p className={A.Label}>
+          소개<span className={A.LabelStar}>*</span>
+        </p>
 
-        <TagsInBox>
-          <PlusBtn
+        <div className={A.TagsInBox}>
+          <button
             type="button"
+            className={A.PlusBtn}
             onMouseDown={(e) => e.preventDefault()}
             onClick={addTagField}
           >
-            <img src={plusIcon} alt="plus" />
-          </PlusBtn>
+            <img
+              className="w-full h-full object-contain"
+              src={plusIcon}
+              alt="plus"
+            />
+          </button>
 
           {tags.map((tag, idx) => {
             const appliedWidth = calcWidth(idx);
@@ -380,26 +376,29 @@ const RoutineRegistration = () => {
                   position: 'relative',
                 }}
               >
-                <MeasureSpan
+                <span
                   ref={(el) => {
                     if (el) valueMeasureRefs.current[idx] = el;
                   }}
                   aria-hidden
+                  className={A.MeasureSpan}
                 >
                   {(tag && tag.length > 0 ? tag : '') || ' '}
-                </MeasureSpan>
+                </span>
 
-                <MeasureSpan
+                <span
                   ref={(el) => {
                     if (el) placeholderMeasureRefs.current[idx] = el;
                   }}
                   aria-hidden
+                  className={A.MeasureSpan}
                 >
                   {PLACEHOLDER_TEXT}
-                </MeasureSpan>
+                </span>
 
-                <TagInput
-                  $wpx={appliedWidth}
+                <input
+                  className={A.TagInput}
+                  style={{ width: `${appliedWidth}px` }}
                   ref={(el) => {
                     if (el) inputRefs.current[idx] = el;
                   }}
@@ -418,11 +417,15 @@ const RoutineRegistration = () => {
               </span>
             );
           })}
-        </TagsInBox>
+        </div>
 
-        <Save disabled={!valid || isPending} onClick={save}>
+        <button
+          className={A.Save(!valid || isPending)}
+          disabled={!valid || isPending}
+          onClick={save}
+        >
           {isPending ? '등록 중…' : '등록'}
-        </Save>
+        </button>
 
         <div
           style={{ position: 'fixed', left: -99999, top: -99999 }}
@@ -439,8 +442,8 @@ const RoutineRegistration = () => {
             />
           </div>
         </div>
-      </Body>
-    </Wrap>
+      </main>
+    </div>
   );
 };
 
