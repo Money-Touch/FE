@@ -3,15 +3,15 @@ import colors from '../common/colors';
 
 export const Wrap = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-top: 8.4rem;
+  overflow-y: auto;
 `;
 
-export const Body = styled.main`
-  margin-top: 2.6rem;
-`;
+export const Body = styled.main``;
 
 export const Section = styled.section`
   margin: 0 2.4rem;
@@ -129,16 +129,21 @@ export const ConfirmBtn = styled.button<{ disabled?: boolean }>`
 `;
 
 export const Dim = styled.div`
+  width 100%;
+  max-width: 425px;
   position: absolute;
   inset: 0;
   z-index: 999;
   background: rgba(17, 17, 17, 0.6);
   display: flex;
   align-items: flex-end;
+  overflow-y: auto;
 `;
 
 export const Modal = styled.div`
+  position: fixed;
   width: 100%;
+  max-width: 425px;
   background: ${colors.white};
   border-radius: 1.5rem 1.5rem 0 0;
   display: flex;

@@ -126,7 +126,6 @@ const FixedCost = () => {
             카테고리 선택<span>*</span>
           </Label>
 
-          {/* ✅ addday.tsx와 동일: 한 줄 + 가로 스크롤 */}
           <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
             <CatBox
               style={{

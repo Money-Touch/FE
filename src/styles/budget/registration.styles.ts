@@ -4,16 +4,17 @@ import colors from '../common/colors';
 export const Wrap = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background: ${colors.B1};
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 8.4rem;
+  overflow-y: auto;
 `;
 
 export const Body = styled.main`
   width: 100%;
-  margin-top: 2.6rem;
 `;
 
 export const Section = styled.section`
@@ -153,17 +154,21 @@ export const ConfirmBtn = styled.button<{ disabled?: boolean }>`
 
 // 모달
 export const Dim = styled.div`
+  width 100%;
+  max-width: 425px;
   position: absolute;
   inset: 0;
   z-index: 999;
   background: rgba(17, 17, 17, 0.6);
-  // backdrop-filter: blur(0.2rem);
   display: flex;
   align-items: flex-end;
+  overflow-y: auto;
 `;
 
 export const Modal = styled.div`
+  position: fixed;
   width: 100%;
+  max-width: 425px;
   background: ${colors.white};
   border-radius: 1.5rem 1.5rem 0 0;
   display: flex;

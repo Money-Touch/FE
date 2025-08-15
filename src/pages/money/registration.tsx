@@ -270,7 +270,7 @@ const BudgetRegister = () => {
 
   return (
     <Wrap>
-      <Header title="예산 등록" />
+      <Header title="예산 등록" bgColor="bg-[var(--color-B1)]" />
 
       <Body>
         <Section>
