@@ -13,8 +13,9 @@ const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
   );
 
   return (
-    <div className={M.ModalBackdrop} onClick={onClose}>
-      <div className={M.ModalBox} onClick={(e) => e.stopPropagation()}>
+    <>
+      <div className={M.ModalBackdrop} onClick={onClose} />
+      <div className={M.ModalBox}>
         <ul className={M.ModalList}>
           {items.map((item) => (
             <li key={item.categoryName} className={M.ModalItem}>
@@ -35,7 +36,7 @@ const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   );
 };
 

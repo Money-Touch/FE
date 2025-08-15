@@ -2,7 +2,7 @@
 export const ModalBackdrop =
   'fixed top-0 left-0 w-screen h-screen bg-[#11111199] flex items-center justify-center z-[999]';
 export const ModalBox =
-  'fixed bg-white pt-[1.9rem] pb-[1.9rem] px-[1.6rem] rounded-[1.5rem] w-[14.8rem] min-h-[13.8rem] overflow-y-auto top-[52.1rem] left-[calc(50%+8.2rem)] -translate-x-1/2';
+  'absolute bg-white pt-[1.9rem] pb-[1.9rem] px-[1.6rem] rounded-[1.5rem] w-[14.8rem] min-h-[13.8rem] overflow-y-auto top-[52.1rem] left-[calc(50%+8.2rem)] -translate-x-1/2 z-[1000]';
 export const ModalList = 'w-[11.6rem] h-[1.6rem]';
 export const ModalItem = 'flex items-center justify-between mb-[1.2rem]';
 export const LeftGroup = 'flex items-center gap-[0.7rem]';
