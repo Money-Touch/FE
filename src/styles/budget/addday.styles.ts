@@ -6,7 +6,7 @@ export const AddDayTWGlobals = createGlobalStyle`
 `;
 
 export const Wrap = styled.div.attrs({
-  className: 'relative w-full min-h-[100vh] flex flex-col',
+  className: 'relative w-full min-h-[100vh] flex flex-col pt-[8.4rem]',
 })``;
 
 export const Body = styled.main.attrs({
@@ -14,7 +14,7 @@ export const Body = styled.main.attrs({
 })``;
 
 export const Section = styled.section.attrs({
-  className: 'mt-[2.6rem] mb-[2.4rem] px-[2.4rem]',
+  className: 'mb-[2.4rem] px-[2.4rem]',
 })``;
 
 export const Label2 = styled.p.attrs({
