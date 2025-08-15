@@ -1,4 +1,3 @@
-import React from 'react';
 import * as M from '../../../styles/home/modal.style';
 import type { ProcessedDataItem } from '../../../types/home/statistics';
 
@@ -7,7 +6,7 @@ interface ModalProps {
   onClose: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
+function Modal({ items, onClose }: ModalProps) {
   const allPercentagesAreIntegers = items.every((item) =>
     Number.isInteger(item.percentage),
   );
@@ -15,7 +14,7 @@ const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
   return (
     <>
       <div className={M.ModalBackdrop} onClick={onClose} />
-      <div className={M.ModalBox}>
+      <div className={M.ModalBox} onClick={(e) => e.stopPropagation()}>
         <ul className={M.ModalList}>
           {items.map((item) => (
             <li key={item.categoryName} className={M.ModalItem}>
@@ -38,6 +37,6 @@ const Modal: React.FC<ModalProps> = ({ items, onClose }) => {
       </div>
     </>
   );
-};
+}
 
 export default Modal;

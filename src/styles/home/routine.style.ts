@@ -56,4 +56,4 @@ export const BudgetButton = (disabled: boolean) =>
       : 'bg-[var(--color-mainColor1)] cursor-pointer'
   } text-white font-medium text-[1.8rem]`;
 export const ErrorMessage =
-  'w-full mt-[0.6rem] font-light text-[1.1rem] text-[var(--color-M1)] text-center';
+  'w-full mt-[0.6rem] text-[1.1rem] text-[var(--color-M1)] text-center font-light';
