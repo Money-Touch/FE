@@ -3,14 +3,15 @@ import colors from '../common/colors';
 
 export const Wrap = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-top: 8.4rem;
 `;
 
 export const Body = styled.main`
-  margin-top: 2.6rem;
+  overflow-y: auto;
 `;
 
 export const Section = styled.section`

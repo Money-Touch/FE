@@ -3,15 +3,17 @@ import colors from '../common/colors';
 
 export const Wrap = styled.div`
   position: relative;
+  padding-top: 8.4rem;
   width: 100%;
   height: 100vh;
   background: ${colors.white};
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
 `;
 
 export const Body = styled.main`
-  padding: 4.2rem 2.4rem 0 2.4rem;
+  padding: 0 2.4rem 0 2.4rem;
 `;
 
 export const InputWrapper = styled.div`

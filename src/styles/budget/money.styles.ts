@@ -2,11 +2,17 @@ import styled, { css } from 'styled-components';
 import colors from '../common/colors';
 
 export const Container = styled.div`
+  padding: 8.4rem 0 13rem 0;
   width: 100%;
+  height: 100vh;
   background: ${colors.B1};
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+export const MainContainer = styled.div`
+  overflow-y: auto;
 `;
 
 export const TopContainer = styled.div`
@@ -22,7 +28,7 @@ export const GreetingCard = styled.section`
   display: flex;
   gap: 2.2rem;
   align-items: center;
-  margin: 1rem 0 2.4rem 0;
+  margin: 0 0 2.4rem 0;
 `;
 
 export const GreetText = styled.p`
@@ -129,7 +135,7 @@ export const SummaryP = styled.p`
 
 export const BarWrapper = styled.div`
   width: 100%;
-  position: relative; /* 별/텍스트 절대배치 기준 */
+  position: relative;
   height: 3.9rem;
   display: flex;
   justify-content: center;
@@ -151,11 +157,10 @@ export const Fill = styled.div`
   transition: width 0.25s ease;
 `;
 
-/* ★ 바와 동일 기준(98% 너비)에 맞춰 별 위치 보정 */
 export const Below = styled.div<{ $fillPercent: number }>`
   position: absolute;
-  left: 1%; /* Bar 좌측 여백(100%-98%)의 절반 = 1% */
-  width: 98%; /* Bar와 동일한 기준 너비 */
+  left: 1%;
+  width: 98%;
   bottom: 0;
   font-size: 1.1rem;
   font-weight: 300;
@@ -169,7 +174,6 @@ export const Below = styled.div<{ $fillPercent: number }>`
     flex-direction: column;
     align-items: center;
 
-    /* 게이지 끝과 정확히 일치 (0~100% 클램프 + 중심 보정) */
     left: ${({ $fillPercent }) =>
       $fillPercent <= 0
         ? '0'
@@ -211,6 +215,7 @@ export const TabItem = styled.button<{ $active: boolean }>`
   font-weight: 500;
   cursor: pointer;
   position: relative;
+  padding-bottom: 0.6rem;
 
   ${({ $active }) =>
     $active &&

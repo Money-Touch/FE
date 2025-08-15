@@ -3,14 +3,16 @@ import colors from '../common/colors';
 
 export const Wrap = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-top: 8.4rem;
 `;
 
 export const Body = styled.main`
-  margin: 2.6rem 2.4rem 0 2.4rem;
+  padding: 0 2.4rem;
+  overflow-y: auto;
 `;
 
 export const InputWrapper = styled.div`
@@ -132,7 +134,7 @@ export const MeasureSpan = styled.span`
 `;
 
 export const Save = styled.button<{ disabled?: boolean }>`
-  margin: 44.5rem 0 16.4rem 0;
+  margin: 44.5rem 0 0 0;
   width: 100%;
   height: 5rem;
   border: none;
