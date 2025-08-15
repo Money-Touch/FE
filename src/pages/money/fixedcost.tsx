@@ -6,33 +6,7 @@ import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import closeIcon from '../../assets/images/budget/Close.png';
 import { useFixedCostMutation } from '../../hooks/money/fixedcost/useFixedCostMutation';
 
-import {
-  Wrap,
-  Body,
-  Section,
-  Row,
-  Label2,
-  Label,
-  AmountBtn,
-  Divider,
-  CatBox,
-  CatBtn,
-  Input,
-  DeleteIcon,
-  Textarea,
-  Save,
-  Dim,
-  Modal,
-  ModalHead,
-  Close,
-  InputRow,
-  Money,
-  InputIcon,
-  Pad,
-  Key,
-  ApplyContainer,
-  Apply,
-} from '../../styles/budget/fixedcost.styles';
+import * as A from '../../styles/budget/fixedcost.styles';
 
 const CATEGORIES = ['배달/외식', '교통', '패션/쇼핑', '카페', '기타'] as const;
 const fmtComma = (v: string | number) =>
@@ -105,29 +79,35 @@ const FixedCost = () => {
   };
 
   return (
-    <Wrap>
+    <div className={A.Wrap}>
       <Header title="고정비" />
 
-      <Body>
-        <Section>
-          <Label2>고정비</Label2>
-          <Row>
-            <AmountBtn onClick={openModal}>
+      <main className={A.Body}>
+        <section className={A.Section}>
+          <p className={A.Label2}>고정비</p>
+          <div className={A.Row}>
+            <button className={A.AmountBtn} onClick={openModal}>
               {fmtComma(amount)}원
-              <img src={pencilIcon} alt="금액 수정" />
-            </AmountBtn>
-          </Row>
-        </Section>
+              <img
+                className="w-[2.4rem] h-[2.4rem]"
+                src={pencilIcon}
+                alt="금액 수정"
+              />
+            </button>
+          </div>
+        </section>
 
-        <Divider />
+        <div className={A.Divider} />
 
-        <Section>
-          <Label>
-            카테고리 선택<span>*</span>
-          </Label>
+        <section className={A.Section}>
+          <p className={A.Label}>
+            카테고리 선택
+            <span className="ml-[0.2rem] text-[var(--color-M1)]">*</span>
+          </p>
 
-          <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
-            <CatBox
+          <div className="overflow-x-auto pb-[4px]">
+            <div
+              className={`${A.CatBox}`}
               style={{
                 display: 'flex',
                 flexWrap: 'nowrap',
@@ -136,30 +116,33 @@ const FixedCost = () => {
               }}
             >
               {CATEGORIES.map((c) => (
-                <CatBtn
+                <button
                   key={c}
-                  $on={c === category}
+                  className={A.CatBtn(c === category)}
                   onClick={() => setCategory(c)}
                   style={{ flex: '0 0 auto', whiteSpace: 'nowrap' }}
                 >
                   {c}
-                </CatBtn>
+                </button>
               ))}
-            </CatBox>
+            </div>
           </div>
 
-          <Label>
-            항목명<span>*</span>
-          </Label>
-          <div style={{ position: 'relative' }}>
-            <Input
+          <p className={A.Label}>
+            항목명
+            <span className="ml-[0.2rem] text-[var(--color-M1)]">*</span>
+          </p>
+          <div className="relative">
+            <input
+              className={A.Input}
               value={item}
               maxLength={20}
               placeholder="지출 항목에 대해 작성해주세요.(최대 20자)"
               onChange={(e) => setItem(e.target.value)}
             />
             {item && (
-              <DeleteIcon
+              <img
+                className={A.DeleteIcon}
                 src={circleCloseIcon}
                 alt="delete"
                 onClick={() => setItem('')}
@@ -167,47 +150,58 @@ const FixedCost = () => {
             )}
           </div>
 
-          <Label>메모</Label>
-          <Textarea
+          <p className={A.Label}>메모</p>
+          <textarea
+            className={A.Textarea}
             placeholder="1000자 이내로 작성해 주세요."
             maxLength={1000}
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
           />
 
-          <Save disabled={!valid || isPending} onClick={save}>
+          <button
+            className={A.Save(!valid || isPending)}
+            disabled={!valid || isPending}
+            onClick={save}
+          >
             {isPending ? '등록 중...' : '확인'}
-          </Save>
-        </Section>
-      </Body>
+          </button>
+        </section>
+      </main>
 
       {modalOpen && (
-        <Dim>
-          <Modal>
-            <ModalHead>
-              <Close
+        <div className={A.Dim}>
+          <div className={A.Modal}>
+            <div className={A.ModalHead}>
+              <img
+                className={A.Close}
                 src={closeIcon}
                 alt="close"
                 onClick={() => setModalOpen(false)}
               />
-              <span>고정비</span>
-            </ModalHead>
+              <span className="w-full text-[2rem] font-medium text-[var(--color-G1)] mb-[2rem]">
+                고정비
+              </span>
+            </div>
 
-            <InputRow>
-              <Money
+            <div className={A.InputRow}>
+              <input
                 readOnly
                 value={raw ? fmtComma(raw) : ''}
-                hasValue={!!raw}
+                className={A.Money(!!raw)}
               />
-              <span>원</span>
-              <InputIcon
+              <span className="absolute right-[4.5rem] text-[2.6rem] font-bold">
+                원
+              </span>
+              <img
+                className={A.InputIcon}
                 src={circleCloseIcon}
                 alt="delete"
                 onClick={() => setRaw('')}
               />
-            </InputRow>
+            </div>
 
-            <Pad>
+            <div className={A.Pad}>
               {[
                 '1',
                 '2',
@@ -222,21 +216,29 @@ const FixedCost = () => {
                 '0',
                 '←',
               ].map((k) => (
-                <Key key={k} onClick={() => pressKey(k === '←' ? 'back' : k)}>
+                <button
+                  key={k}
+                  className={A.Key}
+                  onClick={() => pressKey(k === '←' ? 'back' : k)}
+                >
                   {k}
-                </Key>
+                </button>
               ))}
-            </Pad>
+            </div>
 
-            <ApplyContainer>
-              <Apply disabled={!raw} onClick={applyValue}>
+            <div className={A.ApplyContainer}>
+              <button
+                className={A.Apply(!raw)}
+                disabled={!raw}
+                onClick={applyValue}
+              >
                 수정하기
-              </Apply>
-            </ApplyContainer>
-          </Modal>
-        </Dim>
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-    </Wrap>
+    </div>
   );
 };
 

@@ -7,36 +7,8 @@ import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 
-import {
-  Wrap,
-  Body,
-  Section,
-  Row,
-  Label,
-  IconBtn,
-  Month,
-  Divider,
-  CatUl,
-  CatLi,
-  EditWrapper,
-  EditInput,
-  PlusBtnContainer,
-  PlusBtn,
-  ConfirmBtn,
-  Dim,
-  Modal,
-  ModalHead,
-  Close,
-  InputRow,
-  Money as MoneyInput,
-  InputIcon,
-  Pad,
-  Key,
-  ApplyContainer,
-  Apply,
-} from '../../styles/budget/routine.styles';
+import * as A from '../../styles/budget/routine.styles';
 
-// ✅ 예산 상세 조회 훅 ( /api/house-holds/budgets/{budgetId} )
 import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
 
 const DEFAULT_CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
@@ -44,7 +16,6 @@ const DEFAULT_CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페'
 const Routine = () => {
   const navigate = useNavigate();
 
-  // money.tsx의 플러스 버튼에서 넘겨주는 budgetId 사용
   const location = useLocation() as { state?: { budgetId?: number } };
   const budgetId = location?.state?.budgetId ?? 0;
 
@@ -58,43 +29,32 @@ const Routine = () => {
   const [targetIdx, setTargetIdx] = useState<-1 | number>(-1);
   const [targetCustom, setTargetCustom] = useState(false);
 
-  // ---- 예산 상세 불러오기 ----
-  // 훅 내부에서 0이면 호출 안 하도록 되어 있다면 그대로 사용, 아니라면 budgetId > 0 일 때만 호출하도록 내부 구현이 이미 되어 있음.
   const { data: budgetDetailData } = useBudgetDetailQuery(budgetId || 0);
 
-  // API 데이터 → 화면 상태로 매핑 + 기존 저장 로직과 호환되도록 localStorage 채워주기
   useEffect(() => {
     const result = budgetDetailData?.result;
     if (!result) return;
 
-    // 총 예산
     const total = Number(result.totalBudget ?? 0);
     setMonthBudget(total);
 
-    // 기본 카테고리 금액 맵
     const defaultList: Array<{ categoryName: string; amount: number }> =
       result.defaultCategoryBudgets ?? [];
-
     const defaultMap = new Map(
       defaultList.map((c) => [c.categoryName, Number(c.amount || 0)]),
     );
-
-    // 화면 상수 순서에 맞춰 배열 구성
     const nextCatBudget = DEFAULT_CATEGORIES.map(
       (name) => defaultMap.get(name) ?? 0,
     );
     setCatBudget(nextCatBudget);
 
-    // 커스텀 카테고리
     const customList: Array<{ categoryName: string; amount: number }> =
       result.customCategoryBudgets ?? [];
-
     const nextCustomCats = customList.map((c) => c.categoryName);
     const nextCustomBudget = customList.map((c) => Number(c.amount || 0));
     setCustomCats(nextCustomCats);
     setCustomBudget(nextCustomBudget);
 
-    // ✅ 기존 로직(합계 검증/등록)과 호환을 위해 localStorage에도 동기화
     localStorage.setItem('monthBudget', String(total));
     localStorage.setItem('categoryBudgets', JSON.stringify(nextCatBudget));
     localStorage.setItem('customCategories', JSON.stringify(nextCustomCats));
@@ -170,7 +130,6 @@ const Routine = () => {
   const handleConfirm = () => {
     if (!canConfirm) return;
 
-    // 최종 값 동기화(안전차)
     localStorage.setItem('monthBudget', String(monthBudget));
     localStorage.setItem('categoryBudgets', JSON.stringify(catBudget));
     localStorage.setItem('customCategories', JSON.stringify(customCats));
@@ -180,7 +139,6 @@ const Routine = () => {
       JSON.stringify([...catBudget, ...customBudget]),
     );
 
-    // routine-registration 화면으로 이동 (budgetId 그대로 전달)
     navigate('/routine-registration', {
       replace: true,
       state: { budgetId },
@@ -188,113 +146,126 @@ const Routine = () => {
   };
 
   return (
-    <Wrap>
+    <div className={A.Wrap}>
       <Header title="소비 루틴 등록" />
 
-      <Body>
-        <Section>
-          <Label>한 달 예산</Label>
-          <Row>
-            <Month>{comma(monthBudget)}원</Month>
-            <IconBtn onClick={() => openModal(-1)}>
-              <img src={pencilIcon} alt="edit" />
-            </IconBtn>
-          </Row>
-        </Section>
+      <main className={A.Body}>
+        <section className={A.Section}>
+          <p className={A.Label}>한 달 예산</p>
+          <div className={A.Row}>
+            <p className={A.Month}>{comma(monthBudget)}원</p>
+            <button className={A.IconBtn} onClick={() => openModal(-1)}>
+              <img className="w-full h-full" src={pencilIcon} alt="edit" />
+            </button>
+          </div>
+        </section>
 
-        <Divider />
+        <div className={A.Divider} />
 
-        <Section>
-          <Row>
-            <Label>나의 소비 루틴</Label>
-            <IconBtn
-              $active={editMode}
+        <section className={A.Section}>
+          <div className={A.Row}>
+            <p className={A.Label}>나의 소비 루틴</p>
+            <button
+              className={A.IconBtn}
               onClick={() => setEditMode((v) => !v)}
               style={{ width: '2rem', height: '2rem' }}
             >
-              <img src={editPencilIcon} alt="edit" />
-            </IconBtn>
-          </Row>
+              <img className="w-full h-full" src={editPencilIcon} alt="edit" />
+            </button>
+          </div>
 
-          <CatUl>
+          <ul className={A.CatUl}>
             {DEFAULT_CATEGORIES.map((c, i) => (
-              <CatLi
+              <li
                 key={c}
-                $editable={editMode}
+                className={A.CatLi(editMode)}
                 onClick={() => editMode && openModal(i, false)}
               >
-                <span className="CatP">{c}</span>
+                <span className={A.CatPrimary}>{c}</span>
                 {editMode ? (
-                  <EditWrapper>
-                    <EditInput>{comma(catBudget[i])}원</EditInput>
-                  </EditWrapper>
+                  <div className={A.EditWrapper}>
+                    <span className={A.EditInput}>{comma(catBudget[i])}원</span>
+                  </div>
                 ) : (
                   <span>{comma(catBudget[i])}원</span>
                 )}
-              </CatLi>
+              </li>
             ))}
 
             {customCats.map((name, i) => (
-              <CatLi
+              <li
                 key={`${name}-${i}`}
-                $editable={editMode}
+                className={A.CatLi(editMode)}
                 onClick={() => editMode && openModal(i, true)}
               >
-                <span>{name}</span>
+                <span className={A.CatPrimary}>{name}</span>
                 {editMode ? (
-                  <EditWrapper>
-                    <EditInput>{comma(customBudget[i])}원</EditInput>
-                  </EditWrapper>
+                  <div className={A.EditWrapper}>
+                    <span className={A.EditInput}>
+                      {comma(customBudget[i])}원
+                    </span>
+                  </div>
                 ) : (
                   <span>{comma(customBudget[i])}원</span>
                 )}
-              </CatLi>
+              </li>
             ))}
-          </CatUl>
+          </ul>
 
-          <PlusBtnContainer>
-            <PlusBtn
+          <div className={A.PlusBtnContainer}>
+            <button
+              className={A.PlusBtn}
               onClick={() =>
                 navigate('/add-category', { state: { from: '/routine' } })
               }
             >
-              <img src={plusCircle} alt="add" />
-            </PlusBtn>
-          </PlusBtnContainer>
+              <img
+                className="w-[5.8rem] h-[5.8rem]"
+                src={plusCircle}
+                alt="add"
+              />
+            </button>
+          </div>
 
-          <ConfirmBtn disabled={!canConfirm} onClick={handleConfirm}>
+          <button
+            className={A.ConfirmBtn(!canConfirm)}
+            disabled={!canConfirm}
+            onClick={handleConfirm}
+          >
             확인
-          </ConfirmBtn>
-        </Section>
-      </Body>
+          </button>
+        </section>
+      </main>
 
       {modalOpen && (
-        <Dim>
-          <Modal>
-            <ModalHead>
-              <Close
+        <div className={A.Dim}>
+          <div className={A.Modal}>
+            <div className={A.ModalHead}>
+              <img
+                className={A.Close}
                 src={closeIcon}
                 alt="close"
                 onClick={() => setModalOpen(false)}
               />
-              <span>한 달 예산</span>
-            </ModalHead>
+              <span className={A.ModalTitle}>한 달 예산</span>
+            </div>
 
-            <InputRow>
-              <MoneyInput
+            <div className={A.InputRow}>
+              <input
                 readOnly
                 value={raw ? comma(raw) : ''}
-                hasValue={!!raw}
+                className={A.Money(!!raw)}
               />
-              <span>원</span>
-              <InputIcon
+              <span className={A.Unit}>원</span>
+              <img
+                className={A.InputIcon}
                 src={circleCloseIcon}
                 alt="delete"
                 onClick={() => setRaw('')}
               />
-            </InputRow>
+            </div>
 
-            <Pad>
+            <div className={A.Pad}>
               {[
                 '1',
                 '2',
@@ -309,21 +280,29 @@ const Routine = () => {
                 '0',
                 '←',
               ].map((k) => (
-                <Key key={k} onClick={() => pressKey(k === '←' ? 'back' : k)}>
+                <button
+                  key={k}
+                  className={A.Key}
+                  onClick={() => pressKey(k === '←' ? 'back' : k)}
+                >
                   {k}
-                </Key>
+                </button>
               ))}
-            </Pad>
+            </div>
 
-            <ApplyContainer>
-              <Apply disabled={!raw} onClick={applyValue}>
+            <div className={A.ApplyContainer}>
+              <button
+                className={A.Apply(!raw)}
+                disabled={!raw}
+                onClick={applyValue}
+              >
                 수정하기
-              </Apply>
-            </ApplyContainer>
-          </Modal>
-        </Dim>
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-    </Wrap>
+    </div>
   );
 };
 

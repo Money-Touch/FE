@@ -1,256 +1,94 @@
-import styled, { css } from 'styled-components';
-import colors from '../common/colors';
+export const Wrap =
+  'w-full h-screen flex flex-col relative pt-[8.4rem] overflow-y-auto';
 
-export const Wrap = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  padding-top: 8.4rem;
-  overflow-y: auto;
-`;
+export const Body = '';
 
-export const Body = styled.main``;
+export const Section = 'mx-[2.4rem]';
 
-export const Section = styled.section`
-  margin: 0 2.4rem;
-`;
+export const Row = 'flex items-center gap-[0.6rem]';
 
-export const Row = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-`;
+export const Label = 'text-[1.8rem] font-medium text-[var(--color-G1)]';
 
-export const Label = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.G1};
-`;
+export const Month = 'text-[2.6rem] font-bold text-[var(--color-G1)]';
 
-export const Month = styled.p`
-  font-size: 2.6rem;
-  font-weight: 700;
-  color: ${colors.G1};
-`;
+export const IconBtn =
+  'w-[2.4rem] h-[2.4rem] flex justify-center items-center cursor-pointer';
 
-export const IconBtn = styled.button<{ $active?: boolean }>`
-  width: 2.4rem;
-  height: 2.4rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+export const Divider =
+  'w-full h-[0.7rem] bg-[var(--color-G8)] mt-[2.4rem] mb-[1.8rem]';
 
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`;
+export const CatUl = 'flex flex-col gap-[1.4rem] mt-[1.4rem] mb-[4.7rem]';
 
-export const Divider = styled.div`
-  width: 100%;
-  height: 0.7rem;
-  background: ${colors.G8};
-  margin: 2.4rem 0 1.8rem 0;
-`;
+export const CatLi = (editable: boolean) =>
+  [
+    'w-full h-[2.6rem] flex justify-between items-center',
+    'text-[1.8rem] font-medium text-[var(--color-G1)]',
+    editable ? 'cursor-pointer' : '',
+  ].join(' ');
 
-export const CatUl = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-  margin: 1.4rem 0 4.7rem 0;
-`;
+export const CatPrimary = 'text-[1.5rem] text-[var(--color-G5)]';
 
-export const CatLi = styled.li<{ $editable: boolean }>`
-  width: 100%;
-  height: 2.6rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.G1};
+export const EditWrapper = 'w-[14rem] h-full flex items-center';
 
-  & > span:first-child {
-    color: ${colors.G5};
-    font-size: 1.5rem;
-  }
+export const EditInput =
+  'flex-1 text-[1.8rem] font-medium text-[var(--color-G1)] border-b border-b-[var(--color-mainColor1)] text-right';
 
-  .CatP {
-    color: ${colors.G5};
-    font-size: 1.5rem;
-  }
+export const PlusBtnContainer = 'w-full flex justify-end';
 
-  ${({ $editable }) =>
-    $editable &&
-    css`
-      cursor: pointer;
-    `}
-`;
+export const PlusBtn = 'cursor-pointer';
 
-export const EditWrapper = styled.div`
-  width: 14rem;
-  height: 100%;
-  display: flex;
-  align-items: center;
-`;
+export const ConfirmBtn = (disabled?: boolean) =>
+  [
+    'w-full h-[5rem] mt-[2.3rem] mb-[16.4rem] rounded-[1rem]',
+    'text-[1.8rem] font-medium text-white cursor-pointer',
+    disabled
+      ? 'bg-[var(--color-G6)] pointer-events-none'
+      : 'bg-[var(--color-mainColor1)] pointer-events-auto',
+  ].join(' ');
 
-export const EditInput = styled.span`
-  flex: 1;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.G1};
-  border-bottom: 0.1rem solid ${colors.mainColor1};
-  text-align: right;
-`;
+// 모달 오버레이/박스
+export const Dim =
+  'w-full max-w-[425px] absolute inset-0 z-[999] bg-[rgba(17,17,17,0.6)] flex items-end overflow-y-auto';
 
-export const PlusBtnContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-`;
+export const Modal =
+  'fixed w-full max-w-[425px] bg-white rounded-t-[1.5rem] flex flex-col animate-[slide-up_0.25s_ease]';
 
-export const PlusBtn = styled.button`
-  cursor: pointer;
+export const ModalHead = 'w-full px-[2.4rem] flex flex-col items-end';
 
-  img {
-    width: 5.8rem;
-    height: 5.8rem;
-  }
-`;
+export const ModalTitle =
+  'w-full text-[2rem] font-medium text-[var(--color-G1)] mb-[2rem]';
 
-export const ConfirmBtn = styled.button<{ disabled?: boolean }>`
-  width: 100%;
-  height: 5rem;
-  margin: 2.3rem 0 16.4rem 0;
-  border-radius: 1rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  color: ${colors.white};
-  background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
-`;
+export const Close = 'w-[2.4rem] h-[2.4rem] my-[2rem] mb-[3rem] cursor-pointer';
 
-export const Dim = styled.div`
-  width: 100%;
-  max-width: 425px;
-  position: absolute;
-  inset: 0;
-  z-index: 999;
-  background: rgba(17, 17, 17, 0.6);
-  display: flex;
-  align-items: flex-end;
-  overflow-y: auto;
-`;
+export const InputRow = 'w-full px-[2rem] relative';
 
-export const Modal = styled.div`
-  position: fixed;
-  width: 100%;
-  max-width: 425px;
-  background: ${colors.white};
-  border-radius: 1.5rem 1.5rem 0 0;
-  display: flex;
-  flex-direction: column;
-  animation: slide-up 0.25s ease;
+export const Unit = 'absolute right-[4.5rem] text-[2.6rem] font-bold';
 
-  @keyframes slide-up {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-`;
+export const Money = (hasValue: boolean) =>
+  [
+    'mb-[3rem] w-full h-[3.8rem] pr-[5.5rem] box-border text-[2.6rem] font-bold',
+    'border-b',
+    hasValue
+      ? 'border-b-[var(--color-mainColor1)]'
+      : 'border-b-[var(--color-G1)]',
+  ].join(' ');
 
-export const ModalHead = styled.div`
-  width: 100%;
-  padding: 0 2.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+export const InputIcon =
+  'absolute right-[2rem] top-[1rem] w-[2rem] h-[2rem] cursor-pointer';
 
-  span {
-    width: 100%;
-    font-size: 2rem;
-    font-weight: 500;
-    color: ${colors.G1};
-    margin-bottom: 2rem;
-  }
-`;
+export const Pad =
+  'bg-[#f9f9f9] py-[1.8rem] px-[6.4rem] border-t border-t-[var(--color-G8)] grid grid-cols-3';
 
-export const Close = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
-  margin: 2rem 0 3rem 0;
-  cursor: pointer;
-`;
+export const Key =
+  'w-full text-[3rem] font-medium text-[var(--color-G1)] mb-[2.2rem]';
 
-export const InputRow = styled.div`
-  width: 100%;
-  padding: 0 2rem;
-  position: relative;
+export const ApplyContainer =
+  'w-full h-full px-[2.4rem] pb-[6.8rem] bg-[#f9f9f9]';
 
-  span {
-    position: absolute;
-    font-size: 2.6rem;
-    font-weight: 700;
-    right: 4.5rem;
-  }
-`;
-
-export const Money = styled.input<{ hasValue: boolean }>`
-  margin-bottom: 3rem;
-  width: 100%;
-  height: 3.8rem;
-  padding-right: 5.5rem;
-  box-sizing: border-box;
-  border-bottom: 0.1rem solid
-    ${({ hasValue }) => (hasValue ? colors.mainColor1 : colors.G1)};
-  font-size: 2.6rem;
-  font-weight: 700;
-`;
-
-export const InputIcon = styled.img`
-  position: absolute;
-  right: 2rem;
-  top: 1rem;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-`;
-
-export const Pad = styled.div`
-  background: #f9f9f9;
-  padding: 1.8rem 6.4rem;
-  border-top: 0.1rem solid ${colors.G8};
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-`;
-
-export const Key = styled.button`
-  width: 100%;
-  font-size: 3rem;
-  font-weight: 500;
-  color: ${colors.G1};
-  margin-bottom: 2.2rem;
-`;
-
-export const ApplyContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 0 2.4rem 6.8rem 2.4rem;
-  background: #f9f9f9;
-`;
-
-export const Apply = styled.button<{ disabled?: boolean }>`
-  width: 100%;
-  height: 5rem;
-  border-radius: 1rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.white};
-  background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
-`;
+export const Apply = (disabled?: boolean) =>
+  [
+    'w-full h-[5rem] rounded-[1rem] text-[1.8rem] font-medium text-white',
+    disabled
+      ? 'bg-[var(--color-G6)] pointer-events-none'
+      : 'bg-[var(--color-mainColor1)] pointer-events-auto',
+  ].join(' ');
