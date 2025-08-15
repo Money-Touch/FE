@@ -6,34 +6,7 @@ import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import { useDailyMutation as createDailyConsumption } from '../../hooks/money/addday/useDailyMutation';
 
-import {
-  Wrap,
-  Body,
-  Section,
-  Row,
-  Label2,
-  Label,
-  AmountBtn,
-  Divider,
-  CatBox,
-  CatBtn,
-  Input,
-  DeleteIcon,
-  DateBtn,
-  Textarea,
-  Save,
-  Dim,
-  Modal,
-  ModalHead,
-  Close,
-  InputRow,
-  InputIcon,
-  Money,
-  Pad,
-  Key,
-  ApplyContainer,
-  Apply,
-} from '../../styles/budget/addday.styles';
+import * as A from '../../styles/budget/addday.styles';
 
 const CATEGORIES = ['배달/외식', '교통', '패션/쇼핑', '카페', '기타'] as const;
 
@@ -57,6 +30,7 @@ const localToISO = (s: string) => {
 };
 
 type LayoutCtx = { setHideFooter: (b: boolean) => void };
+type DateTimeInput = HTMLInputElement & { showPicker?: () => void };
 
 const AddDay = () => {
   const nav = useNavigate();
@@ -91,7 +65,7 @@ const AddDay = () => {
   };
   const openDate = () => {
     ensureDateStr();
-    const el = dateInputRef.current;
+    const el = dateInputRef.current as DateTimeInput | null;
     if (!el) return;
     if (typeof el.showPicker === 'function') {
       el.showPicker();
@@ -136,185 +110,188 @@ const AddDay = () => {
   };
 
   return (
-    <Wrap>
-      <Header title="일일" />
+    <>
+      <A.AddDayTWGlobals />
 
-      <Body>
-        <Section>
-          <Label2>거래처</Label2>
-          <Row>
-            <AmountBtn
-              onClick={() => {
-                setRawAmt(amount ? String(amount) : '');
-                setPadOpen(true);
-              }}
-            >
-              {comma(amount)}원
-              <img src={pencilIcon} alt="edit" />
-            </AmountBtn>
-          </Row>
-        </Section>
+      <A.Wrap>
+        <Header title="일일" />
 
-        <Divider />
+        <A.Body>
+          <A.Section>
+            <A.Label2>거래처</A.Label2>
+            <A.Row>
+              <A.AmountBtn
+                onClick={() => {
+                  setRawAmt(amount ? String(amount) : '');
+                  setPadOpen(true);
+                }}
+              >
+                {comma(amount)}원
+                <img src={pencilIcon} alt="edit" />
+              </A.AmountBtn>
+            </A.Row>
+          </A.Section>
 
-        <Section style={{ margin: '1.8rem 0 6.6rem 0' }}>
-          <Label>
-            카테고리 선택<span>*</span>
-          </Label>
+          <A.Divider />
 
-          {/* ✅ 한 줄 + 가로 스크롤 */}
-          <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
-            <CatBox
-              style={{
-                display: 'flex',
-                flexWrap: 'nowrap',
-                gap: '8px',
-                width: 'max-content',
-              }}
-            >
-              {CATEGORIES.map((c) => (
-                <CatBtn
-                  key={c}
-                  $on={c === category}
-                  onClick={() => setCategory(c)}
-                  style={{ flex: '0 0 auto', whiteSpace: 'nowrap' }}
-                >
-                  {c}
-                </CatBtn>
-              ))}
-            </CatBox>
-          </div>
+          <A.Section style={{ margin: '1.8rem 0 6.6rem 0' }}>
+            <A.Label>
+              카테고리 선택<span>*</span>
+            </A.Label>
 
-          <Label>
-            항목명<span>*</span>
-          </Label>
-          <div style={{ position: 'relative' }}>
-            <Input
-              value={item}
-              maxLength={20}
-              placeholder="지출 항목에 대해 작성해주세요.(최대 20자)"
-              onChange={(e) => setItem(e.target.value)}
+            <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
+              <A.CatBox
+                style={{
+                  display: 'flex',
+                  flexWrap: 'nowrap',
+                  gap: '8px',
+                  width: 'max-content',
+                }}
+              >
+                {CATEGORIES.map((c) => (
+                  <A.CatBtn
+                    key={c}
+                    $on={c === category}
+                    onClick={() => setCategory(c)}
+                    style={{ flex: '0 0 auto', whiteSpace: 'nowrap' }}
+                  >
+                    {c}
+                  </A.CatBtn>
+                ))}
+              </A.CatBox>
+            </div>
+
+            <A.Label>
+              항목명<span>*</span>
+            </A.Label>
+            <div style={{ position: 'relative' }}>
+              <A.Input
+                value={item}
+                maxLength={20}
+                placeholder="지출 항목에 대해 작성해주세요.(최대 20자)"
+                onChange={(e) => setItem(e.target.value)}
+              />
+              {item && (
+                <A.DeleteIcon
+                  src={circleCloseIcon}
+                  alt="delete"
+                  onClick={() => setItem('')}
+                />
+              )}
+            </div>
+
+            <A.Label>
+              날짜<span>*</span>
+            </A.Label>
+            <div style={{ position: 'relative' }}>
+              <A.DateBtn $placeholder={!dateStr} onClick={openDate}>
+                {dateStr
+                  ? (() => {
+                      const d = new Date(dateStr);
+                      const ap = d.getHours() >= 12 ? '오후' : '오전';
+                      const h = d.getHours() % 12 || 12;
+                      return `${fmtDateKo(d)}  ${ap} ${two(h)}:${two(
+                        d.getMinutes(),
+                      )}`;
+                    })()
+                  : '날짜를 입력하세요.'}
+              </A.DateBtn>
+              {dateStr && (
+                <A.DeleteIcon
+                  src={circleCloseIcon}
+                  alt="delete"
+                  onClick={() => setDateStr('')}
+                />
+              )}
+
+              <input
+                ref={dateInputRef}
+                type="datetime-local"
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  opacity: 0,
+                  pointerEvents: 'none',
+                }}
+                value={toNativeValue(dateStr)}
+                onChange={onNativePick}
+              />
+            </div>
+
+            <A.Label>메모</A.Label>
+            <A.Textarea
+              value={memo}
+              maxLength={1000}
+              placeholder="1000자 이내로 작성"
+              onChange={(e) => setMemo(e.target.value)}
             />
-            {item && (
-              <DeleteIcon
-                src={circleCloseIcon}
-                alt="delete"
-                onClick={() => setItem('')}
-              />
-            )}
-          </div>
 
-          <Label>
-            날짜<span>*</span>
-          </Label>
-          <div style={{ position: 'relative' }}>
-            <DateBtn $placeholder={!dateStr} onClick={openDate}>
-              {dateStr
-                ? (() => {
-                    const d = new Date(dateStr);
-                    const ap = d.getHours() >= 12 ? '오후' : '오전';
-                    const h = d.getHours() % 12 || 12;
-                    return `${fmtDateKo(d)}  ${ap} ${two(h)}:${two(
-                      d.getMinutes(),
-                    )}`;
-                  })()
-                : '날짜를 입력하세요.'}
-            </DateBtn>
-            {dateStr && (
-              <DeleteIcon
-                src={circleCloseIcon}
-                alt="delete"
-                onClick={() => setDateStr('')}
-              />
-            )}
+            <A.Save disabled={!valid || saving} onClick={save}>
+              {saving ? '저장 중...' : '확인'}
+            </A.Save>
+          </A.Section>
+        </A.Body>
 
-            <input
-              ref={dateInputRef}
-              type="datetime-local"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                opacity: 0,
-                pointerEvents: 'none',
-              }}
-              value={toNativeValue(dateStr)}
-              onChange={onNativePick}
-            />
-          </div>
+        {padOpen && (
+          <A.Dim>
+            <A.Modal>
+              <A.ModalHead>
+                <A.Close
+                  src={closeIcon}
+                  alt="close"
+                  onClick={() => setPadOpen(false)}
+                />
+                <span>금액</span>
+              </A.ModalHead>
 
-          <Label>메모</Label>
-          <Textarea
-            value={memo}
-            maxLength={1000}
-            placeholder="1000자 이내로 작성"
-            onChange={(e) => setMemo(e.target.value)}
-          />
+              <A.InputRow>
+                <A.Money
+                  readOnly
+                  value={rawAmt ? comma(rawAmt) : ''}
+                  hasValue={!!rawAmt}
+                />
+                <span>원</span>
+                <A.InputIcon
+                  src={circleCloseIcon}
+                  alt="delete"
+                  onClick={() => setRawAmt('')}
+                />
+              </A.InputRow>
 
-          <Save disabled={!valid || saving} onClick={save}>
-            {saving ? '저장 중...' : '확인'}
-          </Save>
-        </Section>
-      </Body>
+              <A.Pad>
+                {[
+                  '1',
+                  '2',
+                  '3',
+                  '4',
+                  '5',
+                  '6',
+                  '7',
+                  '8',
+                  '9',
+                  '00',
+                  '0',
+                  '←',
+                ].map((k) => (
+                  <A.Key key={k} onClick={() => press(k === '←' ? 'back' : k)}>
+                    {k}
+                  </A.Key>
+                ))}
+              </A.Pad>
 
-      {padOpen && (
-        <Dim>
-          <Modal>
-            <ModalHead>
-              <Close
-                src={closeIcon}
-                alt="close"
-                onClick={() => setPadOpen(false)}
-              />
-              <span>금액</span>
-            </ModalHead>
-
-            <InputRow>
-              <Money
-                readOnly
-                value={rawAmt ? comma(rawAmt) : ''}
-                hasValue={!!rawAmt}
-              />
-              <span>원</span>
-              <InputIcon
-                src={circleCloseIcon}
-                alt="delete"
-                onClick={() => setRawAmt('')}
-              />
-            </InputRow>
-
-            <Pad>
-              {[
-                '1',
-                '2',
-                '3',
-                '4',
-                '5',
-                '6',
-                '7',
-                '8',
-                '9',
-                '00',
-                '0',
-                '←',
-              ].map((k) => (
-                <Key key={k} onClick={() => press(k === '←' ? 'back' : k)}>
-                  {k}
-                </Key>
-              ))}
-            </Pad>
-
-            <ApplyContainer>
-              <Apply disabled={!rawAmt} onClick={saveAmt}>
-                수정하기
-              </Apply>
-            </ApplyContainer>
-          </Modal>
-        </Dim>
-      )}
-    </Wrap>
+              <A.ApplyContainer>
+                <A.Apply disabled={!rawAmt} onClick={saveAmt}>
+                  수정하기
+                </A.Apply>
+              </A.ApplyContainer>
+            </A.Modal>
+          </A.Dim>
+        )}
+      </A.Wrap>
+    </>
   );
 };
 
