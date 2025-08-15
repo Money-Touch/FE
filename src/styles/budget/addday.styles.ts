@@ -1,329 +1,197 @@
-import styled from 'styled-components';
-import colors from '../common/colors';
+import styled, { createGlobalStyle } from 'styled-components';
 
-const ROW_H = 53;
-
-export const Wrap = styled.div`
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+export const AddDayTWGlobals = createGlobalStyle`
+  @keyframes slide-up { from { transform: translateY(100%);} to { transform: translateY(0);} }
+  .animate-slide-up { animation: slide-up 0.25s ease both; }
 `;
 
-export const Body = styled.main`
-  width: 100%;
-`;
+export const Wrap = styled.div.attrs({
+  className: 'relative w-full min-h-[100vh] flex flex-col',
+})``;
 
-export const Section = styled.section`
-  margin: 2.6rem 0 2.4rem 0;
-  padding: 0 2.4rem;
-`;
+export const Body = styled.main.attrs({
+  className: 'w-full',
+})``;
 
-export const Label2 = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.G1};
+export const Section = styled.section.attrs({
+  className: 'mt-[2.6rem] mb-[2.4rem] px-[2.4rem]',
+})``;
 
-  span {
-    margin-left: 0.2rem;
-    color: ${colors.M1};
-  }
-`;
+export const Label2 = styled.p.attrs({
+  className:
+    'text-[1.8rem] font-[500] text-[var(--color-G1)] ' +
+    '[&>span]:ml-[0.2rem] [&>span]:text-[var(--color-M1)]',
+})``;
 
-export const Row = styled.div`
-  width: 100%;
-`;
+export const Row = styled.div.attrs({
+  className: 'w-full',
+})``;
 
-export const Label = styled(Label2)`
-  margin-bottom: 0.6rem;
-  font-size: 1.5rem;
-`;
+export const Label = styled(Label2).attrs({
+  className:
+    'mb-[0.6rem] text-[1.5rem] font-[500] text-[var(--color-G1)] ' +
+    '[&>span]:ml-[0.2rem] [&>span]:text-[var(--color-M1)]',
+})``;
 
-export const AmountBtn = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 2.6rem;
-  font-weight: 700;
-  color: ${colors.G1};
+export const AmountBtn = styled.button.attrs({
+  className:
+    'flex items-center gap-[0.6rem] text-[2.6rem] font-[700] text-[var(--color-G1)] ' +
+    '[&>img]:w-[2.4rem] [&>img]:h-[2.4rem] [&>img]:cursor-pointer',
+})``;
 
-  img {
-    width: 2.4rem;
-    height: 2.4rem;
-    cursor: pointer;
-  }
-`;
+export const Divider = styled.div.attrs({
+  className: 'w-full h-[0.7rem] bg-[var(--color-G8)]',
+})``;
 
-export const Divider = styled.div`
-  width: 100%;
-  height: 0.7rem;
-  background: ${colors.G8};
-`;
+export const CatBox = styled.div.attrs({
+  className: 'w-full flex flex-wrap gap-[1rem] mb-[2.4rem]',
+})``;
 
-export const CatBox = styled.div`
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 2.4rem;
-`;
+export const CatBtn = styled.button.attrs<{ $on: boolean }>((p) => ({
+  className:
+    'px-[1.4rem] py-[0.7rem] rounded-[2rem] text-[1.4rem] ' +
+    (p.$on
+      ? 'bg-[var(--color-mainColor1)] text-white border border-transparent'
+      : 'bg-white text-[var(--color-G2)] border border-[var(--color-G7)]'),
+}))<{
+  $on: boolean;
+}>``;
 
-export const CatBtn = styled.button<{ $on: boolean }>`
-  padding: 0.7rem 1.4rem;
-  border: 0.1rem solid ${({ $on }) => ($on ? 'transparent' : colors.G7)};
-  border-radius: 2rem;
-  font-size: 1.4rem;
-  background: ${({ $on }) => ($on ? colors.mainColor1 : colors.white)};
-  color: ${({ $on }) => ($on ? colors.white : colors.G2)};
-`;
+export const Input = styled.input.attrs({
+  className:
+    'w-full h-[4.5rem] px-[1.5rem] box-border ' +
+    'border border-[var(--color-G7)] rounded-[0.5rem] ' +
+    'text-[1.4rem] font-[300] mb-[2.4rem] ' +
+    'placeholder:text-[var(--color-G5)]',
+})``;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 4.5rem;
-  padding: 0 1.5rem;
-  box-sizing: border-box;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 0.5rem;
-  font-size: 1.4rem;
-  font-weight: 300;
-  margin-bottom: 2.4rem;
+export const DeleteIcon = styled.img.attrs({
+  className:
+    'w-[2rem] h-[2rem] cursor-pointer absolute right-[1.5rem] top-[1.3rem]',
+})``;
 
-  &::placeholder {
-    color: ${colors.G5};
-  }
-`;
+export const DateBtn = styled.button.attrs<{ $placeholder?: boolean }>((p) => ({
+  className:
+    'w-full h-[4.5rem] px-[1.5rem] text-left ' +
+    'border border-[var(--color-G7)] rounded-[0.5rem] ' +
+    'text-[1.4rem] font-[300] mb-[2.4rem] ' +
+    (p.$placeholder ? 'text-[var(--color-G5)]' : 'text-[var(--color-G1)]'),
+}))<{ $placeholder?: boolean }>``;
 
-export const DeleteIcon = styled.img`
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  position: absolute;
-  right: 1.5rem;
-  top: 1.3rem;
-`;
+export const Textarea = styled.textarea.attrs({
+  className:
+    'w-full h-[18rem] p-[1.5rem] ' +
+    'border border-[var(--color-G7)] rounded-[1rem] ' +
+    'text-[1.4rem] font-[300] resize-none outline-none ' +
+    'placeholder:text-[var(--color-G5)]',
+})``;
 
-export const DateBtn = styled.button<{ $placeholder?: boolean }>`
-  width: 100%;
-  height: 4.5rem;
-  padding: 0 1.5rem;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 0.5rem;
-  font-size: 1.4rem;
-  font-weight: 300;
-  text-align: left;
-  margin-bottom: 2.4rem;
-  color: ${({ $placeholder }) => ($placeholder ? colors.G5 : colors.G1)};
-`;
+export const Save = styled.button.attrs<{ disabled?: boolean }>((p) => ({
+  className:
+    'w-full mt-[6.6rem] h-[5rem] rounded-[1rem] ' +
+    'text-[1.8rem] font-[500] text-white ' +
+    (p.disabled
+      ? 'bg-[var(--color-G6)] pointer-events-none'
+      : 'bg-[var(--color-mainColor1)]'),
+}))<{ disabled?: boolean }>``;
 
-export const Textarea = styled.textarea`
-  width: 100%;
-  height: 18rem;
-  padding: 1.5rem;
-  border: 0.1rem solid ${colors.G7};
-  border-radius: 1rem;
-  font-size: 1.4rem;
-  font-weight: 300;
-  resize: none;
-  outline: none;
+export const Dim = styled.div.attrs({
+  className:
+    'absolute inset-0 z-[999] bg-[rgba(17,17,17,0.6)] ' + 'flex items-end',
+})``;
 
-  &::placeholder {
-    color: ${colors.G5};
-  }
-`;
+export const Modal = styled.div.attrs({
+  className:
+    'w-full bg-white rounded-t-[1.5rem] flex flex-col animate-slide-up',
+})``;
 
-export const Save = styled.button<{ disabled?: boolean }>`
-  width: 100%;
-  margin-top: 6.6rem;
-  height: 5rem;
-  border: none;
-  border-radius: 1rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.white};
-  background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
-  pointer-events: ${({ disabled }) => (disabled ? 'none' : 'auto')};
-`;
+export const ModalHead = styled.div.attrs({
+  className:
+    'w-full px-[2.4rem] flex flex-col items-end ' +
+    '[&>span]:w-full [&>span]:text-[2rem] [&>span]:font-[500] ' +
+    '[&>span]:text-[var(--color-G1)] [&>span]:mb-[2rem]',
+})``;
 
-// 모달
-export const Dim = styled.div`
-  position: absolute;
-  inset: 0;
-  z-index: 999;
-  background: rgba(17, 17, 17, 0.6);
-  // backdrop-filter: blur(0.2rem);
-  display: flex;
-  align-items: flex-end;
-`;
+export const Close = styled.img.attrs({
+  className: 'w-[2.4rem] h-[2.4rem] mt-[2rem] mb-[3rem] cursor-pointer',
+})``;
 
-export const Modal = styled.div`
-  width: 100%;
-  background: ${colors.white};
-  border-radius: 1.5rem 1.5rem 0 0;
-  display: flex;
-  flex-direction: column;
-  animation: slide-up 0.25s ease;
+export const InputRow = styled.div.attrs({
+  className:
+    'w-full px-[2rem] relative ' +
+    '[&>span]:absolute [&>span]:right-[4.5rem] ' +
+    '[&>span]:text-[2.6rem] [&>span]:font-[700]',
+})``;
 
-  @keyframes slide-up {
-    from {
-      transform: translateY(100%);
-    }
-    to {
-      transform: translateY(0);
-    }
-  }
-`;
+export const Money = styled.input.attrs<{ hasValue: boolean }>((p) => ({
+  className:
+    'mb-[3rem] w-full h-[3.8rem] pr-[5.5rem] box-border ' +
+    'text-[2.6rem] font-[700] border-b ' +
+    (p.hasValue
+      ? 'border-[var(--color-mainColor1)]'
+      : 'border-[var(--color-G1)]'),
+}))<{ hasValue: boolean }>``;
 
-export const ModalHead = styled.div`
-  width: 100%;
-  padding: 0 2.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+export const InputIcon = styled.img.attrs({
+  className:
+    'absolute right-[2rem] top-[1rem] w-[2rem] h-[2rem] cursor-pointer',
+})``;
 
-  span {
-    width: 100%;
-    font-size: 2rem;
-    font-weight: 500;
-    color: ${colors.G1};
-    margin-bottom: 2rem;
-  }
-`;
+export const Pad = styled.div.attrs({
+  className:
+    'bg-[#f9f9f9] px-[6.4rem] pt-[1.8rem] ' +
+    'border-t border-[var(--color-G8)] grid grid-cols-3',
+})``;
 
-export const Close = styled.img`
-  width: 2.4rem;
-  height: 2.4rem;
-  margin: 2rem 0 3rem 0;
-  cursor: pointer;
-`;
+export const Key = styled.button.attrs({
+  className: 'w-full text-[3rem] font-[500] text-[var(--color-G1)] mb-[2.2rem]',
+})``;
 
-export const InputRow = styled.div`
-  width: 100%;
-  padding: 0 2rem;
-  position: relative;
+export const ApplyContainer = styled.div.attrs({
+  className: 'w-full h-full px-[2.4rem] pb-[6.8rem] bg-[#f9f9f9]',
+})``;
 
-  span {
-    position: absolute;
-    font-size: 2.6rem;
-    font-weight: 700;
-    right: 4.5rem;
-  }
-`;
+export const Apply = styled.button.attrs<{ disabled?: boolean }>((p) => ({
+  className:
+    'w-full h-[5rem] rounded-[1rem] text-[1.8rem] font-[500] text-white ' +
+    (p.disabled ? 'bg-[var(--color-G6)]' : 'bg-[var(--color-mainColor1)]'),
+}))<{ disabled?: boolean }>``;
 
-export const Money = styled.input<{ hasValue: boolean }>`
-  margin-bottom: 3rem;
-  width: 100%;
-  height: 3.8rem;
-  padding-right: 5.5rem;
-  box-sizing: border-box;
-  border-bottom: 0.1rem solid
-    ${({ hasValue }) => (hasValue ? colors.mainColor1 : colors.G1)};
-  font-size: 2.6rem;
-  font-weight: 700;
-`;
+export const DateModal = styled.div.attrs({
+  className:
+    'w-full bg-white rounded-t-[1.5rem] flex flex-col animate-slide-up ' +
+    'px-[2.4rem] pb-[8.4rem]',
+})``;
 
-export const InputIcon = styled.img`
-  position: absolute;
-  right: 2rem;
-  top: 1rem;
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-`;
+export const WheelWrap = styled.div.attrs({
+  className:
+    'relative grid ' +
+    '[grid-template-columns:1.7fr_1fr_1fr_1fr] ' +
+    'gap-[0.8rem] h-[14.6rem] mb-[4.7rem]',
+})``;
 
-export const Pad = styled.div`
-  background: #f9f9f9;
-  padding: 1.8rem 6.4rem;
-  border-top: 0.1rem solid ${colors.G8};
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-`;
+export const WheelCol = styled.div.attrs({
+  className:
+    'relative h-full overflow-y-auto snap-y snap-mandatory ' +
+    '[-ms-overflow-style:none] [scrollbar-width:none] ' +
+    '[&::-webkit-scrollbar]:hidden',
+})``;
 
-export const Key = styled.button`
-  width: 100%;
-  font-size: 3rem;
-  font-weight: 500;
-  color: ${colors.G1};
-  margin-bottom: 2.2rem;
-`;
+export const WheelSpacer = styled.div.attrs({
+  className: 'h-[5.3rem]',
+})``;
 
-export const ApplyContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 0 2.4rem 6.8rem 2.4rem;
-  background: #f9f9f9;
-`;
+export const WheelItem = styled.div.attrs<{ $active?: boolean }>((p) => ({
+  className:
+    'w-full h-[5.3rem] flex items-center justify-center ' +
+    'text-[2rem] font-[500] snap-center ' +
+    (p.$active ? 'text-[var(--color-G1)]' : 'text-[var(--color-G6)]'),
+}))<{ $active?: boolean }>``;
 
-export const Apply = styled.button<{ disabled?: boolean }>`
-  width: 100%;
-  height: 5rem;
-  border-radius: 1rem;
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${colors.white};
-  background: ${({ disabled }) => (disabled ? colors.G6 : colors.mainColor1)};
-`;
-
-// 날짜 모달
-// -> 화면 너비에 따라 모달 날짜, 시간 등의 위치 이상함
-// -> 추후 수정 필요
-// -> 425px 일때만 그나마 정상으로 보임
-// -> 도저히 안 고쳐짐ㅠ
-export const DateModal = styled(Modal)`
-  width: 100%;
-  padding: 0 2.4rem 8.4rem 2.4rem;
-`;
-
-export const WheelWrap = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: 1.7fr 1fr 1fr 1fr;
-  gap: 0.8rem;
-  height: 14.6rem;
-  margin-bottom: 4.7rem;
-`;
-
-export const WheelCol = styled.div`
-  position: relative;
-  height: 100%;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-export const WheelSpacer = styled.div`
-  height: calc(${ROW_H}rem / 10);
-`;
-
-export const WheelItem = styled.div<{ $active?: boolean }>`
-  width: 100%;
-  height: calc(${ROW_H}rem / 10);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: 500;
-  color: ${({ $active }) => ($active ? colors.G1 : colors.G6)};
-  scroll-snap-align: center;
-`;
-
-export const WheelCenter = styled.div`
-  pointer-events: none;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: calc(${ROW_H}rem / 10);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.8rem;
-  background: rgba(0, 209, 181, 0.08);
-  outline: 0.1rem solid ${colors.mainColor1};
-`;
+export const WheelCenter = styled.div.attrs({
+  className:
+    'pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2 ' +
+    'h-[5.3rem] flex items-center justify-center ' +
+    'rounded-[0.8rem] bg-[rgba(0,209,181,0.08)] ' +
+    'outline outline-1 outline-[var(--color-mainColor1)]',
+})``;
