@@ -129,7 +129,7 @@ export const SummaryP = styled.p`
 
 export const BarWrapper = styled.div`
   width: 100%;
-  position: relative;
+  position: relative; /* 별/텍스트 절대배치 기준 */
   height: 3.9rem;
   display: flex;
   justify-content: center;
@@ -151,19 +151,29 @@ export const Fill = styled.div`
   transition: width 0.25s ease;
 `;
 
+/* ★ 바와 동일 기준(98% 너비)에 맞춰 별 위치 보정 */
 export const Below = styled.div<{ $fillPercent: number }>`
+  position: absolute;
+  left: 1%; /* Bar 좌측 여백(100%-98%)의 절반 = 1% */
+  width: 98%; /* Bar와 동일한 기준 너비 */
+  bottom: 0;
   font-size: 1.1rem;
   font-weight: 300;
   color: ${colors.G5};
+  pointer-events: none;
 
   .used-amount {
+    position: absolute;
+    bottom: -0.6rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
-    bottom: -0.6rem;
+
+    /* 게이지 끝과 정확히 일치 (0~100% 클램프 + 중심 보정) */
     left: ${({ $fillPercent }) =>
-      $fillPercent === 0 ? '0' : `calc(${$fillPercent}% - 1.5rem)`};
+      $fillPercent <= 0
+        ? '0'
+        : `calc(${Math.min($fillPercent, 100)}% - 1.5rem)`};
 
     img {
       width: 1.6rem;
@@ -497,7 +507,7 @@ export const SpendPill = styled.div<{ $minus: boolean }>`
     $minus ? `${colors.subColor5}` : 'transparent'};
 `;
 
-// 여기서부터 수정
+/* 여기서부터 수정된 하단 시트/달력 리스트 영역 */
 export const CalListSection = styled.section`
   padding: 16px;
   background: #f0fff9;

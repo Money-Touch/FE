@@ -1,10 +1,10 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import Header from '../../components/header/header';
 import pencilIcon from '../../assets/images/budget/pencil.png';
 import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
-import { useDailyMutation } from '../../hooks/money/addday/useDailyMutation';
+import { useDailyMutation as createDailyConsumption } from '../../hooks/money/addday/useDailyMutation';
 
 import {
   Wrap,
@@ -33,16 +33,9 @@ import {
   Key,
   ApplyContainer,
   Apply,
-  DateModal,
-  WheelWrap,
-  WheelCol,
-  WheelSpacer,
-  WheelItem,
-  WheelCenter,
 } from '../../styles/budget/addday.styles';
 
 const CATEGORIES = ['배달/외식', '교통', '패션/쇼핑', '카페', '기타'] as const;
-const ROW_H = 53;
 
 const comma = (v: string | number) =>
   String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -50,13 +43,11 @@ const two = (n: number) => String(n).padStart(2, '0');
 const weekdayKo = ['일', '월', '화', '수', '목', '금', '토'] as const;
 const fmtDateKo = (d: Date) =>
   `${d.getMonth() + 1}월${d.getDate()}일 ${weekdayKo[d.getDay()]}`;
-
 const toLocalDt = (d: Date) =>
   `${d.getFullYear()}-${two(d.getMonth() + 1)}-${two(d.getDate())} ${two(
     d.getHours(),
   )}:${two(d.getMinutes())}`;
 
-// 인서 추가
 const localToISO = (s: string) => {
   const [d, t] = s.split(' ');
   const [y, m, day] = d.split('-').map(Number);
@@ -86,83 +77,28 @@ const AddDay = () => {
 
   const [padOpen, setPadOpen] = useState(false);
   const [rawAmt, setRawAmt] = useState('');
-  const [dateOpen, setDateOpen] = useState(false);
-  const [isInitScroll, setIsInitScroll] = useState(false);
 
-  const dateList = useMemo(() => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return Array.from({ length: 61 }, (_, i) => {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i - 30);
-      return d;
-    });
-  }, []);
-
-  const hours12 = useMemo(
-    () => Array.from({ length: 12 }, (_, i) => i + 1),
-    [],
-  );
-  const minutes = useMemo(() => Array.from({ length: 60 }, (_, i) => i), []);
-
-  const [idxDate, setIdxDate] = useState(30);
-  const [meri, setMeri] = useState<'오전' | '오후'>('오전');
-  const [hour12, setHour12] = useState(12);
-  const [minute, setMinute] = useState(0);
-
-  const dateRef = useRef<HTMLDivElement>(null);
-  const meriRef = useRef<HTMLDivElement>(null);
-  const hourRef = useRef<HTMLDivElement>(null);
-  const minRef = useRef<HTMLDivElement>(null);
-
-  const openDate = () => {
-    let base: Date;
-    if (dateStr) {
-      base = new Date(dateStr);
-    } else {
-      base = new Date();
-      setDateStr(toLocalDt(base));
-    }
-
-    const today0 = new Date();
-    today0.setHours(0, 0, 0, 0);
-    const diff = Math.round((+base.setHours(0, 0, 0, 0) - +today0) / 864e5);
-    const idx = 30 + Math.max(-30, Math.min(30, diff));
-
-    const hr = base.getHours();
-    const initMeri = hr >= 12 ? '오후' : '오전';
-    const initHour12 = hr % 12 || 12;
-    const initMin = base.getMinutes();
-
-    setIdxDate(idx);
-    setMeri(initMeri);
-    setHour12(initHour12);
-    setMinute(initMin);
-
-    setIsInitScroll(true);
-    setDateOpen(true);
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  const ensureDateStr = () => {
+    if (!dateStr) setDateStr(toLocalDt(new Date()));
   };
-
-  useEffect(() => {
-    if (!dateOpen) return;
-    setTimeout(() => {
-      dateRef.current?.scrollTo(0, idxDate * ROW_H);
-      meriRef.current?.scrollTo(0, (meri === '오후' ? 3 : 2) * ROW_H);
-      hourRef.current?.scrollTo(0, (hour12 - 1) * ROW_H);
-      minRef.current?.scrollTo(0, minute * ROW_H);
-      setIsInitScroll(false);
-    }, 50);
-  }, [dateOpen]);
-
-  const applyDate = () => {
-    const d = new Date(dateList[idxDate]);
-    let h24 = hour12 % 12;
-    if (meri === '오후') h24 += 12;
-    if (meri === '오전' && hour12 === 12) h24 = 0;
-    d.setHours(h24, minute, 0, 0);
-
+  const toNativeValue = (s: string) => (s ? s.replace(' ', 'T') : '');
+  const onNativePick: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    const v = e.target.value;
+    if (!v) return;
+    const d = new Date(v);
     setDateStr(toLocalDt(d));
-    setDateOpen(false);
+  };
+  const openDate = () => {
+    ensureDateStr();
+    const el = dateInputRef.current;
+    if (!el) return;
+    if (typeof el.showPicker === 'function') {
+      el.showPicker();
+    } else {
+      el.focus();
+      el.click();
+    }
   };
 
   const press = (k: string) =>
@@ -180,18 +116,15 @@ const AddDay = () => {
 
   const save = async () => {
     if (!valid || !dateStr) return;
-
     try {
       setSaving(true);
-
-      await useDailyMutation({
+      await createDailyConsumption({
         categoryName: category,
         amount: Math.abs(amount),
         content: item.trim(),
         memo,
         consumeDate: localToISO(dateStr),
       });
-
       alert('저장되었습니다.');
       nav('/money', { state: { tab: '일일' } });
     } catch (e) {
@@ -200,16 +133,6 @@ const AddDay = () => {
     } finally {
       setSaving(false);
     }
-  };
-
-  const snap = (
-    e: React.UIEvent<HTMLDivElement>,
-    setIdx: (i: number) => void,
-  ) => {
-    if (isInitScroll) return;
-    const top = e.currentTarget.scrollTop;
-    const i = Math.round(top / ROW_H);
-    setIdx(i);
   };
 
   return (
@@ -238,17 +161,29 @@ const AddDay = () => {
           <Label>
             카테고리 선택<span>*</span>
           </Label>
-          <CatBox>
-            {CATEGORIES.map((c) => (
-              <CatBtn
-                key={c}
-                $on={c === category}
-                onClick={() => setCategory(c)}
-              >
-                {c}
-              </CatBtn>
-            ))}
-          </CatBox>
+
+          {/* ✅ 한 줄 + 가로 스크롤 */}
+          <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
+            <CatBox
+              style={{
+                display: 'flex',
+                flexWrap: 'nowrap',
+                gap: '8px',
+                width: 'max-content',
+              }}
+            >
+              {CATEGORIES.map((c) => (
+                <CatBtn
+                  key={c}
+                  $on={c === category}
+                  onClick={() => setCategory(c)}
+                  style={{ flex: '0 0 auto', whiteSpace: 'nowrap' }}
+                >
+                  {c}
+                </CatBtn>
+              ))}
+            </CatBox>
+          </div>
 
           <Label>
             항목명<span>*</span>
@@ -279,7 +214,9 @@ const AddDay = () => {
                     const d = new Date(dateStr);
                     const ap = d.getHours() >= 12 ? '오후' : '오전';
                     const h = d.getHours() % 12 || 12;
-                    return `${fmtDateKo(d)}  ${ap} ${two(h)}:${two(d.getMinutes())}`;
+                    return `${fmtDateKo(d)}  ${ap} ${two(h)}:${two(
+                      d.getMinutes(),
+                    )}`;
                   })()
                 : '날짜를 입력하세요.'}
             </DateBtn>
@@ -290,6 +227,22 @@ const AddDay = () => {
                 onClick={() => setDateStr('')}
               />
             )}
+
+            <input
+              ref={dateInputRef}
+              type="datetime-local"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                opacity: 0,
+                pointerEvents: 'none',
+              }}
+              value={toNativeValue(dateStr)}
+              onChange={onNativePick}
+            />
           </div>
 
           <Label>메모</Label>
@@ -359,89 +312,6 @@ const AddDay = () => {
               </Apply>
             </ApplyContainer>
           </Modal>
-        </Dim>
-      )}
-
-      {dateOpen && (
-        <Dim>
-          <DateModal>
-            <ModalHead>
-              <Close
-                src={closeIcon}
-                alt="close"
-                onClick={() => setDateOpen(false)}
-              />
-            </ModalHead>
-
-            <WheelWrap>
-              <WheelCol ref={dateRef} onScroll={(e) => snap(e, setIdxDate)}>
-                <WheelSpacer />
-                {dateList.map((d, i) => (
-                  <WheelItem key={i} $active={i === idxDate}>
-                    {fmtDateKo(d)}
-                  </WheelItem>
-                ))}
-                <WheelSpacer />
-                <WheelSpacer />
-              </WheelCol>
-
-              <WheelCol
-                ref={meriRef}
-                onScroll={(e) => {
-                  if (isInitScroll) return;
-                  const i = Math.round(e.currentTarget.scrollTop / ROW_H);
-                  setMeri(i === 2 ? '오후' : '오전');
-                }}
-              >
-                <WheelSpacer />
-                <WheelSpacer />
-                <WheelItem $active={meri === '오전'}>오전</WheelItem>
-                <WheelItem $active={meri === '오후'}>오후</WheelItem>
-                <WheelSpacer />
-                <WheelSpacer />
-              </WheelCol>
-
-              <WheelCol
-                ref={hourRef}
-                onScroll={(e) => {
-                  if (isInitScroll) return;
-                  const i = Math.round(e.currentTarget.scrollTop / ROW_H);
-                  setHour12(i + 1);
-                }}
-              >
-                <WheelSpacer />
-                {hours12.map((h) => (
-                  <WheelItem key={h} $active={h === hour12}>
-                    {h}
-                  </WheelItem>
-                ))}
-                <WheelSpacer />
-                <WheelSpacer />
-              </WheelCol>
-
-              <WheelCol
-                ref={minRef}
-                onScroll={(e) => {
-                  if (isInitScroll) return;
-                  const i = Math.round(e.currentTarget.scrollTop / ROW_H);
-                  setMinute(i);
-                }}
-              >
-                <WheelSpacer />
-                {minutes.map((m) => (
-                  <WheelItem key={m} $active={m === minute}>
-                    {two(m)}
-                  </WheelItem>
-                ))}
-                <WheelSpacer />
-                <WheelSpacer />
-              </WheelCol>
-
-              <WheelCenter />
-            </WheelWrap>
-
-            <Apply onClick={applyDate}>완료</Apply>
-          </DateModal>
         </Dim>
       )}
     </Wrap>
