@@ -111,7 +111,6 @@ const categoryImages: Record<string, string> = {
   고정비: fixedCostImage,
 };
 
-// ---- 레거시 필드(routineImageUrl) 호환 ----
 type RoutineItemWithLegacyImage = RoutineListItem & {
   routineImageUrl?: string;
 };
@@ -269,7 +268,6 @@ const Money = () => {
     }
   }, [location.state]);
 
-  // 일일 삭제
   const deleteEntry = async (id: number) => {
     try {
       const res = await callDailyDeleteMutation(id);
@@ -282,7 +280,6 @@ const Money = () => {
     }
   };
 
-  // 고정비 삭제
   const { mutate: deleteFixedCostMutate, isPending: isDeletingFixed } =
     useFixedCostDeleteMutation();
 
@@ -303,9 +300,19 @@ const Money = () => {
     });
   };
 
-  // ===== 게이지 값(두 번째 스샷처럼) : API 값 기준 =====
   const totalBudgetAmt = data?.result?.totalBudget ?? 0;
-  const usedAmt = totalData?.result?.totalConsumptionAmount ?? 0;
+
+  const variableUsedAmt = totalData?.result?.totalConsumptionAmount ?? 0;
+
+  const fixedUsedAmt =
+    fixedListData?.pages?.reduce((sum, page) => {
+      const list = page?.result?.fixedConsumptions ?? [];
+      const pageSum = list.reduce((s, it) => s + (it?.amount ?? 0), 0);
+      return sum + pageSum;
+    }, 0) ?? 0;
+
+  const usedAmt = variableUsedAmt + fixedUsedAmt;
+
   const fillPercent = totalBudgetAmt
     ? Math.min((usedAmt / totalBudgetAmt) * 100, 100)
     : 0;
@@ -336,7 +343,6 @@ const Money = () => {
     startYRef.current = 0;
   };
 
-  // ===== 소비 루틴 목록 =====
   const {
     data: routinesPages,
     fetchNextPage: fetchNextRoutines,
@@ -777,7 +783,6 @@ const Money = () => {
                         <RoutineContent style={{ overflow: 'visible' }}>
                           <DateLine>{dateStr}</DateLine>
 
-                          {/* 제목 잘림 방지 */}
                           <TitleRow
                             style={{
                               overflow: 'visible',
