@@ -24,7 +24,7 @@ function Notify() {
   );
 
   return (
-    <div className={`pageContainer ${S.Container}`}>
+    <div className={`pageContainer ${S.Container} !pt-[8.4rem]`}>
       <Header title="알림" />
       {isNotificationStale(notifications) && (
         <div className={S.NoNewNotice}>새로운 알림이 없어요.</div>

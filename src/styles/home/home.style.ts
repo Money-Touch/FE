@@ -1,6 +1,8 @@
 // home.tsx
-export const Container = 'relative pt-[2.4rem] pb-[4rem] bg-[var(--color-B2)]';
-export const Header = 'flex items-center justify-between h-[6rem]';
+export const Container =
+  'flex flex-col h-screen bg-[var(--color-B2)] pb-[4rem] relative';
+export const Header =
+  'w-full max-w-[425px] top-0 fixed flex items-center justify-between h-[6rem] pt-[2.4rem] z-[50]';
 export const LogoImg = 'w-[3.6rem] h-[3.6rem] ml-[1.7rem]';
 export const AlarmWrapper = 'relative w-[2.4rem] h-[2.4rem] mr-[2.4rem]';
 export const AlarmImg =

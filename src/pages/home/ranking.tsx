@@ -28,8 +28,13 @@ const Ranking = () => {
   const podiumImages = [ranking2, ranking1, ranking3];
 
   return (
-    <div className={`pageContainer ${S.Container}`}>
-      <Header title="똑똑 소비 왕 랭킹" />
+    <div
+      className={`pageContainer ${S.Container} !pt-[11rem] !overflow-y-auto`}
+    >
+      <Header
+        title="똑똑 소비 왕 랭킹"
+        bgColor="bg-[#e0fadd] backdrop-blur-sm"
+      />
 
       <MyRankInfo user={myRank} />
 

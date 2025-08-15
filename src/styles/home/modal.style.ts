@@ -1,6 +1,6 @@
 // home
 export const ModalBackdrop =
-  'absolute top-0 left-0 w-full h-full bg-[#11111199] flex items-center justify-center z-[999]';
+  'fixed top-0 left-0 w-screen h-screen bg-[#11111199] flex items-center justify-center z-[999]';
 export const ModalBox =
   'absolute bg-white pt-[1.9rem] pb-[1.9rem] px-[1.6rem] rounded-[1.5rem] w-[14.8rem] min-h-[13.8rem] overflow-y-auto top-[52.1rem] left-[20.9rem]';
 export const ModalList = 'w-[11.6rem] h-[1.6rem]';
