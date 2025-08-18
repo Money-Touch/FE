@@ -93,7 +93,7 @@ function record() {
       {isLoading && null}
       {error && null}
       {!isLoading && !error && (
-        <div className={`pageContainer ${S.Container} !pt-[8.4rem] `}>
+        <div className={`pageContainer ${S.Container} !pt-[7rem] `}>
           <Header title="소비 기록" />
           <CategorySection
             selectedCategory={formData.categoryName}

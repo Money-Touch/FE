@@ -29,7 +29,7 @@ const Ranking = () => {
 
   return (
     <div
-      className={`pageContainer ${S.Container} !pt-[11rem] !overflow-y-auto`}
+      className={`pageContainer ${S.Container} !pt-[8.6rem] !overflow-y-auto`}
     >
       <Header
         title="똑똑 소비 왕 랭킹"
