@@ -15,6 +15,8 @@ const Feed: React.FC = () => {
   const [searchResults, setSearchResults] = useState<FeedItem[]>([]);
   const [isSearchMode, setIsSearchMode] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const preSearchScrollY = useRef<number>(0);
+  const [resetToken, setResetToken] = useState(0);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useFeedPosts(sortBy);
@@ -54,16 +56,37 @@ const Feed: React.FC = () => {
     };
   }, [handleObserver, sortBy]);
 
+  const handleSearchStart = (keyword: string) => {
+    preSearchScrollY.current = window.scrollY;
+    setIsSearchMode(true);
+    setIsDropdownOpen(false);
+    console.log('Search: ', keyword);
+  };
+
   const handleSearchResults = (results: FeedItem[]) => {
     setSearchResults(results);
-    setIsSearchMode(true);
+  };
+
+  const handleBackFromSearch = () => {
+    setIsSearchMode(false);
+    setSearchResults([]);
+    setResetToken((t) => t + 1);
+    requestAnimationFrame(() => {
+      window.scrollTo(0, preSearchScrollY.current || 0);
+    });
   };
 
   const displayPosts = isSearchMode ? searchResults : allPosts;
 
   return (
     <div className={S.Container}>
-      <SearchBox onSearchResults={handleSearchResults} />
+      <SearchBox
+        onSearchStart={handleSearchStart}
+        onSearchResults={handleSearchResults}
+        isSearchMode={isSearchMode}
+        onBack={handleBackFromSearch}
+        resetToken={resetToken}
+      />
 
       {!isSearchMode && (
         <SortDropdown

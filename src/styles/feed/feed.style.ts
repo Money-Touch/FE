@@ -1,7 +1,8 @@
 export const Container =
   '!h-[calc(100vh-13rem)] !mb-[13rem] px-[2.4rem]  !overflow-y-auto';
 
-export const SearchContainer = 'w-full h-[6rem] rounded-[0.5rem]';
+export const SearchContainer =
+  'flex w-full h-[6rem] rounded-[0.5rem] mt-[2.4rem]';
 
 export const SearchInputWrapper =
   'w-full h-[4.5rem] border border-[var(--color-G7)] rounded-[0.5rem] my-[0.8rem] mx-auto flex items-center';
@@ -87,3 +88,5 @@ export const DefaultProfile =
 
 export const DefaultPostImage =
   'absolute w-full h-full bg-[var(--color-G6)] rounded-[1rem]';
+
+export const SearchBackButton = 'mr-[2rem] flex items-center justify-center';
