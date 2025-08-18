@@ -30,71 +30,7 @@ import {
   useMyRoutinesQuery,
   type RoutineItem as RoutineListItem,
 } from '../../hooks/money/routine/useMyRoutinesQuery';
-
-import {
-  Container,
-  MainContainer,
-  TopContainer,
-  GreetingCard,
-  GreetText,
-  MiniCard,
-  MonthRow,
-  ArrowBtn,
-  MonthText,
-  TotalRow,
-  TotalSpent,
-  EditBtn,
-  BudgetCardWrapper,
-  Summary,
-  SummaryP,
-  BarWrapper,
-  Bar,
-  Fill,
-  Below,
-  TabMenu,
-  TabItemMenu,
-  TabItem,
-  ContentArea,
-  ButtonContainer,
-  PlusBtn,
-  DeleteToggleBtn,
-  Section,
-  Section2,
-  DateRow,
-  ItemRow,
-  ItemRowLeft,
-  ItemRowRight,
-  DeleteBtn,
-  Dot,
-  EmptyBox,
-  EmptyCircle,
-  EmptyText,
-  RoutineCardList,
-  RoutineWideCard,
-  PreviewBox,
-  RoutineContent,
-  DateLine,
-  TitleRow,
-  ArrowIcon,
-  TagsRow,
-  UserRow,
-  Avatar,
-  CalendarWrap,
-  WeekRow,
-  WeekCell,
-  DayGrid,
-  WeekDivider,
-  DayCell,
-  DayNumButton,
-  SpendPill,
-  CalListSection,
-  CalDateTitle,
-  CalItemRow,
-  CalDot,
-  EmptyBoxSmall,
-  SheetHandle,
-  FloatingPlus,
-} from '../../styles/budget/money.styles';
+import * as A from '../../styles/budget/money.styles';
 
 const TAB_LIST = ['일일', '달력', '고정비', '소비 루틴'] as const;
 const WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'] as const;
@@ -373,50 +309,50 @@ const Money = () => {
   }, [activeTab, hasNextRoutines, isFetchingNextRoutines, fetchNextRoutines]);
 
   return (
-    <Container>
+    <A.Container>
       <Header title="가계부" bgColor="bg-[var(--color-B1)]" />
 
-      <MainContainer>
-        <TopContainer>
-          <GreetingCard>
-            <GreetText>
+      <A.MainContainer>
+        <A.TopContainer>
+          <A.GreetingCard>
+            <A.GreetText>
               {nickname}
               <span>
                 님!
                 <br />
                 소비 내역을 작성해 주세요.
               </span>
-            </GreetText>
+            </A.GreetText>
 
-            <MiniCard src={basicImage} alt="일러스트" />
-          </GreetingCard>
+            <A.MiniCard src={basicImage} alt="일러스트" />
+          </A.GreetingCard>
 
-          <MonthRow>
-            <ArrowBtn
+          <A.MonthRow>
+            <A.ArrowBtn
               src={LeftArrowActive}
               alt="left"
               onClick={prevMonth}
               disabled={false}
             />
-            <MonthText>{`${calMonth + 1}월`}</MonthText>
-            <ArrowBtn
+            <A.MonthText>{`${calMonth + 1}월`}</A.MonthText>
+            <A.ArrowBtn
               style={{ transform: 'rotate(180deg)' }}
               src={LeftArrowActive}
               alt="right"
               onClick={nextMonth}
               disabled={isCurrentMonth}
             />
-          </MonthRow>
+          </A.MonthRow>
 
-          <TotalRow>
-            <TotalSpent>
+          <A.TotalRow>
+            <A.TotalSpent>
               {comma(usedAmt)}원
               <span>
                 <span className="slash"> / </span>
                 {comma(totalBudgetAmt)}원
               </span>
-            </TotalSpent>
-            <EditBtn
+            </A.TotalSpent>
+            <A.EditBtn
               src={pencilIcon}
               alt="edit"
               onClick={() =>
@@ -429,31 +365,31 @@ const Money = () => {
                 })
               }
             />
-          </TotalRow>
+          </A.TotalRow>
 
-          <BudgetCardWrapper>
-            <Summary>
+          <A.BudgetCardWrapper>
+            <A.Summary>
               {usedAmt > 0 ? (
-                <SummaryP>
+                <A.SummaryP>
                   한 달 예산 {comma(totalBudgetAmt)}원 중{' '}
                   <span>{comma(usedAmt)}원 </span>
                   사용했어요!
-                </SummaryP>
+                </A.SummaryP>
               ) : (
-                <SummaryP>한 달 예산을 등록해주세요!</SummaryP>
+                <A.SummaryP>한 달 예산을 등록해주세요!</A.SummaryP>
               )}
 
-              <BarWrapper>
-                <Bar>
-                  <Fill
+              <A.BarWrapper>
+                <A.Bar>
+                  <A.Fill
                     style={{
                       width: `${fillPercent}%`,
                       transition: 'width .4s ease',
                     }}
                   />
-                </Bar>
+                </A.Bar>
 
-                <Below $fillPercent={fillPercent}>
+                <A.Below $fillPercent={fillPercent}>
                   <span className="used-amount">
                     <img src={starIcon} alt="star" />
                     <span>{comma(usedAmt)}원</span>
@@ -467,31 +403,31 @@ const Money = () => {
                   >
                     {comma(totalBudgetAmt)}원
                   </span>
-                </Below>
-              </BarWrapper>
-            </Summary>
-          </BudgetCardWrapper>
-        </TopContainer>
+                </A.Below>
+              </A.BarWrapper>
+            </A.Summary>
+          </A.BudgetCardWrapper>
+        </A.TopContainer>
 
-        <TabMenu>
-          <TabItemMenu>
+        <A.TabMenu>
+          <A.TabItemMenu>
             {TAB_LIST.map((t) => (
-              <TabItem
+              <A.TabItem
                 key={t}
                 $active={activeTab === t}
                 onClick={() => setActiveTab(t)}
               >
                 {t}
-              </TabItem>
+              </A.TabItem>
             ))}
-          </TabItemMenu>
-        </TabMenu>
+          </A.TabItemMenu>
+        </A.TabMenu>
 
-        <ContentArea>
+        <A.ContentArea>
           {activeTab === '일일' && (
             <>
-              <ButtonContainer>
-                <PlusBtn
+              <A.ButtonContainer>
+                <A.PlusBtn
                   onClick={() => navigate('/add-day')}
                   src={plusIcon}
                   alt="plus"
@@ -499,14 +435,14 @@ const Money = () => {
 
                 {(monthlyData?.pages?.[0]?.result?.monthlyHistory?.length ??
                   0) > 0 && (
-                  <DeleteToggleBtn
+                  <A.DeleteToggleBtn
                     src={minusIcon}
                     alt="minus"
                     $active={deleteMode}
                     onClick={() => setDeleteMode((v) => !v)}
                   />
                 )}
-              </ButtonContainer>
+              </A.ButtonContainer>
 
               {(monthlyData?.pages?.[0]?.result?.monthlyHistory?.length ?? 0) >
               0 ? (
@@ -517,15 +453,15 @@ const Money = () => {
                     const wd = WEEKDAY[dateObj.getDay()];
 
                     return (
-                      <Section key={day.date}>
-                        <DateRow>
+                      <A.Section key={day.date}>
+                        <A.DateRow>
                           <span className="date">{`${dayNum} ${wd}`}</span>
-                        </DateRow>
+                        </A.DateRow>
 
                         {day.items.map((item) => (
-                          <ItemRow key={item.consumptionRecordId}>
-                            <ItemRowLeft>
-                              <Dot $hide={deleteMode}>
+                          <A.ItemRow key={item.consumptionRecordId}>
+                            <A.ItemRowLeft>
+                              <A.Dot $hide={deleteMode}>
                                 {item.categoryName === '[고정비]' ||
                                 item.categoryName === '고정비' ? (
                                   <img src={fixedCostImage} alt="고정비" />
@@ -537,17 +473,17 @@ const Money = () => {
                                 ) : (
                                   item.categoryName
                                 )}
-                              </Dot>
+                              </A.Dot>
                               <span className="memo">{item.content}</span>
-                            </ItemRowLeft>
+                            </A.ItemRowLeft>
 
-                            <ItemRowRight>
+                            <A.ItemRowRight>
                               <span className="amount">
                                 {comma(item.amount)}원
                               </span>
 
                               {deleteMode && (
-                                <DeleteBtn
+                                <A.DeleteBtn
                                   src={closeIcon}
                                   alt="delete"
                                   onClick={() =>
@@ -555,18 +491,18 @@ const Money = () => {
                                   }
                                 />
                               )}
-                            </ItemRowRight>
-                          </ItemRow>
+                            </A.ItemRowRight>
+                          </A.ItemRow>
                         ))}
-                      </Section>
+                      </A.Section>
                     );
                   }),
                 )
               ) : (
-                <EmptyBox>
-                  <EmptyCircle src={emptyImage} alt="비어 있음" />
-                  <EmptyText>등록된 소비 내역이 없어요.</EmptyText>
-                </EmptyBox>
+                <A.EmptyBox>
+                  <A.EmptyCircle src={emptyImage} alt="비어 있음" />
+                  <A.EmptyText>등록된 소비 내역이 없어요.</A.EmptyText>
+                </A.EmptyBox>
               )}
 
               {hasNextPage && <div ref={loadMoreRef} style={{ height: 40 }} />}
@@ -575,16 +511,16 @@ const Money = () => {
 
           {activeTab === '달력' && (
             <>
-              <CalendarWrap>
-                <WeekRow>
+              <A.CalendarWrap>
+                <A.WeekRow>
                   {WEEKDAY.map((w) => (
-                    <WeekCell key={w}>{w}</WeekCell>
+                    <A.WeekCell key={w}>{w}</A.WeekCell>
                   ))}
-                </WeekRow>
+                </A.WeekRow>
 
-                <DayGrid>
+                <A.DayGrid>
                   {calendarCells.map((d, i) => {
-                    if (!d) return <DayCell key={`empty-${i}`} />;
+                    if (!d) return <A.DayCell key={`empty-${i}`} />;
 
                     const dateStr = `${calYear}-${String(calMonth + 1).padStart(
                       2,
@@ -595,30 +531,30 @@ const Money = () => {
                     const isSelected = selectedDate === dateStr;
 
                     return (
-                      <DayCell key={dateStr}>
-                        <DayNumButton
+                      <A.DayCell key={dateStr}>
+                        <A.DayNumButton
                           $selected={isSelected}
                           onClick={() => toggleDate(dateStr)}
                         >
                           {d}
-                        </DayNumButton>
+                        </A.DayNumButton>
 
                         {daySpent !== 0 && (
-                          <SpendPill $minus={true}>
+                          <A.SpendPill $minus={true}>
                             -{comma(Math.abs(daySpent))}
-                          </SpendPill>
+                          </A.SpendPill>
                         )}
 
                         {(i + 1) % 7 === 0 &&
-                          i + 1 !== calendarCells.length && <WeekDivider />}
-                      </DayCell>
+                          i + 1 !== calendarCells.length && <A.WeekDivider />}
+                      </A.DayCell>
                     );
                   })}
-                </DayGrid>
-              </CalendarWrap>
+                </A.DayGrid>
+              </A.CalendarWrap>
 
               {selectedDate && (
-                <CalListSection
+                <A.CalListSection
                   style={{
                     transform: `translateY(${dragOffset}px)`,
                     transition: anim ? 'transform 0.25s ease' : 'none',
@@ -627,17 +563,17 @@ const Money = () => {
                   onPointerMove={onDragMove}
                   onPointerUp={onDragEnd}
                 >
-                  <SheetHandle />
+                  <A.SheetHandle />
 
-                  <CalDateTitle>
+                  <A.CalDateTitle>
                     {new Date(selectedDate).getDate()}{' '}
                     {WEEKDAY[new Date(selectedDate).getDay()]}
-                  </CalDateTitle>
+                  </A.CalDateTitle>
 
                   {selectedList.length ? (
                     selectedList.map((item) => (
-                      <CalItemRow key={item.consumptionRecordId}>
-                        <CalDot>
+                      <A.CalItemRow key={item.consumptionRecordId}>
+                        <A.CalDot>
                           {item.categoryName === '[고정비]' ||
                           item.categoryName === '고정비' ? (
                             <img src={fixedCostImage} alt="고정비" />
@@ -649,60 +585,62 @@ const Money = () => {
                           ) : (
                             item.categoryName
                           )}
-                        </CalDot>
+                        </A.CalDot>
                         <span className="memo">{item.content}</span>
                         <span className="amount">{comma(item.amount)}원</span>
-                      </CalItemRow>
+                      </A.CalItemRow>
                     ))
                   ) : (
-                    <EmptyBoxSmall>해당 날짜에 기록이 없어요.</EmptyBoxSmall>
+                    <A.EmptyBoxSmall>
+                      해당 날짜에 기록이 없어요.
+                    </A.EmptyBoxSmall>
                   )}
 
-                  <FloatingPlus onClick={() => navigate('/record')}>
+                  <A.FloatingPlus onClick={() => navigate('/record')}>
                     <img src={plusCircle} alt="add" />
-                  </FloatingPlus>
-                </CalListSection>
+                  </A.FloatingPlus>
+                </A.CalListSection>
               )}
             </>
           )}
 
           {activeTab === '고정비' && (
             <>
-              <ButtonContainer>
-                <PlusBtn
+              <A.ButtonContainer>
+                <A.PlusBtn
                   onClick={() => navigate('/fixed-cost')}
                   src={plusIcon}
                   alt="plus"
                 />
 
                 {fixedItems.length > 0 && (
-                  <DeleteToggleBtn
+                  <A.DeleteToggleBtn
                     src={minusIcon}
                     alt="minus"
                     $active={fixedDel}
                     onClick={() => setFixedDel((v) => !v)}
                   />
                 )}
-              </ButtonContainer>
+              </A.ButtonContainer>
 
               {fixedItems.length ? (
-                <Section2>
+                <A.Section2>
                   {fixedItems.map((e) => (
-                    <ItemRow key={e.fixedConsumptionId}>
-                      <ItemRowLeft>
-                        <Dot>
+                    <A.ItemRow key={e.fixedConsumptionId}>
+                      <A.ItemRowLeft>
+                        <A.Dot>
                           <img src={fixedCostImage} alt="fixed cost" />
-                        </Dot>
+                        </A.Dot>
                         <span className="memo">
                           {e.memo || e.categoryName || ''}
                         </span>
-                      </ItemRowLeft>
+                      </A.ItemRowLeft>
 
-                      <ItemRowRight>
+                      <A.ItemRowRight>
                         <span className="amount">{comma(e.amount)}원</span>
 
                         {fixedDel && (
-                          <DeleteBtn
+                          <A.DeleteBtn
                             src={closeIcon}
                             alt="close"
                             onClick={() => deleteFixed(e.fixedConsumptionId)}
@@ -712,27 +650,27 @@ const Money = () => {
                             }}
                           />
                         )}
-                      </ItemRowRight>
-                    </ItemRow>
+                      </A.ItemRowRight>
+                    </A.ItemRow>
                   ))}
 
                   {hasNextFixed && (
                     <div ref={fixedLoadMoreRef} style={{ height: 40 }} />
                   )}
-                </Section2>
+                </A.Section2>
               ) : (
-                <EmptyBox>
-                  <EmptyCircle src={emptyImage} alt="비어 있음" />
-                  <EmptyText>등록된 고정비가 없어요.</EmptyText>
-                </EmptyBox>
+                <A.EmptyBox>
+                  <A.EmptyCircle src={emptyImage} alt="비어 있음" />
+                  <A.EmptyText>등록된 고정비가 없어요.</A.EmptyText>
+                </A.EmptyBox>
               )}
             </>
           )}
 
           {activeTab === '소비 루틴' && (
             <>
-              <ButtonContainer>
-                <PlusBtn
+              <A.ButtonContainer>
+                <A.PlusBtn
                   onClick={() =>
                     navigate('/money-routine', {
                       state: { budgetId: totalData?.result?.budgetId ?? 0 },
@@ -741,10 +679,10 @@ const Money = () => {
                   src={plusIcon}
                   alt="plus"
                 />
-              </ButtonContainer>
+              </A.ButtonContainer>
 
               {routines.length ? (
-                <RoutineCardList>
+                <A.RoutineCardList>
                   {routines.map((r) => {
                     const date = new Date(r.createDate);
                     const dateStr = `${date.getFullYear()} • ${String(
@@ -757,7 +695,7 @@ const Money = () => {
                     const imgUrl = resolveRoutineImageUrl(r);
 
                     return (
-                      <RoutineWideCard
+                      <A.RoutineWideCard
                         key={r.routineId}
                         onClick={() =>
                           navigate(`/myroutine/${r.routineId}`, {
@@ -766,7 +704,7 @@ const Money = () => {
                         }
                         style={{ overflow: 'visible' }}
                       >
-                        <PreviewBox
+                        <A.PreviewBox
                           style={
                             imgUrl
                               ? {
@@ -780,10 +718,10 @@ const Money = () => {
                           }
                         />
 
-                        <RoutineContent style={{ overflow: 'visible' }}>
-                          <DateLine>{dateStr}</DateLine>
+                        <A.RoutineContent style={{ overflow: 'visible' }}>
+                          <A.DateLine>{dateStr}</A.DateLine>
 
-                          <TitleRow
+                          <A.TitleRow
                             style={{
                               overflow: 'visible',
                               alignItems: 'flex-start',
@@ -801,10 +739,10 @@ const Money = () => {
                             >
                               {r.routineName}
                             </h3>
-                            <ArrowIcon src={arrowIconImg} alt="arrow" />
-                          </TitleRow>
+                            <A.ArrowIcon src={arrowIconImg} alt="arrow" />
+                          </A.TitleRow>
 
-                          <TagsRow>
+                          <A.TagsRow>
                             {(r.hashtags ?? []).map((t) => {
                               const tag = t.startsWith('#') ? t : `#${t}`;
                               return (
@@ -813,32 +751,32 @@ const Money = () => {
                                 </span>
                               );
                             })}
-                          </TagsRow>
+                          </A.TagsRow>
 
-                          <UserRow>
-                            <Avatar />
+                          <A.UserRow>
+                            <A.Avatar />
                             <span className="nick">{r.nickname || '라인'}</span>
-                          </UserRow>
-                        </RoutineContent>
-                      </RoutineWideCard>
+                          </A.UserRow>
+                        </A.RoutineContent>
+                      </A.RoutineWideCard>
                     );
                   })}
 
                   {hasNextRoutines && (
                     <div ref={routineLoadMoreRef} style={{ height: 40 }} />
                   )}
-                </RoutineCardList>
+                </A.RoutineCardList>
               ) : (
-                <EmptyBox>
-                  <EmptyCircle src={emptyImage} alt="비어 있음" />
-                  <EmptyText>등록된 소비 루틴이 없어요.</EmptyText>
-                </EmptyBox>
+                <A.EmptyBox>
+                  <A.EmptyCircle src={emptyImage} alt="비어 있음" />
+                  <A.EmptyText>등록된 소비 루틴이 없어요.</A.EmptyText>
+                </A.EmptyBox>
               )}
             </>
           )}
-        </ContentArea>
-      </MainContainer>
-    </Container>
+        </A.ContentArea>
+      </A.MainContainer>
+    </A.Container>
   );
 };
 
