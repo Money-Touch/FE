@@ -21,7 +21,7 @@ function RoutineDetail() {
 
   return (
     <div
-      className={`pageContainer ${S.Container} !pt-[11rem] !overflow-y-auto !overflow-x-hidden`}
+      className={`pageContainer ${S.Container} !pt-[8.6rem] !overflow-y-auto !overflow-x-hidden`}
     >
       <Header title={routine?.routineName} />
       <BudgetList

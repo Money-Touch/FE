@@ -48,7 +48,7 @@ function Routine() {
 
   return (
     <div
-      className={`pageContainer ${S.Container} !pt-[8.4rem] !overflow-y-auto`}
+      className={`pageContainer ${S.Container} !pt-[6.4rem] !overflow-y-auto`}
     >
       <Header title="소비 루틴" />
       <div className={S.SearchWrapper}>

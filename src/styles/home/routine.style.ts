@@ -1,5 +1,5 @@
 // routine.tsx
-export const Container = 'flex px-[2.4rem]';
+export const Container = 'flex px-[2.4rem] pb-[1.5rem]';
 export const SearchWrapper =
   'w-full h-[4.5rem] border border-[var(--color-G7)] rounded-[0.5rem] flex justify-between items-center px-[1.5rem] py-[1.2rem] bg-white';
 export const SearchInput =

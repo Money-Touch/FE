@@ -1,7 +1,7 @@
 // notify.tsx
 export const Container = 'flex px-[2.4rem] overflow-y-auto overflow-x-hidden';
 export const NoNewNotice =
-  'self-start h-[2.2rem]font-medium text-[1.4rem] leading-[2.2rem] text-[var(--color-G2)]';
+  'self-start h-[2.2rem] font-medium text-[1.4rem] leading-[2.2rem] text-[var(--color-G2)]';
 
 // notificationList.tsx
 export const List = (isRead: boolean) =>
