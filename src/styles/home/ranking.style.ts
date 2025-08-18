@@ -28,9 +28,9 @@ export const Podium = 'w-[7rem] h-auto mt-[0.3rem]';
 
 // otherUser.tsx
 export const OtherListWrapper =
-  'w-[calc(100%+4.8rem)] h-[41.8rem] rounded-t-[1.5rem] bg-[var(--color-B1)] shadow-[0_0_1rem_0_#0000000d] box-border px-[2.4rem]';
+  'w-[calc(100%+4.8rem)] h-full rounded-t-[1.5rem] bg-[var(--color-B1)] shadow-[0_0_1rem_0_#0000000d] box-border px-[2.4rem]';
 export const OtherListBox =
-  'w-full h-[31.4rem] mt-[2.8rem] gap-[2.2rem] box-border';
+  'w-full h-[31.4rem] mt-[2.8rem] mb-[5.2rem] gap-[2.2rem] box-border';
 export const OtherUser =
   'flex items-center justify-between h-[2.6rem] leading-[2.2rem] mb-[2.2rem] text-[var(--color-G1)]';
 export const RankNumber = 'w-[0.9rem] font-medium text-[1.4rem]';
