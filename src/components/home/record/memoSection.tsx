@@ -18,7 +18,7 @@ const MemoSection = ({
 }: Props) => {
   return (
     <div className={S.MemoSection}>
-      <Title>메모</Title>
+      <Title showStar={isDisabled}>메모</Title>
       <textarea
         value={value}
         onChange={onChange}

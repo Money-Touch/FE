@@ -11,7 +11,7 @@ interface Props {
 const ImageSection = ({ imageUrl, isDisabled, onChange }: Props) => {
   return (
     <div className={S.ImageSection}>
-      <Title>사진</Title>
+      <Title showStar={isDisabled}>사진</Title>
       <div className={S.ImageInputWrapper(isDisabled)}>
         <label htmlFor="imageUpload" className={S.ImageLabel}>
           {imageUrl ? (

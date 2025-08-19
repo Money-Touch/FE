@@ -3,13 +3,14 @@ import star from '../../../assets/images/home/record/star.png';
 
 interface Props {
   children: React.ReactNode;
+  showStar?: boolean;
 }
 
-const Title = ({ children }: Props) => {
+const Title = ({ children, showStar = true }: Props) => {
   return (
     <div className={S.Title}>
       {children}
-      <img className={S.StarImg} src={star} alt="star" />
+      {showStar && <img className={S.StarImg} src={star} alt="star" />}
     </div>
   );
 };
