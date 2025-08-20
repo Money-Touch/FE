@@ -48,7 +48,7 @@ function RoutineDetail() {
           text="내 예산에 반영할까요?"
           onConfirm={() => {
             setShowModal(false);
-            navigate('/budget-register', { state: { budgetId: routineId } });
+            navigate('/budget-register', { state: { routineId: routineId } });
           }}
           onCancel={() => setShowModal(false)}
         />
