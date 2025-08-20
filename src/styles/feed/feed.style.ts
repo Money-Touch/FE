@@ -18,7 +18,7 @@ export const DropdownButton =
   'flex items-center gap-[0.8rem] px-[1.6rem] py-[0.2rem] rounded-[0.5rem] cursor-pointer';
 
 export const DropdownMenu =
-  'absolute top-full w-[7rem] bg-[var(--color-G8)] mx-[1rem] px-[1.6rem] rounded-[0.5rem] z-10 text-[var(--color-G4)]';
+  'absolute top-full w-[7rem] bg-[var(--color-G8)] mx-[1rem] px-[1.6rem] rounded-[0.5rem] z-10 text-[1.2rem] text-[var(--color-G4)]';
 
 export const DropdownItem = (isActive: boolean) => `
   w-full py-[0.4rem] text-center cursor-pointer flex justify-center items-center

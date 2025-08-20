@@ -13,22 +13,37 @@ interface PageParam {
   cursorViewCount: number | null;
 }
 
+type Page = FeedListResultDTO & {
+  hasNext: boolean;
+  nextCursorId: number | null;
+  nextCursorViewCount: number | null;
+};
+
 const fetchFeedPosts = async (
   sortType: SortType,
   pageParam: PageParam,
-): Promise<FeedListResultDTO> => {
+): Promise<Page> => {
   const token = localStorage.getItem('accessToken');
   if (!token) throw new Error('No access token');
 
   const params: FeedRequestParams = {
     sortType,
-    ...(pageParam.cursorId !== null ? { cursorId: pageParam.cursorId } : {}),
-    ...(sortType === 'POPULAR' && pageParam.cursorViewCount !== null
-      ? { cursorViewCount: pageParam.cursorViewCount }
+    ...(sortType === 'RECENT'
+      ? pageParam.cursorId !== null
+        ? { cursorId: pageParam.cursorId }
+        : {}
+      : {}),
+    ...(sortType === 'POPULAR'
+      ? pageParam.cursorId !== null && pageParam.cursorViewCount !== null
+        ? {
+            cursorId: pageParam.cursorId,
+            cursorViewCount: pageParam.cursorViewCount,
+          }
+        : {}
       : {}),
   };
 
-  const res = await API.get<ApiResponse<FeedListResultDTO>>('/api/feed/home', {
+  const res = await API.get<ApiResponse<Page>>('/api/feed/home', {
     params,
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -38,26 +53,36 @@ const fetchFeedPosts = async (
 
 export const useFeedPosts = (sortType: SortType) => {
   return useInfiniteQuery<
-    FeedListResultDTO,
+    Page,
     Error,
-    InfiniteData<FeedListResultDTO>,
+    InfiniteData<Page>,
     [string, SortType],
     PageParam
   >({
     queryKey: ['feed', sortType],
     initialPageParam: { cursorId: null, cursorViewCount: null },
-    queryFn: async ({ queryKey, pageParam }) => {
-      const [, sortTypeFromKey] = queryKey;
-      return fetchFeedPosts(sortTypeFromKey, pageParam);
-    },
-    getNextPageParam: (lastPage) =>
-      lastPage.hasNext
-        ? {
+    queryFn: ({ pageParam }) => fetchFeedPosts(sortType, pageParam),
+    getNextPageParam: (lastPage) => {
+      if (!lastPage.hasNext) return undefined;
+      if (sortType === 'RECENT') {
+        if (lastPage.nextCursorId != null) {
+          return { cursorId: lastPage.nextCursorId, cursorViewCount: null };
+        }
+        return undefined;
+      } else {
+        if (
+          lastPage.nextCursorId != null &&
+          lastPage.nextCursorViewCount != null
+        ) {
+          return {
             cursorId: lastPage.nextCursorId,
-            cursorViewCount: lastPage.nextCursorViewCount ?? null,
-          }
-        : undefined,
-    staleTime: 1000 * 60,
+            cursorViewCount: lastPage.nextCursorViewCount,
+          };
+        }
+        return undefined;
+      }
+    },
+    staleTime: 60_000,
     refetchOnWindowFocus: false,
   });
 };

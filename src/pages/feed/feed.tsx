@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
+import { useNavigationType } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { useFeedPosts } from '../../hooks/feed/useFeedPosts';
 import { SearchBox } from '../../components/feed/SearchBox';
 import { SortDropdown } from '../../components/feed/SortDropdown';
@@ -6,7 +8,6 @@ import PostItem from '../../components/feed/PostItem';
 import { SkeletonPost } from '../../components/feed/SkeletonPost';
 import NoResult from '../../assets/images/feed/NO_RESULT.png';
 import * as S from '../../styles/feed/feed.style';
-
 import type { SortType, FeedItem } from '../../types/feed/feed';
 
 const Feed: React.FC = () => {
@@ -17,6 +18,22 @@ const Feed: React.FC = () => {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const preSearchScrollY = useRef<number>(0);
   const [resetToken, setResetToken] = useState(0);
+  const navType = useNavigationType();
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (navType !== 'POP') {
+      const shouldClearCache =
+        window.location.href ===
+          window.location.origin + window.location.pathname ||
+        document.referrer === '';
+
+      if (shouldClearCache) {
+        queryClient.removeQueries({ queryKey: ['feed'], exact: false });
+      }
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [navType, queryClient]);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useFeedPosts(sortBy);
@@ -25,9 +42,15 @@ const Feed: React.FC = () => {
 
   const [showSkeleton, setShowSkeleton] = useState(true);
   useEffect(() => {
-    const timeout = setTimeout(() => setShowSkeleton(false), 1000);
-    return () => clearTimeout(timeout);
-  }, []);
+    if (data && !isLoading) {
+      const timeout = setTimeout(() => setShowSkeleton(false), 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [data, isLoading]);
+
+  useEffect(() => {
+    setShowSkeleton(true);
+  }, [sortBy]);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -36,22 +59,31 @@ const Feed: React.FC = () => {
         target.isIntersecting &&
         hasNextPage &&
         !isFetchingNextPage &&
-        !isSearchMode
+        !isSearchMode &&
+        !showSkeleton
       ) {
         fetchNextPage();
       }
     },
-    [fetchNextPage, hasNextPage, isFetchingNextPage, isSearchMode],
+    [
+      fetchNextPage,
+      hasNextPage,
+      isFetchingNextPage,
+      isSearchMode,
+      showSkeleton,
+    ],
   );
 
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
-      threshold: 1.0,
+      root: null,
+      rootMargin: '0px 0px 100px 0px',
+      threshold: 0,
     });
-    const current = observerRef.current;
-    if (current) observer.observe(current);
+    const el = observerRef.current;
+    if (el) observer.observe(el);
     return () => {
-      if (current) observer.unobserve(current);
+      if (el) observer.unobserve(el);
       observer.disconnect();
     };
   }, [handleObserver, sortBy]);
@@ -60,7 +92,7 @@ const Feed: React.FC = () => {
     preSearchScrollY.current = window.scrollY;
     setIsSearchMode(true);
     setIsDropdownOpen(false);
-    console.log('Search: ', keyword);
+    console.log('검색어: ', keyword);
   };
 
   const handleSearchResults = (results: FeedItem[]) => {
@@ -114,7 +146,7 @@ const Feed: React.FC = () => {
           )
         )}
 
-        <div ref={observerRef} />
+        <div ref={observerRef} style={{ height: 1 }} aria-hidden />
 
         {!showSkeleton && isFetchingNextPage && !isSearchMode && (
           <SkeletonPost />
