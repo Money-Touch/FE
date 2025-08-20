@@ -4,11 +4,10 @@ import Header from '../../components/header/header';
 import pencilIcon from '../../assets/images/budget/pencil.png';
 import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
+import { useCategoryQuery } from '../../hooks/money/addday/useCategoryQuery';
 import { useDailyMutation as createDailyConsumption } from '../../hooks/money/addday/useDailyMutation';
 
 import * as A from '../../styles/budget/addday.styles';
-
-const CATEGORIES = ['배달/외식', '교통', '패션/쇼핑', '카페', '기타'] as const;
 
 const comma = (v: string | number) =>
   String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -53,6 +52,12 @@ const AddDay = () => {
   const [rawAmt, setRawAmt] = useState('');
 
   const dateInputRef = useRef<HTMLInputElement>(null);
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+  const { data } = useCategoryQuery();
+
+  const categories = data?.result ?? [];
+
   const ensureDateStr = () => {
     if (!dateStr) setDateStr(toLocalDt(new Date()));
   };
@@ -67,11 +72,9 @@ const AddDay = () => {
     ensureDateStr();
     const el = dateInputRef.current as DateTimeInput | null;
     if (!el) return;
-    if (typeof el.showPicker === 'function') {
+
+    if (!isMobile && typeof el.showPicker === 'function') {
       el.showPicker();
-    } else {
-      el.focus();
-      el.click();
     }
   };
 
@@ -139,23 +142,23 @@ const AddDay = () => {
               카테고리 선택<span>*</span>
             </A.Label>
 
-            <div style={{ overflowX: 'auto', paddingBottom: 4 }}>
+            <div style={{ overflowX: 'auto', paddingBottom: '0.4rem' }}>
               <A.CatBox
                 style={{
                   display: 'flex',
                   flexWrap: 'nowrap',
-                  gap: '8px',
+                  gap: '0.8rem',
                   width: 'max-content',
                 }}
               >
-                {CATEGORIES.map((c) => (
+                {categories.map((c) => (
                   <A.CatBtn
-                    key={c}
-                    $on={c === category}
-                    onClick={() => setCategory(c)}
+                    key={c.categoryName}
+                    $on={c.categoryName === category}
+                    onClick={() => setCategory(c.categoryName)}
                     style={{ flex: '0 0 auto', whiteSpace: 'nowrap' }}
                   >
-                    {c}
+                    {c.categoryName}
                   </A.CatBtn>
                 ))}
               </A.CatBox>
@@ -214,7 +217,7 @@ const AddDay = () => {
                   width: '100%',
                   height: '100%',
                   opacity: 0,
-                  pointerEvents: 'none',
+                  pointerEvents: isMobile ? 'auto' : 'none',
                 }}
                 value={toNativeValue(dateStr)}
                 onChange={onNativePick}

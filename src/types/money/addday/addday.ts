@@ -11,3 +11,12 @@ export interface CreateConsumptionResponse {
   code: string;
   message: string;
 }
+
+export interface CategoryReponse {
+  isSuccess: boolean;
+  code: string;
+  message: string;
+  result: {
+    categoryName: string;
+  }[];
+}
