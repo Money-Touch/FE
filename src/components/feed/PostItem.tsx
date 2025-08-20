@@ -6,6 +6,7 @@ import DislikeIcon from '../../assets/images/feed/Dislike.png';
 import DislikeIconFill from '../../assets/images/feed/Dislike_Fill.png';
 import type { FeedItem } from '../../types/feed/feed';
 import { useReaction } from '../../hooks/feed/useReaction';
+import * as S from '../../styles/feed/feed.style';
 
 type Props = { post: FeedItem };
 
@@ -55,7 +56,11 @@ function ReactionBar({
         aria-pressed={mine === 'WISE'}
         className="flex items-center justify-center gap-[0.4rem] w-[5rem] h-[3.6rem] cursor-pointer disabled:cursor-not-allowed"
       >
-        <img src={mine === 'WISE' ? LikeIconFill : LikeIcon} alt="현명해요" />
+        <img
+          src={mine === 'WISE' ? LikeIconFill : LikeIcon}
+          alt="현명해요"
+          className={S.actionIcon}
+        />
         <span className="w-[2rem] text-center text-[1.4rem] text-[var(--color-G1)]">
           {w}
         </span>
@@ -70,6 +75,7 @@ function ReactionBar({
         <img
           src={mine === 'WASTE' ? DislikeIconFill : DislikeIcon}
           alt="낭비에요"
+          className={S.actionIcon}
         />
         <span className="w-[2rem] text-center text-[1.4rem] text-[var(--color-G1)]">
           {wa}

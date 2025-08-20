@@ -90,3 +90,5 @@ export const DefaultPostImage =
   'absolute w-full h-full bg-[var(--color-G6)] rounded-[1rem]';
 
 export const SearchBackButton = 'mr-[2rem] flex items-center justify-center';
+
+export const actionIcon = 'w-[2rem] h-[2rem]';
