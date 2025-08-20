@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/header/header';
 import LeftArrowActive from '../../assets/images/budget/leftArrowActive.png';
@@ -31,7 +31,6 @@ import {
   type RoutineItem as RoutineListItem,
 } from '../../hooks/money/routine/useMyRoutinesQuery';
 
-// Tailwind class names
 import * as A from '../../styles/budget/money.styles';
 
 const TAB_LIST = ['일일', '달력', '고정비', '소비 루틴'] as const;
@@ -57,6 +56,18 @@ function resolveRoutineImageUrl(item: RoutineListItem): string {
   return r.routineImgUrl ?? r.routineImageUrl ?? '';
 }
 
+type ApiResponse<T = unknown> = {
+  isSuccess: boolean;
+  message?: string;
+  result?: T;
+};
+
+function errorMessage(err: unknown, fallback = '삭제에 실패했습니다.'): string {
+  if (err instanceof Error) return err.message || fallback;
+  if (typeof err === 'string') return err || fallback;
+  return fallback;
+}
+
 const Money = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -64,6 +75,13 @@ const Money = () => {
   const [activeTab, setActiveTab] = useState<(typeof TAB_LIST)[number]>('일일');
   const [deleteMode, setDeleteMode] = useState(false);
   const [fixedDel, setFixedDel] = useState(false);
+
+  const [removedIds, setRemovedIds] = useState<Set<number>>(new Set());
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [removedFixedIds, setRemovedFixedIds] = useState<Set<number>>(
+    new Set(),
+  );
+  const [deletingFixedId, setDeletingFixedId] = useState<number | null>(null);
 
   const today = new Date();
   const [calYear, setCalYear] = useState(today.getFullYear());
@@ -140,8 +158,10 @@ const Money = () => {
     isFetchingNextPage: isFetchingNextFixed,
   } = useFixedCostQuery();
 
-  const fixedItems =
-    fixedListData?.pages.flatMap((p) => p.result.fixedConsumptions) ?? [];
+  const fixedItems = useMemo(
+    () => fixedListData?.pages.flatMap((p) => p.result.fixedConsumptions) ?? [],
+    [fixedListData],
+  );
 
   const fixedLoadMoreRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -208,46 +228,94 @@ const Money = () => {
 
   const deleteEntry = async (id: number) => {
     try {
-      const res = await callDailyDeleteMutation(id);
-      if (res.isSuccess) {
-        alert('삭제 되었습니다.');
-        window.location.reload();
+      setDeletingId(id);
+      const res = (await callDailyDeleteMutation(id)) as ApiResponse<unknown>;
+      if (res?.isSuccess) {
+        setRemovedIds((prev) => {
+          const next = new Set(prev);
+          next.add(id);
+          return next;
+        });
+        return;
       }
-    } catch (err) {
+      alert(res?.message || '삭제에 실패했습니다.');
+    } catch (err: unknown) {
       console.error('삭제 실패', err);
+      alert(errorMessage(err));
+    } finally {
+      setDeletingId(null);
     }
   };
 
-  const { mutate: deleteFixedCostMutate, isPending: isDeletingFixed } =
-    useFixedCostDeleteMutation();
+  const { mutate: deleteFixedCostMutate } = useFixedCostDeleteMutation();
 
-  const deleteFixed = (id: number) => {
-    if (!window.confirm('해당 고정비를 삭제할까요?')) return;
-
-    deleteFixedCostMutate(id, {
-      onSuccess: (res) => {
-        if (res.isSuccess) {
-          alert('삭제되었습니다.');
-        } else {
-          alert(res.message || '삭제에 실패했습니다.');
-        }
-      },
-      onError: () => {
-        alert('삭제에 실패했습니다.');
-      },
-    });
+  const deleteFixed = async (id: number) => {
+    try {
+      setDeletingFixedId(id);
+      await new Promise<void>((resolve, reject) => {
+        deleteFixedCostMutate(id, {
+          onSuccess: (res: ApiResponse<unknown>) => {
+            if (res?.isSuccess) resolve();
+            else reject(new Error(res?.message || '삭제 실패'));
+          },
+          onError: (e: unknown) => reject(e),
+        });
+      });
+      setRemovedFixedIds((prev) => {
+        const next = new Set(prev);
+        next.add(id);
+        return next;
+      });
+    } catch (e: unknown) {
+      console.error(e);
+      alert(errorMessage(e));
+    } finally {
+      setDeletingFixedId(null);
+    }
   };
 
   const totalBudgetAmt = data?.result?.totalBudget ?? 0;
-  const variableUsedAmt = totalData?.result?.totalConsumptionAmount ?? 0;
 
-  const fixedUsedAmt =
+  // 서버가 알려준 변동/고정 합계
+  const serverVariableUsedAmt = totalData?.result?.totalConsumptionAmount ?? 0;
+  const serverFixedUsedAmt =
     fixedListData?.pages?.reduce((sum, page) => {
       const list = page?.result?.fixedConsumptions ?? [];
-      const pageSum = list.reduce((s, it) => s + (it?.amount ?? 0), 0);
+      const pageSum = list.reduce(
+        (s: number, it: { amount?: number }) => s + (it?.amount ?? 0),
+        0,
+      );
       return sum + pageSum;
     }, 0) ?? 0;
 
+  // 방금 삭제한 일일 항목들의 금액 합계
+  const removedDailySum = useMemo(() => {
+    if (!monthlyData?.pages?.length) return 0;
+    let sum = 0;
+    for (const p of monthlyData.pages) {
+      for (const day of p.result.monthlyHistory) {
+        for (const item of day.items) {
+          if (removedIds.has(item.consumptionRecordId)) {
+            sum += item.amount ?? 0;
+          }
+        }
+      }
+    }
+    return sum;
+  }, [monthlyData, removedIds]);
+
+  const removedFixedSum = useMemo(() => {
+    if (!fixedItems.length) return 0;
+    return fixedItems.reduce((acc, it) => {
+      return (
+        acc +
+        (removedFixedIds.has(it.fixedConsumptionId) ? (it.amount ?? 0) : 0)
+      );
+    }, 0);
+  }, [fixedItems, removedFixedIds]);
+
+  const variableUsedAmt = Math.max(0, serverVariableUsedAmt - removedDailySum);
+  const fixedUsedAmt = Math.max(0, serverFixedUsedAmt - removedFixedSum);
   const usedAmt = variableUsedAmt + fixedUsedAmt;
 
   const fillPercent = totalBudgetAmt
@@ -435,8 +503,7 @@ const Money = () => {
             </div>
           </div>
         </div>
-
-        {/* Tabs */}
+        -{' '}
         <nav className={A.TabMenu}>
           <div className={A.TabItemMenu}>
             {TAB_LIST.map((t) => {
@@ -454,7 +521,6 @@ const Money = () => {
             })}
           </div>
         </nav>
-
         <div className={A.ContentArea}>
           {activeTab === '일일' && (
             <>
@@ -485,6 +551,12 @@ const Money = () => {
                     const dayNum = dateObj.getDate();
                     const wd = WEEKDAY[dateObj.getDay()];
 
+                    const visibleItems = day.items.filter(
+                      (item) => !removedIds.has(item.consumptionRecordId),
+                    );
+
+                    if (visibleItems.length === 0) return null;
+
                     return (
                       <section key={day.date} className={A.Section}>
                         <div className={A.DateRow}>
@@ -493,7 +565,7 @@ const Money = () => {
                           >{`${dayNum} ${wd}`}</span>
                         </div>
 
-                        {day.items.map((item) => (
+                        {visibleItems.map((item) => (
                           <div
                             key={item.consumptionRecordId}
                             className={A.ItemRow}
@@ -532,6 +604,16 @@ const Money = () => {
                                   onClick={() =>
                                     deleteEntry(item.consumptionRecordId)
                                   }
+                                  style={{
+                                    opacity:
+                                      deletingId === item.consumptionRecordId
+                                        ? 0.4
+                                        : 1,
+                                    pointerEvents:
+                                      deletingId === item.consumptionRecordId
+                                        ? 'none'
+                                        : 'auto',
+                                  }}
                                 />
                               )}
                             </div>
@@ -624,30 +706,34 @@ const Money = () => {
                   </h3>
 
                   {selectedList.length ? (
-                    selectedList.map((item) => (
-                      <div
-                        className={A.CalItemRow}
-                        key={item.consumptionRecordId}
-                      >
-                        <span className={A.CalDot}>
-                          {item.categoryName === '[고정비]' ||
-                          item.categoryName === '고정비' ? (
-                            <img src={fixedCostImage} alt="고정비" />
-                          ) : categoryImages[item.categoryName] ? (
-                            <img
-                              src={categoryImages[item.categoryName]}
-                              alt={item.categoryName}
-                            />
-                          ) : (
-                            item.categoryName
-                          )}
-                        </span>
-                        <span className={A.CalMemo}>{item.content}</span>
-                        <span className={A.CalAmount}>
-                          {comma(item.amount)}원
-                        </span>
-                      </div>
-                    ))
+                    selectedList
+                      .filter(
+                        (item) => !removedIds.has(item.consumptionRecordId),
+                      )
+                      .map((item) => (
+                        <div
+                          className={A.CalItemRow}
+                          key={item.consumptionRecordId}
+                        >
+                          <span className={A.CalDot}>
+                            {item.categoryName === '[고정비]' ||
+                            item.categoryName === '고정비' ? (
+                              <img src={fixedCostImage} alt="고정비" />
+                            ) : categoryImages[item.categoryName] ? (
+                              <img
+                                src={categoryImages[item.categoryName]}
+                                alt={item.categoryName}
+                              />
+                            ) : (
+                              item.categoryName
+                            )}
+                          </span>
+                          <span className={A.CalMemo}>{item.content}</span>
+                          <span className={A.CalAmount}>
+                            {comma(item.amount)}원
+                          </span>
+                        </div>
+                      ))
                   ) : (
                     <div className={A.EmptyBoxSmall}>
                       해당 날짜에 기록이 없어요.
@@ -687,35 +773,43 @@ const Money = () => {
 
               {fixedItems.length ? (
                 <section className={A.Section2}>
-                  {fixedItems.map((e) => (
-                    <div key={e.fixedConsumptionId} className={A.ItemRow}>
-                      <div className={A.ItemRowLeft}>
-                        <span className={`${A.DotBase} flex`}>
-                          <img src={fixedCostImage} alt="fixed cost" />
-                        </span>
-                        <span className="memo">
-                          {e.memo || e.categoryName || ''}
-                        </span>
-                      </div>
+                  {fixedItems
+                    .filter((e) => !removedFixedIds.has(e.fixedConsumptionId))
+                    .map((e) => (
+                      <div key={e.fixedConsumptionId} className={A.ItemRow}>
+                        <div className={A.ItemRowLeft}>
+                          <span className={`${A.DotBase} flex`}>
+                            <img src={fixedCostImage} alt="fixed cost" />
+                          </span>
+                          <span className="memo">
+                            {e.memo || e.categoryName || ''}
+                          </span>
+                        </div>
 
-                      <div className={A.ItemRowRight}>
-                        <span className="amount">{comma(e.amount)}원</span>
+                        <div className={A.ItemRowRight}>
+                          <span className="amount">{comma(e.amount)}원</span>
 
-                        {fixedDel && (
-                          <img
-                            className={A.DeleteBtn}
-                            src={closeIcon}
-                            alt="close"
-                            onClick={() => deleteFixed(e.fixedConsumptionId)}
-                            style={{
-                              opacity: isDeletingFixed ? 0.6 : 1,
-                              pointerEvents: isDeletingFixed ? 'none' : 'auto',
-                            }}
-                          />
-                        )}
+                          {fixedDel && (
+                            <img
+                              className={A.DeleteBtn}
+                              src={closeIcon}
+                              alt="close"
+                              onClick={() => deleteFixed(e.fixedConsumptionId)}
+                              style={{
+                                opacity:
+                                  deletingFixedId === e.fixedConsumptionId
+                                    ? 0.4
+                                    : 1,
+                                pointerEvents:
+                                  deletingFixedId === e.fixedConsumptionId
+                                    ? 'none'
+                                    : 'auto',
+                              }}
+                            />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
 
                   {hasNextFixed && (
                     <div ref={fixedLoadMoreRef} style={{ height: 40 }} />
