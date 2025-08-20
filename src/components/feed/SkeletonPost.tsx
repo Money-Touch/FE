@@ -5,14 +5,10 @@ export const SkeletonPost: React.FC = () => {
   return (
     <div className={S.PostCard}>
       <div className={S.PostHeader}>
-        <div
-          className={`${S.SkeletonBox} rounded-full`}
-          style={{ width: '3rem', height: '3rem' }}
-        />
-        <div className="flex flex-col gap-2">
+        <div className={`${S.SkeletonBox} w-[3rem] h-[3rem] rounded-full`} />
+        <div className={S.skeletonBoxContainer}>
           <div
-            className={`${S.SkeletonBox} rounded-full`}
-            style={{ width: '12rem', height: '1.6rem' }}
+            className={`${S.SkeletonBox} w-[12rem] h-[1.6rem] rounded-full`}
           />
         </div>
       </div>
@@ -22,14 +18,8 @@ export const SkeletonPost: React.FC = () => {
       </div>
 
       <div className={S.PostActions}>
-        <div
-          className={`${S.SkeletonBox} rounded-full`}
-          style={{ width: '6.4rem', height: '3.2rem' }}
-        />
-        <div
-          className={`${S.SkeletonBox} rounded-full`}
-          style={{ width: '6.4rem', height: '3.2rem' }}
-        />
+        <div className={`${S.SkeletonBox} w-[6.4rem] h-[3rem] rounded-full`} />
+        <div className={`${S.SkeletonBox} w-[6.4rem] h-[3rem] rounded-full`} />
       </div>
     </div>
   );

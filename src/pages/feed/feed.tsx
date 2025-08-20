@@ -108,14 +108,8 @@ const Feed: React.FC = () => {
           !isLoading &&
           !isSearchMode && (
             <div className={S.NoResultContainer}>
-              <img
-                src={NoResult}
-                alt="게시글 없음"
-                className="w-[16rem] h-[16rem] object-contain"
-              />
-              <span className="text-[1.4rem] text-[var(--color-G4)]">
-                게시글이 없어요.
-              </span>
+              <img src={NoResult} alt="게시글 없음" className={S.noPostImg} />
+              <span className={S.noPostText}>게시글이 없어요.</span>
             </div>
           )
         )}
