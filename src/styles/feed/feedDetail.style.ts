@@ -79,3 +79,9 @@ export const replyInputFooter = 'ml-auto flex items-center gap-[0.8rem]';
 export const buttonGroup = 'flex items-center gap-[0.6rem]';
 
 export const footerMargin = '!mb-[13rem]';
+
+export const postNotFound = 'text-center p-10';
+
+export const commentId = '1.2rem';
+
+export const commentItemContainer = 'ml-[1.8rem]';

@@ -57,7 +57,7 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
   );
 
   return (
-    <div className="ml-[1.8rem]">
+    <div className={S.commentItemContainer}>
       <div className={S.commentItem}>
         <img src={ReplyIcon} alt="reply" className={S.replyIconContain} />
         <div className={S.commentMain}>
