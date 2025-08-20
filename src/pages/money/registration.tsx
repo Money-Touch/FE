@@ -77,6 +77,7 @@ const BudgetRegister = () => {
 
   useEffect(() => {
     if (!source) return;
+    // console.log(source);
 
     const {
       totalBudget,
@@ -98,7 +99,7 @@ const BudgetRegister = () => {
       routineCategoryBudgets?.map((c) => c.categoryName) ?? [];
     const routineAmounts = routineCategoryBudgets?.map((c) => c.amount) ?? [];
 
-    if (!localStorage.getItem('monthBudget')) {
+    if (!localStorage.getItem('monthBudget') || routineId) {
       localStorage.setItem('monthBudget', String(totalBudget));
       localStorage.setItem('categoryBudgets', JSON.stringify(defaultArr));
       localStorage.setItem('customCategories', JSON.stringify(customNames));
@@ -119,7 +120,7 @@ const BudgetRegister = () => {
       setRoutineCategories(routineNames);
       setRoutineCatBudget(routineAmounts);
     }
-  }, [source]);
+  }, [source, routineId]);
 
   useEffect(() => {
     if (!budgetId) {
