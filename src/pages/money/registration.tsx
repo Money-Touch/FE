@@ -8,8 +8,11 @@ import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
 import minusIcon from '../../assets/images/budget/minus.png';
 import { useBudgetMutation } from '../../hooks/money/registration/useBudgetsMutation';
+import { useRoutineMutation } from '../../hooks/money/registration/useRoutineMutation';
 import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
+import { useRoutineDetailQuery } from '../../hooks/money/registration/useRoutineDetailQuery';
 import * as R from '../../styles/budget/registration.styles';
+import type { RegistrationState } from '../../types/money/registration/registration';
 
 const CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
 
@@ -17,17 +20,40 @@ const BudgetRegister = () => {
   const navigate = useNavigate();
 
   const { state } = useLocation() as {
-    state?: { year?: number; month?: number; budgetId?: number };
+    state?: RegistrationState;
   };
-  const year = state?.year ?? new Date().getFullYear();
-  const month = state?.month ?? new Date().getMonth() + 1;
-  const budgetId = state?.budgetId;
 
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
+  const [budgetId, setBudgetId] = useState<number | null>(null);
+  const [routineId, setRoutineId] = useState<number | null>(null);
+
+  useEffect(() => {
+    const syncStateWithStorage = <T extends string | number>(
+      key: string,
+      value: T | undefined,
+      setter: (val: T) => void,
+      parser: (s: string) => T,
+    ) => {
+      if (value !== undefined && value !== null) {
+        localStorage.setItem(key, String(value));
+        setter(value);
+      } else {
+        const saved = localStorage.getItem(key);
+        if (saved) setter(parser(saved));
+      }
+    };
+
+    syncStateWithStorage('year', state?.year, setYear, Number);
+    syncStateWithStorage('month', state?.month, setMonth, Number);
+    syncStateWithStorage('budgetId', state?.budgetId, setBudgetId, Number);
+    syncStateWithStorage('routineId', state?.routineId, setRoutineId, Number);
+  }, [state?.year, state?.month, state?.budgetId, state?.routineId]);
+
+  const { data: budgetDetail } = useBudgetDetailQuery(budgetId!);
+  const { data: routineDetail } = useRoutineDetailQuery(routineId!);
   const budgetMutation = useBudgetMutation();
-  const { data: budgetDetail } = useBudgetDetailQuery(budgetId);
-  console.log(budgetId);
-  console.log(budgetDetail);
-  //
+  const routineMutation = useRoutineMutation();
 
   const [monthBudget, setMonthBudget] = useState(0);
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
@@ -44,31 +70,35 @@ const BudgetRegister = () => {
   const [raw, setRaw] = useState('');
   const [targetIdx, setTargetIdx] = useState<-1 | number>(-1);
   const [targetIsCustom, setTargetIsCustom] = useState(false);
+  const [targetIsRoutine, setTargetIsRoutine] = useState(false);
 
-  // 인서 추가
+  const source =
+    budgetDetail?.result ?? (!budgetId ? routineDetail?.result : null);
+
   useEffect(() => {
-    if (budgetDetail?.result) {
-      const {
-        totalBudget,
-        defaultCategoryBudgets,
-        customCategoryBudgets,
-        routineCategoryBudgets,
-      } = budgetDetail.result;
+    if (!source) return;
 
-      const defaultArr = CATEGORIES.map(
-        (name) =>
-          defaultCategoryBudgets.find((c) => c.categoryName === name)?.amount ??
-          0,
-      );
+    const {
+      totalBudget,
+      defaultCategoryBudgets = [],
+      customCategoryBudgets = [],
+      routineCategoryBudgets = [],
+    } = source;
 
-      const customNames =
-        customCategoryBudgets?.map((c) => c.categoryName) ?? [];
-      const customAmounts = customCategoryBudgets?.map((c) => c.amount) ?? [];
+    const defaultArr = CATEGORIES.map(
+      (name) =>
+        defaultCategoryBudgets.find((c) => c.categoryName === name)?.amount ??
+        0,
+    );
 
-      const routineNames =
-        routineCategoryBudgets?.map((c) => c.categoryName) ?? [];
-      const routineAmounts = routineCategoryBudgets?.map((c) => c.amount) ?? [];
+    const customNames = customCategoryBudgets?.map((c) => c.categoryName) ?? [];
+    const customAmounts = customCategoryBudgets?.map((c) => c.amount) ?? [];
 
+    const routineNames =
+      routineCategoryBudgets?.map((c) => c.categoryName) ?? [];
+    const routineAmounts = routineCategoryBudgets?.map((c) => c.amount) ?? [];
+
+    if (!localStorage.getItem('monthBudget')) {
       localStorage.setItem('monthBudget', String(totalBudget));
       localStorage.setItem('categoryBudgets', JSON.stringify(defaultArr));
       localStorage.setItem('customCategories', JSON.stringify(customNames));
@@ -89,7 +119,7 @@ const BudgetRegister = () => {
       setRoutineCategories(routineNames);
       setRoutineCatBudget(routineAmounts);
     }
-  }, [budgetDetail]);
+  }, [source]);
 
   useEffect(() => {
     if (!budgetId) {
@@ -138,9 +168,10 @@ const BudgetRegister = () => {
       k === 'back' ? prev.slice(0, -1) : (prev + k).replace(/^0+(?=\d)/, ''),
     );
 
-  const openModal = (idx: number, isCustom = false) => {
+  const openModal = (idx: number, isCustom = false, isRoutine = false) => {
     setTargetIdx(idx);
     setTargetIsCustom(isCustom);
+    setTargetIsRoutine(isRoutine);
     setModalOpen(true);
   };
 
@@ -151,32 +182,58 @@ const BudgetRegister = () => {
     if (targetIdx === -1) {
       setMonthBudget(n);
       localStorage.setItem('monthBudget', String(n));
-    } else if (!targetIsCustom) {
+    } else if (!targetIsCustom && !targetIsRoutine) {
       setCatBudget((prev) => {
         const next = [...prev];
         next[targetIdx] = n;
         localStorage.setItem('categoryBudgets', JSON.stringify(next));
         return next;
       });
-    } else {
+    } else if (targetIsCustom) {
       setMyCatBudget((prev) => {
         const next = [...prev];
         next[targetIdx] = n;
         localStorage.setItem('customCategoryBudgets', JSON.stringify(next));
         return next;
       });
+    } else if (targetIsRoutine) {
+      setRoutineCatBudget((prev) => {
+        const next = [...prev];
+        next[targetIdx] = n;
+        localStorage.setItem('routineCategoryBudgets', JSON.stringify(next));
+        return next;
+      });
     }
+
     setModalOpen(false);
     setRaw('');
   };
 
-  const deleteCategory = (idx: number) => {
-    setMyCategories((prev) => {
-      const next = prev.filter((_, i) => i !== idx);
-      localStorage.setItem('customCategories', JSON.stringify(next));
-      return next;
-    });
-    setMyCatBudget((prev) => prev.filter((_, i) => i !== idx));
+  const deleteCategory = (idx: number, type: 'custom' | 'routine') => {
+    if (type === 'custom') {
+      setMyCategories((prev) => {
+        const next = prev.filter((_, i) => i !== idx);
+        localStorage.setItem('customCategories', JSON.stringify(next));
+        return next;
+      });
+      setMyCatBudget((prev) => {
+        const next = prev.filter((_, i) => i !== idx);
+        localStorage.setItem('customCategoryBudgets', JSON.stringify(next));
+        return next;
+      });
+    }
+    if (type === 'routine') {
+      setRoutineCategories((prev) => {
+        const next = prev.filter((_, i) => i !== idx);
+        localStorage.setItem('routineCategories', JSON.stringify(next));
+        return next;
+      });
+      setRoutineCatBudget((prev) => {
+        const next = prev.filter((_, i) => i !== idx);
+        localStorage.setItem('routineCategoryBudgets', JSON.stringify(next));
+        return next;
+      });
+    }
   };
 
   const totalDefault = catBudget.reduce((a, b) => a + b, 0);
@@ -187,6 +244,7 @@ const BudgetRegister = () => {
     monthBudget === totalDefault + totalCustom + totalRoutine;
 
   const handleConfirm = () => {
+    // console.log('routineId', routineId);
     if (!canConfirm) return;
 
     const defaultCategoryBudgets = CATEGORIES.map((name, idx) => ({
@@ -201,38 +259,49 @@ const BudgetRegister = () => {
       categoryType: 'CUSTOM' as const,
     }));
 
-    budgetMutation.mutate(
-      {
-        year,
-        month,
-        data: {
-          totalBudget: monthBudget,
-          defaultCategoryBudgets,
-          customCategoryBudgets:
-            customCategoryBudgets.length > 0
-              ? customCategoryBudgets
-              : undefined,
-        },
-      },
-      {
-        onSuccess: (data) => {
-          alert('한달 예산이 등록되었습니다.');
-          // console.log(data);
-          localStorage.removeItem('monthBudget');
-          localStorage.removeItem('categoryBudgets');
-          localStorage.removeItem('customCategories');
-          localStorage.removeItem('customCategoryBudgets');
-          localStorage.removeItem('routineCategories');
-          localStorage.removeItem('routineCategoryBudgets');
+    const routineCategoryBudgets = routineCategories.map((name, idx) => ({
+      categoryName: name,
+      amount: routineCatBudget[idx],
+      categoryType: 'ROUTINE_CATEGORY' as const,
+    }));
 
-          navigate('/money', {
-            replace: true,
-            state: { total: data.result.totalBudget },
-          });
-          console.log(data.totalBudget);
-        },
-      },
-    );
+    const payload = {
+      totalBudget: monthBudget,
+      defaultCategoryBudgets,
+      customCategoryBudgets:
+        customCategoryBudgets.length > 0 ? customCategoryBudgets : undefined,
+      routineCategoryBudgets:
+        routineCategoryBudgets.length > 0 ? routineCategoryBudgets : undefined,
+    };
+
+    const onSuccess = (data: any) => {
+      alert(
+        routineId
+          ? '소비 루틴 예산이 반영되었습니다.'
+          : '한달 예산이 등록되었습니다.',
+      );
+      localStorage.removeItem('monthBudget');
+      localStorage.removeItem('categoryBudgets');
+      localStorage.removeItem('customCategories');
+      localStorage.removeItem('customCategoryBudgets');
+      localStorage.removeItem('routineCategories');
+      localStorage.removeItem('routineCategoryBudgets');
+      localStorage.removeItem('year');
+      localStorage.removeItem('month');
+      localStorage.removeItem('budgetId');
+      localStorage.removeItem('routineId');
+
+      navigate('/money', {
+        replace: true,
+        state: { total: data.result.totalBudget },
+      });
+    };
+
+    if (routineId) {
+      routineMutation.mutate({ routineId, data: payload }, { onSuccess });
+    } else {
+      budgetMutation.mutate({ year, month, data: payload }, { onSuccess });
+    }
   };
 
   return (
@@ -248,7 +317,7 @@ const BudgetRegister = () => {
               className={R.IconBtn}
               src={pencilIcon}
               alt="edit"
-              onClick={() => openModal(-1)}
+              onClick={() => openModal(-1, false, false)}
             />
           </div>
         </section>
@@ -271,7 +340,7 @@ const BudgetRegister = () => {
               <li
                 className={R.CatLi(editMode)}
                 key={c}
-                onClick={() => editMode && openModal(i, false)}
+                onClick={() => editMode && openModal(i, false, false)}
               >
                 {c}
 
@@ -319,7 +388,7 @@ const BudgetRegister = () => {
                     className={R.CatLi(myEditMode || myDeleteMode)}
                     key={name}
                     onClick={() =>
-                      myEditMode && !myDeleteMode && openModal(i, true)
+                      myEditMode && !myDeleteMode && openModal(i, true, false)
                     }
                   >
                     {name}
@@ -340,7 +409,7 @@ const BudgetRegister = () => {
                           className={R.DeleteBtn}
                           src={closeIcon}
                           alt="delete"
-                          onClick={() => deleteCategory(i)}
+                          onClick={() => deleteCategory(i, 'custom')}
                         />
                       )}
                     </div>
@@ -388,7 +457,7 @@ const BudgetRegister = () => {
                     onClick={() =>
                       routineEditMode &&
                       !routineDeleteMode &&
-                      openModal(i, true)
+                      openModal(i, false, true)
                     }
                   >
                     {name}
@@ -409,7 +478,7 @@ const BudgetRegister = () => {
                           className={R.DeleteBtn}
                           src={closeIcon}
                           alt="delete"
-                          onClick={() => deleteCategory(i)}
+                          onClick={() => deleteCategory(i, 'routine')}
                         />
                       )}
                     </div>
