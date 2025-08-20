@@ -102,9 +102,17 @@ function record() {
             onSelectCategory={(category) =>
               setFormData((prev) => ({ ...prev, categoryName: category }))
             }
-            onToggle={() =>
-              setFormData((prev) => ({ ...prev, isPublic: !prev.isPublic }))
-            }
+            onToggle={() => {
+              setFormData((prev) => {
+                const newIsPublic = !prev.isPublic;
+                return {
+                  ...prev,
+                  isPublic: newIsPublic,
+                  ...(newIsPublic ? {} : { imageUrl: '' }),
+                };
+              });
+              setFile(null);
+            }}
           />
 
           <div className={S.RecordSection}>
