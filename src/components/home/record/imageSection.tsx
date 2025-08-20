@@ -21,11 +21,13 @@ const ImageSection = ({ imageUrl, isDisabled, onChange }: Props) => {
           )}
         </label>
         <input
+          key={!isDisabled ? 'disabled' : 'enabled'}
           id="imageUpload"
           type="file"
           accept="image/*"
           onChange={onChange}
           className={S.ImageInput}
+          disabled={!isDisabled}
         />
       </div>
     </div>
