@@ -10,6 +10,8 @@ export const title = 'text-[1.6rem] leading-[2.4rem] tracking-[-0.02em]';
 
 export const editImage = 'flex items-center justify-center cursor-pointer';
 
+export const editPencilImg = 'w-[1.6rem] h-[1.6rem]';
+
 export const representBadgeImageWrapper =
   'relative flex justify-center items-center w-full aspect-[397/298]';
 
@@ -24,6 +26,8 @@ export const badgeItem = 'flex flex-col items-center cursor-pointer';
 
 export const badgeImageWrapper =
   'w-[7.6rem] h-[7.6rem] rounded-full flex justify-center items-center';
+
+export const badgeImg = 'w-[5.8rem] h-[6.6rem] object-contain';
 
 export const badgeName =
   'mt-[1rem] text-[1.2rem] leading-[1.6rem] text-[var(--color-G1)] text-center';
