@@ -61,11 +61,7 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
             aria-label="뒤로가기"
             className={S.SearchBackButton}
           >
-            <img
-              src={LeftArrowIcon}
-              alt="뒤로가기"
-              className="w-[1rem] h-[1.8rem]"
-            />
+            <img src={LeftArrowIcon} alt="뒤로가기" className={S.backButton} />
           </button>
         )}
 
@@ -85,17 +81,15 @@ export const SearchBox: React.FC<SearchBoxProps> = ({
       </div>
 
       {currentKeyword && (
-        <div className="search-results">
+        <div className={S.searchContentContainer}>
           {!isFetching && flatList.length === 0 && (
             <div className={S.NoResultContainer}>
               <img
                 src={NoResult}
                 alt="검색 결과 없음"
-                className="w-[16rem] h-[16rem] object-contain"
+                className={S.noSearchImg}
               />
-              <span className="text-[1.4rem] text-[var(--color-G4)]">
-                검색 결과가 없어요.
-              </span>
+              <span className={S.noSearchText}>검색 결과가 없어요.</span>
             </div>
           )}
         </div>

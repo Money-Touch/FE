@@ -45,7 +45,7 @@ export const SortDropdown: React.FC<SortDropdownProps> = ({
           <img
             src={isOpen ? CaretUpIcon : CaretDownIcon}
             alt="정렬 아이콘"
-            className="w-[0.48rem] h-[0.35rem]"
+            className={S.ChevronIconImg}
           />
         </div>
       </button>

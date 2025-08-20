@@ -57,7 +57,7 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
   );
 
   return (
-    <div className="ml-[1.8rem]">
+    <div className={S.commentItemContainer}>
       <div className={S.commentItem}>
         <img src={ReplyIcon} alt="reply" className={S.replyIconContain} />
         <div className={S.commentMain}>
@@ -81,13 +81,17 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
                 disabled={isLiking}
                 aria-label={liked ? '좋아요 취소' : '좋아요'}
               >
-                <img src={liked ? LikeActiveIcon : LikeIcon} alt="좋아요" />
+                <img
+                  src={liked ? LikeActiveIcon : LikeIcon}
+                  alt="좋아요"
+                  className={S.buttonImg}
+                />
               </button>
               <button
                 className={S.iconButton}
                 onClick={() => onReply(reply.nickname)}
               >
-                <img src={CommentIcon} alt="댓글" />
+                <img src={CommentIcon} alt="댓글" className={S.buttonImg} />
               </button>
             </div>
           </div>
@@ -137,13 +141,17 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 disabled={rootIsLiking}
                 aria-label={rootLiked ? '좋아요 취소' : '좋아요'}
               >
-                <img src={rootLiked ? LikeActiveIcon : LikeIcon} alt="좋아요" />
+                <img
+                  src={rootLiked ? LikeActiveIcon : LikeIcon}
+                  alt="좋아요"
+                  className={S.buttonImg}
+                />
               </button>
               <button
                 className={S.iconButton}
                 onClick={() => onReply(comment.nickname)}
               >
-                <img src={CommentIcon} alt="댓글" />
+                <img src={CommentIcon} alt="댓글" className={S.buttonImg} />
               </button>
             </div>
           </div>

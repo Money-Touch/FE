@@ -18,7 +18,7 @@ export const DropdownButton =
   'flex items-center gap-[0.8rem] px-[1.6rem] py-[0.2rem] rounded-[0.5rem] cursor-pointer';
 
 export const DropdownMenu =
-  'absolute top-full w-[6.1rem] bg-[var(--color-G8)] mx-[1rem] px-[1.6rem] rounded-[0.5rem] z-10 text-[var(--color-G4)]';
+  'absolute top-full w-[7rem] bg-[var(--color-G8)] mx-[1rem] px-[1.6rem] rounded-[0.5rem] z-10 text-[1.2rem] text-[var(--color-G4)]';
 
 export const DropdownItem = (isActive: boolean) => `
   w-full py-[0.4rem] text-center cursor-pointer flex justify-center items-center
@@ -70,15 +70,20 @@ export const DropdownText =
 
 export const ChevronIcon = 'flex items-center';
 
+export const ChevronIconImg = 'w-[0.48rem] h-[0.35rem]';
+
 export const SkeletonBox = (
-  width = '100%',
-  height = '1.6rem',
-  circle = false,
-) => `
-  bg-[var(--color-G7)]
-  ${circle ? 'rounded-full' : 'rounded-[0.4rem]'}
-  w-[${width}] h-[${height}]
-`;
+  width: string = '100%',
+  height: string = '1.6rem',
+  circle: boolean = false,
+) =>
+  `
+    bg-[var(--color-G7)]
+    ${circle ? 'rounded-full' : 'rounded-[0.4rem]'}
+    w-[${width}] h-[${height}]
+  `;
+
+export const skeletonBoxContainer = 'flex flex-col gap-2';
 
 export const ImageSkeleton =
   'absolute bg-[var(--color-G7)] w-full h-full rounded-[0.5rem]';
@@ -90,3 +95,44 @@ export const DefaultPostImage =
   'absolute w-full h-full bg-[var(--color-G6)] rounded-[1rem]';
 
 export const SearchBackButton = 'mr-[2rem] flex items-center justify-center';
+
+export const actionIcon = 'w-[2rem] h-[2rem]';
+
+export const noPostImg = 'w-[16rem] h-[16rem] object-contain';
+
+export const noPostText = 'text-[1.4rem] text-[var(--color-G4)]';
+
+export const actionContainer = 'flex items-center gap-[1.6rem] pt-[0.5rem]';
+
+export const actionImg =
+  'flex items-center justify-center gap-[0.4rem] w-[5rem] h-[3.6rem] cursor-pointer disabled:cursor-not-allowed';
+
+export const actionText =
+  'w-[2rem] text-center text-[1.4rem] text-[var(--color-G1)]';
+
+export const postItemContainer =
+  'bg-[var(--color-white)] overflow-hidden pb-[1.6rem]';
+
+export const profileContainer = 'pb-[0.8rem] flex items-center gap-[1.2rem]';
+
+export const profileStyle = 'w-[3rem] h-[3rem] rounded-full';
+
+export const profileText = 'flex flex-col';
+
+export const profileName = 'text-[1.4rem] text-[var(--color-G2)]';
+
+export const contentContainer =
+  'w-full relative pb-[100%] overflow-hidden rounded-[1rem] cursor-pointer';
+
+export const postImg = 'absolute w-full h-full object-cover';
+
+export const postNoImg =
+  'absolute w-full h-full bg-[var(--color-G6)] rounded-[1rem]';
+
+export const searchContentContainer = 'search-results';
+
+export const noSearchImg = 'w-[16rem] h-[16rem] object-contain';
+
+export const noSearchText = 'text-[1.4rem] text-[var(--color-G4)]';
+
+export const backButton = 'w-[1rem] h-[1.8rem]';

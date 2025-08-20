@@ -56,6 +56,8 @@ export const authorActionGroup = 'flex gap-[1rem]';
 
 export const iconButton = 'bg-none border-none p-1 cursor-pointer';
 
+export const buttonImg = 'w-[1.7rem] h-[1.7rem]';
+
 export const replyIconContain = 'w-[0.8rem] h-[0.8rem] mt-[0.8rem] mr-[0.5rem]';
 
 export const commentMain = 'flex-1 flex flex-col';
@@ -77,3 +79,9 @@ export const replyInputFooter = 'ml-auto flex items-center gap-[0.8rem]';
 export const buttonGroup = 'flex items-center gap-[0.6rem]';
 
 export const footerMargin = '!mb-[13rem]';
+
+export const postNotFound = 'text-center p-10';
+
+export const commentId = '1.2rem';
+
+export const commentItemContainer = 'ml-[1.8rem]';

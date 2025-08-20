@@ -69,7 +69,7 @@ const Mybadge = () => {
             <img
               src={isEditMode ? PencilFilledIcon : PencilIcon}
               alt="수정"
-              className="w-[1.6rem] h-[1.6rem]"
+              className={S.editPencilImg}
             />
           </button>
         </div>
@@ -107,7 +107,7 @@ const Mybadge = () => {
                 <img
                   src={badge.imageUrl}
                   alt={badge.name}
-                  className="w-[5.8rem] h-[6.6rem] object-contain"
+                  className={S.badgeImg}
                 />
               </div>
               <div className={S.badgeName}>{badge.name}</div>

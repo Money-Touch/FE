@@ -86,7 +86,7 @@ export const FeedDetail: React.FC = () => {
   };
 
   if (!data)
-    return <div className="text-center p-10">게시글을 찾을 수 없습니다.</div>;
+    return <div className={S.postNotFound}>게시글을 찾을 수 없습니다.</div>;
 
   const categoryName = data.consumptionCategory?.budgetCategoryName ?? '';
 
@@ -112,7 +112,7 @@ export const FeedDetail: React.FC = () => {
         {comments && comments.length > 0 && (
           <div className={S.commentContainer}>
             {comments.map((c) => (
-              <div key={c.commentId} style={{ marginBottom: '1.2rem' }}>
+              <div key={c.commentId}>
                 <CommentItem
                   comment={c}
                   onReply={onReplyTo(c.commentId)}
