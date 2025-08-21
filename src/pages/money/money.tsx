@@ -50,11 +50,11 @@ const categoryImages: Record<string, string> = {
 };
 
 const tipByTopCategory: Record<string, string> = {
-  '배달/외식': '이 정도면 셰프를 모셔도 되겠어요!',
-  교통: '이 정도면 반쯤 전국일주 하셨네요!',
-  '패션/쇼핑': '이젠 뭘 샀는지 기억이 잘 안 나지 않나요?',
-  카페: '이 정도면 카페를 차리는 게 나을 것 같아요!',
-  기타: '돈이 들어오자마자 나가는 마술을 부리고 있나요?',
+  '배달/외식': '이 정도면 셰프를\n모셔도 되겠어요!',
+  교통: '이 정도면 반쯤\n전국일주 하셨네요!',
+  '패션/쇼핑': '이젠 뭘 샀는지\n기억이 잘 안 나지 않나요?',
+  카페: '이 정도면 카페를 차리는 게\n나을 것 같아요!',
+  기타: '돈이 들어오자마자 나가는\n마술을 부리고 있나요?',
 };
 
 type RoutineItemWithLegacyImage = RoutineListItem & {
@@ -166,6 +166,8 @@ const Money = () => {
     hasNextPage: hasNextFixed,
     isFetchingNextPage: isFetchingNextFixed,
   } = useFixedCostQuery(targetYear, targetMonth);
+
+  console.log('fixed', fixedListData);
 
   const fixedItems = useMemo(
     () => fixedListData?.pages.flatMap((p) => p.result.fixedConsumptions) ?? [],
@@ -437,7 +439,7 @@ const Money = () => {
                 'linear-gradient(135deg, var(--color-subColor3) 0%, #4be3a5 100%)',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
+              gap: '1.2rem',
             }}
           >
             {showTopTip ? (
@@ -446,22 +448,22 @@ const Money = () => {
                   display: 'flex',
                   alignItems: 'center',
                   width: '100%',
-                  gap: 16,
-                  padding: '14px 20px 14px 32px',
+                  gap: '1.6rem',
+                  padding: '1.4rem 2rem 1.4rem 3.2rem',
                 }}
               >
                 <div
                   style={{
-                    width: 48,
-                    height: 48,
+                    width: '4.8rem',
+                    height: '4.8rem',
                     borderRadius: '50%',
                     overflow: 'hidden',
-                    flex: '0 0 48px',
+                    flex: '0 0 4.8rem',
                     background: 'rgba(255,255,255,0.95)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
+                    boxShadow: '0 0.1rem 0.2rem rgba(0,0,0,0.06)',
                   }}
                 >
                   <img
@@ -479,13 +481,14 @@ const Money = () => {
                 <p
                   className={A.GreetText}
                   style={{
-                    margin: 3,
+                    margin: '0.3rem',
                     color: '#fff',
                     fontWeight: 500,
-                    fontSize: 18,
-                    lineHeight: '25px',
-                    letterSpacing: '-0.2px',
-                    paddingRight: 24,
+                    fontSize: '1.8rem',
+                    lineHeight: '2.5rem',
+                    letterSpacing: '-0.02rem',
+                    paddingRight: '2.4rem',
+                    whiteSpace: 'pre-line',
                   }}
                 >
                   {topCategory!.message}
@@ -889,9 +892,7 @@ const Money = () => {
                           <span className={`${A.DotBase} flex`}>
                             <img src={fixedCostImage} alt="fixed cost" />
                           </span>
-                          <span className="memo">
-                            {e.memo || e.categoryName || ''}
-                          </span>
+                          <span className="memo">{e.content || ''}</span>
                         </div>
 
                         <div className={A.ItemRowRight}>

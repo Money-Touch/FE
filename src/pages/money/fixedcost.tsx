@@ -105,13 +105,13 @@ const FixedCost = () => {
             <span className="ml-[0.2rem] text-[var(--color-M1)]">*</span>
           </p>
 
-          <div className="overflow-x-auto pb-[4px]">
+          <div className="overflow-x-auto pb-[0.4rem]">
             <div
               className={`${A.CatBox}`}
               style={{
                 display: 'flex',
                 flexWrap: 'nowrap',
-                gap: '8px',
+                gap: '0.8rem',
                 width: 'max-content',
               }}
             >
