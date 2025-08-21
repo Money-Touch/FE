@@ -24,19 +24,21 @@ function Notify() {
   );
 
   return (
-    <div className={`pageContainer ${S.Container} !pt-[6rem]`}>
+    <div className={S.Container}>
       <Header title="알림" />
-      {isNotificationStale(notifications) && (
-        <div className={S.NoNewNotice}>새로운 알림이 없어요.</div>
-      )}
-      {sortedNotifications.map((item) => (
-        <NotificationList
-          key={item.notificationId}
-          notification={item}
-          onMarkAsRead={markAsRead}
-        />
-      ))}
-      <div ref={bottomRef} />
+      <div className={S.SectionContainer}>
+        {isNotificationStale(notifications) && (
+          <div className={S.NoNewNotice}>새로운 알림이 없어요.</div>
+        )}
+        {sortedNotifications.map((item) => (
+          <NotificationList
+            key={item.notificationId}
+            notification={item}
+            onMarkAsRead={markAsRead}
+          />
+        ))}
+        <div ref={bottomRef} />
+      </div>
     </div>
   );
 }

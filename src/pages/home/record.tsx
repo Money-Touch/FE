@@ -93,72 +93,74 @@ function record() {
       {isLoading && null}
       {error && null}
       {!isLoading && !error && (
-        <div className={`pageContainer ${S.Container} !pt-[7rem] `}>
+        <div className={S.Container}>
           <Header title="소비 기록" />
-          <CategorySection
-            selectedCategory={formData.categoryName}
-            categories={categories}
-            isChecked={!formData.isPublic}
-            onSelectCategory={(category) =>
-              setFormData((prev) => ({ ...prev, categoryName: category }))
-            }
-            onToggle={() => {
-              setFormData((prev) => {
-                const newIsPublic = !prev.isPublic;
-                return {
-                  ...prev,
-                  isPublic: newIsPublic,
-                  ...(newIsPublic ? {} : { imageUrl: '' }),
-                };
-              });
-              setFile(null);
-            }}
-          />
+          <div className={S.SectionContainer}>
+            <CategorySection
+              selectedCategory={formData.categoryName}
+              categories={categories}
+              isChecked={!formData.isPublic}
+              onSelectCategory={(category) =>
+                setFormData((prev) => ({ ...prev, categoryName: category }))
+              }
+              onToggle={() => {
+                setFormData((prev) => {
+                  const newIsPublic = !prev.isPublic;
+                  return {
+                    ...prev,
+                    isPublic: newIsPublic,
+                    ...(newIsPublic ? {} : { imageUrl: '' }),
+                  };
+                });
+                setFile(null);
+              }}
+            />
 
-          <div className={S.RecordSection}>
-            <AmountSection
-              amount={formData.amount}
-              isTouched={isAmountTouched}
-              onChange={(value) => {
-                setIsAmountTouched(true);
-                setFormData((prev) => ({ ...prev, amount: value }));
-              }}
-              onClear={() => {
-                setIsAmountTouched(true);
-                setFormData((prev) => ({ ...prev, amount: 0 }));
-              }}
-            />
-            <ContentSection
-              value={formData.content}
-              error={contentError}
-              onChange={(value) => {
-                setContentError(value.length > 20);
-                setFormData((prev) => ({ ...prev, content: value }));
-              }}
-              onClear={() => {
-                setContentError(false);
-                setFormData((prev) => ({ ...prev, content: '' }));
-              }}
-            />
-            <ImageSection
-              imageUrl={formData.imageUrl}
-              isDisabled={formData.isPublic}
-              onChange={handleImageChange}
-            />
-            <MemoSection
-              value={formData.memo}
-              isError={isMemoInvalid}
-              isDisabled={formData.isPublic}
-              onChange={handleMemoChange}
-              onBlur={handleMemoBlur}
+            <div className={S.RecordSection}>
+              <AmountSection
+                amount={formData.amount}
+                isTouched={isAmountTouched}
+                onChange={(value) => {
+                  setIsAmountTouched(true);
+                  setFormData((prev) => ({ ...prev, amount: value }));
+                }}
+                onClear={() => {
+                  setIsAmountTouched(true);
+                  setFormData((prev) => ({ ...prev, amount: 0 }));
+                }}
+              />
+              <ContentSection
+                value={formData.content}
+                error={contentError}
+                onChange={(value) => {
+                  setContentError(value.length > 20);
+                  setFormData((prev) => ({ ...prev, content: value }));
+                }}
+                onClear={() => {
+                  setContentError(false);
+                  setFormData((prev) => ({ ...prev, content: '' }));
+                }}
+              />
+              <ImageSection
+                imageUrl={formData.imageUrl}
+                isDisabled={formData.isPublic}
+                onChange={handleImageChange}
+              />
+              <MemoSection
+                value={formData.memo}
+                isError={isMemoInvalid}
+                isDisabled={formData.isPublic}
+                onChange={handleMemoChange}
+                onBlur={handleMemoBlur}
+              />
+            </div>
+
+            <SubmitButton
+              isActive={isFormValid && !isPending}
+              onClick={handleSubmit}
+              label={isPending ? '등록 중...' : '완료'}
             />
           </div>
-
-          <SubmitButton
-            isActive={isFormValid && !isPending}
-            onClick={handleSubmit}
-            label={isPending ? '등록 중...' : '완료'}
-          />
         </div>
       )}
     </>

@@ -1,5 +1,7 @@
 // record.tsx
-export const Container = 'flex px-[2.4rem] overflow-y-auto overflow-x-hidden';
+export const Container = 'flex flex-col h-screen';
+export const SectionContainer =
+  'overflow-y-auto overflow-x-hidden px-[2.4rem] pt-[7rem]';
 
 // title
 export const Title =

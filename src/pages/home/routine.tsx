@@ -47,42 +47,46 @@ function Routine() {
   if (error) return <div></div>;
 
   return (
-    <div
-      className={`pageContainer ${S.Container} !pt-[6.4rem] !overflow-y-auto`}
-    >
+    <div className={S.Container}>
       <Header title="소비 루틴" />
-      <div className={S.SearchWrapper}>
-        <input
-          type="text"
-          placeholder="검색어를 입력해 주세요."
-          value={inputValue}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          className={S.SearchInput}
-        />
-        <img
-          src={searchIcon}
-          alt="검색"
-          className={S.SearchIcon}
-          onClick={handleSearchClick}
-          style={{ cursor: 'pointer' }}
-        />
-      </div>
-
-      {isSearching && routines.length === 0 ? (
-        <div className={S.NoResultWrapper}>
-          <img src={noResult} alt="검색 결과 없음" className={S.NoResultImg} />
+      <div className={S.SectionContainer}>
+        <div className={S.SearchWrapper}>
+          <input
+            type="text"
+            placeholder="검색어를 입력해 주세요."
+            value={inputValue}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            className={S.SearchInput}
+          />
+          <img
+            src={searchIcon}
+            alt="검색"
+            className={S.SearchIcon}
+            onClick={handleSearchClick}
+            style={{ cursor: 'pointer' }}
+          />
         </div>
-      ) : (
-        <>
-          <div className={S.List}>
-            {routines.map((item) => (
-              <RoutineCard key={item.routineId} item={item} />
-            ))}
+
+        {isSearching && routines.length === 0 ? (
+          <div className={S.NoResultWrapper}>
+            <img
+              src={noResult}
+              alt="검색 결과 없음"
+              className={S.NoResultImg}
+            />
           </div>
-          <div ref={bottomRef} />
-        </>
-      )}
+        ) : (
+          <>
+            <div className={S.List}>
+              {routines.map((item) => (
+                <RoutineCard key={item.routineId} item={item} />
+              ))}
+            </div>
+            <div ref={bottomRef} />
+          </>
+        )}
+      </div>
     </div>
   );
 }
