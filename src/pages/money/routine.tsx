@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/header/header';
 import pencilIcon from '../../assets/images/budget/pencil.png';
-import editPencilIcon from '../../assets/images/budget/editPencil.png';
 import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
@@ -13,17 +12,19 @@ import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDe
 
 const DEFAULT_CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
 
+type LocState = { state?: { budgetId?: number; refresh?: number } };
+
 const Routine = () => {
   const navigate = useNavigate();
 
-  const location = useLocation() as { state?: { budgetId?: number } };
+  const location = useLocation() as LocState;
   const budgetId = location?.state?.budgetId ?? 0;
 
   const [monthBudget, setMonthBudget] = useState(0);
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
   const [customCats, setCustomCats] = useState<string[]>([]);
   const [customBudget, setCustomBudget] = useState<number[]>([]);
-  const [editMode, setEditMode] = useState(false);
+  const [editMode] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [raw, setRaw] = useState('');
   const [targetIdx, setTargetIdx] = useState<-1 | number>(-1);
@@ -48,25 +49,57 @@ const Routine = () => {
     );
     setCatBudget(nextCatBudget);
 
-    const customList: Array<{ categoryName: string; amount: number }> =
+    const serverCustom: Array<{ categoryName: string; amount: number }> =
       result.customCategoryBudgets ?? [];
-    const nextCustomCats = customList.map((c) => c.categoryName);
-    const nextCustomBudget = customList.map((c) => Number(c.amount || 0));
-    setCustomCats(nextCustomCats);
-    setCustomBudget(nextCustomBudget);
+    const serverCats = serverCustom.map((c) => c.categoryName);
+    const serverBudgets = serverCustom.map((c) => Number(c.amount || 0));
+
+    const storedCats: string[] = JSON.parse(
+      localStorage.getItem('customCategories') || '[]',
+    );
+    const storedBudgets: number[] = JSON.parse(
+      localStorage.getItem('customCategoryBudgets') || '[]',
+    );
+
+    const mergedCats = [...serverCats];
+    const mergedBudgets = [...serverBudgets];
+
+    storedCats.forEach((name, idx) => {
+      if (!mergedCats.includes(name)) {
+        mergedCats.push(name);
+        mergedBudgets.push(Number(storedBudgets[idx] ?? 0));
+      }
+    });
+
+    setCustomCats(mergedCats);
+    setCustomBudget(mergedBudgets);
 
     localStorage.setItem('monthBudget', String(total));
     localStorage.setItem('categoryBudgets', JSON.stringify(nextCatBudget));
-    localStorage.setItem('customCategories', JSON.stringify(nextCustomCats));
+    localStorage.setItem('customCategories', JSON.stringify(mergedCats));
     localStorage.setItem(
       'customCategoryBudgets',
-      JSON.stringify(nextCustomBudget),
+      JSON.stringify(mergedBudgets),
     );
     localStorage.setItem(
       'totalRoutineBudget',
-      JSON.stringify([...nextCatBudget, ...nextCustomBudget]),
+      JSON.stringify([...nextCatBudget, ...mergedBudgets]),
     );
   }, [budgetDetailData]);
+
+  useEffect(() => {
+    const cats: string[] = JSON.parse(
+      localStorage.getItem('customCategories') || '[]',
+    );
+    const budgets: number[] = JSON.parse(
+      localStorage.getItem('customCategoryBudgets') || '[]',
+    );
+
+    if (cats.length) {
+      setCustomCats(cats);
+      setCustomBudget(cats.map((_, i) => Number(budgets[i] ?? 0)));
+    }
+  }, [location?.state?.refresh]);
 
   const comma = (v: string | number) =>
     String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -83,8 +116,8 @@ const Routine = () => {
       idx === -1
         ? String(monthBudget)
         : isCustom
-          ? String(customBudget[idx])
-          : String(catBudget[idx]),
+          ? String(customBudget[idx] ?? 0)
+          : String(catBudget[idx] ?? 0),
     );
     setModalOpen(true);
   };
@@ -167,10 +200,13 @@ const Routine = () => {
             <p className={A.Label}>나의 소비 루틴</p>
             <button
               className={A.IconBtn}
-              onClick={() => setEditMode((v) => !v)}
-              style={{ width: '2rem', height: '2rem' }}
+              onClick={() =>
+                navigate('/add-category', {
+                  state: { from: '/money-routine', budgetId },
+                })
+              }
             >
-              <img className="w-full h-full" src={editPencilIcon} alt="edit" />
+              <img className="w-full h-full" src={pencilIcon} alt="edit" />
             </button>
           </div>
 
@@ -202,11 +238,11 @@ const Routine = () => {
                 {editMode ? (
                   <div className={A.EditWrapper}>
                     <span className={A.EditInput}>
-                      {comma(customBudget[i])}원
+                      {comma(customBudget[i] ?? 0)}원
                     </span>
                   </div>
                 ) : (
-                  <span>{comma(customBudget[i])}원</span>
+                  <span>{comma(customBudget[i] ?? 0)}원</span>
                 )}
               </li>
             ))}
@@ -216,7 +252,9 @@ const Routine = () => {
             <button
               className={A.PlusBtn}
               onClick={() =>
-                navigate('/add-category', { state: { from: '/routine' } })
+                navigate('/add-category', {
+                  state: { from: '/money-routine', budgetId },
+                })
               }
             >
               <img
