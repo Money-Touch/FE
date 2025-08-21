@@ -18,9 +18,7 @@ const Home = () => {
   const hasUnread = (notifications || []).some((n) => !n.isRead);
 
   return (
-    <div
-      className={`${S.Container} !h-[calc(100vh-13rem)] !pt-[7rem] !mb-[13rem] !overflow-y-auto`}
-    >
+    <div className={S.Container}>
       <Header hasUnread={hasUnread} onAlarmClick={handleAlarmClick} />
       <div className={S.Section}>
         <ConsumptionWelcome />
