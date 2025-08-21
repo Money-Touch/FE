@@ -72,7 +72,7 @@ export const submitButton =
   'text-white text-[1.4rem] h-[3rem] w-[4.4rem] rounded-[0.5rem] bg-[var(--color-mainColor1)] cursor-pointer disabled:bg-[var(--color-G5)] disabled:cursor-not-allowed';
 
 export const mentionLabel =
-  'text-[var(--color-G1)] bg-[var(--color-subColor5)] rounded-[0.5rem] ml-[0.5rem] text-[1.2rem] leading-[1.8rem] w-[3.7rem] h-[2.4rem] flex items-center justify-center';
+  'text-[var(--color-G1)] bg-[var(--color-subColor5)] rounded-[0.5rem] ml-[0.5rem] text-[1.2rem] leading-[1.8rem] w-flex h-[2.4rem] flex items-center justify-center';
 
 export const replyInputFooter = 'ml-auto flex items-center gap-[0.8rem]';
 
