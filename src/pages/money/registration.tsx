@@ -17,6 +17,28 @@ import type { RegistrationState } from '../../types/money/registration/registrat
 const CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
 
 const BudgetRegister = () => {
+  useEffect(() => {
+    return () => {
+      if (
+        location.pathname === '/add-category' ||
+        location.pathname === '/budget-register'
+      )
+        return;
+      localStorage.removeItem('monthBudget');
+      localStorage.removeItem('categoryBudgets');
+      localStorage.removeItem('customCategories');
+      localStorage.removeItem('customCategoryBudgets');
+      localStorage.removeItem('routineCategories');
+      localStorage.removeItem('routineCategoryBudgets');
+      localStorage.removeItem('totalRoutineBudget');
+      localStorage.removeItem('year');
+      localStorage.removeItem('month');
+      localStorage.removeItem('budgetId');
+      localStorage.removeItem('routineId');
+      localStorage.removeItem('budgetInitialized');
+    };
+  }, [location.pathname]);
+
   const navigate = useNavigate();
 
   const { state } = useLocation() as {
@@ -79,27 +101,30 @@ const BudgetRegister = () => {
     if (!source) return;
     // console.log(source);
 
-    const {
-      totalBudget,
-      defaultCategoryBudgets = [],
-      customCategoryBudgets = [],
-      routineCategoryBudgets = [],
-    } = source;
+    const alreadyInit = localStorage.getItem('budgetInitialized');
 
-    const defaultArr = CATEGORIES.map(
-      (name) =>
-        defaultCategoryBudgets.find((c) => c.categoryName === name)?.amount ??
-        0,
-    );
+    if (!alreadyInit && (budgetId || routineId)) {
+      const {
+        totalBudget,
+        defaultCategoryBudgets = [],
+        customCategoryBudgets = [],
+        routineCategoryBudgets = [],
+      } = source;
 
-    const customNames = customCategoryBudgets?.map((c) => c.categoryName) ?? [];
-    const customAmounts = customCategoryBudgets?.map((c) => c.amount) ?? [];
+      const defaultArr = CATEGORIES.map(
+        (name) =>
+          defaultCategoryBudgets.find((c) => c.categoryName === name)?.amount ??
+          0,
+      );
 
-    const routineNames =
-      routineCategoryBudgets?.map((c) => c.categoryName) ?? [];
-    const routineAmounts = routineCategoryBudgets?.map((c) => c.amount) ?? [];
+      const customNames =
+        customCategoryBudgets?.map((c) => c.categoryName) ?? [];
+      const customAmounts = customCategoryBudgets?.map((c) => c.amount) ?? [];
 
-    if (!localStorage.getItem('monthBudget') || routineId) {
+      const routineNames =
+        routineCategoryBudgets?.map((c) => c.categoryName) ?? [];
+      const routineAmounts = routineCategoryBudgets?.map((c) => c.amount) ?? [];
+
       localStorage.setItem('monthBudget', String(totalBudget));
       localStorage.setItem('categoryBudgets', JSON.stringify(defaultArr));
       localStorage.setItem('customCategories', JSON.stringify(customNames));
@@ -120,7 +145,7 @@ const BudgetRegister = () => {
       setRoutineCategories(routineNames);
       setRoutineCatBudget(routineAmounts);
     }
-  }, [source, routineId]);
+  }, [source]);
 
   useEffect(() => {
     if (!budgetId) {
@@ -281,21 +306,13 @@ const BudgetRegister = () => {
           ? '소비 루틴 예산이 반영되었습니다.'
           : '한달 예산이 등록되었습니다.',
       );
-      localStorage.removeItem('monthBudget');
-      localStorage.removeItem('categoryBudgets');
-      localStorage.removeItem('customCategories');
-      localStorage.removeItem('customCategoryBudgets');
-      localStorage.removeItem('routineCategories');
-      localStorage.removeItem('routineCategoryBudgets');
-      localStorage.removeItem('year');
-      localStorage.removeItem('month');
-      localStorage.removeItem('budgetId');
-      localStorage.removeItem('routineId');
 
       navigate('/money', {
         replace: true,
         state: { total: data.result.totalBudget },
       });
+
+      localStorage.removeItem('budgetInitialized');
     };
 
     if (routineId) {
