@@ -75,6 +75,8 @@ const AddDay = () => {
 
     if (!isMobile && typeof el.showPicker === 'function') {
       el.showPicker();
+    } else {
+      el.click();
     }
   };
 

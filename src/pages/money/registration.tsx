@@ -1,4 +1,3 @@
-// src/pages/money/registration/index.tsx (BudgetRegister)
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/header/header';
@@ -17,57 +16,12 @@ import type { RegistrationState } from '../../types/money/registration/registrat
 
 const CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
 
-// ---- 타입 보강(ESLint any 금지 대응) ----
-type CategoryBudgetType = 'DEFAULT' | 'CUSTOM' | 'ROUTINE_CATEGORY';
-
-type CategoryBudgetPayload = {
-  categoryName: string;
-  amount: number;
-  categoryType: CategoryBudgetType;
-};
-
-type RegisterPayload = {
-  totalBudget: number;
-  defaultCategoryBudgets: CategoryBudgetPayload[];
-  customCategoryBudgets?: CategoryBudgetPayload[];
-  routineCategoryBudgets?: CategoryBudgetPayload[];
-};
-
-type RegisterResult = { totalBudget: number };
-type ApiResponse<T> = { isSuccess?: boolean; message?: string; result: T };
-// ---------------------------------------
-
 const BudgetRegister = () => {
   const navigate = useNavigate();
 
-  // pathname도 써야 하므로 location 객체 자체를 받습니다.
-  const location = useLocation() as {
-    pathname: string;
+  const { state } = useLocation() as {
     state?: RegistrationState;
   };
-  const { state } = location;
-
-  // 페이지 이탈 시 로컬스토리지 정리 (add-category, budget-register는 제외)
-  useEffect(() => {
-    return () => {
-      if (
-        location.pathname === '/add-category' ||
-        location.pathname === '/budget-register'
-      ) {
-        return;
-      }
-      localStorage.removeItem('monthBudget');
-      localStorage.removeItem('categoryBudgets');
-      localStorage.removeItem('customCategories');
-      localStorage.removeItem('customCategoryBudgets');
-      localStorage.removeItem('routineCategories');
-      localStorage.removeItem('routineCategoryBudgets');
-      localStorage.removeItem('year');
-      localStorage.removeItem('month');
-      localStorage.removeItem('budgetId');
-      localStorage.removeItem('routineId');
-    };
-  }, [location.pathname]);
 
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
@@ -96,9 +50,8 @@ const BudgetRegister = () => {
     syncStateWithStorage('routineId', state?.routineId, setRoutineId, Number);
   }, [state?.year, state?.month, state?.budgetId, state?.routineId]);
 
-  // null일 수 있으니 안전하게 0 기본값 전달
-  const { data: budgetDetail } = useBudgetDetailQuery(budgetId ?? 0);
-  const { data: routineDetail } = useRoutineDetailQuery(routineId ?? 0);
+  const { data: budgetDetail } = useBudgetDetailQuery(budgetId!);
+  const { data: routineDetail } = useRoutineDetailQuery(routineId!);
   const budgetMutation = useBudgetMutation();
   const routineMutation = useRoutineMutation();
 
@@ -119,43 +72,37 @@ const BudgetRegister = () => {
   const [targetIsCustom, setTargetIsCustom] = useState(false);
   const [targetIsRoutine, setTargetIsRoutine] = useState(false);
 
-  // budget or routine 상세에서 원본 데이터 가져오기
-  type SourceShape =
-    | {
-        totalBudget: number;
-        defaultCategoryBudgets?: { categoryName: string; amount: number }[];
-        customCategoryBudgets?: { categoryName: string; amount: number }[];
-        routineCategoryBudgets?: { categoryName: string; amount: number }[];
-      }
-    | null
-    | undefined;
-
-  const source: SourceShape =
+  const source =
     budgetDetail?.result ?? (!budgetId ? routineDetail?.result : null);
 
   useEffect(() => {
     if (!source) return;
+    // console.log(source);
 
-    const {
-      totalBudget,
-      defaultCategoryBudgets = [],
-      customCategoryBudgets = [],
-      routineCategoryBudgets = [],
-    } = source;
+    const alreadyInit = localStorage.getItem('budgetInitialized');
 
-    const defaultArr = CATEGORIES.map(
-      (name) =>
-        defaultCategoryBudgets.find((c) => c.categoryName === name)?.amount ??
-        0,
-    );
+    if (!alreadyInit && (budgetId || routineId)) {
+      const {
+        totalBudget,
+        defaultCategoryBudgets = [],
+        customCategoryBudgets = [],
+        routineCategoryBudgets = [],
+      } = source;
 
-    const customNames = customCategoryBudgets.map((c) => c.categoryName);
-    const customAmounts = customCategoryBudgets.map((c) => c.amount);
+      const defaultArr = CATEGORIES.map(
+        (name) =>
+          defaultCategoryBudgets.find((c) => c.categoryName === name)?.amount ??
+          0,
+      );
 
-    const routineNames = routineCategoryBudgets.map((c) => c.categoryName);
-    const routineAmounts = routineCategoryBudgets.map((c) => c.amount);
+      const customNames =
+        customCategoryBudgets?.map((c) => c.categoryName) ?? [];
+      const customAmounts = customCategoryBudgets?.map((c) => c.amount) ?? [];
 
-    if (!localStorage.getItem('monthBudget') || routineId) {
+      const routineNames =
+        routineCategoryBudgets?.map((c) => c.categoryName) ?? [];
+      const routineAmounts = routineCategoryBudgets?.map((c) => c.amount) ?? [];
+
       localStorage.setItem('monthBudget', String(totalBudget));
       localStorage.setItem('categoryBudgets', JSON.stringify(defaultArr));
       localStorage.setItem('customCategories', JSON.stringify(customNames));
@@ -176,11 +123,11 @@ const BudgetRegister = () => {
       setRoutineCategories(routineNames);
       setRoutineCatBudget(routineAmounts);
     }
-  }, [source, routineId]);
+  }, [source]);
 
   useEffect(() => {
     if (!budgetId) {
-      const savedCats: string[] = JSON.parse(
+      const savedCats = JSON.parse(
         localStorage.getItem('customCategories') || '[]',
       );
       setMyCategories(savedCats);
@@ -188,12 +135,12 @@ const BudgetRegister = () => {
       const savedMonth = Number(localStorage.getItem('monthBudget') || 0);
       if (savedMonth) setMonthBudget(savedMonth);
 
-      const savedCatBudgets: number[] = JSON.parse(
+      const savedCatBudgets = JSON.parse(
         localStorage.getItem('categoryBudgets') || '[]',
       );
       if (savedCatBudgets.length === 5) setCatBudget(savedCatBudgets);
 
-      const savedMyBudgets: number[] = JSON.parse(
+      const savedMyBudgets = JSON.parse(
         localStorage.getItem('customCategoryBudgets') || '[]',
       );
       setMyCatBudget(
@@ -202,10 +149,10 @@ const BudgetRegister = () => {
           : Array(savedCats.length).fill(0),
       );
 
-      const savedRoutineCats: string[] = JSON.parse(
+      const savedRoutineCats = JSON.parse(
         localStorage.getItem('routineCategories') || '[]',
       );
-      const savedRoutineBudgets: number[] = JSON.parse(
+      const savedRoutineBudgets = JSON.parse(
         localStorage.getItem('routineCategoryBudgets') || '[]',
       );
       setRoutineCategories(savedRoutineCats);
@@ -301,57 +248,50 @@ const BudgetRegister = () => {
     monthBudget === totalDefault + totalCustom + totalRoutine;
 
   const handleConfirm = () => {
+    // console.log('routineId', routineId);
     if (!canConfirm) return;
 
-    const defaultCategoryBudgets: CategoryBudgetPayload[] = CATEGORIES.map(
-      (name, idx) => ({
-        categoryName: name,
-        amount: catBudget[idx],
-        categoryType: 'DEFAULT',
-      }),
-    );
+    const defaultCategoryBudgets = CATEGORIES.map((name, idx) => ({
+      categoryName: name,
+      amount: catBudget[idx],
+      categoryType: 'DEFAULT' as const,
+    }));
 
-    const customCategoryBudgets: CategoryBudgetPayload[] = myCategories.map(
-      (name, idx) => ({
-        categoryName: name,
-        amount: myCatBudget[idx],
-        categoryType: 'CUSTOM',
-      }),
-    );
+    const customCategoryBudgets = myCategories.map((name, idx) => ({
+      categoryName: name,
+      amount: myCatBudget[idx],
+      categoryType: 'CUSTOM' as const,
+    }));
 
-    const routineCategoryBudgets: CategoryBudgetPayload[] =
-      routineCategories.map((name, idx) => ({
-        categoryName: name,
-        amount: routineCatBudget[idx],
-        categoryType: 'ROUTINE_CATEGORY',
-      }));
+    const routineCategoryBudgets = routineCategories.map((name, idx) => ({
+      categoryName: name,
+      amount: routineCatBudget[idx],
+      categoryType: 'ROUTINE_CATEGORY' as const,
+    }));
 
-    const payload: RegisterPayload = {
+    const payload = {
       totalBudget: monthBudget,
       defaultCategoryBudgets,
-      customCategoryBudgets: customCategoryBudgets.length
-        ? customCategoryBudgets
-        : undefined,
-      routineCategoryBudgets: routineCategoryBudgets.length
-        ? routineCategoryBudgets
-        : undefined,
+      customCategoryBudgets:
+        customCategoryBudgets.length > 0 ? customCategoryBudgets : undefined,
+      routineCategoryBudgets:
+        routineCategoryBudgets.length > 0 ? routineCategoryBudgets : undefined,
     };
 
-    // ---- any 제거: 명시적 성공 응답 타입 지정 ----
-    const onSuccess = (data: ApiResponse<RegisterResult>) => {
+    const onSuccess = (data: any) => {
       alert(
         routineId
           ? '소비 루틴 예산이 반영되었습니다.'
           : '한달 예산이 등록되었습니다.',
       );
-      const total = data?.result?.totalBudget ?? monthBudget;
 
       navigate('/money', {
         replace: true,
-        state: { total },
+        state: { total: data.result.totalBudget },
       });
+
+      localStorage.removeItem('budgetInitialized');
     };
-    // -------------------------------------------
 
     if (routineId) {
       routineMutation.mutate({ routineId, data: payload }, { onSuccess });

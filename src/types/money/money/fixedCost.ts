@@ -3,6 +3,7 @@ export interface FixedConsumption {
   categoryName: string;
   amount: number;
   memo?: string;
+  content: string;
 }
 
 export interface FixedCostResult {

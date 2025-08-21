@@ -1,5 +1,7 @@
 // routine.tsx
-export const Container = 'flex px-[2.4rem] pb-[1.5rem]';
+export const Container = 'flex flex-col h-screen';
+export const SectionContainer =
+  'overflow-y-auto overflow-x-hidden px-[2.4rem] pt-[6.4rem] pb-[1.5rem]';
 export const SearchWrapper =
   'w-full h-[4.5rem] border border-[var(--color-G7)] rounded-[0.5rem] flex justify-between items-center px-[1.5rem] py-[1.2rem] bg-white';
 export const SearchInput =
@@ -36,13 +38,15 @@ export const NoResultWrapper =
 export const NoResultImg = 'w-[14.8rem] h-[15.8rem]';
 
 // routineDetail.tsx
+export const DetailContainer =
+  'overflow-y-auto overflow-x-hidden px-[2.4rem] pt-[8.6rem]';
 export const Budget = 'w-full h-[6.1rem] flex flex-col items-start';
 export const BudgetTitle =
   'h-[2.6rem] font-medium text-[1.8rem] text-[var(--color-G1)]';
 export const BudgetAmount =
   'h-[3.5rem] font-bold text-[2.6rem] text-[var(--color-G1)]';
 export const Line =
-  'flex-none w-[calc(100%+4.8rem)] h-[0.7rem] mt-[2.4rem] bg-[var(--color-G8)]';
+  '-mx-[2.4rem] flex-none w-[calc(100%+4.8rem)] h-[0.7rem] mt-[2.4rem] bg-[var(--color-G8)]';
 export const BudgetListWrapper =
   'h-[22.6rem] mt-[3rem] gap-[1.4rem] w-full flex flex-col';
 export const BudgetItem = 'flex justify-between items-center h-[2.6rem]';
