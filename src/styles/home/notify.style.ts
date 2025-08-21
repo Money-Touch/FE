@@ -1,11 +1,13 @@
 // notify.tsx
-export const Container = 'flex px-[2.4rem] overflow-y-auto overflow-x-hidden';
+export const Container = 'flex flex-col h-screen';
+export const SectionContainer =
+  'overflow-y-auto overflow-x-hidden px-[2.4rem] pt-[6rem]';
 export const NoNewNotice =
   'self-start h-[2.2rem] font-medium text-[1.4rem] leading-[2.2rem] text-[var(--color-G2)]';
 
 // notificationList.tsx
 export const List = (isRead: boolean) =>
-  `w-[calc(100%+4.8rem)] flex px-[2.4rem] py-[1.5rem] ${
+  `-mx-[2.4rem] flex px-[2.4rem] py-[1.5rem] ${
     isRead ? 'bg-[var(--color-white)]' : 'bg-[var(--color-subColor5)]'
   } items-start box-border gap-[8.3rem] cursor-pointer`;
 export const Item = 'w-full h-[7.3rem] flex items-start justify-between';

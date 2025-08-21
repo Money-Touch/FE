@@ -56,8 +56,8 @@ export default function RoutineCard({ item }: Props) {
           </div>
 
           <div className={S.HashtagList}>
-            {item.hashtags.map((hashtag) => (
-              <span key={hashtag} className={S.Hashtag}>
+            {item.hashtags.map((hashtag, index) => (
+              <span key={`${hashtag}-${index}`} className={S.Hashtag}>
                 {hashtag}
               </span>
             ))}

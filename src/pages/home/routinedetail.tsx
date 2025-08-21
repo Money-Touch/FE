@@ -20,39 +20,39 @@ function RoutineDetail() {
   const routine = data.result;
 
   return (
-    <div
-      className={`pageContainer ${S.Container} !pt-[8.6rem] !overflow-y-auto !overflow-x-hidden`}
-    >
+    <div className={S.Container}>
       <Header title={routine?.routineName} />
-      <BudgetList
-        totalBudget={routine.totalBudget}
-        budgetList={routine.categoryBudgetList}
-      />
-      <button
-        className={S.BudgetButton(!routine.canApply)}
-        disabled={!routine.canApply}
-        onClick={() => {
-          if (routine.canApply) setShowModal(true);
-        }}
-      >
-        내 예산에 반영
-      </button>
-      {!routine.canApply && (
-        <div className={S.ErrorMessage}>{routine.cannotApplyMessage}</div>
-      )}
-
-      <div className="!mb-[7.4rem]" />
-
-      {showModal && (
-        <Modal
-          text="내 예산에 반영할까요?"
-          onConfirm={() => {
-            setShowModal(false);
-            navigate('/budget-register', { state: { routineId: routineId } });
-          }}
-          onCancel={() => setShowModal(false)}
+      <div className={S.DetailContainer}>
+        <BudgetList
+          totalBudget={routine.totalBudget}
+          budgetList={routine.categoryBudgetList}
         />
-      )}
+        <button
+          className={S.BudgetButton(!routine.canApply)}
+          disabled={!routine.canApply}
+          onClick={() => {
+            if (routine.canApply) setShowModal(true);
+          }}
+        >
+          내 예산에 반영
+        </button>
+        {!routine.canApply && (
+          <div className={S.ErrorMessage}>{routine.cannotApplyMessage}</div>
+        )}
+
+        <div className="!mb-[7.4rem]" />
+
+        {showModal && (
+          <Modal
+            text="내 예산에 반영할까요?"
+            onConfirm={() => {
+              setShowModal(false);
+              navigate('/budget-register', { state: { routineId: routineId } });
+            }}
+            onCancel={() => setShowModal(false)}
+          />
+        )}
+      </div>
     </div>
   );
 }
