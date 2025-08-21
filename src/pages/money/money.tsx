@@ -110,6 +110,7 @@ const Money = () => {
 
   const { data: totalData } = useTotalQuery(targetYear, targetMonth);
   const totalAmount = totalData?.result?.budgetId;
+  const usedAmount = totalData?.result?.totalConsumptionAmount;
   const { data } = useBudgetDetailQuery(totalAmount || 0);
 
   const isDaily = activeTab === '일일';
@@ -327,9 +328,10 @@ const Money = () => {
   const fixedUsedAmt = Math.max(0, serverFixedUsedAmt - removedFixedSum);
   const usedAmt = variableUsedAmt + fixedUsedAmt;
 
-  const fillPercent = totalBudgetAmt
-    ? Math.min((usedAmt / totalBudgetAmt) * 100, 100)
-    : 0;
+  const fillPercent =
+    Number(totalBudgetAmt) > 0
+      ? Math.min((Number(usedAmount) / Number(totalBudgetAmt)) * 100, 100)
+      : 0;
 
   const selectedList = selectedDate
     ? (dailyData?.pages.flatMap((page) => page.result.items) ?? [])
@@ -531,7 +533,7 @@ const Money = () => {
 
           <div className={A.TotalRow}>
             <p className={A.TotalSpent}>
-              {comma(usedAmt)}원{' '}
+              {comma(usedAmount || 0)}원{' '}
               <span className={A.TotalSub}>
                 <span className={A.TotalSlash}> / </span>
                 {comma(totalBudgetAmt)}원
@@ -558,7 +560,9 @@ const Money = () => {
               {totalBudgetAmt > 0 ? (
                 <p className={A.SummaryP}>
                   한 달 예산 {comma(totalBudgetAmt)}원 중{' '}
-                  <span className={A.SummaryStrong}>{comma(usedAmt)}원 </span>
+                  <span className={A.SummaryStrong}>
+                    {comma(usedAmount || 0)}원{' '}
+                  </span>
                   사용했어요!
                 </p>
               ) : (
