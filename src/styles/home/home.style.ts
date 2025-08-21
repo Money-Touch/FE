@@ -1,6 +1,6 @@
 // home.tsx
 export const Container =
-  'flex flex-col h-full bg-[var(--color-B2)] pb-[4rem] relative';
+  'flex flex-col bg-[var(--color-B2)] pb-[4rem] relative h-[calc(100vh-10rem)] pt-[7rem] overflow-y-auto';
 export const Header =
   'w-full max-w-[425px] top-0 fixed flex items-center justify-between h-[6rem] pt-[2.4rem] pb-[1rem] z-[50]';
 export const LogoImg = 'w-[3.6rem] h-[3.6rem] ml-[1.7rem]';
