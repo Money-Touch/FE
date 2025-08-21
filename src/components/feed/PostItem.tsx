@@ -4,6 +4,7 @@ import LikeIcon from '../../assets/images/feed/Like.png';
 import LikeIconFill from '../../assets/images/feed/Like_Fill.png';
 import DislikeIcon from '../../assets/images/feed/Dislike.png';
 import DislikeIconFill from '../../assets/images/feed/Dislike_Fill.png';
+import noProfile from '../../assets/images/feed/noProfile.png';
 import type { FeedItem } from '../../types/feed/feed';
 import { useReaction } from '../../hooks/feed/useReaction';
 import * as S from '../../styles/feed/feed.style';
@@ -89,22 +90,18 @@ function PostItem({ post }: Props) {
     navigate(`/feed/post/${post.consumptionRecordId}`);
   }, [navigate, post.consumptionRecordId]);
 
+  const authorProfile = post.user.profileImgUrl || noProfile;
+
   return (
     <div className={S.postItemContainer}>
       <div className={S.profileContainer}>
-        {post.user.profileImgUrl ? (
-          <img
-            src={post.user.profileImgUrl}
-            alt={`${post.user.nickname}의 프로필 이미지`}
-            className={`${S.profileStyle} object-cover`}
-          />
-        ) : (
-          <div
-            className={`${S.profileStyle} bg-[var(--color-G6)]`}
-            role="img"
-            aria-label="기본 프로필 이미지"
-          />
-        )}
+        <img
+          src={authorProfile}
+          alt={`${post.user.nickname}의 프로필 이미지`}
+          className={`${S.profileStyle} object-cover ${
+            authorProfile === noProfile ? 'bg-[var(--color-G6)]' : ''
+          }`}
+        />
         <div className={S.profileText}>
           <h3 className={S.profileName}>{post.user.nickname}</h3>
         </div>
