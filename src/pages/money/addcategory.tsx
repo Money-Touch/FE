@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/header/header';
 import CircleCloseIcon from '../../assets/images/budget/CircleClose.png';
@@ -11,6 +11,10 @@ type FromState = { state?: { from?: string; budgetId?: number } };
 const AddCategory = () => {
   const navigate = useNavigate();
   const location = useLocation() as FromState;
+
+  useEffect(() => {
+    localStorage.setItem('budgetInitialized', 'true');
+  }, []);
 
   const from = location?.state?.from || '/budget-register';
   const budgetId = location?.state?.budgetId ?? 0;
