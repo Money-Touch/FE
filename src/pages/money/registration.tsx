@@ -17,28 +17,6 @@ import type { RegistrationState } from '../../types/money/registration/registrat
 const CATEGORIES = ['배달/외식', '패션/쇼핑', '교통', '카페', '기타'];
 
 const BudgetRegister = () => {
-  useEffect(() => {
-    return () => {
-      if (
-        location.pathname === '/add-category' ||
-        location.pathname === '/budget-register'
-      )
-        return;
-      localStorage.removeItem('monthBudget');
-      localStorage.removeItem('categoryBudgets');
-      localStorage.removeItem('customCategories');
-      localStorage.removeItem('customCategoryBudgets');
-      localStorage.removeItem('routineCategories');
-      localStorage.removeItem('routineCategoryBudgets');
-      localStorage.removeItem('totalRoutineBudget');
-      localStorage.removeItem('year');
-      localStorage.removeItem('month');
-      localStorage.removeItem('budgetId');
-      localStorage.removeItem('routineId');
-      localStorage.removeItem('budgetInitialized');
-    };
-  }, [location.pathname]);
-
   const navigate = useNavigate();
 
   const { state } = useLocation() as {
