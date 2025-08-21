@@ -1,4 +1,4 @@
-export const container = '!h-[calc(100vh-13rem)] !overflow-y-auto !pt-[8.4rem]';
+export const container = '!h-[calc(100vh-10rem)] !overflow-y-auto !pt-[8.4rem]';
 
 export const contentContainer = 'flex flex-col mx-[2.4rem]';
 
