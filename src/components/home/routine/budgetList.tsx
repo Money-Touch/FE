@@ -19,7 +19,7 @@ export default function BudgetList({
       <div className={S.Line} />
 
       <div className={S.BudgetListWrapper}>
-        {budgetList.map((item, index) => (
+        {budgetList?.map((item, index) => (
           <div key={index} className={S.BudgetItem}>
             <div className={S.BudgetLabel}>{item.categoryName}</div>
             <div className={S.BudgetAmountPerItem}>
