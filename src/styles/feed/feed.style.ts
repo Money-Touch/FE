@@ -1,5 +1,5 @@
 export const Container =
-  '!h-[calc(100vh-13rem)] !mb-[13rem] px-[2.4rem]  !overflow-y-auto';
+  '!h-[calc(100vh-10rem)] !mb-[13rem] px-[2.4rem]  !overflow-y-auto';
 
 export const SearchContainer =
   'flex w-full h-[6rem] rounded-[0.5rem] mt-[2.4rem]';

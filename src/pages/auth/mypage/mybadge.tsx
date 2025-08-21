@@ -3,7 +3,7 @@ import Header from '../../../components/header/header';
 import Footer from '../../../components/footer/footer';
 import PencilIcon from '../../../assets/images/auth/badge/Pencil.png';
 import PencilFilledIcon from '../../../assets/images/auth/badge/Pencil_Filled.png';
-import Nobadge from '../../../assets/images/auth/badge/Represent/NoBadge.png';
+import Nobadge from '../../../assets/images/auth/badge/Represent/NoBadge.svg';
 import * as S from '../../../styles/auth/mypage/mybadge.style';
 
 import {
@@ -61,11 +61,22 @@ const Mybadge = () => {
 
   return (
     <div ref={wrapperRef} className={S.container}>
-      <Header title="MY 배지" />
+      <div className="fixed z-[1000]">
+        <Header title="MY 배지" />
+      </div>
       <div className={S.topContainer}>
         <div className={S.titleContainer}>
           <div className={S.title}>대표 배지</div>
-          <button className={S.editImage} onClick={() => setIsEditMode(true)}>
+          <button
+            className={S.editImage}
+            onClick={() => {
+              if (isEditMode) {
+                handleCancel();
+              } else {
+                setIsEditMode(true);
+              }
+            }}
+          >
             <img
               src={isEditMode ? PencilFilledIcon : PencilIcon}
               alt="수정"
