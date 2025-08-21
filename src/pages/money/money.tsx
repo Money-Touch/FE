@@ -1,4 +1,3 @@
-// src/pages/money/money.tsx
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/header/header';
@@ -286,10 +285,17 @@ const Money = () => {
 
   const totalBudgetAmt = data?.result?.totalBudget ?? 0;
 
-  // 서버가 내려주는 전체 사용액(일일 + 고정비 포함)
-  const serverTotalUsedAmt = totalData?.result?.totalConsumptionAmount ?? 0;
+  const serverVariableUsedAmt = totalData?.result?.totalConsumptionAmount ?? 0;
+  const serverFixedUsedAmt =
+    fixedListData?.pages?.reduce((sum, page) => {
+      const list = page?.result?.fixedConsumptions ?? [];
+      const pageSum = list.reduce(
+        (s: number, it: { amount?: number }) => s + (it?.amount ?? 0),
+        0,
+      );
+      return sum + pageSum;
+    }, 0) ?? 0;
 
-  // 방금 UI에서 삭제한 일일 지출 합계
   const removedDailySum = useMemo(() => {
     if (!monthlyData?.pages?.length) return 0;
     let sum = 0;
@@ -305,7 +311,6 @@ const Money = () => {
     return sum;
   }, [monthlyData, removedIds]);
 
-  // 방금 UI에서 삭제한 고정비 합계
   const removedFixedSum = useMemo(() => {
     if (!fixedItems.length) return 0;
     return fixedItems.reduce((acc, it) => {
@@ -316,11 +321,9 @@ const Money = () => {
     }, 0);
   }, [fixedItems, removedFixedIds]);
 
-  // 최종 사용액 = 서버 합계 - (UI에서 방금 삭제한 일일 + 고정비)
-  const usedAmt = Math.max(
-    0,
-    serverTotalUsedAmt - removedDailySum - removedFixedSum,
-  );
+  const variableUsedAmt = Math.max(0, serverVariableUsedAmt - removedDailySum);
+  const fixedUsedAmt = Math.max(0, serverFixedUsedAmt - removedFixedSum);
+  const usedAmt = variableUsedAmt + fixedUsedAmt;
 
   const fillPercent = totalBudgetAmt
     ? Math.min((usedAmt / totalBudgetAmt) * 100, 100)
@@ -330,7 +333,6 @@ const Money = () => {
     ? (dailyData?.pages.flatMap((page) => page.result.items) ?? [])
     : [];
 
-  // ✅ 월간 일일지출(고정비 제외, 삭제 제외) 기준 카테고리별 합계 계산
   const topCategory = useMemo(() => {
     if (!monthlyData?.pages?.length) return null;
 
@@ -582,6 +584,7 @@ const Money = () => {
                       src={starIcon}
                       alt="star"
                     />
+                    {/* 숫자 라벨은 숨기되 레이아웃은 유지 → 별 위치 변화 없음 */}
                     <span
                       aria-hidden="true"
                       style={{
