@@ -61,11 +61,22 @@ const Mybadge = () => {
 
   return (
     <div ref={wrapperRef} className={S.container}>
-      <Header title="MY 배지" />
+      <div className="fixed z-[1000]">
+        <Header title="MY 배지" />
+      </div>
       <div className={S.topContainer}>
         <div className={S.titleContainer}>
           <div className={S.title}>대표 배지</div>
-          <button className={S.editImage} onClick={() => setIsEditMode(true)}>
+          <button
+            className={S.editImage}
+            onClick={() => {
+              if (isEditMode) {
+                handleCancel();
+              } else {
+                setIsEditMode(true);
+              }
+            }}
+          >
             <img
               src={isEditMode ? PencilFilledIcon : PencilIcon}
               alt="수정"
