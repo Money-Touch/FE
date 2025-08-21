@@ -68,10 +68,10 @@ function record() {
     return validateForm(formData, contentError, isMemoInvalid);
   }, [formData, contentError, isMemoInvalid]);
 
-  const { mutate: submitRecord } = useSubmitRecord(resetForm);
+  const { mutate: submitRecord, isPending } = useSubmitRecord(resetForm);
 
   const handleSubmit = () => {
-    if (!isFormValid) return;
+    if (!isFormValid || isPending) return;
     console.log('data:', { formData, file });
 
     submitRecord(
@@ -154,7 +154,11 @@ function record() {
             />
           </div>
 
-          <SubmitButton isActive={isFormValid} onClick={handleSubmit} />
+          <SubmitButton
+            isActive={isFormValid && !isPending}
+            onClick={handleSubmit}
+            label={isPending ? '등록 중...' : '완료'}
+          />
         </div>
       )}
     </>
