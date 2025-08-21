@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { API } from '../../../apis/axios';
 
 type ApiResponse<T> = {
   isSuccess: boolean;
@@ -20,8 +20,14 @@ export type RoutineDetail = {
 };
 
 const fetchMyRoutineDetail = async (routineId: number) => {
-  const { data } = await axios.get<ApiResponse<RoutineDetail>>(
+  const { data } = await API.get<ApiResponse<RoutineDetail>>(
     `/api/house-holds/routines/users/${routineId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Content-Type': 'application/json',
+      },
+    },
   );
   return data;
 };

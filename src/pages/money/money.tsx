@@ -406,6 +406,7 @@ const Money = () => {
 
   const routines: RoutineListItem[] =
     routinesPages?.pages.flatMap((p) => p.result.routineList) ?? [];
+  console.log('루틴', routines);
 
   const routineLoadMoreRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
