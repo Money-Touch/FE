@@ -3,7 +3,7 @@ import Header from '../../../components/header/header';
 import Footer from '../../../components/footer/footer';
 import PencilIcon from '../../../assets/images/auth/badge/Pencil.png';
 import PencilFilledIcon from '../../../assets/images/auth/badge/Pencil_Filled.png';
-import Nobadge from '../../../assets/images/auth/badge/Represent/NoBadge.png';
+import Nobadge from '../../../assets/images/auth/badge/Represent/NoBadge.svg';
 import * as S from '../../../styles/auth/mypage/mybadge.style';
 
 import {
