@@ -12,6 +12,7 @@ const Kakao = () => {
   const handleLogin = () => {
     window.Kakao.Auth.authorize({
       redirectUri: getRedirectUri(),
+      throughTalk: false,
     });
   };
 

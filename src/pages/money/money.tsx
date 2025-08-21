@@ -156,7 +156,7 @@ const Money = () => {
     fetchNextPage: fetchNextFixed,
     hasNextPage: hasNextFixed,
     isFetchingNextPage: isFetchingNextFixed,
-  } = useFixedCostQuery();
+  } = useFixedCostQuery(targetYear, targetMonth);
 
   const fixedItems = useMemo(
     () => fixedListData?.pages.flatMap((p) => p.result.fixedConsumptions) ?? [],
