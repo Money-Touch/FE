@@ -24,7 +24,7 @@ const Routine = () => {
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
   const [customCats, setCustomCats] = useState<string[]>([]);
   const [customBudget, setCustomBudget] = useState<number[]>([]);
-  const [editMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [raw, setRaw] = useState('');
   const [targetIdx, setTargetIdx] = useState<-1 | number>(-1);
@@ -200,11 +200,8 @@ const Routine = () => {
             <p className={A.Label}>나의 소비 루틴</p>
             <button
               className={A.IconBtn}
-              onClick={() =>
-                navigate('/add-category', {
-                  state: { from: '/money-routine', budgetId },
-                })
-              }
+              onClick={() => setEditMode((v) => !v)}
+              aria-pressed={editMode}
             >
               <img className="w-full h-full" src={pencilIcon} alt="edit" />
             </button>
