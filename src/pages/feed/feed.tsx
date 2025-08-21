@@ -11,7 +11,7 @@ import * as S from '../../styles/feed/feed.style';
 import type { SortType, FeedItem } from '../../types/feed/feed';
 
 const Feed: React.FC = () => {
-  const [sortBy, setSortBy] = useState<SortType>('POPULAR');
+  const [sortBy, setSortBy] = useState<SortType>('RECENT');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<FeedItem[]>([]);
   const [isSearchMode, setIsSearchMode] = useState(false);
