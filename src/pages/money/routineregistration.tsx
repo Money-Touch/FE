@@ -72,6 +72,43 @@ const RoutineRegistration = () => {
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
   const [customCats, setCustomCats] = useState<string[]>([]);
   const [customBudget, setCustomBudget] = useState<number[]>([]);
+  const [routineCats, setRoutineCats] = useState<string[]>([]);
+  const [routineBudget, setRoutineBudget] = useState<number[]>([]);
+
+  // useEffect(() => {
+  //   setMonthBudget(Number(localStorage.getItem('monthBudget') || 0));
+
+  //   const savedCat = JSON.parse(
+  //     localStorage.getItem('categoryBudgets') || '[]',
+  //   );
+  //   if (savedCat.length === 5) setCatBudget(savedCat);
+
+  //   const savedCurs = JSON.parse(
+  //     localStorage.getItem('customCategories') || '[]',
+  //   );
+  //   setCustomCats(savedCurs);
+
+  //   const savedCBudg = JSON.parse(
+  //     localStorage.getItem('customCategoryBudgets') || '[]',
+  //   );
+  //   setCustomBudget(
+  //     savedCBudg.length ? savedCBudg : Array(savedCurs.length).fill(0),
+  //   );
+
+  //   const savedRoutineCats = JSON.parse(
+  //     localStorage.getItem('routineCategories') || '[]',
+  //   );
+  //   setRoutineCats(savedRoutineCats);
+
+  //   const savedRoutineBudgets = JSON.parse(
+  //     localStorage.getItem('routineCategoryBudgets') || '[]',
+  //   );
+  //   setRoutineBudget(
+  //     savedRoutineBudgets.length
+  //       ? savedRoutineBudgets
+  //       : Array(savedRoutineCats.length).fill(0),
+  //   );
+  // }, []);
 
   useEffect(() => {
     setMonthBudget(Number(localStorage.getItem('monthBudget') || 0));
@@ -91,6 +128,20 @@ const RoutineRegistration = () => {
     );
     setCustomBudget(
       savedCBudg.length ? savedCBudg : Array(savedCurs.length).fill(0),
+    );
+
+    const savedRoutineCats = JSON.parse(
+      localStorage.getItem('routineCategories') || '[]',
+    );
+    setRoutineCats(savedRoutineCats);
+
+    const savedRoutineBudgets = JSON.parse(
+      localStorage.getItem('routineCategoryBudgets') || '[]',
+    );
+    setRoutineBudget(
+      savedRoutineBudgets.length
+        ? savedRoutineBudgets
+        : Array(savedRoutineCats.length).fill(0),
     );
   }, []);
 
@@ -117,15 +168,54 @@ const RoutineRegistration = () => {
     ...customCats.map((name, i) => [name, customBudget[i] || 0] as const),
   ]);
 
-  const buildBudgetListFromServer = () => {
-    const base = serverCategoryNames.map((name) => ({
+  // const buildBudgetListFromServer = () => {
+  //   const base = serverCategoryNames.map((name) => ({
+  //     categoryName: name,
+  //     amount: localMap.get(name) ?? 0,
+  //   }));
+
+  //   const extras = Array.from(localMap.entries())
+  //     .filter(([name]) => !serverCategoryNames.includes(name))
+  //     .map(([name, amount]) => ({ categoryName: name, amount }));
+
+  //   const routines = routineCats.map((name, i) => ({
+  //     categoryName: name,
+  //     amount: routineBudget[i] || 0,
+  //   }));
+
+  //   return [...base, ...extras, ...routines];
+  // };
+
+  const buildBudgetList = () => {
+    const defaultCats = DEFAULT_CATEGORIES.map((name, i) => ({
       categoryName: name,
-      amount: localMap.get(name) ?? 0,
+      amount:
+        JSON.parse(localStorage.getItem('categoryBudgets') || '[]')[i] || 0,
     }));
-    const extras = Array.from(localMap.entries())
-      .filter(([name]) => !serverCategoryNames.includes(name))
-      .map(([name, amount]) => ({ categoryName: name, amount }));
-    return [...base, ...extras];
+
+    const customCats = JSON.parse(
+      localStorage.getItem('customCategories') || '[]',
+    );
+    const customBudgets = JSON.parse(
+      localStorage.getItem('customCategoryBudgets') || '[]',
+    );
+    const customList = customCats.map((name: string, i: number) => ({
+      categoryName: name,
+      amount: customBudgets[i] || 0,
+    }));
+
+    const routineCats = JSON.parse(
+      localStorage.getItem('routineCategories') || '[]',
+    );
+    const routineBudgets = JSON.parse(
+      localStorage.getItem('routineCategoryBudgets') || '[]',
+    );
+    const routineList = routineCats.map((name: string, i: number) => ({
+      categoryName: name,
+      amount: routineBudgets[i] || 0,
+    }));
+
+    return [...defaultCats, ...customList, ...routineList];
   };
 
   const previewCategories = (() => {
@@ -133,10 +223,17 @@ const RoutineRegistration = () => {
       name,
       amount: localMap.get(name) ?? 0,
     }));
+
     const extras = Array.from(localMap.entries())
       .filter(([name]) => !serverCategoryNames.includes(name))
       .map(([name, amount]) => ({ name, amount }));
-    return [...base, ...extras];
+
+    const routines = routineCats.map((name, i) => ({
+      name,
+      amount: routineBudget[i] || 0,
+    }));
+
+    return [...base, ...extras, ...routines];
   })();
 
   const previewTags = tags
@@ -170,10 +267,20 @@ const RoutineRegistration = () => {
     return url;
   };
 
-  const totalBudget = [...catBudget, ...customBudget].reduce(
-    (a, b) => a + b,
-    0,
-  );
+  const totalBudget = (() => {
+    const cat = JSON.parse(localStorage.getItem('categoryBudgets') || '[]');
+    const custom = JSON.parse(
+      localStorage.getItem('customCategoryBudgets') || '[]',
+    );
+    const routine = JSON.parse(
+      localStorage.getItem('routineCategoryBudgets') || '[]',
+    );
+
+    return [...cat, ...custom, ...routine].reduce(
+      (a: number, b: number) => a + Number(b || 0),
+      0,
+    );
+  })();
 
   const onChangeTag = (idx: number, raw: string) => {
     const val = raw.startsWith('#') ? raw : `# ${raw.replace(/^#+/, '')}`;
@@ -210,6 +317,13 @@ const RoutineRegistration = () => {
   const { mutate, isPending } = useCreateRoutineMutation();
 
   const save = async () => {
+    console.log('total', totalBudget);
+    console.log('month', monthBudget);
+    console.log('routineCats', routineCats);
+    console.log('routineBudget', routineBudget);
+    console.log('catBudget', catBudget);
+    console.log('customBudget', customBudget);
+
     if (!valid) return;
     if (!budgetId) {
       alert('예산 ID(budgetId)를 확인할 수 없습니다.');
@@ -242,11 +356,12 @@ const RoutineRegistration = () => {
           totalBudget,
           routineName: title.trim(),
           hashtags: normalizedTags,
-          budgetList: buildBudgetListFromServer(),
+          budgetList: buildBudgetList(),
         },
       },
       {
         onSuccess: () => {
+          // console.log(data);
           alert('소비 루틴이 등록되었습니다.');
           navigate('/money', { replace: true, state: { tab: '소비 루틴' } });
         },
