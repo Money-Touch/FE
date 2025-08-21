@@ -16,6 +16,7 @@ import eatImage from '../../assets/images/budget/eat.png';
 import playImage from '../../assets/images/budget/play.png';
 import fixedCostImage from '../../assets/images/budget/fixedcost.png';
 import closeIcon from '../../assets/images/budget/Close.png';
+import etcImage from '../../assets/images/budget/etc.png';
 
 import { useTotalQuery } from '../../hooks/money/money/useTotalQuery';
 import { useMonthlyQuery } from '../../hooks/money/money/useMonthlyQuery';
@@ -46,6 +47,14 @@ const categoryImages: Record<string, string> = {
   기타: playImage,
   '패션/쇼핑': playImage,
   고정비: fixedCostImage,
+};
+
+const tipByTopCategory: Record<string, string> = {
+  '배달/외식': '이 정도면 셰프를 모셔도 되겠어요!',
+  교통: '이 정도면 반쯤 전국일주 하셨네요!',
+  '패션/쇼핑': '이젠 뭘 샀는지 기억이 잘 안 나지 않나요?',
+  카페: '이 정도면 카페를 차리는 게 나을 것 같아요!',
+  기타: '돈이 들어오자마자 나가는 마술을 부리고 있나요?',
 };
 
 type RoutineItemWithLegacyImage = RoutineListItem & {
@@ -276,7 +285,6 @@ const Money = () => {
 
   const totalBudgetAmt = data?.result?.totalBudget ?? 0;
 
-  // 서버가 알려준 변동/고정 합계
   const serverVariableUsedAmt = totalData?.result?.totalConsumptionAmount ?? 0;
   const serverFixedUsedAmt =
     fixedListData?.pages?.reduce((sum, page) => {
@@ -288,7 +296,6 @@ const Money = () => {
       return sum + pageSum;
     }, 0) ?? 0;
 
-  // 방금 삭제한 일일 항목들의 금액 합계
   const removedDailySum = useMemo(() => {
     if (!monthlyData?.pages?.length) return 0;
     let sum = 0;
@@ -326,6 +333,46 @@ const Money = () => {
     ? (dailyData?.pages.flatMap((page) => page.result.items) ?? [])
     : [];
 
+  const topCategory = useMemo(() => {
+    if (!monthlyData?.pages?.length) return null;
+
+    const sums = new Map<string, number>();
+    for (const p of monthlyData.pages) {
+      for (const day of p.result.monthlyHistory) {
+        for (const it of day.items) {
+          if (removedIds.has(it.consumptionRecordId)) continue;
+          if (it.categoryName === '고정비' || it.categoryName === '[고정비]')
+            continue;
+
+          const key = it.categoryName || '기타';
+          const prev = sums.get(key) ?? 0;
+          sums.set(key, prev + (it.amount ?? 0));
+        }
+      }
+    }
+
+    if (sums.size === 0) return null;
+
+    let topName = '';
+    let topValue = -1;
+    for (const [name, v] of sums) {
+      if (v > topValue) {
+        topValue = v;
+        topName = name;
+      }
+    }
+
+    const icon = categoryImages[topName] ?? etcImage;
+    const message =
+      tipByTopCategory[topName] ?? '혹시 이 분야로 창업 준비 중이신가요?';
+
+    return { name: topName, icon, message, total: topValue };
+  }, [monthlyData, removedIds]);
+
+  const showTopTip =
+    !!topCategory &&
+    (monthlyData?.pages?.[0]?.result?.monthlyHistory?.length ?? 0) > 0;
+
   const onDragStart = (e: React.PointerEvent) => {
     if (!sheetOpen) return;
     setAnim(false);
@@ -353,7 +400,7 @@ const Money = () => {
     fetchNextPage: fetchNextRoutines,
     hasNextPage: hasNextRoutines,
     isFetchingNextPage: isFetchingNextRoutines,
-  } = useMyRoutinesQuery();
+  } = useMyRoutinesQuery(targetYear, targetMonth);
 
   const routines: RoutineListItem[] =
     routinesPages?.pages.flatMap((p) => p.result.routineList) ?? [];
@@ -388,18 +435,75 @@ const Money = () => {
             style={{
               background:
                 'linear-gradient(135deg, var(--color-subColor3) 0%, #4be3a5 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
             }}
           >
-            <p className={A.GreetText}>
-              {nickname}
-              <span className="font-medium">
-                님!
-                <br />
-                소비 내역을 작성해 주세요.
-              </span>
-            </p>
+            {showTopTip ? (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  width: '100%',
+                  gap: 16,
+                  padding: '14px 20px 14px 32px',
+                }}
+              >
+                <div
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    flex: '0 0 48px',
+                    background: 'rgba(255,255,255,0.95)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.06)',
+                  }}
+                >
+                  <img
+                    src={topCategory!.icon}
+                    alt={topCategory!.name}
+                    style={{
+                      width: '80%',
+                      height: '80%',
+                      objectFit: 'contain',
+                      display: 'block',
+                    }}
+                  />
+                </div>
 
-            <img className={A.MiniCard} src={basicImage} alt="일러스트" />
+                <p
+                  className={A.GreetText}
+                  style={{
+                    margin: 3,
+                    color: '#fff',
+                    fontWeight: 500,
+                    fontSize: 18,
+                    lineHeight: '25px',
+                    letterSpacing: '-0.2px',
+                    paddingRight: 24,
+                  }}
+                >
+                  {topCategory!.message}
+                </p>
+              </div>
+            ) : (
+              <>
+                <p className={A.GreetText}>
+                  {nickname}
+                  <span className="font-medium">
+                    님!
+                    <br />
+                    소비 내역을 작성해 주세요.
+                  </span>
+                </p>
+                <img className={A.MiniCard} src={basicImage} alt="일러스트" />
+              </>
+            )}
           </section>
 
           <div className={A.MonthRow}>
@@ -447,7 +551,7 @@ const Money = () => {
 
           <div className={A.BudgetCardWrapper}>
             <div className={A.Summary}>
-              {usedAmt > 0 ? (
+              {totalBudgetAmt > 0 ? (
                 <p className={A.SummaryP}>
                   한 달 예산 {comma(totalBudgetAmt)}원 중{' '}
                   <span className={A.SummaryStrong}>{comma(usedAmt)}원 </span>
@@ -480,9 +584,12 @@ const Money = () => {
                       src={starIcon}
                       alt="star"
                     />
+                    {/* 숫자 라벨은 숨기되 레이아웃은 유지 → 별 위치 변화 없음 */}
                     <span
+                      aria-hidden="true"
                       style={{
-                        visibility: fillPercent === 0 ? 'hidden' : 'visible',
+                        visibility: 'hidden',
+                        whiteSpace: 'nowrap',
                       }}
                     >
                       {comma(usedAmt)}원
@@ -503,7 +610,7 @@ const Money = () => {
             </div>
           </div>
         </div>
-        -{' '}
+
         <nav className={A.TabMenu}>
           <div className={A.TabItemMenu}>
             {TAB_LIST.map((t) => {
@@ -521,6 +628,7 @@ const Money = () => {
             })}
           </div>
         </nav>
+
         <div className={A.ContentArea}>
           {activeTab === '일일' && (
             <>
@@ -585,7 +693,7 @@ const Money = () => {
                                     alt={item.categoryName}
                                   />
                                 ) : (
-                                  item.categoryName
+                                  <img src={etcImage} alt={item.categoryName} />
                                 )}
                               </span>
                               <span className="memo">{item.content}</span>
@@ -725,7 +833,7 @@ const Money = () => {
                                 alt={item.categoryName}
                               />
                             ) : (
-                              item.categoryName
+                              <img src={etcImage} alt={item.categoryName} />
                             )}
                           </span>
                           <span className={A.CalMemo}>{item.content}</span>

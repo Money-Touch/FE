@@ -9,10 +9,10 @@ export const GreetingCard =
   'relative w-full h-[11rem] rounded-[1.5rem] flex gap-[2.2rem] items-center mb-[2.4rem]';
 
 export const GreetText =
-  'ml-[3.9rem] text-[var(--color-white)] text-[2rem] font-[700] leading-[2.8rem]';
+  'ml-[3.9rem] text-[var(--color-white)] text-[1.8rem] font-[700] leading-[2.6rem]';
 
 export const MiniCard =
-  'w-[8.4rem] h-[9.2rem] ml-[-2rem] shrink-0 -translate-y-[0.3rem]';
+  'w-[8.4rem] h-[9.2rem] ml-[0rem] shrink-0 -translate-y-[0.3rem]';
 
 export const MonthRow = 'flex w-full items-center gap-[0.4rem]';
 
@@ -136,7 +136,7 @@ export const TagsRow = 'flex gap-[0.6rem]';
 
 export const Tag = 'text-[1.1rem] font-[300] text-[var(--color-G4)]';
 
-export const UserRow = 'flex items-center mt-[2.1rem] gap-[0.6rem]';
+export const UserRow = 'flex items-center mt-[1rem] gap-[0.6rem]';
 
 export const Avatar = 'w-[1.4rem] h-[1.4rem] rounded-full bg-[var(--color-G7)]';
 

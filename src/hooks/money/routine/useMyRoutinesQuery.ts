@@ -2,7 +2,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { API } from '../../../apis/axios';
 
-// ---- API types ----
 export type RoutineItem = {
   routineId: number;
   createDate: string;
@@ -29,10 +28,15 @@ export type ApiResponse<T> = {
   result: T;
 };
 
-export function useMyRoutinesQuery() {
+// ✅ year/month를 인자로 받고, 미지정 시 현재 날짜로 기본값 설정
+export function useMyRoutinesQuery(yearInput?: number, monthInput?: number) {
+  const now = new Date();
+  const year = yearInput ?? now.getFullYear();
+  const month = monthInput ?? now.getMonth() + 1;
+
   return useInfiniteQuery<ApiResponse<RoutineListResult>, Error>({
-    queryKey: ['my-routines'],
-    initialPageParam: undefined, // 첫 요청은 cursorId 없음
+    queryKey: ['my-routines', year, month], // ✅ 캐시 분리
+    initialPageParam: undefined,
     queryFn: async ({ pageParam }) => {
       const accessToken =
         localStorage.getItem('accessToken') ||
@@ -42,11 +46,14 @@ export function useMyRoutinesQuery() {
       const res = await API.get<ApiResponse<RoutineListResult>>(
         '/api/house-holds/routines/users',
         {
-          params: pageParam ? { cursorId: pageParam } : undefined,
+          params: {
+            year, // ✅ 여기서 year/month 사용
+            month,
+            ...(pageParam ? { cursorId: pageParam } : {}),
+          },
           headers: accessToken
             ? { Authorization: `Bearer ${accessToken}` }
             : undefined,
-          // withCredentials: true, // 쿠키 인증이면 해제
         },
       );
 

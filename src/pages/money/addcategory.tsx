@@ -6,29 +6,52 @@ import * as A from '../../styles/budget/addcategory.styles';
 
 const MAX_LEN = 8;
 
+type FromState = { state?: { from?: string; budgetId?: number } };
+
 const AddCategory = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [category, setCategory] = useState('');
+  const location = useLocation() as FromState;
 
-  const from =
-    (location.state as { from?: string } | null)?.from || '/budget-register';
+  const from = location?.state?.from || '/budget-register';
+  const budgetId = location?.state?.budgetId ?? 0;
+
+  const [category, setCategory] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length <= MAX_LEN) setCategory(e.target.value);
   };
 
   const handleSubmit = () => {
-    if (!category.trim()) return;
+    const name = category.trim();
+    if (!name) return;
 
-    const existing = JSON.parse(
+    const existingCats: string[] = JSON.parse(
       localStorage.getItem('customCategories') || '[]',
     );
-    localStorage.setItem(
-      'customCategories',
-      JSON.stringify([...existing, category.trim()]),
+    const existingBudgets: number[] = JSON.parse(
+      localStorage.getItem('customCategoryBudgets') || '[]',
     );
-    navigate(from, { replace: true });
+
+    if (!existingCats.includes(name)) {
+      const newCats = [...existingCats, name];
+      const newBudgets = [...existingBudgets, 0];
+
+      localStorage.setItem('customCategories', JSON.stringify(newCats));
+      localStorage.setItem('customCategoryBudgets', JSON.stringify(newBudgets));
+
+      const defaultBudgets: number[] = JSON.parse(
+        localStorage.getItem('categoryBudgets') || '[]',
+      );
+      localStorage.setItem(
+        'totalRoutineBudget',
+        JSON.stringify([...defaultBudgets, ...newBudgets]),
+      );
+    }
+
+    navigate(from, {
+      replace: true,
+      state: { budgetId, refresh: Date.now() },
+    });
   };
 
   return (
