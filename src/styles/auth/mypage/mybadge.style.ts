@@ -1,5 +1,5 @@
 export const container =
-  'flex-col !h-[calc(100vh-10rem)] !mb-[13rem] !overflow-y-auto !pt-[8.4rem]';
+  'flex-col !h-[calc(100vh-10rem)] !mb-[10rem] !overflow-y-auto !pt-[8.4rem]';
 
 export const topContainer =
   'flex flex-col w-full mx-auto px-[1.6rem] mx-[2.4rem]';
