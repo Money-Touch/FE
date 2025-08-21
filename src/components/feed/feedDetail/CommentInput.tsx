@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from '../../../styles/feed/feedDetail.style';
-import PersonIcon from '../../../assets/images/feed/Person.png';
+import noProfile from '../../../assets/images/feed/noProfile.png';
 import { useMypageQuery } from '../../../hooks/auth/mypage/useMypageQuery';
 
 interface CommentInputProps {
@@ -24,7 +24,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const disabled = replyText.trim().length === 0 || isSubmitting;
 
   const { data: mypageData } = useMypageQuery();
-  const profileImageUrl = mypageData?.result?.profileImgUrl || PersonIcon;
+  const profileImageUrl = mypageData?.result?.profileImgUrl || noProfile;
 
   return (
     <div className={S.replyInputWrapper}>

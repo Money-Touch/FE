@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from '../../../styles/feed/feedDetail.style';
 
-import PersonIcon from '../../../assets/images/feed/Person.png';
+import noProfile from '../../../assets/images/feed/noProfile.png';
 import CommentIcon from '../../../assets/images/feed/Bubble.png';
 import LikeIcon from '../../../assets/images/feed/Like.png';
 import LikeActiveIcon from '../../../assets/images/feed/Like_Fill.png';
@@ -64,7 +64,7 @@ const ReplyItem: React.FC<ReplyItemProps> = ({
           <div className={S.commentAuthorSection}>
             <div className={S.authorInfoGroup}>
               <img
-                src={reply.profileImgUrl || PersonIcon}
+                src={reply.profileImgUrl || noProfile}
                 className={S.profileImage}
                 alt="작성자 프로필"
               />
@@ -124,7 +124,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
           <div className={S.commentAuthorSection}>
             <div className={S.authorInfoGroup}>
               <img
-                src={comment.profileImgUrl || PersonIcon}
+                src={comment.profileImgUrl || noProfile}
                 className={S.profileImage}
                 alt="작성자 프로필"
               />

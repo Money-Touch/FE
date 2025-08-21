@@ -5,7 +5,7 @@ import LikeActiveIcon from '../../../assets/images/feed/Like_Fill.png';
 import DislikeIcon from '../../../assets/images/feed/Dislike.png';
 import DislikeActiveIcon from '../../../assets/images/feed/Dislike_Fill.png';
 import CommentIcon from '../../../assets/images/feed/Bubble.png';
-import PersonIcon from '../../../assets/images/feed/Person.png';
+import noProfile from '../../../assets/images/feed/noProfile.png';
 import EllipseIcon from '../../../assets/images/feed/Ellipse_221.png';
 import type {
   FeedDetailResultDTO,
@@ -47,7 +47,7 @@ const DetailPostItem: React.FC<Props> = ({
   const image = data.imageUrls?.[0];
   const categoryName = data.consumptionCategory?.budgetCategoryName ?? '';
   const authorName = data.user?.nickname ?? '';
-  const authorProfile = data.user?.profileImgUrl || PersonIcon;
+  const authorProfile = data.user?.profileImgUrl || noProfile;
 
   return (
     <>
