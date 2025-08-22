@@ -28,43 +28,42 @@ const Ranking = () => {
   const podiumImages = [ranking2, ranking1, ranking3];
 
   return (
-    <div
-      className={`pageContainer ${S.Container} !pt-[8.6rem] !overflow-y-auto`}
-    >
+    <div className={S.Container}>
       <Header
         title="똑똑 소비 왕 랭킹"
         bgColor="bg-[#e0fadd] backdrop-blur-sm"
       />
+      <div className={S.SectionContainer}>
+        <MyRankInfo user={myRank} />
 
-      <MyRankInfo user={myRank} />
+        <div className={S.Top3Wrapper}>
+          {displayOrder.map((orderIdx, i) => (
+            <TopUserInfo
+              key={top3[orderIdx].nickname}
+              user={top3[orderIdx]}
+              medal={medalImages[orderIdx]}
+              podium={podiumImages[i]}
+            />
+          ))}
+        </div>
 
-      <div className={S.Top3Wrapper}>
-        {displayOrder.map((orderIdx, i) => (
-          <TopUserInfo
-            key={top3[orderIdx].nickname}
-            user={top3[orderIdx]}
-            medal={medalImages[orderIdx]}
-            podium={podiumImages[i]}
-          />
-        ))}
-      </div>
-
-      <div className={S.OtherListWrapper}>
-        <div className={S.OtherListBox}>
-          {others.map((user, idx) => {
-            const rankNow = idx + 4;
-            const icon = getRankChangeIcon(
-              user.rankChangeStatus as 'UP' | 'DOWN' | 'SAME',
-            );
-            return (
-              <OtherUserInfo
-                key={user.nickname}
-                user={user}
-                rank={rankNow}
-                icon={icon}
-              />
-            );
-          })}
+        <div className={S.OtherListWrapper}>
+          <div className={S.OtherListBox}>
+            {others.map((user, idx) => {
+              const rankNow = idx + 4;
+              const icon = getRankChangeIcon(
+                user.rankChangeStatus as 'UP' | 'DOWN' | 'SAME',
+              );
+              return (
+                <OtherUserInfo
+                  key={user.nickname}
+                  user={user}
+                  rank={rankNow}
+                  icon={icon}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 // ranking.tsx
-export const Container =
-  'flex flex-col px-[2.4rem] overflow-y-auto overflow-x-hidden bg-[linear-gradient(180deg,_#e0fadd_0%,_var(--color-M2)_56.31%)]';
+export const Container = 'flex flex-col h-screen';
+export const SectionContainer =
+  'flex flex-col flex-1 min-h-0 overflow-y-auto overflow-x-hidden px-[2.4rem] pt-[8.6rem] bg-[linear-gradient(180deg,_#e0fadd_0%,_var(--color-M2)_56.31%)] custom-scroll';
 
 //myRank.tsx
 export const MyRankBox =
@@ -28,7 +29,7 @@ export const Podium = 'w-[7rem] h-auto mt-[0.3rem]';
 
 // otherUser.tsx
 export const OtherListWrapper =
-  'w-[calc(100%+4.8rem)] h-full rounded-t-[1.5rem] bg-[var(--color-B1)] shadow-[0_0_1rem_0_#0000000d] box-border px-[2.4rem]';
+  '-mx-[2.4rem] w-[calc(100%+4.8rem)] h-full rounded-t-[1.5rem] bg-[var(--color-B1)] shadow-[0_0_1rem_0_#0000000d] box-border px-[2.4rem]';
 export const OtherListBox =
   'w-full h-[31.4rem] mt-[2.8rem] mb-[5.2rem] gap-[2.2rem] box-border';
 export const OtherUser =

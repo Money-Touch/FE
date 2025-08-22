@@ -79,6 +79,18 @@
   .font-hakgyoL {
     font-family: 'Hakgyoansim-L', sans-serif !important;
   }
+
+  .custom-scroll {
+    scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
+  }
+
+  .custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
 }
 
 @layer utilities {
