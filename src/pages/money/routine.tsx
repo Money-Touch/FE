@@ -24,6 +24,8 @@ const Routine = () => {
   const [catBudget, setCatBudget] = useState<number[]>(Array(5).fill(0));
   const [customCats, setCustomCats] = useState<string[]>([]);
   const [customBudget, setCustomBudget] = useState<number[]>([]);
+  const [routineCats, setRoutineCats] = useState<string[]>([]);
+  const [routineBudget, setRoutineBudget] = useState<number[]>([]);
   const [editMode, setEditMode] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [raw, setRaw] = useState('');
@@ -31,8 +33,30 @@ const Routine = () => {
   const [targetCustom, setTargetCustom] = useState(false);
 
   const { data: budgetDetailData } = useBudgetDetailQuery(budgetId || 0);
+  // console.log('routine', budgetDetailData);
+
+  const handleBack = () => {
+    [
+      'year',
+      'month',
+      'monthBudget',
+      'categoryBudgets',
+      'customCategories',
+      'customCategoryBudgets',
+      'totalRoutineBudget',
+      'budgetId',
+      'routineId',
+      'budgetInitialized',
+      'routineCategories',
+      'routineCategoryBudgets',
+    ].forEach((key) => localStorage.removeItem(key));
+
+    navigate('/money', { state: { activeTab: 'routine' } });
+  };
 
   useEffect(() => {
+    if (localStorage.getItem('budgetInitialized') === 'true') return;
+
     const result = budgetDetailData?.result;
     if (!result) return;
 
@@ -74,6 +98,14 @@ const Routine = () => {
     setCustomCats(mergedCats);
     setCustomBudget(mergedBudgets);
 
+    const serverRoutine: Array<{ categoryName: string; amount: number }> =
+      result.routineCategoryBudgets ?? [];
+    const routineNames = serverRoutine.map((c) => c.categoryName);
+    const routineBudgets = serverRoutine.map((c) => Number(c.amount || 0));
+
+    setRoutineCats(routineNames);
+    setRoutineBudget(routineBudgets);
+
     localStorage.setItem('monthBudget', String(total));
     localStorage.setItem('categoryBudgets', JSON.stringify(nextCatBudget));
     localStorage.setItem('customCategories', JSON.stringify(mergedCats));
@@ -81,23 +113,48 @@ const Routine = () => {
       'customCategoryBudgets',
       JSON.stringify(mergedBudgets),
     );
+    localStorage.setItem('routineCategories', JSON.stringify(routineNames));
+    localStorage.setItem(
+      'routineCategoryBudgets',
+      JSON.stringify(routineBudgets),
+    );
     localStorage.setItem(
       'totalRoutineBudget',
-      JSON.stringify([...nextCatBudget, ...mergedBudgets]),
+      JSON.stringify([...nextCatBudget, ...mergedBudgets, ...routineBudgets]),
     );
+
+    localStorage.setItem('budgetInitialized', 'true');
   }, [budgetDetailData]);
 
   useEffect(() => {
+    const month = Number(localStorage.getItem('monthBudget') ?? 0);
+    setMonthBudget(month);
+
+    const catB: number[] = JSON.parse(
+      localStorage.getItem('categoryBudgets') || '[]',
+    );
+    if (catB.length) setCatBudget(catB);
+
     const cats: string[] = JSON.parse(
       localStorage.getItem('customCategories') || '[]',
     );
     const budgets: number[] = JSON.parse(
       localStorage.getItem('customCategoryBudgets') || '[]',
     );
-
     if (cats.length) {
       setCustomCats(cats);
       setCustomBudget(cats.map((_, i) => Number(budgets[i] ?? 0)));
+    }
+
+    const routineCats: string[] = JSON.parse(
+      localStorage.getItem('routineCategories') || '[]',
+    );
+    const routineBudgets: number[] = JSON.parse(
+      localStorage.getItem('routineCategoryBudgets') || '[]',
+    );
+    if (routineCats.length) {
+      setRoutineCats(routineCats);
+      setRoutineBudget(routineBudgets);
     }
   }, [location?.state?.refresh]);
 
@@ -158,7 +215,11 @@ const Routine = () => {
 
   const canConfirm =
     monthBudget > 0 &&
-    monthBudget === [...catBudget, ...customBudget].reduce((a, b) => a + b, 0);
+    monthBudget ===
+      [...catBudget, ...customBudget, ...routineBudget].reduce(
+        (acc, cur) => acc + cur,
+        0,
+      );
 
   const handleConfirm = () => {
     if (!canConfirm) return;
@@ -180,7 +241,7 @@ const Routine = () => {
 
   return (
     <div className={A.Wrap}>
-      <Header title="소비 루틴 등록" />
+      <Header title="소비 루틴 등록" onBack={handleBack} />
 
       <main className={A.Body}>
         <section className={A.Section}>
@@ -240,6 +301,25 @@ const Routine = () => {
                   </div>
                 ) : (
                   <span>{comma(customBudget[i] ?? 0)}원</span>
+                )}
+              </li>
+            ))}
+
+            {routineCats.map((name, i) => (
+              <li
+                key={`${name}-${i}`}
+                className={A.CatLi(editMode)}
+                onClick={() => editMode && openModal(i, true)}
+              >
+                <span className={A.CatPrimary}>{name}</span>
+                {editMode ? (
+                  <div className={A.EditWrapper}>
+                    <span className={A.EditInput}>
+                      {comma(routineBudget[i] ?? 0)}원
+                    </span>
+                  </div>
+                ) : (
+                  <span>{comma(routineBudget[i] ?? 0)}원</span>
                 )}
               </li>
             ))}

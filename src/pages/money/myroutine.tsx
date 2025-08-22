@@ -24,6 +24,7 @@ const MyRoutine = () => {
   const { id } = useParams<{ id: string }>();
   const routineId = Number(id);
   const { data, isLoading, isError } = useMyRoutineDetailQuery(routineId);
+  console.log(data);
 
   const routineName = data?.result?.routineName ?? '소비 루틴';
   const totalBudget = data?.result?.totalBudget ?? 0;

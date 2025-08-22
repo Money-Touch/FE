@@ -6,21 +6,27 @@ export function useClearBudgetStorage() {
 
   useEffect(() => {
     if (
-      location.pathname !== '/budget-register' &&
-      location.pathname !== '/add-category'
+      location.pathname === '/budget-register' ||
+      location.pathname === '/add-category' ||
+      location.pathname === '/money-routine' ||
+      location.pathname === '/routine-registration'
     ) {
-      localStorage.removeItem('monthBudget');
-      localStorage.removeItem('categoryBudgets');
-      localStorage.removeItem('customCategories');
-      localStorage.removeItem('customCategoryBudgets');
-      localStorage.removeItem('routineCategories');
-      localStorage.removeItem('routineCategoryBudgets');
-      localStorage.removeItem('totalRoutineBudget');
-      localStorage.removeItem('year');
-      localStorage.removeItem('month');
-      localStorage.removeItem('budgetId');
-      localStorage.removeItem('routineId');
-      localStorage.removeItem('budgetInitialized');
+      return () => {
+        [
+          'monthBudget',
+          'categoryBudgets',
+          'customCategories',
+          'customCategoryBudgets',
+          'routineCategories',
+          'routineCategoryBudgets',
+          'totalRoutineBudget',
+          'year',
+          'month',
+          'budgetId',
+          'routineId',
+          'budgetInitialized',
+        ].forEach((key) => localStorage.removeItem(key));
+      };
     }
   }, [location.pathname]);
 }

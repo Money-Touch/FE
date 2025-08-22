@@ -78,6 +78,14 @@ function errorMessage(err: unknown, fallback = '삭제에 실패했습니다.'):
 }
 
 const Money = () => {
+  useEffect(() => {
+    const reloaded = sessionStorage.getItem('moneyPageReloaded');
+    if (!reloaded) {
+      sessionStorage.setItem('moneyPageReloaded', 'true');
+      window.location.reload();
+    }
+  }, []);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -110,6 +118,7 @@ const Money = () => {
 
   const { data: totalData } = useTotalQuery(targetYear, targetMonth);
   const totalAmount = totalData?.result?.budgetId;
+  const usedAmount = totalData?.result?.totalConsumptionAmount;
   const { data } = useBudgetDetailQuery(totalAmount || 0);
 
   const isDaily = activeTab === '일일';
@@ -327,9 +336,10 @@ const Money = () => {
   const fixedUsedAmt = Math.max(0, serverFixedUsedAmt - removedFixedSum);
   const usedAmt = variableUsedAmt + fixedUsedAmt;
 
-  const fillPercent = totalBudgetAmt
-    ? Math.min((usedAmt / totalBudgetAmt) * 100, 100)
-    : 0;
+  const fillPercent =
+    Number(totalBudgetAmt) > 0
+      ? Math.min((Number(usedAmount) / Number(totalBudgetAmt)) * 100, 100)
+      : 0;
 
   const selectedList = selectedDate
     ? (dailyData?.pages.flatMap((page) => page.result.items) ?? [])
@@ -406,6 +416,7 @@ const Money = () => {
 
   const routines: RoutineListItem[] =
     routinesPages?.pages.flatMap((p) => p.result.routineList) ?? [];
+  console.log('루틴', routines);
 
   const routineLoadMoreRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -530,7 +541,7 @@ const Money = () => {
 
           <div className={A.TotalRow}>
             <p className={A.TotalSpent}>
-              {comma(usedAmt)}원{' '}
+              {comma(usedAmount || 0)}원{' '}
               <span className={A.TotalSub}>
                 <span className={A.TotalSlash}> / </span>
                 {comma(totalBudgetAmt)}원
@@ -557,7 +568,9 @@ const Money = () => {
               {totalBudgetAmt > 0 ? (
                 <p className={A.SummaryP}>
                   한 달 예산 {comma(totalBudgetAmt)}원 중{' '}
-                  <span className={A.SummaryStrong}>{comma(usedAmt)}원 </span>
+                  <span className={A.SummaryStrong}>
+                    {comma(usedAmount || 0)}원{' '}
+                  </span>
                   사용했어요!
                 </p>
               ) : (
@@ -802,7 +815,7 @@ const Money = () => {
                 <section
                   className={A.CalListSection}
                   style={{
-                    transform: `translateY(${dragOffset}px)`,
+                    transform: `translateY(${dragOffset / 10}rem)`,
                     transition: anim ? 'transform 0.25s ease' : 'none',
                   }}
                   onPointerDown={onDragStart}
@@ -863,7 +876,7 @@ const Money = () => {
           )}
 
           {activeTab === '고정비' && (
-            <>
+            <div className={A.ContentArea}>
               <div className={A.ButtonContainer}>
                 <img
                   onClick={() => navigate('/fixed-cost')}
@@ -934,7 +947,7 @@ const Money = () => {
                   <p className={A.EmptyText}>등록된 고정비가 없어요.</p>
                 </div>
               )}
-            </>
+            </div>
           )}
 
           {activeTab === '소비 루틴' && (

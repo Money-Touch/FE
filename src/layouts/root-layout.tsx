@@ -1,12 +1,12 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../components/footer/footer';
 import useAutoTokenRefresh from '../hooks/auth/token/useAutoTokenRefresh';
-import { useClearBudgetStorage } from '../hooks/common/useClearBudgetStorage';
+// import { useClearBudgetStorage } from '../hooks/common/useClearBudgetStorage';
 
 const RootLayout = () => {
   useAutoTokenRefresh();
   const location = useLocation();
-  useClearBudgetStorage();
+  // useClearBudgetStorage();
   const currentPath = location.pathname;
 
   const showFooterPaths = ['/home', '/money', '/feed', '/mypage'];

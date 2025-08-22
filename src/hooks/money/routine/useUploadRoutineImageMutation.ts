@@ -1,5 +1,4 @@
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { API } from '../../../apis/axios';
 
 type ApiResponse<T> = {
@@ -16,27 +15,16 @@ type UploadResult = {
 };
 
 export const useUploadRoutineImageMutation = () => {
-  const accessToken =
-    localStorage.getItem('accessToken') ||
-    localStorage.getItem('ACCESS_TOKEN') ||
-    '';
-
-  // 업로드는 API 인스턴스의 기본 JSON 헤더 영향을 피하기 위해 axios 기본 인스턴스 사용
-  const baseURL = (API.defaults.baseURL as string) || '';
+  const accessToken = localStorage.getItem('accessToken') || '';
 
   return useMutation<ApiResponse<UploadResult>, Error, FormData>({
     mutationFn: async (formData: FormData) => {
-      const res = await axios.post<ApiResponse<UploadResult>>(
-        baseURL + '/api/house-holds/routines/img',
-        formData,
-        {
-          headers: {
-            ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-            // Content-Type 설정하지 않음 (브라우저가 boundary 포함해 자동 설정)
-          },
-          withCredentials: true,
+      const res = await API.post('/api/house-holds/routines/img', formData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': undefined,
         },
-      );
+      });
 
       const data = res.data;
       if (!data?.isSuccess) {

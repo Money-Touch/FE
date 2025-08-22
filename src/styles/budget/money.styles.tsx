@@ -1,7 +1,7 @@
 export const Container =
-  'pt-[8.4rem] pb-[13rem] w-full h-screen bg-[var(--color-B1)] flex flex-col items-center';
+  'pt-[8.4rem] w-full min-h-full bg-[var(--color-B1)] flex flex-col items-center !h-[calc(100vh-10rem)] !overflow-y-auto !pb-[10rem]';
 
-export const MainContainer = 'overflow-y-auto w-full';
+export const MainContainer = 'overflow-y-auto w-full h-full';
 
 export const TopContainer = 'w-full px-[2.4rem]';
 
@@ -71,7 +71,7 @@ export const TabUnderline =
   'absolute bottom-0 left-1/2 -translate-x-1/2 w-[4.4rem] h-[0.4rem] bg-[var(--color-mainColor1)] rounded-[1rem]';
 
 export const ContentArea =
-  'bg-[var(--color-white)] h-full w-full relative pt-[2.71rem]';
+  'bg-[var(--color-white)] w-full relative pt-[2.71rem]';
 
 export const ButtonContainer =
   'w-full flex justify-end pr-[2.4rem] gap-[1.6rem]';
@@ -165,30 +165,30 @@ export const DayNumButton = (selected: boolean) =>
 
 export const SpendPill = (minus: boolean) =>
   [
-    'mt-[0.5rem] px-[6px] h-[1.6rem] rounded-[0.5rem] text-[1rem] leading-none inline-flex items-center whitespace-nowrap text-[var(--color-subColor1)]',
+    'mt-[0.5rem] px-[0.6rem] h-[1.6rem] rounded-[0.5rem] text-[1rem] leading-none inline-flex items-center whitespace-nowrap text-[var(--color-subColor1)]',
     minus ? 'bg-[var(--color-subColor5)]' : 'bg-transparent',
   ].join(' ');
 
 export const CalListSection =
-  'p-[16px] bg-[#f0fff9] rounded-t-[16px] mt-[-300px] pb-[190px]';
+  'p-[1.6rem] bg-[#f0fff9] rounded-t-[1.6rem] mt-[-30rem] pb-[19rem] h-full';
 
-export const CalDateTitle = 'text-[16px] font-[700] mb-[12px]';
+export const CalDateTitle = 'text-[1.6rem] font-[700] mb-[1.2rem]';
 
 export const CalItemRow =
-  'flex items-center gap-[12px] py-[12px] border-b border-[var(--color-G8)]';
+  'flex items-center gap-[1.2rem] py-[1.2rem] border-b border-[var(--color-G8)]';
 
-export const CalMemo = 'flex-1 text-[14px]';
+export const CalMemo = 'flex-1 text-[1.4rem]';
 
-export const CalAmount = 'text-[14px] font-[600]';
+export const CalAmount = 'text-[1.4rem] font-[600]';
 
 export const CalDot =
-  'flex-none w-[32px] h-[32px] rounded-full bg-[#f6f6f6] overflow-hidden flex items-center justify-center';
+  'flex-none w-[3.2rem] h-[3.2rem] rounded-full bg-[#f6f6f6] overflow-hidden flex items-center justify-center';
 
 export const EmptyBoxSmall =
-  'pt-[12px] pb-[24px] text-center text-[var(--color-G4)] text-[13px]';
+  'pt-[1.2rem] pb-[2.4rem] text-center text-[var(--color-G4)] text-[1.3rem]';
 
 export const SheetHandle =
-  'w-[36px] h-[4px] rounded-[2px] bg-[var(--color-G4)] mx-auto mb-[12px]';
+  'w-[3.6rem] h-[0.4rem] rounded-[0.2rem] bg-[var(--color-G4)] mx-auto mb-[1.2rem]';
 
 export const FloatingPlus =
-  'absolute right-[18px] bottom-[24px] w-[52px] h-[52px] rounded-full bg-transparent border-0 p-0 cursor-pointer';
+  'absolute right-[1.8rem] bottom-[2.4rem] w-[5.2rem] h-[5.2rem] rounded-full bg-transparent border-0 p-0 cursor-pointer';

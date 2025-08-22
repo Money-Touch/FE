@@ -179,6 +179,26 @@ const BudgetRegister = () => {
     setModalOpen(true);
   };
 
+  // 뒤로가기
+  const handleBack = () => {
+    [
+      'year',
+      'month',
+      'monthBudget',
+      'categoryBudgets',
+      'customCategories',
+      'customCategoryBudgets',
+      'totalRoutineBudget',
+      'budgetId',
+      'routineId',
+      'budgetInitialized',
+      'routineCategories',
+      'routineCategoryBudgets',
+    ].forEach((key) => localStorage.removeItem(key));
+
+    navigate(-1);
+  };
+
   const applyValue = () => {
     const n = Number(raw);
     if (isNaN(n)) return;
@@ -290,7 +310,18 @@ const BudgetRegister = () => {
         state: { total: data.result.totalBudget },
       });
 
+      localStorage.removeItem('year');
+      localStorage.removeItem('month');
+      localStorage.removeItem('monthBudget');
+      localStorage.removeItem('categoryBudgets');
+      localStorage.removeItem('customCategories');
+      localStorage.removeItem('customCategoryBudgets');
+      localStorage.removeItem('totalRoutineBudget');
+      localStorage.removeItem('budgetId');
+      localStorage.removeItem('routineId');
       localStorage.removeItem('budgetInitialized');
+      localStorage.removeItem('routineCategories');
+      localStorage.removeItem('routineCategoryBudgets');
     };
 
     if (routineId) {
@@ -302,7 +333,11 @@ const BudgetRegister = () => {
 
   return (
     <div className={R.Wrap}>
-      <Header title="예산 등록" bgColor="bg-[var(--color-B1)]" />
+      <Header
+        title="예산 등록"
+        bgColor="bg-[var(--color-B1)]"
+        onBack={handleBack}
+      />
 
       <main className={R.Body}>
         <section className={R.Section}>

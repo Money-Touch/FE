@@ -65,7 +65,7 @@ const Onboarding = ({
 
       <ListOnboarding onboardingList={onboardingList} onSelect={handleSelect} />
 
-      <div className={`${S.BottomContainer} !mt-[3.7rem]`}>
+      <div className={`${S.BottomContainer} !mt-[3.7rem] !mb-[16.4rem]`}>
         <button
           className={S.NextButton(isComplete)}
           onClick={handleSubmit}
