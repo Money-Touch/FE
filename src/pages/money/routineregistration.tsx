@@ -257,7 +257,20 @@ const RoutineRegistration = () => {
     if (!blob) return undefined;
 
     const fd = new FormData();
-    fd.append('file', blob, 'routine-preview.png');
+    fd.append(
+      'file',
+      new File([blob], 'routine-preview.png', { type: 'image/png' }),
+    );
+    for (const [key, value] of fd.entries()) {
+      console.log('FormData key:', key);
+      if (value instanceof File) {
+        console.log('File name:', value.name);
+        console.log('File type:', value.type);
+        console.log('File size:', value.size, 'bytes');
+      } else {
+        console.log('Value:', value);
+      }
+    }
 
     const resp = (await uploadImageAsync(fd)) as ApiResponse<UploadImageResult>;
     const url =
