@@ -78,6 +78,14 @@ function errorMessage(err: unknown, fallback = '삭제에 실패했습니다.'):
 }
 
 const Money = () => {
+  useEffect(() => {
+    const reloaded = sessionStorage.getItem('moneyPageReloaded');
+    if (!reloaded) {
+      sessionStorage.setItem('moneyPageReloaded', 'true');
+      window.location.reload();
+    }
+  }, []);
+
   const navigate = useNavigate();
   const location = useLocation();
 
