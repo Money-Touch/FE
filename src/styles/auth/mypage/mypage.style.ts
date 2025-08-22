@@ -8,7 +8,8 @@ export const ProfileContainer =
 export const ProfileLeftContainer =
   'flex flex-col justify-center gap-[0.9rem] w-[8rem]';
 
-export const ProfileImg = 'w-[8rem] h-[8rem] cursor-pointer rounded-[2.756rem]';
+export const ProfileImg =
+  'w-[8rem] h-[8rem] cursor-pointer rounded-[2.756rem] object-cover';
 
 export const ProfileEditButton =
   'w-full h-[2.3rem] rounded-[0.5rem] border-[0.05rem] border-[var(--color-G7)] text-[var(--color-G1)] text-[1.1rem] font-light cursor-pointer';

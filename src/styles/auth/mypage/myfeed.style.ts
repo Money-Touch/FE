@@ -11,7 +11,7 @@ export const ListGrid4Container =
 
 // item-grid4.tsx
 export const ItemGrid4Div =
-  'w-full h-[11.8rem] rounded-[0.5rem] bg-[var(--color-G1)] cursor-pointer';
+  'w-full aspect-square rounded-[0.5rem] bg-[var(--color-G1)] cursor-pointer';
 
 // list-grid2.tsx
 export const ListGrid2Container =
@@ -24,6 +24,6 @@ export const ItemGrid2Contaienr =
 export const ItemGrid2P = 'font-light text-[0.8rem] text-[var(--color-G3)]';
 
 export const ItemGrid2Img =
-  'w-full h-[36.5rem] rounded-[1rem] bg-[var(--color-G1)]';
+  'w-full aspect-square rounded-[1rem] bg-[var(--color-G1)]';
 
 export const ItemGrid2PDiv = 'w-full mt-[0.6rem]';
