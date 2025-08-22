@@ -807,7 +807,7 @@ const Money = () => {
                 <section
                   className={A.CalListSection}
                   style={{
-                    transform: `translateY(${dragOffset}px)`,
+                    transform: `translateY(${dragOffset / 10}rem)`,
                     transition: anim ? 'transform 0.25s ease' : 'none',
                   }}
                   onPointerDown={onDragStart}
@@ -868,7 +868,7 @@ const Money = () => {
           )}
 
           {activeTab === '고정비' && (
-            <>
+            <div className={A.ContentArea}>
               <div className={A.ButtonContainer}>
                 <img
                   onClick={() => navigate('/fixed-cost')}
@@ -939,7 +939,7 @@ const Money = () => {
                   <p className={A.EmptyText}>등록된 고정비가 없어요.</p>
                 </div>
               )}
-            </>
+            </div>
           )}
 
           {activeTab === '소비 루틴' && (
