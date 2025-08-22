@@ -5,7 +5,7 @@ import pencilIcon from '../../assets/images/budget/pencil.png';
 import closeIcon from '../../assets/images/budget/Close.png';
 import circleCloseIcon from '../../assets/images/budget/CircleClose.png';
 import plusCircle from '../../assets/images/budget/Plus-2.png';
-
+import type { CategoryRoutine } from '../../types/money/registration/routine';
 import * as A from '../../styles/budget/routine.styles';
 
 import { useBudgetDetailQuery } from '../../hooks/money/registration/useBudgetDetailQuery';
@@ -30,7 +30,9 @@ const Routine = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [raw, setRaw] = useState('');
   const [targetIdx, setTargetIdx] = useState<-1 | number>(-1);
-  const [targetCustom, setTargetCustom] = useState(false);
+  const [targetType, setTargetType] = useState<
+    CategoryRoutine['categoryType'] | 'MONTH'
+  >('MONTH');
 
   const { data: budgetDetailData } = useBudgetDetailQuery(budgetId || 0);
   // console.log('routine', budgetDetailData);
@@ -166,16 +168,23 @@ const Routine = () => {
       k === 'back' ? prev.slice(0, -1) : (prev + k).replace(/^0+(?=\d)/, ''),
     );
 
-  const openModal = (idx: number, isCustom = false) => {
+  const openModal = (
+    idx: number,
+    type: CategoryRoutine['categoryType'] | 'MONTH',
+  ) => {
     setTargetIdx(idx);
-    setTargetCustom(isCustom);
-    setRaw(
-      idx === -1
-        ? String(monthBudget)
-        : isCustom
-          ? String(customBudget[idx] ?? 0)
-          : String(catBudget[idx] ?? 0),
-    );
+    setTargetType(type);
+
+    if (type === 'MONTH') {
+      setRaw(String(monthBudget));
+    } else if (type === 'DEFAULT') {
+      setRaw(String(catBudget[idx] ?? 0));
+    } else if (type === 'CUSTOM') {
+      setRaw(String(customBudget[idx] ?? 0));
+    } else if (type === 'ROUTINE_CATEGORY') {
+      setRaw(String(routineBudget[idx] ?? 0));
+    }
+
     setModalOpen(true);
   };
 
@@ -183,32 +192,53 @@ const Routine = () => {
     const n = Number(raw);
     if (isNaN(n)) return;
 
-    if (targetIdx === -1) {
-      setMonthBudget(n);
-      localStorage.setItem('monthBudget', String(n));
-    } else if (!targetCustom) {
-      setCatBudget((prev) => {
-        const next = [...prev];
-        next[targetIdx] = n;
-        localStorage.setItem('categoryBudgets', JSON.stringify(next));
-        localStorage.setItem(
-          'totalRoutineBudget',
-          JSON.stringify([...next, ...customBudget]),
-        );
-        return next;
-      });
-    } else {
-      setCustomBudget((prev) => {
-        const next = [...prev];
-        next[targetIdx] = n;
-        localStorage.setItem('customCategoryBudgets', JSON.stringify(next));
-        localStorage.setItem(
-          'totalRoutineBudget',
-          JSON.stringify([...catBudget, ...next]),
-        );
-        return next;
-      });
+    switch (targetType) {
+      case 'MONTH': {
+        setMonthBudget(n);
+        localStorage.setItem('monthBudget', String(n));
+        break;
+      }
+      case 'DEFAULT': {
+        setCatBudget((prev) => {
+          const next = [...prev];
+          next[targetIdx] = n;
+          localStorage.setItem('categoryBudgets', JSON.stringify(next));
+          localStorage.setItem(
+            'totalRoutineBudget',
+            JSON.stringify([...next, ...customBudget, ...routineBudget]),
+          );
+          return next;
+        });
+        break;
+      }
+      case 'CUSTOM': {
+        setCustomBudget((prev) => {
+          const next = [...prev];
+          next[targetIdx] = n;
+          localStorage.setItem('customCategoryBudgets', JSON.stringify(next));
+          localStorage.setItem(
+            'totalRoutineBudget',
+            JSON.stringify([...catBudget, ...next, ...routineBudget]),
+          );
+          return next;
+        });
+        break;
+      }
+      case 'ROUTINE_CATEGORY': {
+        setRoutineBudget((prev) => {
+          const next = [...prev];
+          next[targetIdx] = n;
+          localStorage.setItem('routineCategoryBudgets', JSON.stringify(next));
+          localStorage.setItem(
+            'totalRoutineBudget',
+            JSON.stringify([...catBudget, ...customBudget, ...next]),
+          );
+          return next;
+        });
+        break;
+      }
     }
+
     setModalOpen(false);
     setRaw('');
   };
@@ -248,7 +278,10 @@ const Routine = () => {
           <p className={A.Label}>한 달 예산</p>
           <div className={A.Row}>
             <p className={A.Month}>{comma(monthBudget)}원</p>
-            <button className={A.IconBtn} onClick={() => openModal(-1)}>
+            <button
+              className={A.IconBtn}
+              onClick={() => openModal(-1, 'MONTH')}
+            >
               <img className="w-full h-full" src={pencilIcon} alt="edit" />
             </button>
           </div>
@@ -273,7 +306,7 @@ const Routine = () => {
               <li
                 key={c}
                 className={A.CatLi(editMode)}
-                onClick={() => editMode && openModal(i, false)}
+                onClick={() => editMode && openModal(i, 'DEFAULT')}
               >
                 <span className={A.CatPrimary}>{c}</span>
                 {editMode ? (
@@ -290,7 +323,7 @@ const Routine = () => {
               <li
                 key={`${name}-${i}`}
                 className={A.CatLi(editMode)}
-                onClick={() => editMode && openModal(i, true)}
+                onClick={() => editMode && openModal(i, 'CUSTOM')}
               >
                 <span className={A.CatPrimary}>{name}</span>
                 {editMode ? (
@@ -309,7 +342,7 @@ const Routine = () => {
               <li
                 key={`${name}-${i}`}
                 className={A.CatLi(editMode)}
-                onClick={() => editMode && openModal(i, true)}
+                onClick={() => editMode && openModal(i, 'ROUTINE_CATEGORY')}
               >
                 <span className={A.CatPrimary}>{name}</span>
                 {editMode ? (
